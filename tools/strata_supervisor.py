@@ -18,10 +18,12 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE = Path(os.getenv("BC250_ROOT", str(ROOT.parent))).resolve()
+RUNTIME = Path(os.getenv("STRATA_RUNTIME_DIR", str(ROOT))).resolve()
+RUNTIME.mkdir(parents=True, exist_ok=True)
 QUEUE = ROOT / "TASK_QUEUE.json"
-CHECKPOINT = ROOT / "STRATA_CHECKPOINT.json"
-MEMORY = ROOT / "STRATA_MEMORY.jsonl"
-METRICS = ROOT / "STRATA_METRICS.json"
+CHECKPOINT = RUNTIME / "STRATA_CHECKPOINT.json"
+MEMORY = RUNTIME / "STRATA_MEMORY.jsonl"
+METRICS = RUNTIME / "STRATA_METRICS.json"
 MODEL_URL = os.getenv("STRATA_URL", "http://127.0.0.1:8080").rstrip("/")
 PUBLIC_HOSTS = {"raw.githubusercontent.com", "github.com", "learn.microsoft.com", "www.xbox.com", "news.xbox.com", "www.amd.com", "blog.playstation.com"}
 STATS = {"tool_calls": 0, "input_tokens": 0, "output_tokens": 0, "last_validation_utc": None}

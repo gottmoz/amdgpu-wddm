@@ -21,12 +21,13 @@ import strata_supervisor as worker
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INBOX_QUEUE = ROOT / "STRATA_INBOX_QUEUE.json"
-GENERATED_QUEUE = ROOT / "STRATA_GENERATED_QUEUE.json"
+RUNTIME = worker.RUNTIME
+INBOX_QUEUE = RUNTIME / "STRATA_INBOX_QUEUE.json"
+GENERATED_QUEUE = RUNTIME / "STRATA_GENERATED_QUEUE.json"
 XBOX_QUEUE = ROOT / "XBOX_TASK_QUEUE.json"
-LOCK = ROOT / ".strata-daemon.lock"
-STOP = ROOT / "STRATA_STOP"
-REJECTIONS = ROOT / "STRATA_INBOX_REJECTIONS.json"
+LOCK = RUNTIME / ".strata-daemon.lock"
+STOP = RUNTIME / "STRATA_STOP"
+REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
 STATUS_BRANCH = "agent/strata-status"
 INBOX_BRANCH = "agent/strata-inbox"
 APPROVED_AREAS = {*(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
@@ -334,7 +335,7 @@ def main():
                     last_heartbeat = time.time()
             except Exception as error:
                 state = "error"
-                (ROOT / "STRATA_DAEMON_ERROR.txt").write_text(f"{utc_now()} {type(error).__name__}: {error}\n", encoding="utf-8")
+                (RUNTIME / "STRATA_DAEMON_ERROR.txt").write_text(f"{utc_now()} {type(error).__name__}: {error}\n", encoding="utf-8")
                 try:
                     heartbeat(args.repo, branch, state, task)
                 except Exception:
