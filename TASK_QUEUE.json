@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "S001",
+      "objective": "Read only docs/research/gfx1013-isa-leads-ps5-decoders.md and docs/01-evidence-rules.md. Write docs/research/ps5-source-inventory.md with a short verified source inventory and clear unanswered questions about firmware portability. Keep it under 400 words. Do not use more than four reads. Do not read firmware bytes.",
+      "branch": "dev/build-ci",
+      "allowed_writes": [
+        "docs/research/ps5-source-inventory.md"
+      ],
+      "verify": [],
+      "publish": false,
+      "commit_message": "research: inventory PS5 source leads",
+      "status": "done",
+      "commit": null,
+      "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).\n\nEvidence used (2 reads only):\n- `docs/research/gfx1013-isa-leads-ps5-decoders.md` — the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Yōtei lead.\n- `docs/01-evidence-rules.md` — status vocabulary and the positive-control requirement, applied to label everything as unmeasured.\n\nVerified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
+    }
+  ]
+}
