@@ -30,6 +30,7 @@ wpa_supplicant.conf
 *_ed25519.pub
 authorized_keys
 /scratch/
+/.strata-daemon.lock
 # The default work folder of the installer host tests run from the repo (tools\release\test-*.ps1 without -WorkRoot)
 /tools/test-tmp/
 
