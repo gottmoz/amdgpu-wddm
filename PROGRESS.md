@@ -16,10 +16,12 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Eight public Cyan Skillfish files were fetched outside Git. They matched the manifest sizes and SHA-256 values and passed static header, bounds and CRC checks.
 - Ghidra 12.1.4 headless imported and analyzed the locally built unsigned KMD. It exited zero and deleted its temporary project. This verifies the tool route, not PS5 firmware compatibility.
 - Task S003 produced a scoped map of ACPI VFCT capture and Driver Store firmware loading. Its first validation failed on writing style. The reviewed note now passes doclint.
+- Task S004 produced a historical SMU source map. Its first validation failed on writing style. The reviewed note now passes doclint and directs current limits to `docs/hardware.md`.
+- The Strata supervisor now permits 100 tool rounds per task and compacts older tool actions. A mocked 18-round run completed with at most 15 context messages.
 
 ## In progress
 
-- Continue bounded source review of the local SMU owner and PS5 Linux memory-map differences.
+- Compare PS5 Linux memory-map source with the BC-250 source map at pinned revisions.
 - Identify a lawful complete firmware image before attempting a PS5 and BC-250 binary comparison. No such image has been identified in this workspace.
 
 ## Constraints

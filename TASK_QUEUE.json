@@ -50,7 +50,7 @@
     },
     {
       "id": "S004",
-      "objective": "Read only docs/hardware.md and docs/design/startup-clock-ownership.md. Write docs/research/bc250-smu-source-map.md in under 300 words. Describe the documented local SMU owner and firmware boundary, with exact source paths. Distinguish measured facts from open PS5 compatibility questions. Do not read firmware bytes or run hardware commands.",
+      "objective": "Read only docs/design/startup-clock-ownership.md. Use at most four reads. Write docs/research/bc250-smu-source-map.md in under 250 words. State the documented local SMU owner, exact source path and open PS5 compatibility questions. Do not read firmware bytes or run hardware commands.",
       "branch": "research/ps5-firmware",
       "allowed_writes": [
         "docs/research/bc250-smu-source-map.md"
@@ -65,7 +65,8 @@
       ],
       "publish": false,
       "commit_message": "research: map BC-250 SMU source boundaries",
-      "status": "pending"
+      "status": "done",
+      "summary": "The scoped SMU note was reviewed as a historical M433-M441 source map and passes doclint. Current operating limits must come from docs/hardware.md and facts."
     },
     {
       "id": "S005",

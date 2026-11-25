@@ -11,6 +11,7 @@
 - `tools/firmware/inspect_headers.py` verified header bounds and CRC for all eight manifest-pinned public microcode files. The formats are gfx 1.0, RLC 2.0 and SDMA 1.0. See `docs/research/ps5-firmware-portability.md` for versions and limits.
 - `driver/shim/bc250_psp.c` checks bounds and the supported RLC layout before splitting MEC and jump-table payloads. It does not establish compatibility with a PS5 firmware container. See `docs/research/psp-loader-boundaries.md`.
 - `driver/kmd/atom_firmware.c` captures an ACPI VFCT table. The scoped source review found no DRAM training in that file or in `docs/design/firmware-driver-store.md`. See `docs/research/bc250-memory-init-source-map.md`.
+- `docs/design/startup-clock-ownership.md` is a historical M433 to M441 design note. Its numeric SMU policy is not the current operating limit. See `docs/research/bc250-smu-source-map.md` and `docs/hardware.md`.
 
 ## Hypotheses and research leads
 
