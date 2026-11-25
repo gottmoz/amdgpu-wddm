@@ -18,6 +18,7 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Task S003 produced a scoped map of ACPI VFCT capture and Driver Store firmware loading. Its first validation failed on writing style. The reviewed note now passes doclint.
 - Task S004 produced a historical SMU source map. Its first validation failed on writing style. The reviewed note now passes doclint and directs current limits to `docs/hardware.md`.
 - The Strata supervisor now permits 100 tool rounds per task and compacts older tool actions. A mocked 18-round run completed with at most 15 context messages.
+- GitHub Actions run [45678032319](https://github.com/gottmoz/amdgpu-wddm/actions/runs/45678032319) passed on `dev/build-ci` after the 100-round change. It completed the KMD build and host-test steps on Windows.
 
 ## In progress
 
