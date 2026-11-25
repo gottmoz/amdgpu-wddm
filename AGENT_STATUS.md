@@ -1,9 +1,9 @@
 # Strata status
 
-- utc: `2026-11-25T19:28:20Z`
-- state: `idle`
-- current task id: `None`
-- research area: `None`
+- utc: `2026-11-25T19:28:34Z`
+- state: `working`
+- current task id: `AUTO-XRE03-01`
+- research area: `XRE03`
 - completed count: `4`
 - failed count: `0`
 - tool calls: `0`
