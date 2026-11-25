@@ -1,14 +1,14 @@
 # Strata status
 
-- utc: `2026-11-25T19:40:22Z`
-- state: `working`
-- current task id: `AUTO-XRE06-01`
-- research area: `XRE06`
+- utc: `2026-11-25T19:41:06Z`
+- state: `blocked`
+- current task id: `None`
+- research area: `None`
 - completed count: `5`
-- failed count: `0`
-- tool calls: `111`
-- input tokens: `365581`
-- output tokens: `12510`
+- failed count: `1`
+- tool calls: `115`
+- input tokens: `374807`
+- output tokens: `14362`
 - last successful validation utc: `None`
 - last successful commit: `c736a720d9f58ad6649c8cf926637260a936723f`
 - next task id: `XRE01A`
