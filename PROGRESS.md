@@ -12,11 +12,14 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Strata 0.2.9 (engine build 0.1.55) serves `qwen3.8-flash-next-q2_0` at local port 8080. `/v1/models` and a forced OpenAI chat tool call worked.
 - GitHub Actions run [45675073663](https://github.com/gottmoz/amdgpu-wddm/actions/runs/45675073663) passed the pinned kit download, KMD `CompileOnly`, and host tests on `windows-2022` at commit `c61942caf`.
 - The local Strata supervisor completed task S001 after the original task was split. Its source inventory was reviewed and adjusted for the repository writing gate.
+- On `research/ps5-firmware`, task S002 produced a source-based PSP loader note. The note was reviewed against `bc250_psp.c` and adjusted for the writing gate.
+- Eight public Cyan Skillfish files were fetched outside Git. They matched the manifest sizes and SHA-256 values and passed static header, bounds and CRC checks.
+- Ghidra 12.1.4 headless imported and analyzed the locally built unsigned KMD. It exited zero and deleted its temporary project. This verifies the tool route, not PS5 firmware compatibility.
 
 ## In progress
 
-- Survey PS5 Linux and BC5 source projects on `research/ps5-firmware`.
-- Inventory any permitted local firmware images before attempting static analysis. No full PS5 or BC-250 firmware image has been identified in this workspace.
+- Continue bounded source review of AGESA, boot memory initialization and PS5 Linux memory-map differences.
+- Identify a lawful complete firmware image before attempting a PS5 and BC-250 binary comparison. No such image has been identified in this workspace.
 
 ## Constraints
 

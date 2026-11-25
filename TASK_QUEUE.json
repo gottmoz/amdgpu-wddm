@@ -14,6 +14,38 @@
       "status": "done",
       "commit": null,
       "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).\n\nEvidence used (2 reads only):\n- `docs/research/gfx1013-isa-leads-ps5-decoders.md` — the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Yōtei lead.\n- `docs/01-evidence-rules.md` — status vocabulary and the positive-control requirement, applied to label everything as unmeasured.\n\nVerified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
+    },
+    {
+      "id": "S002",
+      "objective": "Read only driver/shim/bc250_psp.c and driver/shim/include/amdgpu_ucode.h. Write docs/research/psp-loader-boundaries.md in under 300 words. Explain which firmware header checks and PSP payload splits the local code implements, and list unanswered PS5 compatibility questions. Do not read binary firmware or make a hardware claim.",
+      "branch": "research/ps5-firmware",
+      "allowed_writes": [
+        "docs/research/psp-loader-boundaries.md"
+      ],
+      "verify": [],
+      "publish": false,
+      "commit_message": "research: record PSP loader boundaries",
+      "status": "done",
+      "summary": "Written `docs/research/psp-loader-boundaries.md` (~244 words, 1.96 KB).\n\n**Evidence used (2 reads only, as scoped):**\n- `driver/shim/bc250_psp.c` — `bc250_fw_locate()` header validation and the MEC/JT split; file-name and FW-type tables.\n- `driver/shim/include/amdgpu_ucode.h` — the four header structs actually taken over (common, gfx v1.0, rlc v2.0, sdma v1.0).\n\n**Verified (code-level observations):**\n- Size floor of `sizeof(gfx_firmware_header_v1_0)`; `size_bytes` must equal the supplied `file_size` (the shim does not trust `request_firmware()` the way upstream does); `header_size_bytes ≤ ucode_array_offset_bytes ≤ file_size`; `ucode_size_bytes` non-zero and within the file.\n- RLC_G is hard-gated to header v2.0 with `header_size_bytes ≥ sizeof(rlc_firmware_header_v2_0)` — later RLC minor layouts are refused, not partially loaded.\n- MEC1/2 and their JT halves require gfx header major == 1, with `jt_size`/`jt_offset` bounds checked; CP_MEC gets `ucode_size - jt_size*4` at `array_offset`"
+    },
+    {
+      "id": "S003",
+      "objective": "Inspect only driver/kmd/atom_firmware.c and docs/design/firmware-driver-store.md. Write docs/research/bc250-memory-init-source-map.md in under 300 words. Describe what those files actually establish about boot firmware, memory initialization and driver loading. Mark AGESA and PS5 comparisons as unanswered. Do not read or copy firmware binaries.",
+      "branch": "research/ps5-firmware",
+      "allowed_writes": [
+        "docs/research/bc250-memory-init-source-map.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/bc250-memory-init-source-map.md"
+        ]
+      ],
+      "publish": false,
+      "commit_message": "research: map BC-250 memory init sources",
+      "status": "pending"
     }
   ]
 }
