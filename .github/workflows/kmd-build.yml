@@ -1,0 +1,60 @@
+name: KMD build
+
+on:
+  push:
+    branches: [dev/build-ci]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile-only:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch pinned WDK and SDK packages
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $root = Join-Path $env:RUNNER_TEMP 'bc250-workspace'
+          $kits = Join-Path $root 'toolchain\nuget'
+          $version = '10.0.26100.6584'
+          $expected = @{
+            'microsoft.windows.wdk.x64' = 'c393d03dfb640b5c92f546b32f6770ef68cd3aaf691956e7d66d8e2c28a1b55e'
+            'microsoft.windows.sdk.cpp' = '5d31b38205bdd9ac761b4cb39fbbc6b7209b01c11194324afc674d7d119483a0'
+            'microsoft.windows.sdk.cpp.x64' = 'c29ce7a4641cb37ee32ebb8078cc65cfbabc7025076bcfba869039204b1e960d'
+          }
+          New-Item -ItemType Directory -Force $kits | Out-Null
+          foreach ($id in $expected.Keys) {
+            $zip = Join-Path $kits "$id.$version.zip"
+            Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/$id/$version/$id.$version.nupkg" -OutFile $zip
+            $actual = (Get-FileHash $zip -Algorithm SHA256).Hash
+            if ($actual -ine $expected[$id]) { throw "Hash mismatch: $id" }
+            Expand-Archive $zip (Join-Path $kits $id)
+          }
+          "BC250_CI_WORKSPACE=$root" >> $env:GITHUB_ENV
+      - name: KMD CompileOnly
+        shell: pwsh
+        run: |
+          & pwsh -NoProfile -File driver/kmd/build.ps1 `
+            -Kits "$env:BC250_CI_WORKSPACE\toolchain\nuget" `
+            -Out "$env:BC250_CI_WORKSPACE\kmd-compile-only" `
+            -QualityWorkspace $env:BC250_CI_WORKSPACE -CompileOnly -Flavour release
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Hardware-independent tests
+        shell: pwsh
+        run: |
+          python -m unittest discover -s tools/regcalc
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python -m unittest discover -s tools/diagusb
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python -m unittest discover -s tools/facts
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/facts/gen_facts.py --check
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
