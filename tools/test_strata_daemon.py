@@ -48,6 +48,13 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(path, daemon.GENERATED_QUEUE)
         self.assertEqual(selected["id"], "AUTO-XRE03-01")
 
+    def test_source_scoped_task_rejects_unrelated_reads(self):
+        task = {"sources": ["XBOX_FIRMWARE_INVENTORY.json"], "allowed_writes": ["docs/research/test.md"]}
+        with self.assertRaisesRegex(ValueError, "declared task source"):
+            worker.tool("read_file", {"path": "PROGRESS.md"}, task)
+        with self.assertRaisesRegex(ValueError, "source-scoped"):
+            worker.tool("list_files", {"glob": "docs/**/*.md"}, task)
+
     def test_budget_split_and_retry_limit(self):
         task = {"id": "AUTO-test", "area": "XRE03", "branch": "research/xbox-firmware",
                 "objective": "Read two sources", "allowed_writes": ["docs/research/test-note.md"],

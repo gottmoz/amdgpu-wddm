@@ -77,6 +77,14 @@ def command(args):
 
 
 def tool(name, args, task):
+    sources = task.get("sources")
+    if sources:
+        if name == "read_file" and args["path"] not in sources:
+            raise ValueError("read path is not a declared task source")
+        if name == "fetch_url" and args["url"] not in sources:
+            raise ValueError("URL is not a declared task source")
+        if name not in ("read_file", "fetch_url", "write_file"):
+            raise ValueError("source-scoped task permits only source reads and declared writes")
     if name == "list_files":
         if Path(args["glob"]).is_absolute() or ".." in Path(args["glob"]).parts:
             raise ValueError("glob must stay within repository")
@@ -193,9 +201,10 @@ def publish(task):
 
 def work(task, model):
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
+    fixed_sources = task.get("sources", [])
     base = [
-        {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise. If sources are declared, read only those sources, then write the declared output promptly. Do not inspect unrelated files."},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
