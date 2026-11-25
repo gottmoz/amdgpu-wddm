@@ -45,7 +45,37 @@
       ],
       "publish": false,
       "commit_message": "research: map BC-250 memory init sources",
+      "status": "done",
+      "summary": "The scoped source map was reviewed and passes doclint. It establishes an ACPI VFCT capture path and Driver Store firmware loading, without evidence of AGESA or DRAM training."
+    },
+    {
+      "id": "S004",
+      "objective": "Read only docs/hardware.md and docs/design/startup-clock-ownership.md. Write docs/research/bc250-smu-source-map.md in under 300 words. Describe the documented local SMU owner and firmware boundary, with exact source paths. Distinguish measured facts from open PS5 compatibility questions. Do not read firmware bytes or run hardware commands.",
+      "branch": "research/ps5-firmware",
+      "allowed_writes": [
+        "docs/research/bc250-smu-source-map.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/bc250-smu-source-map.md"
+        ]
+      ],
+      "publish": false,
+      "commit_message": "research: map BC-250 SMU source boundaries",
       "status": "pending"
+    },
+    {
+      "id": "S005",
+      "objective": "Identify a lawful complete PS5 or BC-250 firmware image outside Git, record its source and SHA-256, then define a narrow read-only Ghidra question before analysis. No image is currently identified.",
+      "branch": "research/ps5-firmware",
+      "allowed_writes": [],
+      "verify": [],
+      "publish": false,
+      "commit_message": "research: record firmware image provenance",
+      "status": "needs_input"
     }
   ]
 }

@@ -15,10 +15,11 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - On `research/ps5-firmware`, task S002 produced a source-based PSP loader note. The note was reviewed against `bc250_psp.c` and adjusted for the writing gate.
 - Eight public Cyan Skillfish files were fetched outside Git. They matched the manifest sizes and SHA-256 values and passed static header, bounds and CRC checks.
 - Ghidra 12.1.4 headless imported and analyzed the locally built unsigned KMD. It exited zero and deleted its temporary project. This verifies the tool route, not PS5 firmware compatibility.
+- Task S003 produced a scoped map of ACPI VFCT capture and Driver Store firmware loading. Its first validation failed on writing style. The reviewed note now passes doclint.
 
 ## In progress
 
-- Continue bounded source review of AGESA, boot memory initialization and PS5 Linux memory-map differences.
+- Continue bounded source review of the local SMU owner and PS5 Linux memory-map differences.
 - Identify a lawful complete firmware image before attempting a PS5 and BC-250 binary comparison. No such image has been identified in this workspace.
 
 ## Constraints
