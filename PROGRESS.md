@@ -28,7 +28,9 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - The official OSU1 URL resolved to a Microsoft download on 2026-11-25. A HEAD request reported 6,286,062,048 bytes. The archive has not been downloaded or hashed.
 - The continuous Strata coordinator has separate inbox and generated queues, a workspace lock, bounded retries and stalled-request recovery. It also splits tasks with source lists and publishes GitHub heartbeats. Five host regression tests pass. The `agent/strata-inbox` and `agent/strata-status` branches were created and a live background worker started.
 - Strata produced an XVD source note. Codex checked it against the pinned XanaduXVD README, corrected its inferences and style, and passed doclint.
-- The Nagi release build plan stopped before preflight because `D:\BC250-Development\ref\mesa\src\amd\common\amd_family.h` is absent. The complete Mesa reference tree is absent from this workspace. The earlier KMD `CompileOnly` build remains verified.
+- The Nagi release build plan first stopped on a missing Mesa reference. A shallow sparse checkout of upstream Mesa at `66e82ef1f618d147225a04c773991c404a67f82a` now supplies that source outside Git.
+- The repeated release plan reached the full input audit and stopped before preflight. `scratch/release-set/build-context.json` lists absent AGS SDK, display source, Linux source, GPU microcode, glslang, Python build packages, LLVM, MinGW, NuGet packages, and winflexbison. The earlier KMD `CompileOnly` build remains verified.
+- A background download of the public Microsoft OSU1 update was rejected by automatic approval review. The 6.3 GB archive is still absent. Its SHA-256 and version remain unverified.
 
 ## Constraints
 
