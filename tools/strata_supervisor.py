@@ -162,29 +162,40 @@ def publish(task):
 
 def work(task, model):
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
-    messages = [
+    base = [
         {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise."},
         {"role": "user", "content": json.dumps({"objective": task["objective"], "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
     ]
-    for step in range(16):
+    recent = []
+    compact = []
+    for step in range(100):
+        summary = [{"role": "user", "content": "Earlier tool actions, compacted:\n" + "\n".join(compact[-20:])}] if compact else []
+        messages = base + summary + [message for group in recent for message in group]
         choice = api(messages, model)
         message = choice["message"]
-        messages.append({k: v for k, v in message.items() if k in ("role", "content", "tool_calls")})
+        group = [{k: v for k, v in message.items() if k in ("role", "content", "tool_calls")}]
         calls = message.get("tool_calls") or []
         if not calls:
-            if not message.get("content") and not all(confined(path).is_file() for path in task["allowed_writes"]):
-                messages.append({"role": "user", "content": "Write the declared output file using write_file now. Keep it short."})
-                continue
-            atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "response", "summary": (message.get("content") or "")[:3000]})
-            return message.get("content") or ""
-        for call in calls:
-            try:
-                args = json.loads(call["function"]["arguments"])
-                result = tool(call["function"]["name"], args, task)
-            except Exception as error:
-                result = {"error": str(error)}
-            messages.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
-            atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
+            if all(confined(path).is_file() for path in task["allowed_writes"]):
+                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "response", "summary": (message.get("content") or "")[:3000]})
+                return message.get("content") or ""
+            group.append({"role": "user", "content": "Write the declared output file using write_file now. Keep it short."})
+        else:
+            for call in calls:
+                try:
+                    args = json.loads(call["function"]["arguments"])
+                    result = tool(call["function"]["name"], args, task)
+                except Exception as error:
+                    result = {"error": str(error)}
+                group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
+                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
+        recent.append(group)
+        if len(recent) > 6:
+            old = recent.pop(0)
+            for item in old:
+                for call in item.get("tool_calls", []):
+                    compact.append(f"step {step}: {call['function']['name']} {call['function']['arguments'][:120]}")
+            compact = compact[-20:]
     raise RuntimeError("tool round limit reached; split the task")
 
 
