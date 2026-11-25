@@ -46,7 +46,8 @@ def atomic_json(path, data):
 
 def confined(relative, *, writable=False):
     path = (ROOT / relative).resolve()
-    if (not path.is_relative_to(ROOT) or FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts)
+    public_manifest = relative == "tools/firmware/cyan_skillfish2.json" and not writable
+    if (not path.is_relative_to(ROOT) or (FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts) and not public_manifest)
             or path.name.lower().startswith((".env", "credential", "secret"))
             or path.suffix.lower() in {".pem", ".key", ".pfx", ".p12"}):
         raise ValueError("path outside allowed source and documentation tree")

@@ -55,6 +55,12 @@ class CoordinatorTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "source-scoped"):
             worker.tool("list_files", {"glob": "docs/**/*.md"}, task)
 
+    def test_public_microcode_manifest_is_read_only(self):
+        path = worker.confined("tools/firmware/cyan_skillfish2.json")
+        self.assertEqual(path.name, "cyan_skillfish2.json")
+        with self.assertRaisesRegex(ValueError, "outside allowed"):
+            worker.confined("tools/firmware/cyan_skillfish2.json", writable=True)
+
     def test_budget_split_and_retry_limit(self):
         task = {"id": "AUTO-test", "area": "XRE03", "branch": "research/xbox-firmware",
                 "objective": "Read two sources", "allowed_writes": ["docs/research/test-note.md"],
