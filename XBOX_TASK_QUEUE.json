@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "origin": "approved_research_plan",
+  "tasks": [
+    {"id": "XRE01A", "area": "XRE01", "status": "pending", "objective": "Find primary 4800S and 4700S kit specifications. Update only unknown source fields in XBOX_HARDWARE_MATRIX.md after checking exact revisions.", "allowed_writes": ["XBOX_HARDWARE_MATRIX.md"], "branch": "research/xbox-firmware"},
+    {"id": "XRE02A", "area": "XRE02", "status": "pending", "objective": "Inspect official OSU1 metadata without installing it. Record exact size, SHA-256 after a complete verified local download, and package version from documented metadata.", "allowed_writes": ["XBOX_FIRMWARE_INVENTORY.json"], "branch": "research/xbox-firmware"},
+    {"id": "XRE03A", "area": "XRE03", "status": "pending", "objective": "Review XanaduXVD and xvdtool at pinned commits. Document only their read-only format-identification behavior and limits, with no Xbox One to Series assumption.", "allowed_writes": ["XBOX_RESEARCH.md"], "branch": "research/xbox-firmware"},
+    {"id": "XRE04A", "area": "XRE04", "status": "pending", "objective": "Find public Series X/S boot-stage sources and distinguish them from Xbox One research. Update XBOX_BOOT_ARCHITECTURE.md with citations and unknowns.", "allowed_writes": ["XBOX_BOOT_ARCHITECTURE.md"], "branch": "research/xbox-firmware"},
+    {"id": "XRE05A", "area": "XRE05", "status": "pending", "objective": "Map official public GameCore, DirectX and Windows documentation. Record what is applicable to Nagi without assuming desktop WDDM on Xbox.", "allowed_writes": ["XBOX_RESEARCH.md"], "branch": "research/xbox-firmware"},
+    {"id": "XRE06A", "area": "XRE06", "status": "pending", "objective": "Compare public AMD firmware metadata only. Record PSP, SMU, microcode, VCN and SDMA unknowns without firmware transfers or hardware access.", "allowed_writes": ["XBOX_FIRMWARE_INVENTORY.json"], "branch": "research/xbox-firmware"},
+    {"id": "XRE07A", "area": "XRE07", "status": "pending", "objective": "Draft a read-only Xbox storage inspection procedure from documented sources. Do not access an original SSD.", "allowed_writes": ["XBOX_BOOT_ARCHITECTURE.md"], "branch": "research/xbox-firmware"},
+    {"id": "XRE08A", "area": "XRE08", "status": "pending", "objective": "Update CONSOLE_COMPATIBILITY_MATRIX.md using only verified or source-derived results from XRE01-XRE07. Keep unproven boot support labeled unknown.", "allowed_writes": ["CONSOLE_COMPATIBILITY_MATRIX.md"], "branch": "research/xbox-firmware"}
+  ]
+}

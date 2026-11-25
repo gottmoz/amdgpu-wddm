@@ -24,6 +24,8 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 
 - Compare PS5 Linux memory-map source with the BC-250 source map at pinned revisions.
 - Identify a lawful complete firmware image before attempting a PS5 and BC-250 binary comparison. No such image has been identified in this workspace.
+- Xbox Series X/S research started on `research/xbox-firmware`. The initial source inventory, hardware matrix and XRE01-XRE08 task queue are in `XBOX_RESEARCH.md`, `XBOX_HARDWARE_MATRIX.md` and `XBOX_TASK_QUEUE.json`.
+- The official OSU1 URL resolved to a Microsoft download on 2026-11-25. A HEAD request reported 6,286,062,048 bytes. The archive has not been downloaded or hashed.
 
 ## Constraints
 

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "updated_utc": "2026-11-25",
+  "entries": [
+    {
+      "id": "OSU1",
+      "kind": "operating_system_update",
+      "official_entry_url": "https://www.xbox.com/xboxone/osu1",
+      "resolved_url": "https://download.microsoft.com/download/524a2f3b-271e-42a2-befe-913d3cc76c0e/OSU1.zip",
+      "observed_http_method": "HEAD",
+      "observed_size_bytes": 6286062048,
+      "observed_last_modified_utc": "2026-11-06T21:38:03Z",
+      "sha256": null,
+      "version": null,
+      "local_path": null,
+      "status": "SOURCE-DERIVED",
+      "notes": "Microsoft URL and HTTP metadata verified on 2026-11-25. File not downloaded or hashed. This is an update package, not a complete boot firmware image."
+    },
+    {
+      "id": "CYAN_SKILLFISH2_PUBLIC_MICROCODE",
+      "kind": "public_gpu_microcode_set",
+      "manifest_path": "tools/firmware/cyan_skillfish2.json",
+      "source_commit": "2b8daaf611fbade74f26a5b58ec1defe6a02f5e0",
+      "file_count": 8,
+      "sha256": "per-file in manifest",
+      "local_path": "outside Git under workspace scratch/firmware-static",
+      "status": "VERIFIED",
+      "notes": "All eight local files matched the manifest and static header checks on 2026-11-25. This is BC-250 GPU microcode, not Xbox boot firmware."
+    }
+  ]
+}
