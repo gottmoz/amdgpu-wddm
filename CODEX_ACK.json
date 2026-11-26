@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T17:29:16Z",
+      "observed_utc": "2026-11-26T17:43:57Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, isolated LLVM candidate startup checked",
+      "run_status": "scheduler-triggered, isolated LLVM PE imports inspected",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -75,7 +75,8 @@
         "mingw-w64-x86_64-clang-libs-22.1.8-3-any.pkg.tar.zst SHA256 9B1A59F9DB49F24BC03BA137C307E5D20D986EAA4EC1CC179EA5E889047AC965",
         "mingw-w64-x86_64-llvm-22.1.8-3-any.pkg.tar.zst SHA256 551273499170D15A532E5FB98299B67AC2846A6788E6A352CE77889FB746D40B",
         "mingw-w64-x86_64-llvm-libs-22.1.8-3-any.pkg.tar.zst SHA256 AB50A733CBAFD24E5180C00DEDE15014ECB7C133B836CE59262C22C27D46D659",
-        "Extracted the four archives under scratch/msys2-llvm-22.1.8-3/candidate. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. clang --version exited 0xC0000135. PE imports include libstdc++-6.dll, libclang-cpp.dll and libLLVM-22.dll. Compiler identity remains unverified. Plan not rerun."
+        "Extracted the four archives under scratch/msys2-llvm-22.1.8-3/candidate. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. clang --version exited 0xC0000135. PE imports include libstdc++-6.dll, libclang-cpp.dll and libLLVM-22.dll. Compiler identity remains unverified. Plan not rerun.",
+        "PE import inspection of clang.exe, libclang-cpp.dll and libLLVM-22.dll identified six additional non-system DLL names: libstdc++-6.dll, libwinpthread-1.dll, libffi-8.dll, libxml2-16.dll, zlib1.dll and libzstd.dll. PID 2940 remained present during this poll. Compiler identity and plan remain unverified."
       ],
       "blockers": [
         "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
@@ -86,12 +87,12 @@
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: candidate clang fails to start (0xC0000135); SDK/WDK junctions and Strata intake mismatch remain",
-  "last_poll_utc": "2026-11-26T17:29:16Z",
+  "result": "blocked: candidate runtime dependencies identified; SDK/WDK junctions and Strata intake mismatch remain",
+  "last_poll_utc": "2026-11-26T17:43:57Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T17:29:16Z",
+    "last_poll_utc": "2026-11-26T17:43:57Z",
     "trigger": "scheduler-triggered",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "result": "blocked: candidate clang fails to start (0xC0000135); SDK/WDK junctions and Strata intake mismatch remain"
+    "result": "blocked: candidate runtime dependencies identified; SDK/WDK junctions and Strata intake mismatch remain"
   }
 }
