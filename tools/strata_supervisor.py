@@ -266,8 +266,8 @@ def work(task, model):
     if "terminal" in available_tools:
         examples["terminal"] = {"argv": task.get("test_command", ["python", "-m", "unittest", "tools.test_strata_daemon"])}
     base = [
-        {"role": "system", "content": "You are a local BC-250 engineering agent. Follow the task-scoped tool permissions and use only tools exposed for this task. Never touch hardware, secrets or firmware bytes. If source paths are listed, read only those. Complete the declared artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "examples": examples, "previous_validation_error": task.get("validation_error"), "prior_tool_errors": task.get("invalid_tool_history", []), "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "system", "content": "You are a local BC-250 engineering agent. Use only the exposed task-scoped tools. File access is not implicit: read_file may read only exact paths in sources, and write_file may write only exact paths in allowed_writes. Never read user-profile, Strata application, environment, secret or undeclared paths. Do not touch hardware or firmware bytes. For terminal, run only the supplied test_command. If a source is insufficient, continue with a bounded implementation from the declared source and document the limitation in the output. Complete the declared artifact and keep the final summary concise."},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "tool_limits": {"read_file": "exact paths listed in sources only", "write_file": "exact paths listed in allowed_writes only", "terminal": "only test_command"}, "examples": examples, "test_command": task.get("test_command"), "previous_validation_error": task.get("validation_error"), "prior_tool_errors": task.get("invalid_tool_history", []), "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
@@ -301,7 +301,7 @@ def work(task, model):
                                     "path": args.get("path") if isinstance(args, dict) else None,
                                     "reason": str(error)[:300]})
                     del history[:-3]
-                    result = {"error_code":code,"reason":str(error),"available_tools":[x["function"]["name"] for x in definitions(task)],"suggested_action":"Use read_file for a declared source, then write_file to the declared output."}
+                    result = {"error_code":code,"reason":str(error),"available_tools":[x["function"]["name"] for x in definitions(task)],"suggested_action":f"Do not retry that path. Read only one of these exact declared sources: {fixed_sources}. Write only to: {task['allowed_writes']}. For terminal, use the supplied test_command: {task.get('test_command')}"}
                     invalid=int(task.get("invalid_tool_calls",0))+1; task["invalid_tool_calls"]=invalid
                     if invalid>=3:
                         atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid,"last_error":history[-1]})
