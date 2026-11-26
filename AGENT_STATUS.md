@@ -1,6 +1,6 @@
 # Strata status
 
-- utc: `2026-11-26T11:29:40Z`
+- utc: `2026-11-26T11:30:43Z`
 - state: `working`
 - current task id: `NAGI-CONTEXT-UNC-01`
 - research area: `NAGI`
@@ -10,7 +10,7 @@
 - input tokens: `5084041`
 - output tokens: `549062`
 - last successful validation utc: `2026-11-26T11:24:33Z`
-- uptime seconds: `10819`
+- uptime seconds: `10882`
 - endurance target seconds: `28800`
 - actual work seconds: `7144.3`
 - idle seconds: `1410.0`
