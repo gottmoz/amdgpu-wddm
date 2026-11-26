@@ -11,6 +11,7 @@ source limitations rather than inventing hashes. No firmware bytes are read.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from typing import Any, Dict, Iterable, List, Optional
 
@@ -26,7 +27,7 @@ MISSING_REASONS = (
 
 
 def _normalize_hash(value: Any) -> Optional[str]:
-    """Return a lowercase hex-normalized hash, or None when the hash is missing/invalid."""
+    """Return a lowercase SHA-256 digest, or None when it is missing/invalid."""
     if value is None:
         return None
     if isinstance(value, bool):
@@ -34,7 +35,7 @@ def _normalize_hash(value: Any) -> Optional[str]:
     if not isinstance(value, str):
         return None
     text = value.strip()
-    if not text:
+    if not text or not re.fullmatch(r"[0-9a-fA-F]{64}", text):
         return None
     return text.lower()
 
@@ -46,6 +47,8 @@ def _hash_reason(value: Any) -> str:
         return "non-string-hash"
     if not value.strip():
         return "empty-hash" if not value else "whitespace-only-hash"
+    if not re.fullmatch(r"[0-9a-fA-F]{64}", value.strip()):
+        return "invalid-hash"
     return "invalid-hash"
 
 
@@ -53,9 +56,9 @@ def group_segment_hashes(records: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
     """Group identical validated segment hashes across firmware versions.
 
     Records may carry: hash (or segment_hash), firmware_version (or version),
-    container, validated (default True). Records without a usable hash are reported
-    explicitly under missing_hash_records; unvalidated records are reported under
-    unvalidated_records and never grouped.
+    container and validated=True. Only explicit validation and 64-character
+    hexadecimal SHA-256 digests are grouped. Missing/invalid hashes and unvalidated
+    records are reported separately and never grouped.
     """
     groups: Dict[str, Dict[str, Any]] = {}
     missing: List[Dict[str, Any]] = []
@@ -80,7 +83,7 @@ def group_segment_hashes(records: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
             )
             continue
 
-        if not record.get("validated", True):
+        if record.get("validated") is not True:
             unvalidated.append({"index": index, "hash": normalized})
             continue
 

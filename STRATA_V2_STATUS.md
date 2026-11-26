@@ -47,3 +47,8 @@ The queue has 20 concrete pending/retry code and test tasks across PS5, Nagi and
 Nagi's `build_context_summary.py` was automatically published at `35e509c4fbc345f64ffa546afe3023ebffa99474` after its declared tests passed; Codex reviewed the code and tests. The five Python build dependencies were verified in scratch/py. Other toolchain dependencies remain unresolved.
 
 The full focused suite passed 51 tests at this checkpoint. The eight-hour endurance start remains `2026-11-26T08:29:21Z`; latest stored counters before daemon restart were 5,293.2 work seconds, 1,410 idle seconds, 112 worker runs and 11 automatic recoveries.
+
+
+## PS5 tool review – 2026-11-26T11:02:10Z
+
+Reviewed the automatically published segment-hash utility. Corrected SHA-256 syntax validation and the requirement for explicit validation; the 9-test module and 60-test focused suite pass. Current PS5 summary input lacks per-segment digests, so no real cross-version segment match has been established.

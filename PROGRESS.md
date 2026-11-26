@@ -62,3 +62,6 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Review recursion is disabled. Two duplicate test-probe tasks were rejected and never published. Publication now rejects unasserted test artifacts and large tracked-file deletions.
 - The persistent queue contains 20 pending/retry implementation tasks across PS5, Nagi and Strata. No source path is missing. The scheduler rotates among areas.
 - Focused tests pass: 51 tests across Strata, V2 smoke, binary audit, PS5 inventory summary, build-context summary and Nagi dependency verification.
+
+
+- PS5 segment-hash tool reviewed and tightened at 2026-11-26T11:02:10Z: accepts only 64-character hexadecimal SHA-256 values and requires `validated: true`; malformed hashes and unvalidated rows are excluded. Its declared source summary contains no per-segment hashes, so actual firmware-version grouping remains unavailable until structured per-segment metadata is present. The synthetic suite passes.

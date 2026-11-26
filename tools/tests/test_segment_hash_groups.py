@@ -17,11 +17,22 @@ from tools.firmware.segment_hash_groups import (
 
 
 class GroupingTests(unittest.TestCase):
+    def test_requires_sha256_format_and_explicit_validation(self):
+        result = group_segment_hashes([
+            {"hash": "a" * 64, "version": "11.00", "validated": True},
+            {"hash": "z" * 64, "version": "11.20", "validated": True},
+            {"hash": "b" * 64, "version": "11.40"},
+        ])
+        self.assertEqual(result["group_count"], 1)
+        self.assertEqual(result["groups"][0]["hash"], "a" * 64)
+        self.assertEqual(result["missing_hash_records"], [{"index": 1, "reason": "invalid-hash"}])
+        self.assertEqual(result["unvalidated_records"], [{"index": 2, "hash": "b" * 64}])
+
     def test_identical_hash_shared_across_versions(self):
         records = [
-            {"hash": "AA11", "firmware_version": "11.40", "container": "1140_PS5UPDATE1.PUP.dec", "validated": True},
-            {"hash": "aa11", "firmware_version": "11.20", "container": "1120_PS5UPDATE1.PUP.dec", "validated": True},
-            {"hash": "bb22", "firmware_version": "11.40", "container": "1140_PS5UPDATE1.PUP.dec", "validated": True},
+            {"hash": "A" * 64, "firmware_version": "11.40", "container": "1140_PS5UPDATE1.PUP.dec", "validated": True},
+            {"hash": "a" * 64, "firmware_version": "11.20", "container": "1120_PS5UPDATE1.PUP.dec", "validated": True},
+            {"hash": "b" * 64, "firmware_version": "11.40", "container": "1140_PS5UPDATE1.PUP.dec", "validated": True},
         ]
         result = group_segment_hashes(records)
         self.assertEqual(result["schema"], SCHEMA)
@@ -29,7 +40,7 @@ class GroupingTests(unittest.TestCase):
         self.assertEqual(result["group_count"], 2)
         self.assertEqual(result["shared_group_count"], 1)
         self.assertEqual(result["groups"][0], {
-            "hash": "aa11",
+            "hash": "a" * 64,
             "occurrences": 2,
             "firmware_version_count": 2,
             "firmware_versions": ["11.20", "11.40"],
@@ -41,15 +52,15 @@ class GroupingTests(unittest.TestCase):
 
     def test_deterministic_sorted_output(self):
         records = [
-            {"segment_hash": "ff00", "version": "11.40"},
-            {"segment_hash": "0011", "version": "11.00"},
-            {"segment_hash": "0011", "version": "11.20"},
+            {"segment_hash": "f" * 64, "version": "11.40", "validated": True},
+            {"segment_hash": "0" * 64, "version": "11.00", "validated": True},
+            {"segment_hash": "0" * 64, "version": "11.20", "validated": True},
         ]
         first = dumps(group_segment_hashes(records))
         second = dumps(group_segment_hashes(list(reversed(records))))
         self.assertEqual(first, second)
         payload = json.loads(first)
-        self.assertEqual([g["hash"] for g in payload["groups"]], ["0011", "ff00"])
+        self.assertEqual([g["hash"] for g in payload["groups"]], ["0" * 64, "f" * 64])
         self.assertEqual(payload["shared_group_count"], 1)
 
     def test_missing_and_invalid_hash_handling(self):
@@ -58,25 +69,25 @@ class GroupingTests(unittest.TestCase):
             {"hash": None, "firmware_version": "11.40"},
             {"hash": "   ", "firmware_version": "11.40"},
             {"hash": 12345, "firmware_version": "11.40"},
-            {"hash": "cc33", "firmware_version": "11.40"},
+            {"hash": "cc33", "firmware_version": "11.40", "validated": True},
         ]
         result = group_segment_hashes(records)
-        self.assertEqual(result["missing_hash_count"], 4)
-        self.assertEqual(result["group_count"], 1)
+        self.assertEqual(result["missing_hash_count"], 5)
+        self.assertEqual(result["group_count"], 0)
         reasons = [item["reason"] for item in result["missing_hash_records"]]
-        self.assertEqual(reasons, ["missing-hash-field", "non-string-hash", "null-hash", "whitespace-only-hash"])
+        self.assertEqual(reasons, ["invalid-hash", "missing-hash-field", "non-string-hash", "null-hash", "whitespace-only-hash"])
         self.assertEqual(result["unvalidated_count"], 0)
 
     def test_unvalidated_records_excluded_from_groups(self):
         records = [
-            {"hash": "dd44", "firmware_version": "11.40", "validated": False},
-            {"hash": "dd44", "firmware_version": "11.20", "validated": True},
+            {"hash": "d" * 64, "firmware_version": "11.40", "validated": False},
+            {"hash": "d" * 64, "firmware_version": "11.20", "validated": True},
         ]
         result = group_segment_hashes(records)
         self.assertEqual(result["group_count"], 1)
         self.assertEqual(result["groups"][0]["occurrences"], 1)
         self.assertEqual(result["unvalidated_count"], 1)
-        self.assertEqual(result["unvalidated_records"][0], {"index": 0, "hash": "dd44"})
+        self.assertEqual(result["unvalidated_records"][0], {"index": 0, "hash": "d" * 64})
 
     def test_non_object_record_is_missing_hash(self):
         result = group_segment_hashes(["not-a-record"])
@@ -107,7 +118,7 @@ class GroupingTests(unittest.TestCase):
         self.assertTrue(result["limitations"])
 
     def test_cli_emits_json(self):
-        payload = {"segments": [{"hash": "ABCD", "firmware_version": "11.40"}]}
+        payload = {"segments": [{"hash": "A" * 64, "firmware_version": "11.40", "validated": True}]}
         path = self._write_tmp(payload)
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
@@ -115,7 +126,7 @@ class GroupingTests(unittest.TestCase):
         emitted = json.loads(out.getvalue())
         self.assertEqual(code, 0)
         self.assertEqual(emitted["group_count"], 1)
-        self.assertEqual(emitted["groups"][0]["hash"], "abcd")
+        self.assertEqual(emitted["groups"][0]["hash"], "a" * 64)
 
     def test_cli_missing_argument_returns_error(self):
         out = io.StringIO()

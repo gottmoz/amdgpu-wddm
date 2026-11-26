@@ -54,3 +54,6 @@ The 40-candidate PS5 summary is metadata, not new disassembly. Ghidra function c
 
 - `NAGI-PYDEPS-VERIFY-01`: accepted after Codex corrected the generated verifier against `docs/build.md`. It checks Meson 1.12.0, Mako 1.4.1, MarkupSafe 3.0.3, PyYAML 6.0.3 and packaging 25.0 from the isolated target, without installing packages. Synthetic tests and a read-only check of the current target passed.
 - `STRATA-PUBLISH-GATE-01`: accepted after mocked-Git regression checks. Large deletions to tracked files are rejected before staging.
+
+
+- `PS5-SEGMENT-GROUP-01`: Codex review found the initial implementation accepted arbitrary strings and treated missing validation as validated. Corrected both rules; the tool now requires a 64-hex SHA-256 and explicit `validated: true`. The source inventory summary has only aggregate hash counts, so the tool reports no segment groups from that source and does not claim component identities.
