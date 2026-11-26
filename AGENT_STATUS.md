@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T13:01:50Z`
-- state: `idle`
-- current task id: `None`
-- research area: `None`
+- utc: `2026-11-26T13:02:53Z`
+- state: `working`
+- current task id: `STRATA-HEARTBEAT-REVIEWS-01`
+- research area: `STRATA`
 - completed count: `56`
 - failed count: `11`
-- tool calls: `1376`
-- input tokens: `6542376`
-- output tokens: `844635`
+- tool calls: `1381`
+- input tokens: `6561753`
+- output tokens: `847559`
 - last successful validation utc: `2026-11-26T13:01:44Z`
-- uptime seconds: `16349`
+- uptime seconds: `16412`
 - endurance target seconds: `28800`
 - actual work seconds: `12822.6`
 - idle seconds: `1410.0`
