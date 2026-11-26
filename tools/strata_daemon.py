@@ -217,6 +217,8 @@ def replenish_backlog(branch, floor=20):
     for template in templates:
         if ready >= floor: break
         if template["id"] in known: continue
+        if any(not (ROOT / source).is_file() for source in template.get("sources", [])):
+            continue
         task = dict(template, branch=branch, status="pending")
         task.setdefault("publish", False)
         task.setdefault("verify", [["python","tools/quality/doclint.py","--files",*task["allowed_writes"]]])

@@ -80,6 +80,7 @@ class CoordinatorTests(unittest.TestCase):
         base = Path(self.temp.name)
         root_queue = base / "TASK_QUEUE.json"
         objectives = base / "STRATA_OBJECTIVES.json"
+        (base / "README.md").write_text("source fixture\n", encoding="utf-8")
         daemon.save(root_queue, {"schema_version": 1, "tasks": []})
         daemon.save(objectives, {"schema_version": 1, "tasks": [
             {"id": f"T-{i}", "objective": f"Review source {i}", "area": "PS5",
@@ -97,6 +98,8 @@ class CoordinatorTests(unittest.TestCase):
         base = Path(self.temp.name)
         root_queue = base / "TASK_QUEUE.json"
         objectives = base / "STRATA_OBJECTIVES.json"
+        (base / "tools").mkdir()
+        (base / "tools/strata_daemon.py").write_text("source fixture\n", encoding="utf-8")
         daemon.save(root_queue, {"schema_version": 1, "tasks": []})
         daemon.save(objectives, {"schema_version": 1, "tasks": [{
             "id": "CODE-1", "objective": "Implement and test.", "area": "STRATA",

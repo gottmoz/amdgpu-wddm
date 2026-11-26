@@ -267,7 +267,7 @@ def work(task, model):
         examples["terminal"] = {"argv": task.get("test_command", ["python", "-m", "unittest", "tools.test_strata_daemon"])}
     base = [
         {"role": "system", "content": "You are a local BC-250 engineering agent. Follow the task-scoped tool permissions and use only tools exposed for this task. Never touch hardware, secrets or firmware bytes. If source paths are listed, read only those. Complete the declared artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "examples": examples, "previous_validation_error": task.get("validation_error"), "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "examples": examples, "previous_validation_error": task.get("validation_error"), "prior_tool_errors": task.get("invalid_tool_history", []), "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
@@ -286,6 +286,7 @@ def work(task, model):
         else:
             for call in calls:
                 STATS["tool_calls"] += 1
+                args = {}
                 try:
                     args = json.loads(call["function"]["arguments"])
                     name=call["function"]["name"]
@@ -294,10 +295,16 @@ def work(task, model):
                     result = tool(name, args, task)
                 except Exception as error:
                     code="TOOL_NOT_ALLOWED" if isinstance(error,PermissionError) else "INVALID_TOOL_CALL"
+                    history = task.setdefault("invalid_tool_history", [])
+                    history.append({"tool": call.get("function", {}).get("name", "unknown"),
+                                    "argument_keys": sorted(args) if isinstance(args, dict) else [],
+                                    "path": args.get("path") if isinstance(args, dict) else None,
+                                    "reason": str(error)[:300]})
+                    del history[:-3]
                     result = {"error_code":code,"reason":str(error),"available_tools":[x["function"]["name"] for x in definitions(task)],"suggested_action":"Use read_file for a declared source, then write_file to the declared output."}
                     invalid=int(task.get("invalid_tool_calls",0))+1; task["invalid_tool_calls"]=invalid
                     if invalid>=3:
-                        atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid})
+                        atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid,"last_error":history[-1]})
                         raise RuntimeError("RETRY_SCHEDULED: repeated invalid tool calls")
                 group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
                 atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
