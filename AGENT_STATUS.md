@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T09:18:14Z`
+- utc: `2026-11-26T09:19:17Z`
 - state: `working`
 - current task id: `REVIEW-PS5-INV-06`
 - research area: `PS5`
 - completed count: `24`
 - failed count: `3`
-- tool calls: `876`
-- input tokens: `3829233`
-- output tokens: `257691`
+- tool calls: `877`
+- input tokens: `3838872`
+- output tokens: `263679`
 - last successful validation utc: `2026-11-26T09:16:11Z`
-- uptime seconds: `2933`
+- uptime seconds: `2996`
 - endurance target seconds: `28800`
 - actual work seconds: `2197.5`
 - idle seconds: `0`
@@ -19,5 +19,5 @@
 - pending reviews: `19`
 - published commits: `13`
 - last successful commit: `bf84ebd2201964be72084340896600d5316a9c8d`
-- next task id: `REVIEW-PS5-INV-05`
+- next task id: `REVIEW-PS5-INV-01`
 - work branch: `agent/strata-v2`
