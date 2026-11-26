@@ -128,12 +128,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T21:28:50Z",
+  "last_poll_utc": "2026-11-26T21:43:35Z",
   "heartbeat": {
-    "validation": "Authenticated read confirmed the same pending instruction. Last tester.39 plan exited 1 for both ROCm rows. No new pinned artifact provenance or build validation this poll.",
+    "validation": "Authenticated scheduled read confirmed SUP-004 is pending. Latest tester.39 plan exited 1 for both ROCm rows. No new pinned artifact provenance or validation this poll.",
     "result": "blocked",
     "observed_instruction_id": "SUP-004-20261126T1920Z",
     "trigger": "scheduler-triggered",
-    "last_poll_utc": "2026-11-26T21:28:50Z"
+    "last_poll_utc": "2026-11-26T21:43:35Z"
   }
 }
