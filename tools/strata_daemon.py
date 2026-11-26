@@ -29,6 +29,8 @@ OBJECTIVES = ROOT / "STRATA_OBJECTIVES.json"
 LOCK = RUNTIME / ".strata-daemon.lock"
 STOP = RUNTIME / "STRATA_STOP"
 REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
+ENDURANCE = RUNTIME / "STRATA_ENDURANCE.json"
+RECOVERIES = RUNTIME / "STRATA_RECOVERIES.json"
 STATUS_BRANCH = "agent/strata-status"
 INBOX_BRANCH = "agent/strata-inbox"
 APPROVED_AREAS = {*(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
@@ -38,6 +40,23 @@ STOPPING = False
 
 def utc_now():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def endurance_state():
+    if ENDURANCE.exists():
+        return load(ENDURANCE)
+    state = {"started_utc": utc_now(), "target_seconds": 28800, "work_seconds": 0,
+             "idle_seconds": 0, "idle_reason": None, "worker_runs": 0}
+    save(ENDURANCE, state)
+    return state
+
+
+def add_duration(field, seconds, reason=None):
+    state = endurance_state()
+    state[field] = round(state.get(field, 0) + max(0, seconds), 1)
+    if reason:
+        state["idle_reason"] = reason
+    save(ENDURANCE, state)
 
 
 def save(path, value):
@@ -315,6 +334,10 @@ def run_task(path, task, stall_seconds, tick=None):
 def status_payload(branch, state, task):
     tasks = [item for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, ROOT / "TASK_QUEUE.json") for item in load(path)["tasks"]]
     metrics = json.loads(worker.METRICS.read_text(encoding="utf-8")) if worker.METRICS.exists() else {}
+    endurance = endurance_state()
+    now = datetime.now(timezone.utc)
+    started = datetime.strptime(endurance["started_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    recoveries = load(RECOVERIES).get("automatic_recoveries", 0)
     next_item = next((item["id"] for item in tasks if item.get("branch") == branch and item.get("status") == "pending"), None)
     return {"utc": utc_now(), "state": state, "current_task_id": task.get("id") if task else None,
             "research_area": task.get("area") if task else None,
@@ -323,6 +346,14 @@ def status_payload(branch, state, task):
             "tool_calls": metrics.get("tool_calls", 0), "input_tokens": metrics.get("input_tokens"),
             "output_tokens": metrics.get("output_tokens"),
             "last_successful_validation_utc": metrics.get("last_validation_utc"),
+            "uptime_seconds": int((now - started).total_seconds()),
+            "endurance_target_seconds": endurance["target_seconds"],
+            "actual_work_seconds": endurance["work_seconds"],
+            "idle_seconds": endurance["idle_seconds"],
+            "idle_reason": endurance.get("idle_reason"),
+            "automatic_recoveries": recoveries,
+            "pending_reviews": sum(item.get("status") == "done" and not item.get("reviewed") for item in tasks),
+            "published_commits": sum(bool(item.get("commit")) for item in tasks),
             "last_successful_commit": git("rev-parse", "HEAD"), "next_task_id": next_item,
             "work_branch": branch}
 
@@ -378,6 +409,7 @@ def main():
         lock.close()
         return 0
     last_heartbeat = 0
+    endurance_state()
     state = "idle"
     task = None
     try:
@@ -398,7 +430,12 @@ def main():
                         if time.time() - last_heartbeat >= args.heartbeat_seconds:
                             heartbeat(args.repo, branch, "working", active)
                             last_heartbeat = time.time()
+                    work_started = time.monotonic()
                     result = run_task(path, task, args.stall_seconds, tick=tick)
+                    add_duration("work_seconds", time.monotonic() - work_started)
+                    endurance = endurance_state()
+                    endurance["worker_runs"] = endurance.get("worker_runs", 0) + 1
+                    save(ENDURANCE, endurance)
                     state = "blocked" if result in ("failed", "stalled") else "idle"
                     heartbeat(args.repo, branch, state, None)
                     last_heartbeat = time.time()
@@ -411,10 +448,14 @@ def main():
                     pass
             if args.once:
                 break
+            idle_started = time.monotonic()
             for _ in range(max(1, args.poll_seconds)):
                 if STOP.exists() or STOPPING:
                     break
                 time.sleep(1)
+            idle_elapsed = time.monotonic() - idle_started
+            if not task:
+                add_duration("idle_seconds", idle_elapsed, "no eligible ready task (queue empty or waiting for retry)")
         if not args.once:
             heartbeat(args.repo, branch, "idle", None)
     finally:
