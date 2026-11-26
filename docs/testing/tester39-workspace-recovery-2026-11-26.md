@@ -17,3 +17,8 @@ The official LLVM tag dereferences to the documented commit. Complete both LLVM 
 The coordinator reads the checkout branch with `git branch --show-current`. Its GitHub intake requires the task branch to match the worker checkout and allows `research/ps5-firmware` and `research/xbox-firmware`. The current `agent/strata-v2` checkout cannot accept those tasks. Two offline fixture tests passed for intake scope and deduplication, and for delayed retry eligibility.
 
 For a separate authorized run, provision a checkout of the approved research branch with the reviewed V2 daemon present. Confirm the checkout branch, use a separate runtime directory and launch under the approved research configuration before submitting a matching task. The existing run was left in place. The saved endurance snapshot reported 13,539.5 work seconds and 22,500.1 idle seconds against a 28,800-second target.
+## Host validation
+
+The LLVM checkout completed at the pinned commit. Both ConfigureOnly runs exited 0, with 28 x64 and 29 x86 cache values matching the recipe. These trees still need compilation and llvm-config validation.
+
+The pinned HIP layer 1 recipe exited 0 with its host validation enabled. The local bc250hsa.lib SHA-256 is 4D07C234A3EDA71CCE55D6DE01DA6D262BD935EE16F95B2B8FBA3E874D948EDD.
