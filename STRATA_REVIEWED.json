@@ -61,8 +61,9 @@
     "PS5-SUMMARY-SPARSE-01",
     "PS5-SUMMARY-PROVENANCE-01",
     "PS5-GHIDRA-JSON-VALIDATOR-01",
-    "PS5-SEGMENT-GROUP-EDGE-01"
+    "PS5-SEGMENT-GROUP-EDGE-01",
+    "PS5-VERSION-DELTA-EDGE-01"
   ],
-  "reviewed_utc": "2026-11-26T13:01:44Z",
+  "reviewed_utc": "2026-11-26T13:13:51Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
