@@ -95,7 +95,7 @@
       ]
     },
     {
-      "observed_utc": "2026-11-26T19:35:31Z",
+      "observed_utc": "2026-11-26T19:44:40Z",
       "disposition": "blocked",
       "blockers": [
         "Recover exact TheRock input record and matching local artifacts.",
@@ -106,7 +106,8 @@
       "instruction_id": "SUP-004-20261126T1920Z",
       "validation": [
         "tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.",
-        "Two offline Strata tests passed for intake scope/dedupe and delayed retry. No live queue changes."
+        "Two offline Strata tests passed for intake scope/dedupe and delayed retry. No live queue changes.",
+        "Ninja llvm-config dry runs exited 0 for x64 (245 steps) and x86 (241 steps). The documented x64 host recipe matched 28 cache values and entered Ninja compilation. Build still running at poll; log scratch/sup004-llvm-x64-build.log. Local workspace filename scan found neither payload.json nor therock.json. No planner rerun or Strata changes this poll."
       ],
       "evidence": [
         "Evidence note on dev/build-ci at f3337eabf0a9250ade42da037bdcb8aaa59a9e71",
@@ -120,12 +121,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T19:35:31Z",
+  "last_poll_utc": "2026-11-26T19:44:40Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-004-20261126T1920Z",
-    "trigger": "scheduler-triggered",
-    "validation": "tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.",
-    "last_poll_utc": "2026-11-26T19:35:31Z",
-    "result": "blocked"
+    "validation": "Ninja llvm-config dry runs exited 0 for x64 (245 steps) and x86 (241 steps). The documented x64 host recipe matched 28 cache values and entered Ninja compilation. Build still running at poll; log scratch/sup004-llvm-x64-build.log. Local workspace filename scan found neither payload.json nor therock.json. No planner rerun or Strata changes this poll.",
+    "result": "blocked",
+    "last_poll_utc": "2026-11-26T19:44:40Z",
+    "trigger": "scheduler-triggered"
   }
 }
