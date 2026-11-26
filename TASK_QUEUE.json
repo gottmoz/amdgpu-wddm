@@ -253,7 +253,9 @@
       "branch": "agent/strata-v2",
       "status": "done",
       "publish": false,
-      "summary": "Wrote `docs/research/strata/ps5-report-consistency.md` (~100 words, 783 B).\n\n**Direct observations from the only declared source:**\n- Counts are internally consistent: 33 entries per PUP, and 7 identical + 26 differing = 33.\n- ELF markers 11 + 11 + 15 + 7 = 44, bounded files 10 + 10 + 14 + 6 = 40, matching the stated four failed extent checks.\n- 99 complete entries = 33 x 3, consistent with the eight Skillfish hash comparison.\n\n**Discrepancy:** the source references `PS5_DUMP_INVENTORY.json`, not `PS5_ELF_INVENTORY.json`. That file was not declared or readable, so no external cross-check was possible.\n\n**Wording gap:** the \"Forty candidates ... within ... their containing PUP entry\" claim cannot cover the six `kdata1001.bin` candidates, which have no PUP entry.\n\n**Unknowns:** nested PUP payloads, per-file Ghidra logs, final function counts."
+      "summary": "Wrote `docs/research/strata/ps5-report-consistency.md` (~100 words, 783 B).\n\n**Direct observations from the only declared source:**\n- Counts are internally consistent: 33 entries per PUP, and 7 identical + 26 differing = 33.\n- ELF markers 11 + 11 + 15 + 7 = 44, bounded files 10 + 10 + 14 + 6 = 40, matching the stated four failed extent checks.\n- 99 complete entries = 33 x 3, consistent with the eight Skillfish hash comparison.\n\n**Discrepancy:** the source references `PS5_DUMP_INVENTORY.json`, not `PS5_ELF_INVENTORY.json`. That file was not declared or readable, so no external cross-check was possible.\n\n**Wording gap:** the \"Forty candidates ... within ... their containing PUP entry\" claim cannot cover the six `kdata1001.bin` candidates, which have no PUP entry.\n\n**Unknowns:** nested PUP payloads, per-file Ghidra logs, final function counts.",
+      "review_status": "corrected",
+      "review_disposition": "Fix numerical and hash-match claims; original note now corrected."
     },
     {
       "id": "PS5-INV-07",
@@ -311,7 +313,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/binary-audit-test-map.md` (~107 words, 1294 B).\n\n**Direct observations from the only declared source** (`tools/tests/test_binary_audit.py`, 8 tests):\n- Accept path: ELF64 x86-64 with 0 section headers passes with `bounds_valid: true`.\n- Header-size rules: `phentsize=0` and `shentsize=0` with `shnum>0` raise `ELF_PHENTSIZE_INVALID` / `ELF_SHENTSIZE_INVALID`.\n- Table bounds: `phoff=400` and `shoff=400` raise `ELF_PHDR_TABLE_TRUNCATED` / `ELF_SHDR_TABLE_TRUNCATED`.\n- Segments: `poff=1000` raises `SEGMENT_FILE_RANGE_INVALID`, `ptype=4` yields 0 validated executable bytes, overlap is `[[0,1]]`, entry `0x500000` is invalid, and `memsz - filesz` is reported as 32 zero-initialized bytes.\n- `shoff` with `shnum=0` raises `ELF_EXTENDED_NUMBERING_UNSUPPORTED`.\n- `entropy_range` is non-negative, `hash_range(p, 9999, 3)` raises `RANGE_OUT_OF_BOUNDS`, and a stale cache `parser_version` is rewritten to `audit.PARSER_VERSION`.\n\n**Unknowns:** `binary_audit.py` was not declare"
+      "summary": "Wrote `docs/research/strata/binary-audit-test-map.md` (~107 words, 1294 B).\n\n**Direct observations from the only declared source** (`tools/tests/test_binary_audit.py`, 8 tests):\n- Accept path: ELF64 x86-64 with 0 section headers passes with `bounds_valid: true`.\n- Header-size rules: `phentsize=0` and `shentsize=0` with `shnum>0` raise `ELF_PHENTSIZE_INVALID` / `ELF_SHENTSIZE_INVALID`.\n- Table bounds: `phoff=400` and `shoff=400` raise `ELF_PHDR_TABLE_TRUNCATED` / `ELF_SHDR_TABLE_TRUNCATED`.\n- Segments: `poff=1000` raises `SEGMENT_FILE_RANGE_INVALID`, `ptype=4` yields 0 validated executable bytes, overlap is `[[0,1]]`, entry `0x500000` is invalid, and `memsz - filesz` is reported as 32 zero-initialized bytes.\n- `shoff` with `shnum=0` raises `ELF_EXTENDED_NUMBERING_UNSUPPORTED`.\n- `entropy_range` is non-negative, `hash_range(p, 9999, 3)` raises `RANGE_OUT_OF_BOUNDS`, and a stale cache `parser_version` is rewritten to `audit.PARSER_VERSION`.\n\n**Unknowns:** `binary_audit.py` was not declare",
+      "review_status": "accepted_internal",
+      "review_disposition": "Useful test-name navigation, internal only; does not substitute for code/tests."
     },
     {
       "id": "NAGI-DEP-01",
@@ -339,7 +343,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/nagi-dependency-summary.md` (872 B, ~99 words).\n\n**Direct observations from the only declared source (`docs/build-playbook.md`):** five input classes that the planner can reject or leave untracked — manifest pins (source/recipe revisions, arguments, outputs, host tests), payload inputs from `release-sources.json`, row-declared `workspace` inputs, tool/SDK/reference inputs from `build-context-inputs.json`, and implicit or override-moved paths (`-Root`, `-QualityWorkspace`, `-Kits`) needing review.\n\n**Unknowns flagged:** the declared source is Markdown, not structured JSON, and it names no concrete missing item. The read was truncated at the 12k character limit. No build files were touched."
+      "summary": "Wrote `docs/research/strata/nagi-dependency-summary.md` (872 B, ~99 words).\n\n**Direct observations from the only declared source (`docs/build-playbook.md`):** five input classes that the planner can reject or leave untracked — manifest pins (source/recipe revisions, arguments, outputs, host tests), payload inputs from `release-sources.json`, row-declared `workspace` inputs, tool/SDK/reference inputs from `build-context-inputs.json`, and implicit or override-moved paths (`-Root`, `-QualityWorkspace`, `-Kits`) needing review.\n\n**Unknowns flagged:** the declared source is Markdown, not structured JSON, and it names no concrete missing item. The read was truncated at the 12k character limit. No build files were touched.",
+      "review_status": "rejected_low_value",
+      "review_disposition": "Generic dependency summary adds no verifiable missing-input detail."
     },
     {
       "id": "NAGI-DEP-02",
@@ -398,7 +404,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/nagi-release-manifest-gaps.md` (878 B, ~81 words).\n\n**Direct observations from the only declared source** (`tools/release/release-tester.39.json`):\n- Order: release `tester.39` / version `0.7.216.113-tester.39`, recipe `amdgpu-wddm` at `ad7b90d9d`, then 7 repositories, then containment entries BD-212, BD-312, BD-313, BD-315, BD-315, BD-320, BD-299, BD-306, BD-327, BD-330.\n- Gaps: `amdgpu-wddm` checkout is the unresolved literal `{repo}`; `dxbc-spirv`, `dxil-spirv` and `Vulkan-Headers` declare no base commit; the note cites `0b80967d2` and `4cf4e386f` only in short form; BD-315 appears twice with different commits; 25 row references across 10 entries and 9 defect ids with no row definition table.\n\n**Unknowns:** the read truncated at 12k characters, so the BD-205 entry and any later sections were not seen."
+      "summary": "Wrote `docs/research/strata/nagi-release-manifest-gaps.md` (878 B, ~81 words).\n\n**Direct observations from the only declared source** (`tools/release/release-tester.39.json`):\n- Order: release `tester.39` / version `0.7.216.113-tester.39`, recipe `amdgpu-wddm` at `ad7b90d9d`, then 7 repositories, then containment entries BD-212, BD-312, BD-313, BD-315, BD-315, BD-320, BD-299, BD-306, BD-327, BD-330.\n- Gaps: `amdgpu-wddm` checkout is the unresolved literal `{repo}`; `dxbc-spirv`, `dxil-spirv` and `Vulkan-Headers` declare no base commit; the note cites `0b80967d2` and `4cf4e386f` only in short form; BD-315 appears twice with different commits; 25 row references across 10 entries and 9 defect ids with no row definition table.\n\n**Unknowns:** the read truncated at 12k characters, so the BD-205 entry and any later sections were not seen.",
+      "review_status": "rejected_incomplete",
+      "review_disposition": "Manifest summary used truncated input and cannot support completeness claims."
     },
     {
       "id": "NAGI-DEP-04",
@@ -426,7 +434,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/nagi-reference-closure.md` (1,035 B, ~100 words).\n\n**Direct observations** (only declared source, `tools/release/build-context-inputs.json`, schema 1):\n- Five recipe declarations visible: four `compute/hip/build-rocm-payload.ps1` (174881cf2, c434348f4, f664c8808, e36e80051) and one `compute/hip/build-runtime.ps1` (174881cf2).\n- Each pins six recipe/helper bindings; payload revisions share recipe `01f117c43`, `compute/hip` `d904a04f8`, `tools/firmware` `d31e8b83b`, but differ in `tools/build`, `tools/quality`, `tools/release/installer`.\n- Identical required inputs: `{root}/toolchain/llvm-23.1.4-win64`, `{root}/toolchain/nuget` (4 SDK/WDK children), `{root}/toolchain/llvm-amdgpu-22.1.8/mingw64/bin`; all `workspace_from_kits: false`.\n\n**Unknowns:** read truncated at 12k chars, so no KMD-specific recipe, toolchain hashes, or manifest row pins were seen. `STRATA_SKILLS.md` was rejected as a non-declared path.\n\n**Follow-up inputs:** full `build-context-inputs.json"
+      "summary": "Wrote `docs/research/strata/nagi-reference-closure.md` (1,035 B, ~100 words).\n\n**Direct observations** (only declared source, `tools/release/build-context-inputs.json`, schema 1):\n- Five recipe declarations visible: four `compute/hip/build-rocm-payload.ps1` (174881cf2, c434348f4, f664c8808, e36e80051) and one `compute/hip/build-runtime.ps1` (174881cf2).\n- Each pins six recipe/helper bindings; payload revisions share recipe `01f117c43`, `compute/hip` `d904a04f8`, `tools/firmware` `d31e8b83b`, but differ in `tools/build`, `tools/quality`, `tools/release/installer`.\n- Identical required inputs: `{root}/toolchain/llvm-23.1.4-win64`, `{root}/toolchain/nuget` (4 SDK/WDK children), `{root}/toolchain/llvm-amdgpu-22.1.8/mingw64/bin`; all `workspace_from_kits: false`.\n\n**Unknowns:** read truncated at 12k chars, so no KMD-specific recipe, toolchain hashes, or manifest row pins were seen. `STRATA_SKILLS.md` was rejected as a non-declared path.\n\n**Follow-up inputs:** full `build-context-inputs.json",
+      "review_status": "rejected_overclaim",
+      "review_disposition": "Reference-closure conclusion exceeds the declared source evidence."
     },
     {
       "id": "PS5-AMD-01",
@@ -458,7 +468,9 @@
       "attempts": 1,
       "error": "validation failed. Correct the declared output and retry. docs/research/strata/ps5-public-amd-manifest.md:1:41 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-public-amd-manifest.md: 1 findings\n",
       "retry_at": 1795683129.3834963,
-      "summary": "Wrote `docs/research/strata/ps5-public-amd-manifest.md` (~1070 B, ~103 words).\n\n**Direct observations** (only declared source, `tools/firmware/cyan_skillfish2.json`):\n- Pinned provenance: linux-firmware, commit `2b8daaf611fbade74f26a5b58ec1defe6a02f5e0`, path `amdgpu/cyan_skillfish2_*.bin`, stated redistributable per LICENSE.amdgpu (WHENCE).\n- Two URL templates keyed on `{name}` and `{commit}`, plus a declared local target `C:\\BC250\\firmware`.\n- Eight components: ce, me, mec, mec2, pfp, rlc, sdma, sdma1, with declared sizes and sha256 values. mec and mec2 share one hash.\n\n**Unknowns:** no IP revision, build date, signature, or license text in the manifest; hashes are declared rather than verified; no PS5 device mapping is stated. No binary contents were read."
+      "summary": "Wrote `docs/research/strata/ps5-public-amd-manifest.md` (~1070 B, ~103 words).\n\n**Direct observations** (only declared source, `tools/firmware/cyan_skillfish2.json`):\n- Pinned provenance: linux-firmware, commit `2b8daaf611fbade74f26a5b58ec1defe6a02f5e0`, path `amdgpu/cyan_skillfish2_*.bin`, stated redistributable per LICENSE.amdgpu (WHENCE).\n- Two URL templates keyed on `{name}` and `{commit}`, plus a declared local target `C:\\BC250\\firmware`.\n- Eight components: ce, me, mec, mec2, pfp, rlc, sdma, sdma1, with declared sizes and sha256 values. mec and mec2 share one hash.\n\n**Unknowns:** no IP revision, build date, signature, or license text in the manifest; hashes are declared rather than verified; no PS5 device mapping is stated. No binary contents were read.",
+      "review_status": "corrected_in_digest",
+      "review_disposition": "Manifest note requires explicit limits: fetch templates, destination, sizes and hashes unverified."
     },
     {
       "id": "PS5-AMD-02",
@@ -485,7 +497,9 @@
       "branch": "agent/strata-v2",
       "status": "done",
       "publish": false,
-      "summary": "Wrote `docs/research/strata/psp-loader-open-questions.md` (833 B, ~93 words) from the single declared source.\n\n**Verified loader behavior:** size must equal the caller `file_size`, bad IDs and NULL pointers fail, header size stays inside the array offset and file size, ucode size is non-zero and fits after the offset, RLC_G is gated to rlc v2.0 with later minors refused, CRC32 and version fields are unchecked, MEC1/MEC2 require gfx major 1 with JT size and offset under a quarter of ucode, CP_MEC1/2 take the remainder while JT halves take the quarter slice, and SDMA0/1, CE, PFP, ME and RLC_G use the whole ucode.\n\n**Unanswered PS5 questions:** container framing, RLC minor plus restore/IRAM/DRAM images, PSP IP fit with `psp_v11_0_8.c` ring semantics, MEC jump table semantics, CRC32 checking, and endianness. All are unmeasured hypotheses."
+      "summary": "Wrote `docs/research/strata/psp-loader-open-questions.md` (833 B, ~93 words) from the single declared source.\n\n**Verified loader behavior:** size must equal the caller `file_size`, bad IDs and NULL pointers fail, header size stays inside the array offset and file size, ucode size is non-zero and fits after the offset, RLC_G is gated to rlc v2.0 with later minors refused, CRC32 and version fields are unchecked, MEC1/MEC2 require gfx major 1 with JT size and offset under a quarter of ucode, CP_MEC1/2 take the remainder while JT halves take the quarter slice, and SDMA0/1, CE, PFP, ME and RLC_G use the whole ucode.\n\n**Unanswered PS5 questions:** container framing, RLC minor plus restore/IRAM/DRAM images, PSP IP fit with `psp_v11_0_8.c` ring semantics, MEC jump table semantics, CRC32 checking, and endianness. All are unmeasured hypotheses.",
+      "review_status": "corrected_in_digest",
+      "review_disposition": "Loader review distinguishes a quarter-table upper bound from exact payload extent and records omitted validation gates."
     },
     {
       "id": "PS5-AMD-03",
@@ -513,7 +527,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/smu-source-boundary.md` (1,014 B, ~116 words) from the single declared source.\n\n**Direct observations:** the note describes `bc250_smu.c` as a mailbox protocol layer (five imported AMD functions, generated MP1 offsets, owner checks, bounded polls, no MMIO or locking), `smu.c` as the intended native owner (push lock, MMIO, time bindings, paired reads, stop handling) with hardware ownership transfer still open, `bc250_clock.c` as a wrapper over an imported AMD DPM edit with local policy and readback, and a typed KMD escape that rejects raw SMU forwarding or fallback.\n\n**Unknowns flagged as non-policy:** the numeric clock/voltage limits are historical, host tests do not prove hardware transport or startup acceptance, PS5 offsets/IDs/responses/DPM tables/startup order are unverified, and current policy needs a fresh review."
+      "summary": "Wrote `docs/research/strata/smu-source-boundary.md` (1,014 B, ~116 words) from the single declared source.\n\n**Direct observations:** the note describes `bc250_smu.c` as a mailbox protocol layer (five imported AMD functions, generated MP1 offsets, owner checks, bounded polls, no MMIO or locking), `smu.c` as the intended native owner (push lock, MMIO, time bindings, paired reads, stop handling) with hardware ownership transfer still open, `bc250_clock.c` as a wrapper over an imported AMD DPM edit with local policy and readback, and a typed KMD escape that rejects raw SMU forwarding or fallback.\n\n**Unknowns flagged as non-policy:** the numeric clock/voltage limits are historical, host tests do not prove hardware transport or startup acceptance, PS5 offsets/IDs/responses/DPM tables/startup order are unverified, and current policy needs a fresh review.",
+      "review_status": "corrected_in_digest",
+      "review_disposition": "Historical M433–M441 design note is not current firmware or hardware evidence."
     },
     {
       "id": "PS5-AMD-04",
@@ -540,7 +556,9 @@
       "branch": "agent/strata-v2",
       "status": "done",
       "publish": false,
-      "summary": "Wrote `docs/research/strata/memory-init-evidence.md` (934 B, ~93 words) from the single declared source.\n\n**Established:** `atom_firmware.c` only captures an ACPI VFCT table via AuxKlib at `PASSIVE_LEVEL`, identifies the device from PCI config header reads, allocates tagged pool buffers (`AfAB`), and maps failures to resource/config errors. It performs no GPU or DRAM write, training, or initialization. The design note pins eight firmware binaries in the signed package, caps reads at 1 MiB with pre-PSP rejection of bad reads, and states host tests do not prove driver-load or deferred-install acceptance.\n\n**Unknowns:** VFCT origin and `BC250_ATOM_VFCT_ID` value, any MCLK/DRAM training or memory controller bring-up, and any PS5 comparison."
+      "summary": "Wrote `docs/research/strata/memory-init-evidence.md` (934 B, ~93 words) from the single declared source.\n\n**Established:** `atom_firmware.c` only captures an ACPI VFCT table via AuxKlib at `PASSIVE_LEVEL`, identifies the device from PCI config header reads, allocates tagged pool buffers (`AfAB`), and maps failures to resource/config errors. It performs no GPU or DRAM write, training, or initialization. The design note pins eight firmware binaries in the signed package, caps reads at 1 MiB with pre-PSP rejection of bad reads, and states host tests do not prove driver-load or deferred-install acceptance.\n\n**Unknowns:** VFCT origin and `BC250_ATOM_VFCT_ID` value, any MCLK/DRAM training or memory controller bring-up, and any PS5 comparison.",
+      "review_status": "corrected_in_digest",
+      "review_disposition": "Separate source-code observations from design notes; no firmware bytes or hardware initialization were tested."
     },
     {
       "id": "PS5-AMD-05",
@@ -568,7 +586,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-portability-blockers.md` (779 B, ~110 words) from the single declared source, `docs/research/ps5-firmware-portability.md`.\n\n**Direct observations:** eight pinned Cyan Skillfish microcode files with no PSP, SMU, AGESA, VCN or PS5 image; CRC matched bytes after the 32-byte header, all eight passed on 2026-11-25; KMD PSP/SMU files show only this driver's interfaces; one Linux boot report lists SMC `0x00580600` and VCN version zero; no full PS5 or BC-250 image exists for Ghidra; BC5 ADR 0012 chooses host-written libraries with no PS5 firmware dependency; VCN MMIO is forbidden after a prior wedge.\n\n**Unverified assumptions:** PS5 firmware accepts these PSP/SMU contracts, shared lineage implies boot/init/memory/peripheral compatibility, and AGESA or BIOS images are available."
+      "summary": "Wrote `docs/research/strata/ps5-portability-blockers.md` (779 B, ~110 words) from the single declared source, `docs/research/ps5-firmware-portability.md`.\n\n**Direct observations:** eight pinned Cyan Skillfish microcode files with no PSP, SMU, AGESA, VCN or PS5 image; CRC matched bytes after the 32-byte header, all eight passed on 2026-11-25; KMD PSP/SMU files show only this driver's interfaces; one Linux boot report lists SMC `0x00580600` and VCN version zero; no full PS5 or BC-250 image exists for Ghidra; BC5 ADR 0012 chooses host-written libraries with no PS5 firmware dependency; VCN MMIO is forbidden after a prior wedge.\n\n**Unverified assumptions:** PS5 firmware accepts these PSP/SMU contracts, shared lineage implies boot/init/memory/peripheral compatibility, and AGESA or BIOS images are available.",
+      "review_status": "corrected_in_digest",
+      "review_disposition": "Portability conclusions remain source-derived; shared IP does not establish binary or boot compatibility."
     },
     {
       "id": "STRATA-OPS-01",
@@ -593,13 +613,13 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
+      "status": "quarantined",
       "publish": false,
-      "invalid_tool_calls": 4,
+      "invalid_tool_calls": 5,
       "validation_error": "docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:14:22 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:15:15 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:16:28 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md: 10 findings\n",
-      "attempts": 3,
+      "attempts": 4,
       "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795684012.0282545
+      "retry_at": 1795684704.9429688
     },
     {
       "id": "STRATA-OPS-02",
@@ -627,7 +647,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/strata-state-coverage.md` (~706 B, ~70 words) from `tools/strata_state.py`.\n\n**Direct observations:** seven tables are declared: `meta`, `tasks`, `checkpoints`, `tool_calls`, `events`, `validations`, and `review_queue`. `tasks` and `review_queue` carry state columns. `upsert_task` inserts or replaces a task and defaults state to `pending`. `recover_running` moves `running` tasks to `retry_scheduled`. `checkpoint`, `event`, and `record_call` write records but do not change state.\n\n**Unknowns:** no implemented transitions for `review_queue`, `validations`, checkpoints, or completion states. Allowed state values and lifecycle are not defined."
+      "summary": "Wrote `docs/research/strata/strata-state-coverage.md` (~706 B, ~70 words) from `tools/strata_state.py`.\n\n**Direct observations:** seven tables are declared: `meta`, `tasks`, `checkpoints`, `tool_calls`, `events`, `validations`, and `review_queue`. `tasks` and `review_queue` carry state columns. `upsert_task` inserts or replaces a task and defaults state to `pending`. `recover_running` moves `running` tasks to `retry_scheduled`. `checkpoint`, `event`, and `record_call` write records but do not change state.\n\n**Unknowns:** no implemented transitions for `review_queue`, `validations`, checkpoints, or completion states. Allowed state values and lifecycle are not defined.",
+      "review_status": "rejected_low_value",
+      "review_disposition": "Repeats generic state coverage without a measured defect or test."
     },
     {
       "id": "STRATA-OPS-03",
@@ -652,13 +674,16 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
+      "status": "done",
       "publish": false,
-      "invalid_tool_calls": 3,
+      "invalid_tool_calls": 4,
       "validation_error": "docs/research/strata/strata-watchdog-review.md:7:9 synonym-rotation: 'launch' and 'start' name the same action. Pick one and use it every time. [launches]\ndocs/research/strata/strata-watchdog-review.md:10:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/strata-watchdog-review.md: 2 findings\n",
-      "attempts": 2,
+      "attempts": 3,
       "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795683877.005807
+      "retry_at": 1795684155.3024254,
+      "summary": "Wrote `docs/research/strata/strata-watchdog-review.md` (876 bytes, ~98 words) from the single declared source `tools/strata_watchdog.py`.\n\n**Direct observations:** the loop runs every 30 seconds until `STRATA_STOP` exists. It reads `v2-daemon.pid` and accepts ownership only when the process is running and its command line contains `strata_daemon.py`. A missing, zero, or dead PID causes a restart, which clears `STRATA_STOP`, sets runtime variables, appends logs, and updates `STRATA_RECOVERIES.json`.\n\n**Failure mode needing a test:** `alive()` returns `False` on any exception, so a missing `psutil` or transient lookup error can trigger a restart every 30 seconds.\n\n**Unknowns:** heartbeat enforcement, duplicate watchdogs, PID reuse, and recovery counter accuracy.",
+      "review_status": "actionable_followup",
+      "review_disposition": "Watchdog exception handling merits a bounded regression test; note remains internal."
     },
     {
       "id": "PS5-INV-09",
@@ -686,7 +711,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-provenance-summary.md` (593 B, ~68 words) from the single declared source `PS5_DUMP_INVENTORY.json`.\n\n**Direct observations:** four analyzed originals (three PUP.dec containers plus `kdata1001.bin`) with recorded bytes, SHA-256, type, and bounded ELF64 counts; `originals_modified` is false; five additional files are listed only as archives or key material with no extraction or Ghidra import; no Git status is recorded.\n\n**Unknowns:** acquisition source and chain of custody, PUP versions (filename-inferred), `kdata1001.bin` type, and whether any originals remain outside Git."
+      "summary": "Wrote `docs/research/strata/ps5-provenance-summary.md` (593 B, ~68 words) from the single declared source `PS5_DUMP_INVENTORY.json`.\n\n**Direct observations:** four analyzed originals (three PUP.dec containers plus `kdata1001.bin`) with recorded bytes, SHA-256, type, and bounded ELF64 counts; `originals_modified` is false; five additional files are listed only as archives or key material with no extraction or Ghidra import; no Git status is recorded.\n\n**Unknowns:** acquisition source and chain of custody, PUP versions (filename-inferred), `kdata1001.bin` type, and whether any originals remain outside Git.",
+      "review_status": "accepted_internal",
+      "review_disposition": "Useful provenance caveat; originals stay outside Git and provenance remains unverified."
     },
     {
       "id": "PS5-INV-10",
@@ -714,7 +741,9 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-version-limits.md` (616 bytes, ~90 words) from the single declared source `PS5_VERSION_COMPARISON.md`.\n\n**Direct observations:** three local update files each contain 33 table entries. Packed entry SHA-256 comparison shows 7 positions byte-identical across all three and 26 differing positions. Entry IDs are kept only as table metadata and are not treated as confirmed component identities.\n\n**Unknowns:** file version labels, meaning of the differing entries, contents of the referenced `PS5_SEGMENT_COMPARISON.json`, and whether all 33 entries are valid or complete."
+      "summary": "Wrote `docs/research/strata/ps5-version-limits.md` (616 bytes, ~90 words) from the single declared source `PS5_VERSION_COMPARISON.md`.\n\n**Direct observations:** three local update files each contain 33 table entries. Packed entry SHA-256 comparison shows 7 positions byte-identical across all three and 26 differing positions. Entry IDs are kept only as table metadata and are not treated as confirmed component identities.\n\n**Unknowns:** file version labels, meaning of the differing entries, contents of the referenced `PS5_SEGMENT_COMPARISON.json`, and whether all 33 entries are valid or complete.",
+      "review_status": "rejected_duplicate",
+      "review_disposition": "Duplicates the existing cross-version limits without new evidence."
     },
     {
       "id": "NAGI-DEP-05",
@@ -739,8 +768,12 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "running",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 2,
+      "summary": "Wrote `docs/research/strata/nagi-progress-state.md` (597 bytes, ~64 words).\n\nDirect observations from `PROGRESS.md`:\n- Latest recorded build result: GitHub Actions run `45678032319` on `dev/build-ci`.\n- It passed pinned kit download, KMD `CompileOnly` build, and host tests on Windows.\n- Local unsigned `bc250kmd.sys` linked successfully.\n- Stack budget, release flavour, and static KMD PE layout gates passed.\n- Current blocker: no lawful complete firmware image has been identified for PS5 and BC-250 binary comparison.\n\nUnknowns:\n- `PROGRESS.md` does not name Nagi.\n- Runtime HVCI acceptance and firmware component identity remain unproven.",
+      "review_status": "rejected_inaccurate",
+      "review_disposition": "Conflates build runs and contains unsupported release-state claims."
     },
     {
       "id": "PS5-INV-11",
@@ -763,8 +796,15 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "validation_error": "docs/research/strata/ps5-review-artifact-status.md:9:43 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-review-artifact-status.md: 1 findings\n",
+      "attempts": 1,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/ps5-review-artifact-status.md:9:43 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-review-artifact-status.md: 1 findings\n",
+      "retry_at": 1795683991.2143068,
+      "summary": "**Artifact status: absent**\n\n- Glob `docs/research/ps5-dump-strata-review.md` returned zero matches.\n- No other file was read.\n- Note written to `docs/research/strata/ps5-review-artifact-status.md` (312 bytes, ~60 words), semicolon-free per Rule 8.1.",
+      "review_status": "rejected_low_value",
+      "review_disposition": "Artifact-existence check has no lasting engineering value."
     },
     {
       "id": "REVIEW-PS5-INV-01",
@@ -782,7 +822,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "quarantined",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -792,7 +832,12 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-01-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 5,
+      "validation_error": "docs/research/strata/reviews/ps5-inv-01-review.md:9:16 synonym-rotation: 'validate' and 'check' name the same action. Pick one and use it every time. [validated]\ndocs/research/strata/reviews/ps5-inv-01-review.md:13:1 long-sentence: Sentence has 26 words (cap 25). Split it. [26 words]\ndocs/research/strata/reviews/ps5-inv-01-review.md:18:1 long-sentence: Sentence has 36 words (cap 25). Split it. [36 words]\ndocs/research/strata/reviews/ps5-inv-01-review.md:19:1 long-sentence: Sentence has 26 words (cap 25). Split it. [26 words]\ndocs/research/strata/reviews/ps5-inv-01-review.md:24:1 long-sentence: Sentence has 27 words (cap 25). Split it. [27 words]\ndocs/research/strata/reviews/ps5-inv-01-review.md: 5 findings\n",
+      "attempts": 4,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795685259.751223
     },
     {
       "id": "REVIEW-PS5-INV-02",
@@ -810,7 +855,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -820,7 +865,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-02-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-02-review.md` (1210 bytes).\n\nKey points from the two declared sources:\n- The note claims eight records were read, but the JSON contains seven complete records plus one truncated record.\n- The prior parser rejection reason appears only in the seven complete records, not the eighth.\n- Parser v2 bounds results, byte equality, header counts, segment count, Ghidra counts, and confidence match the visible records.\n- The note omits the JSON corrected classification and does not state that valid bounds do not prove executable behavior or function recovery.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-INV-03",
@@ -838,7 +887,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -848,7 +897,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-03-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Wrote `docs/research/strata/reviews/ps5-inv-03-review.md`.\n\nReview summary:\n- The note’s visible-record claims match the JSON.\n- The note omits that the JSON is truncated.\n- The note does not limit the index 0 match to visible metadata only.\n- The note does not state that missing 1120 records prevent full comparison.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-INV-04",
@@ -866,7 +919,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -876,7 +929,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-04-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-04-review.md`.\n\nFindings:\n- The note adds stronger wording than the source.\n- The note treats unknown fields as confirmed gaps.\n- The note omits limits on Ghidra function counts.\n- The note omits that imports do not prove executable behavior.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-INV-05",
@@ -894,7 +951,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -904,7 +961,15 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-05-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 4,
+      "validation_error": "docs/research/strata/reviews/ps5-inv-05-review.md:17:1 long-sentence: Sentence has 28 words (cap 25). Split it. [28 words]\ndocs/research/strata/reviews/ps5-inv-05-review.md: 1 findings\n",
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795685269.621843,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-05-review.md`.\n\nMain findings:\n- The note adds an unsupported Ghidra status claim from `GHIDRA_ANALYSIS_STATUS.md`.\n- The note omits the matrix limitation that no row establishes firmware or boot compatibility.\n- The note omits the architecture-family and static-scan limitations.\n- The note does not preserve the matrix separation between binary observations and source leads.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-INV-06",
@@ -922,7 +987,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -932,7 +997,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-06-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-06-review.md` (1882 bytes).\n\nFindings from the two declared sources:\n- Arithmetic in the note checks out: 33 entries per PUP, 7 identical plus 26 differing, 44 markers, 40 bounded files.\n- Unsupported inference: the note equates the four unbounded marker-positive files with the four failed extent checks, which the source never links.\n- Factual mismatch: the note's \"matching\" phrasing for Skillfish conflicts with the source's zero matches among 99 complete entries, and the six-candidate claim for `kdata1001.bin` sits against seven markers and six bounded files.\n- Omitted limitations: unknown acquisition source, no decompression or decryption, nested payloads uninterpreted, raw Ghidra import lacking a load address, counts reflecting Ghidra output only, nested matches not excluded, and the ELF batch still in progress outside Git.\n\nNote: the skill files at `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` and `C:\\Users\\jimmy\\.cod",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-INV-08",
@@ -950,7 +1019,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "quarantined",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -960,7 +1029,12 @@
           "--files",
           "docs/research/strata/reviews/ps5-inv-08-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 4,
+      "validation_error": "docs/research/strata/reviews/ps5-inv-08-review.md:8:85 synonym-rotation: 'check' and 'validate' name the same action. Pick one and use it every time. [checks]\ndocs/research/strata/reviews/ps5-inv-08-review.md:22:41 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/reviews/ps5-inv-08-review.md: 2 findings\n",
+      "attempts": 4,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795686123.0958772
     },
     {
       "id": "REVIEW-NAGI-DEP-01",
@@ -978,7 +1052,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -988,7 +1062,11 @@
           "--files",
           "docs/research/strata/reviews/nagi-dep-01-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Review written to `docs/research/strata/reviews/nagi-dep-01-review.md` (1513 bytes).\n\nFindings from the two declared sources:\n- The note's five input categories match the playbook.\n- Unsupported framing: the title promises missing items by type, while the playbook only states declaration rules. The note itself concedes this.\n- Overgeneralization: the claim that a checkout edit changes no pins is limited in the source to pinned source.\n- Factual mismatch: missing workspace inputs are refused by the planner's content check, not described as a blanket rejection.\n- Omitted limitations: incomplete recipe file-access tracing, unreadable inputs stopping the command before planning, identical Git object ID requirement for declaration reuse, hash checks on `-KeepFrom` imports, and the truncated playbook read inside the option table.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` was rejected as a non-declared path, so skill instructions were not read.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-NAGI-DEP-03",
@@ -1006,7 +1084,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1016,7 +1094,11 @@
           "--files",
           "docs/research/strata/reviews/nagi-dep-03-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/nagi-dep-03-review.md` (1827 bytes).\n\nFindings from the two declared sources:\n- The note's manifest-order items match the visible JSON: release name, version, recipe repository and commit, seven repository names, the placeholder amdgpu-wddm checkout, the three repositories without a base field, and the two BD-315 entries with different commits.\n- Unsupported framing: the containment totals of 25 rows, 10 entries and 9 defect ids are stated as list-wide, but the JSON read ends mid-entry at BD-205. The counts only cover visible entries.\n- Scope mismatch: the containment ordering claim cannot be verified past BD-330 because the source is truncated.\n- Omitted limitations: submodule links, the four present base commits, the Mesa upstream commit and fork identities, the manifest note's row-movement description, and repeated commits shared by different defect ids.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` and `C:\\Users\\jimmy\\",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-NAGI-DEP-04",
@@ -1034,7 +1116,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1044,7 +1126,15 @@
           "--files",
           "docs/research/strata/reviews/nagi-dep-04-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 3,
+      "validation_error": "docs/research/strata/reviews/nagi-dep-04-review.md:10:1 long-sentence: Sentence has 27 words (cap 25). Split it. [27 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:25:1 long-sentence: Sentence has 35 words (cap 25). Split it. [35 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:27:1 long-sentence: Sentence has 26 words (cap 25). Split it. [26 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:28:1 long-sentence: Sentence has 31 words (cap 25). Split it. [31 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md: 4 findings\n",
+      "attempts": 3,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/reviews/nagi-dep-04-review.md:10:1 long-sentence: Sentence has 27 words (cap 25). Split it. [27 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:25:1 long-sentence: Sentence has 35 words (cap 25). Split it. [35 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:27:1 long-sentence: Sentence has 26 words (cap 25). Split it. [26 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md:28:1 long-sentence: Sentence has 31 words (cap 25). Split it. [31 words]\ndocs/research/strata/reviews/nagi-dep-04-review.md: 4 findings\n",
+      "retry_at": 1795685859.3900821,
+      "summary": "Review written to `docs/research/strata/reviews/nagi-dep-04-review.md` (1847 bytes).\n\nFindings from the two declared sources:\n\n- The note claims the payload revisions differ in the installer pin. Two payload declarations share the same installer value, so the claim is only partly supported.\n- The JSON read truncates inside the fifth declaration. Only two of its inputs are visible, yet the note states all five input sets match.\n- The false kits flag appears in four records only. The note generalizes it to all five.\n- Omitted limitations: the reuse rule tied to matching recipe/helper bindings, the planner's separate hashing of workspace inputs and payload producers, the required flags, parameter names, and the parent link for the mingw path.\n- The runtime declaration repeats the helper pins of the first payload declaration; only the script hash differs. The note does not mention this.\n- The shared recipe, hip and firmware hashes are attributed only to payload revisions, but the runtime r",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-AMD-01",
@@ -1062,7 +1152,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1072,7 +1162,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-amd-01-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-amd-01-review.md` (980 bytes).\n\nFindings from the two declared sources:\n- The note describes the JSON `remote_dir` field as a local target directory. The source field name is `remote_dir`.\n- The note presents the two URL templates as resolving the name and commit placeholders. The source only lists the templates and shows no resolution or retrieval behavior.\n- Omitted limitations: directory existence and writability, network or mirror availability, unverified declared sizes, and the fact that shared hashes show only declared equality rather than file identity.\n- The note also omits that the provenance string carries no license text and no WHENCE content.\n- No other factual mismatch found in the visible source. Component count, sizes, commit, repository, path pattern, and the shared mec/mec2 hash all match the JSON.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` was rejected as a non-declared path, so skill instructions ",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-AMD-02",
@@ -1090,7 +1184,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1100,7 +1194,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-amd-02-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-amd-02-review.md` (1809 bytes).\n\nFindings from the two declared sources:\n\n- The note describes the JT halves as taking the quarter slice. The source gives each half four times the declared `jt_size`, with the quarter acting only as an upper bound.\n- The note uses an under-a-quarter phrasing. The source bound is non-strict.\n- The note says bad IDs fail. The source says out-of-range IDs.\n- The note frames the header size as a range test. The source states a chained ordering.\n- Omitted limitations: the minimum file size tied to the gfx v1.0 header struct, the non-zero `jt_size` requirement, the RLC header size floor, the ucode feature version in the unchecked list, the array-offset basis for payload offsets, the reason for the gfx major 1 gate, the restriction of checks to `bc250_fw_locate()`, the header slice coverage, the identity endianness macros, and the evidence paths plus the no-firmware-bytes statement.\n- Matching items: unchecke",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-AMD-03",
@@ -1118,7 +1216,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1128,7 +1226,11 @@
           "--files",
           "docs/research/strata/reviews/ps5-amd-03-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-amd-03-review.md`.\n\nMain findings:\n- The boundary note presents source-map content as direct observations rather than historical note descriptions.\n- It omits the original scope path, the no-firmware/no-hardware statement, and the current-facts check.\n- It omits the static-metadata comparison requirement before hardware experiments.\n- It broadens the fallback rejection and shortens several source-map qualifiers.\n- No direct factual contradiction was found in the SMU role, lock, MMIO, poll, ownership, DPM, or PS5 unknown items.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` was rejected as a non-declared path.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-AMD-04",
@@ -1146,7 +1248,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1156,7 +1258,10 @@
           "--files",
           "docs/research/strata/reviews/ps5-amd-04-review.md"
         ]
-      ]
+      ],
+      "summary": "Review written to `docs/research/strata/reviews/ps5-amd-04-review.md`.\n\nMain findings:\n- The note collapses the source map’s separation between code findings and design-note findings.\n- It attributes the firmware binary count to code rather than the design note.\n- It omits the two-file scope, the no-binary-read statement, ZIP exclusion, driver directory handle behavior, no override rule, the full read failure list, BD-152 pending checks, IRQL check, PCI property comparison, and context status failure path.\n- No direct factual contradiction was found in the allocation, tag, release, cap, or unknowns.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-PS5-AMD-05",
@@ -1174,7 +1279,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1184,7 +1289,10 @@
           "--files",
           "docs/research/strata/reviews/ps5-amd-05-review.md"
         ]
-      ]
+      ],
+      "summary": "Review written to `docs/research/strata/reviews/ps5-amd-05-review.md` (2287 bytes).\n\nFindings from the two declared sources:\n\n- The note labels its list as direct observations, while the source frames it as source observations plus open questions and states it adds no new hardware fact.\n- The note omits the source's unit-unavailable and no-flash/install/extract/modify/publish statement.\n- The note drops the manifest's commit pin and size/SHA-256 pinning, and the script-based header and payload bound checks.\n- The note says no full image exists; the source only says the inventory found none for comparison.\n- The note treats the BC5 boot-chain claim as an observation; the source marks it as a project position, not a measurement.\n- The note omits the `docs/hardware.md` basis for the VCN MMIO ban, the no-runtime-probe scope, the other reported microcode versions, the caution that a zero VCN value says nothing about a PS5, the shared-IP-name inference warning, SPI immutability, the files st",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
     },
     {
       "id": "REVIEW-STRATA-OPS-02",
@@ -1202,7 +1310,7 @@
         "read_file",
         "write_file"
       ],
-      "status": "pending",
+      "status": "done",
       "publish": false,
       "origin": "generated_review",
       "verify": [
@@ -1212,7 +1320,630 @@
           "--files",
           "docs/research/strata/reviews/strata-ops-02-review.md"
         ]
-      ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/reviews/strata-ops-02-review.md`.\n\nSummary:\n- The note matches the source on table count, state columns, task upsert behavior, running-to-retry recovery, and non-state helper functions.\n- The note omits several source limitations: required task fields, branch defaults, checkpoint replacement, duplicate tool-call handling, timestamps, database setup behavior, missing validation/review_queue helpers, and schema version overwrite behavior.\n- No direct factual mismatch was found.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
+    },
+    {
+      "id": "REVIEW-STRATA-OPS-03",
+      "branch": "agent/strata-v2",
+      "area": "STRATA",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/strata-watchdog-review.md",
+        "tools/strata_watchdog.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/strata-ops-03-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "quarantined",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/strata-ops-03-review.md"
+        ]
+      ],
+      "invalid_tool_calls": 4,
+      "validation_error": "docs/research/strata/reviews/strata-ops-03-review.md:38:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/reviews/strata-ops-03-review.md: 1 findings\n",
+      "attempts": 4,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795687493.970391
+    },
+    {
+      "id": "REVIEW-PS5-INV-09",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-provenance-summary.md",
+        "PS5_DUMP_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-09-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "done",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-09-review.md"
+        ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-09-review.md` (931 bytes).\n\nFindings:\n- The note omits inventory metadata: provenance, source directory, analysis directory, observed date, entry counts, PUP versions, and the embedded ELF64 headers in kdata1001.bin.\n- The note extends no extraction or Ghidra import to all five other files; the inventory states it for only two archives.\n- The note omits that the two key files were unread and unhashed, and the archive metadata limits on mgs4.zip.\n- File count, bytes, hashes, types, and the modified flag match. No direct contradiction found.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
+    },
+    {
+      "id": "REVIEW-PS5-INV-10",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-version-limits.md",
+        "PS5_VERSION_COMPARISON.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-10-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "done",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-10-review.md"
+        ]
+      ],
+      "invalid_tool_calls": 1,
+      "summary": "Review written to `docs/research/strata/reviews/ps5-inv-10-review.md` (1019 bytes).\n\nFindings from the two declared sources:\n- Counts match: three files, 33 entries each, 7 identical positions, 26 differing positions.\n- The note keeps the entry-ID metadata caution but drops the limiting term.\n- The note omits four source limitations: unstated version labels, unestablished meaning of differing entries, the unread comparison JSON, and unknown validity/comparability/completeness of the 33 entries.\n- The note asserts the comparison JSON holds per-entry hashes and sizes; the source says that file was not read, so this is unsupported.\n- No numeric contradiction was found.",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
+    },
+    {
+      "id": "REVIEW-NAGI-DEP-05",
+      "branch": "agent/strata-v2",
+      "area": "NAGI",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/nagi-progress-state.md",
+        "PROGRESS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/nagi-dep-05-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "done",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/nagi-dep-05-review.md"
+        ]
+      ],
+      "invalid_tool_calls": 2,
+      "summary": "Review written to `docs/research/strata/reviews/nagi-dep-05-review.md` (2238 bytes).\n\nFindings from the two declared sources:\n\n- The note labels run `45678032319` as the latest recorded build; `PROGRESS.md` carries no latest-run label.\n- The note attributes the pinned kit download to that run; `PROGRESS.md` ties the kit download to run `45675073663` and only lists build plus host-test steps for the later run.\n- The note names the linked binary `bc250kmd.sys`; the source names it `bc250kmd.unsigned.sys`.\n- The note generalizes the missing firmware image to all lawful sources; the source limits it to this workspace.\n- The note presents its list as direct observations; the source describes itself as an operational handoff, not a hardware facts graph.\n- Omitted limitations: the `CompileOnly` mode, the unsigned KMD hash and scratch path, the static-layout-versus-HVCI boundary, the Ghidra tool-route-only caveat, the PUP hash non-match plus nested-component caveat, the missing PS5 provenance,",
+      "review_status": "rejected_redundant",
+      "review_disposition": "One-review-per-note artifact is redundant; substantive corrections are consolidated in STRATA_REVIEW_DIGEST.md."
+    },
+    {
+      "id": "PS5-SUMMARY-STRICT-01",
+      "area": "PS5",
+      "objective": "Add strict row/type validation to the inventory summary and edge-case tests. Keep behavior metadata-only; malformed inventories must fail with actionable messages.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_elf_inventory_summary"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_elf_inventory_summary"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary strict 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 5,
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688806.4609597
+    },
+    {
+      "id": "PS5-SEGMENT-GROUP-01",
+      "area": "PS5",
+      "objective": "Implement a deterministic JSON-only grouping utility for identical validated executable segment hashes across firmware versions, with explicit missing-hash handling and synthetic regression tests.",
+      "sources": [
+        "tools/firmware/segment_hash_groups.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/segment_hash_groups.py",
+        "tools/tests/test_segment_hash_groups.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_segment_hash_groups"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_segment_hash_groups"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 segment group 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 5,
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688888.2843661
+    },
+    {
+      "id": "PS5-VERSION-DELTA-01",
+      "area": "PS5",
+      "objective": "Implement a deterministic comparison utility for candidate metadata across PS5 versions. Report only exact hash equality and field deltas; do not infer component identities. Add synthetic tests.",
+      "sources": [
+        "tools/firmware/ps5_version_delta.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/ps5_version_delta.py",
+        "tools/tests/test_ps5_version_delta.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_version_delta"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_version_delta"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 version delta 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 4,
+      "attempts": 2,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688741.9324753
+    },
+    {
+      "id": "PS5-REPORT-VALIDATE-01",
+      "area": "PS5",
+      "objective": "Add tests that validate the PS5 inventory summary schema and its explicit analysis limitations using synthetic JSON only.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_elf_inventory_summary"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_elf_inventory_summary"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 report validate 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "running"
+    },
+    {
+      "id": "NAGI-BUILD-CONTEXT-01",
+      "area": "NAGI",
+      "objective": "Create a small deterministic summary tool for build-context JSON: counts by completion state and missing relative input identifiers. Do not emit local absolute paths or environment values. Add synthetic tests.",
+      "sources": [
+        "tools/release/build_context.py"
+      ],
+      "allowed_writes": [
+        "tools/release/build_context_summary.py",
+        "tools/tests/test_build_context_summary.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_build_context_summary"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_build_context_summary"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi build context 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 5,
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688815.6479452
+    },
+    {
+      "id": "NAGI-PYDEPS-VERIFY-01",
+      "area": "NAGI",
+      "objective": "Create a read-only verifier for the five pinned Python build distributions in BC250 scratch/py. It must report expected versus actual versions and never install packages. Add tests with an injected temporary target.",
+      "sources": [
+        "docs/build-playbook.md"
+      ],
+      "allowed_writes": [
+        "tools/release/verify_python_build_deps.py",
+        "tools/tests/test_verify_python_build_deps.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_verify_python_build_deps"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_verify_python_build_deps"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi pydeps verify 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 5,
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688896.235389
+    },
+    {
+      "id": "NAGI-PYDEPS-TEST-01",
+      "area": "NAGI",
+      "objective": "Add regression tests for missing, wrong-version and correctly-installed pinned Python build dependencies without accessing the network.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_verify_python_build_deps.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_verify_python_build_deps"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_verify_python_build_deps"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi pydeps test 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 4,
+      "attempts": 2,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688750.426697
+    },
+    {
+      "id": "NAGI-CONTEXT-TEST-01",
+      "area": "NAGI",
+      "objective": "Add synthetic tests for build-context summaries, including absent paths, complete inputs and malformed records; ensure output omits machine-specific absolute paths.",
+      "sources": [
+        "tools/release/build_context_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_build_context_summary.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_build_context_summary"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_build_context_summary"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi context test 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending"
+    },
+    {
+      "id": "STRATA-PUBLISH-GATE-01",
+      "area": "STRATA",
+      "objective": "Add unit tests for the automatic publication policy: require explicit policy, unittest verification, allowed paths and rejection of secrets. Mock Git; never push from tests.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_publish.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_publish"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_publish"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata publish gate 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "invalid_tool_calls": 1,
+      "summary": "",
+      "review_status": "accepted_validated",
+      "review_disposition": "Regression tests passed; implementation and test artifacts are present in committed branch."
+    },
+    {
+      "id": "STRATA-AREA-ROTATION-01",
+      "area": "STRATA",
+      "objective": "Add regression tests for scheduler rotation across PS5, NAGI and STRATA queues, including delayed retry and recovery of a running task.",
+      "sources": [
+        "tools/strata_daemon.py"
+      ],
+      "allowed_writes": [
+        "tools/test_strata_daemon.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.test_strata_daemon"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.test_strata_daemon"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata area rotation 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 5,
+      "attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688879.523561
+    },
+    {
+      "id": "STRATA-REVIEW-LOOP-01",
+      "area": "STRATA",
+      "objective": "Add a regression test that completed review tasks never generate further review tasks and that review generation stays disabled when backlog is low.",
+      "sources": [
+        "tools/strata_daemon.py"
+      ],
+      "allowed_writes": [
+        "tools/test_strata_daemon.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.test_strata_daemon"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.test_strata_daemon"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata review loop 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 4,
+      "attempts": 2,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688675.3626013
+    },
+    {
+      "id": "STRATA-WATCHDOG-TEST-01",
+      "area": "STRATA",
+      "objective": "Add deterministic tests for watchdog ownership checks and transient process-inspection errors; prevent false-positive restart loops without weakening PID ownership validation.",
+      "sources": [
+        "tools/strata_watchdog.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_watchdog.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_watchdog"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_watchdog"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata watchdog test 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 3,
+      "attempts": 1,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795688672.020989
     }
   ]
 }

@@ -237,6 +237,14 @@ def publish(task):
         content = path.read_text(encoding="utf-8")
         if re.search(r"-----BEGIN .*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}", content):
             raise RuntimeError("possible credential in publication")
+    review_log = ROOT / "STRATA_REVIEWED.json"
+    review_data = json.loads(review_log.read_text(encoding="utf-8")) if review_log.exists() else {"schema_version": 1, "reviewed_task_ids": []}
+    if task["id"] not in review_data["reviewed_task_ids"]:
+        review_data["reviewed_task_ids"].append(task["id"])
+    review_data["reviewed_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    review_data["review_basis"] = "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
+    atomic_json(review_log, review_data)
+    paths.append("STRATA_REVIEWED.json")
     for argv in (["git", "add", "--", *paths], ["git", "commit", "-m", task["commit_message"]], ["git", "push", "origin", branch]):
         result = run(argv, 120)
         if result["exit_code"]:

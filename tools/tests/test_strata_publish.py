@@ -19,7 +19,7 @@ class PublishPolicyTests(unittest.TestCase):
         (target / 'sample.py').write_text('VALUE = 1\n', encoding='utf-8')
 
     def task(self, **extra):
-        result = {'branch': 'agent/strata-v2', 'publication_policy': 'unit-tested-code',
+        result = {'id': 'PUBLISH-TEST-01', 'branch': 'agent/strata-v2', 'publication_policy': 'unit-tested-code',
                   'allowed_writes': ['tools/tests/sample.py'],
                   'verify': [['python', '-m', 'unittest', 'sample_test']],
                   'commit_message': 'test: sample'}
@@ -36,6 +36,8 @@ class PublishPolicyTests(unittest.TestCase):
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', return_value={'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}) as run:
             self.assertEqual(worker.publish(self.task()), 'abc123')
         self.assertEqual(run.call_count, 5)
+        reviewed = __import__('json').loads((self.root / 'STRATA_REVIEWED.json').read_text(encoding='utf-8'))
+        self.assertEqual(reviewed['reviewed_task_ids'], ['PUBLISH-TEST-01'])
 
     def test_doc_only_and_unvalidated_publish_are_rejected(self):
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'):

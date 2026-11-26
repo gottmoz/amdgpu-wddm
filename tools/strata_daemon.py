@@ -217,7 +217,8 @@ def replenish_backlog(branch, floor=20):
     for template in templates:
         if ready >= floor: break
         if template["id"] in known: continue
-        task = dict(template, branch=branch, status="pending", publish=False)
+        task = dict(template, branch=branch, status="pending")
+        task.setdefault("publish", False)
         task.setdefault("verify", [["python","tools/quality/doclint.py","--files",*task["allowed_writes"]]])
         queue["tasks"].append(task); known.add(task["id"]); ready += 1; added += 1
     if added: save(ROOT / "TASK_QUEUE.json", queue)

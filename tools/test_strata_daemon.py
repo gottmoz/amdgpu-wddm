@@ -93,6 +93,20 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(path, root_queue)
         self.assertEqual(task["id"], "T-0")
 
+    def test_replenishment_preserves_explicit_publication_policy(self):
+        base = Path(self.temp.name)
+        root_queue = base / "TASK_QUEUE.json"
+        objectives = base / "STRATA_OBJECTIVES.json"
+        daemon.save(root_queue, {"schema_version": 1, "tasks": []})
+        daemon.save(objectives, {"schema_version": 1, "tasks": [{
+            "id": "CODE-1", "objective": "Implement and test.", "area": "STRATA",
+            "sources": ["tools/strata_daemon.py"], "allowed_writes": ["tools/test_strata_daemon.py"],
+            "publish": True, "publication_policy": "unit-tested-code",
+            "verify": [["python", "-m", "unittest", "tools.test_strata_daemon"]]}]})
+        with patch.object(daemon, "ROOT", base), patch.object(daemon, "OBJECTIVES", objectives):
+            daemon.replenish_backlog("agent/strata-v2", floor=1)
+        self.assertTrue(daemon.load(root_queue)["tasks"][0]["publish"])
+
     def test_worker_retry_is_not_overwritten_by_daemon(self):
         task = {"id": "T-retry", "branch": "agent/strata-v2", "status": "retry_scheduled",
                 "attempts": 1, "error": "model API timeout"}

@@ -43,8 +43,9 @@
     "S004",
     "S005",
     "STRATA-OPS-02",
-    "STRATA-OPS-03"
+    "STRATA-OPS-03",
+    "STRATA-PUBLISH-GATE-01"
   ],
-  "reviewed_utc": "2026-11-26T10:08:00Z",
-  "review_basis": "Codex triage against declared sources and available review artifacts; low-value/repetitive outputs rejected, corrections and follow-up actions recorded in STRATA_REVIEW_DIGEST.md."
+  "reviewed_utc": "2026-11-26T10:24:33Z",
+  "review_basis": "Codex source review plus deterministic test verification; low-risk Python artifacts follow restricted auto-publication policy."
 }
