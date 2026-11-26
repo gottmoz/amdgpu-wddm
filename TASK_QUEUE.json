@@ -359,13 +359,13 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
+      "status": "quarantined",
       "publish": false,
-      "attempts": 3,
-      "retry_at": 1795683207.7333753,
-      "validation_error": "docs/research/strata/nagi-build-prerequisites.md:6:14 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md:14:39 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md: 2 findings\n",
-      "error": "validation failed. Correct the declared output and retry. docs/research/strata/nagi-build-prerequisites.md:6:14 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md:14:39 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md: 2 findings\n",
-      "invalid_tool_calls": 1
+      "attempts": 4,
+      "retry_at": 1795683837.5516462,
+      "validation_error": "docs/research/strata/nagi-build-prerequisites.md:7:1 long-sentence: Sentence has 29 words (cap 25). Split it. [29 words]\ndocs/research/strata/nagi-build-prerequisites.md: 1 findings\n",
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/nagi-build-prerequisites.md:7:1 long-sentence: Sentence has 29 words (cap 25). Split it. [29 words]\ndocs/research/strata/nagi-build-prerequisites.md: 1 findings\n",
+      "invalid_tool_calls": 2
     },
     {
       "id": "NAGI-DEP-03",
@@ -418,8 +418,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "running",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/nagi-reference-closure.md` (1,035 B, ~100 words).\n\n**Direct observations** (only declared source, `tools/release/build-context-inputs.json`, schema 1):\n- Five recipe declarations visible: four `compute/hip/build-rocm-payload.ps1` (174881cf2, c434348f4, f664c8808, e36e80051) and one `compute/hip/build-runtime.ps1` (174881cf2).\n- Each pins six recipe/helper bindings; payload revisions share recipe `01f117c43`, `compute/hip` `d904a04f8`, `tools/firmware` `d31e8b83b`, but differ in `tools/build`, `tools/quality`, `tools/release/installer`.\n- Identical required inputs: `{root}/toolchain/llvm-23.1.4-win64`, `{root}/toolchain/nuget` (4 SDK/WDK children), `{root}/toolchain/llvm-amdgpu-22.1.8/mingw64/bin`; all `workspace_from_kits: false`.\n\n**Unknowns:** read truncated at 12k chars, so no KMD-specific recipe, toolchain hashes, or manifest row pins were seen. `STRATA_SKILLS.md` was rejected as a non-declared path.\n\n**Follow-up inputs:** full `build-context-inputs.json"
     },
     {
       "id": "PS5-AMD-01",
@@ -444,8 +446,14 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 2,
+      "validation_error": "docs/research/strata/ps5-public-amd-manifest.md:1:41 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-public-amd-manifest.md: 1 findings\n",
+      "attempts": 1,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/ps5-public-amd-manifest.md:1:41 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-public-amd-manifest.md: 1 findings\n",
+      "retry_at": 1795683129.3834963,
+      "summary": "Wrote `docs/research/strata/ps5-public-amd-manifest.md` (~1070 B, ~103 words).\n\n**Direct observations** (only declared source, `tools/firmware/cyan_skillfish2.json`):\n- Pinned provenance: linux-firmware, commit `2b8daaf611fbade74f26a5b58ec1defe6a02f5e0`, path `amdgpu/cyan_skillfish2_*.bin`, stated redistributable per LICENSE.amdgpu (WHENCE).\n- Two URL templates keyed on `{name}` and `{commit}`, plus a declared local target `C:\\BC250\\firmware`.\n- Eight components: ce, me, mec, mec2, pfp, rlc, sdma, sdma1, with declared sizes and sha256 values. mec and mec2 share one hash.\n\n**Unknowns:** no IP revision, build date, signature, or license text in the manifest; hashes are declared rather than verified; no PS5 device mapping is stated. No binary contents were read."
     },
     {
       "id": "PS5-AMD-02",
@@ -470,8 +478,9 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "summary": "Wrote `docs/research/strata/psp-loader-open-questions.md` (833 B, ~93 words) from the single declared source.\n\n**Verified loader behavior:** size must equal the caller `file_size`, bad IDs and NULL pointers fail, header size stays inside the array offset and file size, ucode size is non-zero and fits after the offset, RLC_G is gated to rlc v2.0 with later minors refused, CRC32 and version fields are unchecked, MEC1/MEC2 require gfx major 1 with JT size and offset under a quarter of ucode, CP_MEC1/2 take the remainder while JT halves take the quarter slice, and SDMA0/1, CE, PFP, ME and RLC_G use the whole ucode.\n\n**Unanswered PS5 questions:** container framing, RLC minor plus restore/IRAM/DRAM images, PSP IP fit with `psp_v11_0_8.c` ring semantics, MEC jump table semantics, CRC32 checking, and endianness. All are unmeasured hypotheses."
     },
     {
       "id": "PS5-AMD-03",
@@ -496,8 +505,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/smu-source-boundary.md` (1,014 B, ~116 words) from the single declared source.\n\n**Direct observations:** the note describes `bc250_smu.c` as a mailbox protocol layer (five imported AMD functions, generated MP1 offsets, owner checks, bounded polls, no MMIO or locking), `smu.c` as the intended native owner (push lock, MMIO, time bindings, paired reads, stop handling) with hardware ownership transfer still open, `bc250_clock.c` as a wrapper over an imported AMD DPM edit with local policy and readback, and a typed KMD escape that rejects raw SMU forwarding or fallback.\n\n**Unknowns flagged as non-policy:** the numeric clock/voltage limits are historical, host tests do not prove hardware transport or startup acceptance, PS5 offsets/IDs/responses/DPM tables/startup order are unverified, and current policy needs a fresh review."
     },
     {
       "id": "PS5-AMD-04",
@@ -522,8 +533,9 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "summary": "Wrote `docs/research/strata/memory-init-evidence.md` (934 B, ~93 words) from the single declared source.\n\n**Established:** `atom_firmware.c` only captures an ACPI VFCT table via AuxKlib at `PASSIVE_LEVEL`, identifies the device from PCI config header reads, allocates tagged pool buffers (`AfAB`), and maps failures to resource/config errors. It performs no GPU or DRAM write, training, or initialization. The design note pins eight firmware binaries in the signed package, caps reads at 1 MiB with pre-PSP rejection of bad reads, and states host tests do not prove driver-load or deferred-install acceptance.\n\n**Unknowns:** VFCT origin and `BC250_ATOM_VFCT_ID` value, any MCLK/DRAM training or memory controller bring-up, and any PS5 comparison."
     },
     {
       "id": "PS5-AMD-05",
@@ -548,8 +560,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-portability-blockers.md` (779 B, ~110 words) from the single declared source, `docs/research/ps5-firmware-portability.md`.\n\n**Direct observations:** eight pinned Cyan Skillfish microcode files with no PSP, SMU, AGESA, VCN or PS5 image; CRC matched bytes after the 32-byte header, all eight passed on 2026-11-25; KMD PSP/SMU files show only this driver's interfaces; one Linux boot report lists SMC `0x00580600` and VCN version zero; no full PS5 or BC-250 image exists for Ghidra; BC5 ADR 0012 chooses host-written libraries with no PS5 firmware dependency; VCN MMIO is forbidden after a prior wedge.\n\n**Unverified assumptions:** PS5 firmware accepts these PSP/SMU contracts, shared lineage implies boot/init/memory/peripheral compatibility, and AGESA or BIOS images are available."
     },
     {
       "id": "STRATA-OPS-01",
@@ -574,8 +588,13 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "retry_scheduled",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "validation_error": "docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:14:22 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:15:15 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:16:28 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md: 10 findings\n",
+      "attempts": 1,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/resea",
+      "retry_at": 1795683589.8165958
     },
     {
       "id": "STRATA-OPS-02",
@@ -600,7 +619,7 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "running",
       "publish": false
     },
     {

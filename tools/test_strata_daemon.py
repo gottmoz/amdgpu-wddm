@@ -22,6 +22,10 @@ class CoordinatorTests(unittest.TestCase):
             patcher = patch.object(daemon, name, path)
             patcher.start()
             self.addCleanup(patcher.stop)
+        for name in ("ENDURANCE", "RECOVERIES", "REVIEW_LOG"):
+            patcher = patch.object(daemon, name, base / f"{name}.json")
+            patcher.start()
+            self.addCleanup(patcher.stop)
 
     def test_inbox_scope_and_duplicate(self):
         task = {"id": "IN-XRE03-1", "area": "XRE03", "branch": "research/xbox-firmware",
