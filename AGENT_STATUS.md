@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T12:41:50Z`
+- utc: `2026-11-26T12:42:53Z`
 - state: `working`
 - current task id: `PS5-SUMMARY-SPARSE-01`
 - research area: `PS5`
 - completed count: `52`
 - failed count: `8`
-- tool calls: `1315`
-- input tokens: `6162676`
-- output tokens: `774403`
+- tool calls: `1318`
+- input tokens: `6184706`
+- output tokens: `781850`
 - last successful validation utc: `2026-11-26T12:39:50Z`
-- uptime seconds: `15149`
+- uptime seconds: `15212`
 - endurance target seconds: `28800`
 - actual work seconds: `11598.4`
 - idle seconds: `1410.0`
