@@ -1,18 +1,18 @@
 # Strata status
 
-- utc: `2026-11-26T11:05:01Z`
-- state: `working`
-- current task id: `STRATA-WATCHDOG-TEST-01`
-- research area: `STRATA`
+- utc: `2026-11-26T11:05:34Z`
+- state: `idle`
+- current task id: `None`
+- research area: `None`
 - completed count: `44`
 - failed count: `6`
-- tool calls: `1136`
-- input tokens: `4773937`
-- output tokens: `458468`
+- tool calls: `1138`
+- input tokens: `4794727`
+- output tokens: `470606`
 - last successful validation utc: `2026-11-26T11:02:10Z`
-- uptime seconds: `9340`
+- uptime seconds: `9373`
 - endurance target seconds: `28800`
-- actual work seconds: `5566.2`
+- actual work seconds: `5974.7`
 - idle seconds: `1410.0`
 - idle reason: `None`
 - automatic recoveries: `12`
