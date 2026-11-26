@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T17:14:50Z",
+      "observed_utc": "2026-11-26T17:29:16Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, official LLVM candidate archives staged",
+      "run_status": "scheduler-triggered, isolated LLVM candidate startup checked",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -74,22 +74,24 @@
         "mingw-w64-x86_64-clang-22.1.8-3-any.pkg.tar.zst SHA256 834F6B80A81388610CC077CB6CCCCC20EA02DCF21F525FB7CFB037CEB9273E6A",
         "mingw-w64-x86_64-clang-libs-22.1.8-3-any.pkg.tar.zst SHA256 9B1A59F9DB49F24BC03BA137C307E5D20D986EAA4EC1CC179EA5E889047AC965",
         "mingw-w64-x86_64-llvm-22.1.8-3-any.pkg.tar.zst SHA256 551273499170D15A532E5FB98299B67AC2846A6788E6A352CE77889FB746D40B",
-        "mingw-w64-x86_64-llvm-libs-22.1.8-3-any.pkg.tar.zst SHA256 AB50A733CBAFD24E5180C00DEDE15014ECB7C133B836CE59262C22C27D46D659"
+        "mingw-w64-x86_64-llvm-libs-22.1.8-3-any.pkg.tar.zst SHA256 AB50A733CBAFD24E5180C00DEDE15014ECB7C133B836CE59262C22C27D46D659",
+        "Extracted the four archives under scratch/msys2-llvm-22.1.8-3/candidate. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. clang --version exited 0xC0000135. PE imports include libstdc++-6.dll, libclang-cpp.dll and libLLVM-22.dll. Compiler identity remains unverified. Plan not rerun."
       ],
       "blockers": [
         "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
-        "AMDGPU LLVM 22.1.8 mingw64 and mingw64/bin absent. Unsupported SDK and WDK c junctions remain."
+        "AMDGPU LLVM 22.1.8 mingw64 and mingw64/bin absent. Unsupported SDK and WDK c junctions remain.",
+        "The isolated MSYS2 candidate needs its matching runtime DLLs before compiler identity can be checked."
       ]
     }
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: MSYS2 packages staged, compiler identity and SDK/WDK junctions unresolved, Strata intake branch mismatch",
-  "last_poll_utc": "2026-11-26T17:14:50Z",
+  "result": "blocked: candidate clang fails to start (0xC0000135); SDK/WDK junctions and Strata intake mismatch remain",
+  "last_poll_utc": "2026-11-26T17:29:16Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T17:14:50Z",
+    "last_poll_utc": "2026-11-26T17:29:16Z",
     "trigger": "scheduler-triggered",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "result": "blocked: MSYS2 packages staged, compiler identity and SDK/WDK junctions unresolved, Strata intake branch mismatch"
+    "result": "blocked: candidate clang fails to start (0xC0000135); SDK/WDK junctions and Strata intake mismatch remain"
   }
 }
