@@ -1,6 +1,6 @@
 # Strata status
 
-- utc: `2026-11-26T22:43:25Z`
+- utc: `2026-11-26T22:44:29Z`
 - state: `idle`
 - current task id: `None`
 - research area: `None`
@@ -10,10 +10,10 @@
 - input tokens: `6691182`
 - output tokens: `889244`
 - last successful validation utc: `2026-11-26T13:15:04Z`
-- uptime seconds: `51244`
+- uptime seconds: `51308`
 - endurance target seconds: `28800`
 - actual work seconds: `13539.5`
-- idle seconds: `33540.1`
+- idle seconds: `33600.1`
 - idle reason: `no eligible ready task (queue empty or waiting for retry)`
 - automatic recoveries: `12`
 - pending reviews: `0`
