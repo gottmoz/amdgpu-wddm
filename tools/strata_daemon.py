@@ -283,7 +283,7 @@ def update_failure(path, task, stalled=False):
     current["attempts"] = attempts
     if retriable and attempts <= 3:
         current["status"] = "pending"
-        current["retry_at"] = time.time() + min(30 * 2 ** (attempts - 1), 120)
+        current["retry_at"] = time.time() + min(90 * 2 ** (attempts - 1), 300)
     elif "tool round limit" in error.lower() or "context" in error.lower():
         children = current.get("split_tasks", [])
         if not children and len(current.get("sources", [])) > 1 and len(current.get("allowed_writes", [])) == 1:

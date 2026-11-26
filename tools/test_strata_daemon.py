@@ -103,9 +103,23 @@ class CoordinatorTests(unittest.TestCase):
             saved = daemon.load(path)["tasks"][0]
             self.assertEqual(saved["status"], "pending")
             self.assertEqual(saved["attempts"], attempt + 1)
+            if attempt == 0:
+                self.assertGreater(saved["retry_at"] - __import__("time").time(), 80)
             task = saved
         daemon.update_failure(path, task)
         self.assertEqual(daemon.load(path)["tasks"][0]["status"], "blocked")
+
+    def test_independent_task_runs_before_delayed_retry(self):
+        now = __import__("time").time()
+        tasks = [
+            {"id": "T-retry", "branch": "agent/strata-v2", "status": "pending", "retry_at": now + 90},
+            {"id": "T-next", "branch": "agent/strata-v2", "status": "pending", "retry_at": 0},
+        ]
+        path = Path(self.temp.name) / "TASK_QUEUE.json"
+        daemon.save(path, {"schema_version": 1, "tasks": tasks})
+        with patch.object(daemon, "ROOT", Path(self.temp.name)):
+            _, selected = daemon.next_task("agent/strata-v2")
+        self.assertEqual(selected["id"], "T-next")
 
     def test_low_backlog_generates_source_review_once(self):
         base = Path(self.temp.name)
