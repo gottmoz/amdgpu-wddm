@@ -95,7 +95,7 @@
       ]
     },
     {
-      "observed_utc": "2026-11-26T20:19:02Z",
+      "observed_utc": "2026-11-26T20:29:01Z",
       "disposition": "blocked",
       "blockers": [
         "Recover exact TheRock input record and matching local artifacts.",
@@ -109,7 +109,8 @@
         "Two offline Strata tests passed for intake scope/dedupe and delayed retry. No live queue changes.",
         "Ninja llvm-config dry runs exited 0 for x64 (245 steps) and x86 (241 steps). The documented x64 host recipe matched 28 cache values and entered Ninja compilation. Build still running at poll; log scratch/sup004-llvm-x64-build.log. Local workspace filename scan found neither payload.json nor therock.json. No planner rerun or Strata changes this poll.",
         "The x64 Ninja process is no longer active. Its build log ends at invocation, no llvm-config.exe exists in the build tree or install prefix, and Ninja dry run shows 1498 steps remaining for llvm-config install. No successful exit is established. Local Git history traces the pinned prior payload hash to release registration a1c7a47fe and has no path history for payload.json or therock.json. Previous tester.39 plan remains blocked on TheRock and history inputs for both ROCm rows.",
-        "Ninja llvm-config builds exited 0 on x64 and x86. Both tools reported 23.1.2 with exit 0. PE machine values: x64 0x8664, x86 0x014C. Full LLVM install and consumer builds remain unverified. tester.39 -Plan rerun exited 1 after complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. Both ROCm rows still lack TheRock and history inputs. No release build or live Strata change."
+        "Ninja llvm-config builds exited 0 on x64 and x86. Both tools reported 23.1.2 with exit 0. PE machine values: x64 0x8664, x86 0x014C. Full LLVM install and consumer builds remain unverified. tester.39 -Plan rerun exited 1 after complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. Both ROCm rows still lack TheRock and history inputs. No release build or live Strata change.",
+        "Reviewed compute/hip/build-rocm-payload.ps1 against the tester.39 pins. Both ROCm rows require the original TheRock input record, both DLLs matching its SHA256 values, SDK headers and imp-hip.tsv, plus the hash-pinned prior payload.json. No new pinned artifact provenance was found. Prior plan exit 1 remains the latest build validation. No planner rerun or live Strata change."
       ],
       "evidence": [
         "Evidence note on dev/build-ci at f3337eabf0a9250ade42da037bdcb8aaa59a9e71",
@@ -124,12 +125,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T20:19:02Z",
+  "last_poll_utc": "2026-11-26T20:29:01Z",
   "heartbeat": {
-    "validation": "Ninja llvm-config builds exited 0 on x64 and x86. Both tools reported 23.1.2 with exit 0. PE machine values: x64 0x8664, x86 0x014C. Full LLVM install and consumer builds remain unverified. tester.39 -Plan rerun exited 1 after complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. Both ROCm rows still lack TheRock and history inputs. No release build or live Strata change.",
-    "last_poll_utc": "2026-11-26T20:19:02Z",
+    "last_poll_utc": "2026-11-26T20:29:01Z",
     "observed_instruction_id": "SUP-004-20261126T1920Z",
+    "trigger": "scheduler-triggered",
     "result": "blocked",
-    "trigger": "scheduler-triggered"
+    "validation": "Reviewed compute/hip/build-rocm-payload.ps1 against the tester.39 pins. Both ROCm rows require the original TheRock input record, both DLLs matching its SHA256 values, SDK headers and imp-hip.tsv, plus the hash-pinned prior payload.json. No new pinned artifact provenance was found. Prior plan exit 1 remains the latest build validation. No planner rerun or live Strata change."
   }
 }
