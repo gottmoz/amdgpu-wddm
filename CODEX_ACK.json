@@ -22,7 +22,7 @@
     },
     {
       "instruction_id": "SUP-002-20261126T1417Z",
-      "observed_utc": "2026-11-26T15:59:39Z",
+      "observed_utc": "2026-11-26T16:14:57Z",
       "disposition": "blocked",
       "run_status": "scheduler-triggered, partial validation complete",
       "evidence": [
@@ -35,7 +35,8 @@
         "Staged the two required Linux AMDGPU source files from upstream v6.18 commit 7d0a66e4bb9081d75c82ec4957c50034cb0ea449 as local plan inputs. Strata inbox is empty; snapshot reports 156 worker runs and 8130 idle seconds.",
         "Staged eight Cyan Skillfish 2 firmware files locally from linux-firmware db9b63a5baeddf32fa1635507383adeae997fbc3 and computed SHA-256 for each. Strata inbox is empty; endurance still reports 156 worker runs.",
         "Staged 3,171 Microsoft display DDI documents at 7515063cea4c9e98db6a92986c5b4ddb0463fd16 and three GPUOpen ADL headers at 84c881cb2136f04287eb3af12de00a9e2867aa9e. Strata inbox is empty; endurance snapshot shows 156 worker runs and 9840.1 idle seconds.",
-        "Staged pinned MSYS2 UCRT64 tools (14.0.0.r532.gdbbc8e99d-1) locally and verified widl.exe exists. Package SHA256 871A2A20876C827A82B64DC0FC9DCC9138458FC011AE49403C23CA31D3C9DFEC. Strata inbox remains empty."
+        "Staged pinned MSYS2 UCRT64 tools (14.0.0.r532.gdbbc8e99d-1) locally and verified widl.exe exists. Package SHA256 871A2A20876C827A82B64DC0FC9DCC9138458FC011AE49403C23CA31D3C9DFEC. Strata inbox remains empty.",
+        "Staged 148 Microsoft WDK 10.0.28000.2526 UM headers from NuGet. Package SHA256 63C939FB5A79295BF40E941DB592681272219B04EDFF095FE2F3D123E5579A90. Strata inbox is empty."
       ],
       "validation": [
         "Re-ran release-tester.39.json in plan-only mode. Exit 1 before preflight. Context SHA256 2E7A645EB522C781D08988DEB13956FBA0631F3058AA76D616B060DCBDE81883. See scratch/release-plan-after-sdk-x86-v2/build-context.json.",
@@ -44,15 +45,16 @@
         "tester.39 -Plan recognized both sources and exited 1 before planning or preflight. Context D0DE171CFFCE0BE4C33A75A29C8FD916FB9A56E6C090F83A6C5C9F3857772D7B; exact paths in scratch/release-plan-after-agility/build-context.json.",
         "tester.39 -Plan recognized all eight firmware files and exited 1 before planning/preflight. Context 78C5E3E7F57C738A0C19897D4020ECDC8F1FAE37754292FDE4F12BABD8FBF918. Exact paths: scratch/release-plan-after-agility/build-context.json.",
         "tester.39 -Plan recognized both reference inputs and exited 1 before preflight. Context 050EA2E0EF911D5B72BD58284B0482E261C4EDE41826B329EB85E8018B9C5B7E in scratch/release-plan-after-adl/build-context.json.",
-        "tester.39 -Plan recognized the MSYS2 bin directory and exited 1 before preflight. Context SHA256 3AC690BA97643A1BF56EF8415C23E510A47D4BE50D00AB2F051994887A91920A in scratch/release-plan-after-adl/build-context.json."
+        "tester.39 -Plan recognized the MSYS2 bin directory and exited 1 before preflight. Context SHA256 3AC690BA97643A1BF56EF8415C23E510A47D4BE50D00AB2F051994887A91920A in scratch/release-plan-after-adl/build-context.json.",
+        "tester.39 -Plan recognized the headers and exited 1 before preflight. Context 7FE1BCC931703EEEB0343716CE13FFF2FCE7E5A464070829E707F884B4CC0416."
       ],
       "blockers": [
-        "Four absent paths: LLVM 23.1.4, LLVM AMDGPU 22.1.8 mingw64 and its bin, and WDK 28000.2526 UM headers. SDK and WDK c junctions remain unsupported.",
+        "Three absent paths: LLVM 23.1.4 and LLVM AMDGPU 22.1.8 mingw64 and bin. Two unsupported SDK/WDK c junctions.",
         "Strata queue intake and retry contract remains unverified. No new engineering commit or task ID."
       ]
     }
   ],
-  "last_poll_utc": "2026-11-26T15:59:39Z",
+  "last_poll_utc": "2026-11-26T16:14:57Z",
   "observed_instruction_id": "SUP-002-20261126T1417Z",
   "trigger": "scheduler-triggered",
   "result": "blocked"
