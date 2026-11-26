@@ -49,8 +49,9 @@
     "STRATA-PUBLISH-GATE-01",
     "NAGI-BUILD-CONTEXT-01",
     "NAGI-VERIFIER-JSON-01",
-    "PS5-SEGMENT-GROUP-01"
+    "PS5-SEGMENT-GROUP-01",
+    "PS5-REPORT-VALIDATE-01"
   ],
-  "reviewed_utc": "2026-11-26T11:02:10Z",
-  "review_basis": "Codex-reviewed auto-published artifacts; deterministic tests and source boundaries were checked. The PS5 segment hash utility was corrected to require valid SHA-256 and explicit validation."
+  "reviewed_utc": "2026-11-26T11:16:22Z",
+  "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
