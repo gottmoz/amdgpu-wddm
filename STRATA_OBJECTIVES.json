@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "generated_from": "existing project reports and unresolved build/analysis questions",
+  "tasks": [
+    {
+      "id": "PS5-INV-01",
+      "area": "PS5",
+      "objective": "Summarize verified ELF architecture and Ghidra counts. Preserve uncertainty. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_ELF_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-elf-counts.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-elf-counts.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-02",
+      "area": "PS5",
+      "objective": "Summarize parser-v2 rejection outcomes and previous parser defects. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_ELF_REJECTION_REPORT.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-parser-reassessment.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-parser-reassessment.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-03",
+      "area": "PS5",
+      "objective": "Identify entry positions with identical hashes and differing hashes. No component inference. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_SEGMENT_COMPARISON.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-entry-hash-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-entry-hash-summary.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-04",
+      "area": "PS5",
+      "objective": "List the actual completed batch settings and clearly state missing settings. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "GHIDRA_ANALYSIS_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-ghidra-settings-gap.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-ghidra-settings-gap.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-05",
+      "area": "PS5",
+      "objective": "Summarize known and unknown PSP/SMU/microcode/memory-init identities. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_COMPONENT_MATRIX.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-component-evidence.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-component-evidence.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-06",
+      "area": "PS5",
+      "objective": "Check counts and limitations against PS5_ELF_INVENTORY.json. Report only discrepancies. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-dump-static-analysis.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-report-consistency.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-report-consistency.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-07",
+      "area": "PS5",
+      "objective": "Describe currently validated ELF fields and list concrete uncovered ELF checks. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/firmware/binary_audit.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/binary-audit-coverage.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/binary-audit-coverage.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-08",
+      "area": "PS5",
+      "objective": "Map test names to the corresponding parser invariants. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/tests/test_binary_audit.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/binary-audit-test-map.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/binary-audit-test-map.md"
+        ]
+      ]
+    },
+    {
+      "id": "NAGI-DEP-01",
+      "area": "NAGI",
+      "objective": "Summarize missing build inputs by type from structured JSON. Do not edit build files. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/build-playbook.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-dependency-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-dependency-summary.md"
+        ]
+      ]
+    },
+    {
+      "id": "NAGI-DEP-02",
+      "area": "NAGI",
+      "objective": "Summarize documented local KMD build prerequisites and commands. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/build.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-build-prerequisites.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-build-prerequisites.md"
+        ]
+      ]
+    },
+    {
+      "id": "NAGI-DEP-03",
+      "area": "NAGI",
+      "objective": "List release components in manifest order and flag absent input references. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/release/release-tester.39.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-release-manifest-gaps.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-release-manifest-gaps.md"
+        ]
+      ]
+    },
+    {
+      "id": "NAGI-DEP-04",
+      "area": "NAGI",
+      "objective": "Summarize required source closures for KMD and identify input paths for follow-up. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/release/build-context-inputs.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-reference-closure.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-reference-closure.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-AMD-01",
+      "area": "PS5",
+      "objective": "Summarize public manifest component names and pinned provenance without describing binary contents. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/firmware/cyan_skillfish2.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-public-amd-manifest.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-public-amd-manifest.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-AMD-02",
+      "area": "PS5",
+      "objective": "List supported local loader behavior and unanswered PS5 compatibility questions. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/psp-loader-boundaries.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/psp-loader-open-questions.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/psp-loader-open-questions.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-AMD-03",
+      "area": "PS5",
+      "objective": "Separate historical source observations from current SMU operating policy. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/bc250-smu-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/smu-source-boundary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/smu-source-boundary.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-AMD-04",
+      "area": "PS5",
+      "objective": "Summarize what local sources do and do not establish about memory initialization. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/bc250-memory-init-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/memory-init-evidence.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/memory-init-evidence.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-AMD-05",
+      "area": "PS5",
+      "objective": "Summarize documented portability blockers and unverified assumptions. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-firmware-portability.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-portability-blockers.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-portability-blockers.md"
+        ]
+      ]
+    },
+    {
+      "id": "STRATA-OPS-01",
+      "area": "STRATA",
+      "objective": "Review operational status claims against current tests described in the file. List measurable next acceptance tests. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "STRATA_V2_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-acceptance-gaps.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-acceptance-gaps.md"
+        ]
+      ]
+    },
+    {
+      "id": "STRATA-OPS-02",
+      "area": "STRATA",
+      "objective": "Identify state tables and which state transitions are currently implemented. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/strata_state.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-state-coverage.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-state-coverage.md"
+        ]
+      ]
+    },
+    {
+      "id": "STRATA-OPS-03",
+      "area": "STRATA",
+      "objective": "Summarize watchdog ownership checks and one failure mode requiring a test. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/strata_watchdog.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-watchdog-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-watchdog-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-09",
+      "area": "PS5",
+      "objective": "Summarize file provenance limitations and which originals remain outside Git. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_DUMP_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-provenance-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-provenance-summary.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-10",
+      "area": "PS5",
+      "objective": "Summarize the observed across-version entry count and limits of the comparison. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_VERSION_COMPARISON.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-version-limits.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-version-limits.md"
+        ]
+      ]
+    },
+    {
+      "id": "NAGI-DEP-05",
+      "area": "NAGI",
+      "objective": "Extract the latest verified Nagi build result and current blocker. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PROGRESS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-progress-state.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-progress-state.md"
+        ]
+      ]
+    },
+    {
+      "id": "PS5-INV-11",
+      "area": "PS5",
+      "objective": "Check whether this review exists; if missing, report that without substituting another source. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-dump-static-analysis.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-review-artifact-status.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-review-artifact-status.md"
+        ]
+      ]
+    }
+  ]
+}

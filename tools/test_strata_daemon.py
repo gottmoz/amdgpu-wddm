@@ -57,6 +57,68 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(path, daemon.GENERATED_QUEUE)
         self.assertEqual(selected["id"], "AUTO-XRE03-01")
 
+    def test_strata_backlog_replenishes_to_floor_and_runs_root_queue(self):
+        base = Path(self.temp.name)
+        root_queue = base / "TASK_QUEUE.json"
+        objectives = base / "STRATA_OBJECTIVES.json"
+        daemon.save(root_queue, {"schema_version": 1, "tasks": []})
+        daemon.save(objectives, {"schema_version": 1, "tasks": [
+            {"id": f"T-{i}", "objective": f"Review source {i}", "area": "PS5",
+             "sources": ["README.md"], "allowed_writes": [f"docs/research/t{i}.md"],
+             "tools": ["read_file", "write_file"]} for i in range(23)
+        ]})
+        with patch.object(daemon, "ROOT", base), patch.object(daemon, "OBJECTIVES", objectives):
+            self.assertEqual(daemon.replenish_backlog("agent/strata-v2", floor=20), 20)
+            self.assertEqual(daemon.replenish_backlog("agent/strata-v2", floor=20), 0)
+            path, task = daemon.next_task("agent/strata-v2")
+        self.assertEqual(path, root_queue)
+        self.assertEqual(task["id"], "T-0")
+
+    def test_worker_retry_is_not_overwritten_by_daemon(self):
+        task = {"id": "T-retry", "branch": "agent/strata-v2", "status": "retry_scheduled",
+                "attempts": 1, "error": "model API timeout"}
+        path = Path(self.temp.name) / "root.json"
+        daemon.save(path, {"schema_version": 1, "tasks": [task]})
+        daemon.update_failure(path, task)
+        saved = daemon.load(path)["tasks"][0]
+        self.assertEqual(saved["status"], "retry_scheduled")
+        self.assertEqual(saved["attempts"], 1)
+
+    def test_low_backlog_generates_source_review_once(self):
+        base = Path(self.temp.name)
+        (base / "source.md").write_text("Source claim.\n", encoding="utf-8")
+        output = base / "docs/research/strata/result.md"
+        output.parent.mkdir(parents=True)
+        output.write_text("Result note.\n", encoding="utf-8")
+        task = {"id": "P-1", "branch": "agent/strata-v2", "status": "done", "area": "PS5",
+                "sources": ["source.md"], "allowed_writes": ["docs/research/strata/result.md"]}
+        queue_path = base / "TASK_QUEUE.json"
+        daemon.save(queue_path, {"schema_version": 1, "tasks": [task]})
+        with patch.object(daemon, "ROOT", base):
+            self.assertEqual(daemon.generate_followup_reviews("agent/strata-v2", floor=5), 1)
+            self.assertEqual(daemon.generate_followup_reviews("agent/strata-v2", floor=5), 0)
+        result = daemon.load(queue_path)["tasks"]
+        self.assertEqual(result[1]["id"], "REVIEW-P-1")
+        self.assertEqual(result[1]["sources"], ["docs/research/strata/result.md", "source.md"])
+
+    def test_simulated_api_failure_persists_retry_and_returns(self):
+        base = Path(self.temp.name)
+        queue = base / "queue.json"
+        task = {"id": "T-api-fail", "branch": "agent/strata-v2", "status": "pending",
+                "objective": "Read a declared source", "allowed_writes": ["docs/research/test.md"]}
+        worker.atomic_json(queue, {"schema_version": 1, "tasks": [task]})
+        paths = {name: base / f"{name}.json" for name in ("STATE_DB", "MEMORY", "CHECKPOINT", "METRICS")}
+        args = ["strata_supervisor.py", "--once", "--queue", str(queue), "--task-id", task["id"]]
+        with patch.object(worker, "active_model", return_value="mock-model"), \
+             patch.object(worker, "current_branch", return_value="agent/strata-v2"), \
+             patch.object(worker, "api", side_effect=TimeoutError("simulated API timeout")), \
+             patch.object(worker.sys, "argv", args), \
+             patch.multiple(worker, **paths):
+            self.assertEqual(worker.main(), 1)
+        saved = json.loads(queue.read_text(encoding="utf-8"))["tasks"][0]
+        self.assertEqual(saved["status"], "retry_scheduled")
+        self.assertIn("simulated API timeout", saved["error"])
+
     def test_source_scoped_task_rejects_unrelated_reads(self):
         task = {"sources": ["XBOX_FIRMWARE_INVENTORY.json"], "allowed_writes": ["docs/research/test.md"]}
         with self.assertRaisesRegex(ValueError, "declared task source"):

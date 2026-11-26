@@ -25,6 +25,7 @@ RUNTIME = worker.RUNTIME
 INBOX_QUEUE = RUNTIME / "STRATA_INBOX_QUEUE.json"
 GENERATED_QUEUE = RUNTIME / "STRATA_GENERATED_QUEUE.json"
 XBOX_QUEUE = ROOT / "XBOX_TASK_QUEUE.json"
+OBJECTIVES = ROOT / "STRATA_OBJECTIVES.json"
 LOCK = RUNTIME / ".strata-daemon.lock"
 STOP = RUNTIME / "STRATA_STOP"
 REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
@@ -179,9 +180,72 @@ def generate_task(branch):
     return None
 
 
+def replenish_backlog(branch, floor=20):
+    """Queue only reviewed, source-scoped objectives until the useful backlog floor."""
+    if branch != "agent/strata-v2" or not OBJECTIVES.exists():
+        return 0
+    queue = load(ROOT / "TASK_QUEUE.json")
+    templates = json.loads(OBJECTIVES.read_text(encoding="utf-8"))["tasks"]
+    other_queues = [INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE]
+    known_tasks = queue["tasks"] + [t for path in other_queues for t in load(path)["tasks"]]
+    ready = sum(t.get("branch")==branch and t.get("status") in ("pending","retry_scheduled","running") for t in known_tasks)
+    known = {t["id"] for t in known_tasks}
+    added = 0
+    for template in templates:
+        if ready >= floor: break
+        if template["id"] in known: continue
+        task = dict(template, branch=branch, status="pending", publish=False)
+        task.setdefault("verify", [["python","tools/quality/doclint.py","--files",*task["allowed_writes"]]])
+        queue["tasks"].append(task); known.add(task["id"]); ready += 1; added += 1
+    if added: save(ROOT / "TASK_QUEUE.json", queue)
+    return added
+
+
+def generate_followup_reviews(branch, floor=5):
+    """Create source-to-result consistency checks when the useful queue is low."""
+    if branch != "agent/strata-v2":
+        return 0
+    root_queue = load(ROOT / "TASK_QUEUE.json")
+    other_paths = [INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE]
+    all_tasks = root_queue["tasks"] + [task for path in other_paths for task in load(path)["tasks"]]
+    ready = sum(task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running") for task in all_tasks)
+    if ready >= floor:
+        return 0
+    known = {task["id"] for task in all_tasks}
+    added = 0
+    for source_task in root_queue["tasks"]:
+        if ready >= 20:
+            break
+        if source_task.get("branch") != branch or source_task.get("status") != "done":
+            continue
+        outputs = source_task.get("allowed_writes", [])
+        sources = source_task.get("sources", [])
+        if len(outputs) != 1 or len(sources) != 1:
+            continue
+        output_path = ROOT / outputs[0]
+        source_path = ROOT / sources[0]
+        review_id = f"REVIEW-{source_task['id']}"
+        review_path = f"docs/research/strata/reviews/{source_task['id'].lower()}-review.md"
+        if review_id in known or not output_path.is_file() or not source_path.is_file():
+            continue
+        root_queue["tasks"].append({
+            "id": review_id, "branch": branch, "area": source_task.get("area", "PS5"),
+            "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+            "sources": [outputs[0], sources[0]], "allowed_writes": [review_path],
+            "tools": ["read_file", "write_file"], "status": "pending", "publish": False,
+            "origin": "generated_review", "verify": [["python", "tools/quality/doclint.py", "--files", review_path]],
+        })
+        known.add(review_id)
+        ready += 1
+        added += 1
+    if added:
+        save(ROOT / "TASK_QUEUE.json", root_queue)
+    return added
+
+
 def next_task(branch):
     now = time.time()
-    for path in (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE):
+    for path in (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, ROOT / "TASK_QUEUE.json"):
         for task in load(path)["tasks"]:
             if task.get("branch") == branch and task.get("status") in ("pending", "running") and task.get("retry_at", 0) <= now:
                 return path, task
@@ -191,6 +255,9 @@ def next_task(branch):
 def update_failure(path, task, stalled=False):
     queue = load(path)
     current = next(item for item in queue["tasks"] if item["id"] == task["id"])
+    # The worker persists retry/quarantine state itself. Preserve that decision.
+    if current.get("status") in ("retry_scheduled", "quarantined"):
+        return
     error = current.get("error", "stalled worker" if stalled else "worker failed before checkpoint")
     retriable = stalled or any(word in error.lower() for word in ("urlerror", "timed out", "connection", "http 5"))
     attempts = current.get("attempts", 0) + 1
@@ -318,6 +385,8 @@ def main():
             try:
                 import_inbox(args.repo, branch)
                 generate_task(branch)
+                generate_followup_reviews(branch)
+                replenish_backlog(branch)
                 path, task = next_task(branch)
                 state = "working" if task else "idle"
                 if time.time() - last_heartbeat >= args.heartbeat_seconds:

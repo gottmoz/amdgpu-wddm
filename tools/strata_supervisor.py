@@ -219,7 +219,7 @@ def work(task, model):
     fixed_sources = task.get("sources", [])
     base = [
         {"role": "system", "content": "You are a local BC-250 engineering agent. Follow task-scoped tool permissions. Never touch hardware, secrets or firmware bytes. Available tools are listed in the user task. For each tool call, use the exact schema: read_file {path}, write_file {path,content}. If source paths are listed, read only those. Complete the artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": [x["function"]["name"] for x in definitions(task)], "examples": {"read_file": {"path": fixed_sources[0] if fixed_sources else "README.md"}, "write_file": {"path": task["allowed_writes"][0] if task["allowed_writes"] else "", "content": "..."}}, "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": [x["function"]["name"] for x in definitions(task)], "examples": {"read_file": {"path": fixed_sources[0] if fixed_sources else "README.md"}, "write_file": {"path": task["allowed_writes"][0] if task["allowed_writes"] else "", "content": "..."}}, "previous_validation_error": task.get("validation_error"), "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
@@ -295,7 +295,9 @@ def main():
             for check in task.get("verify", []):
                 result = run(check, 180)
                 if result["exit_code"]:
-                    raise RuntimeError("verification failed: " + str(check) + " " + result["stderr"][-1000:])
+                    detail=result["stdout"][-1500:]+result["stderr"][-1500:]
+                    task["validation_error"]=detail
+                    raise RuntimeError("validation failed. Correct the declared output and retry. " + detail)
             if task.get("verify"):
                 STATS["last_validation_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
                 with state_db: state_db.execute("INSERT INTO validations(task_id,result,created_utc) VALUES(?,?,?)",(task["id"],"passed",STATS["last_validation_utc"]))
