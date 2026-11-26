@@ -38,3 +38,12 @@ The original eight-hour endurance start and counters remain intact. The daemon/w
 The generated Nagi dependency verifier was incorrect on first pass (unrelated package pins and global environment lookup). Codex corrected it against `docs/build.md`; five pinned distributions in isolated `scratch\\py` all match, and tests pass. Publication now rejects large deletions from existing files. A Strata task had replaced the daemon tests with an inspection probe; it was restored from the reviewed revision and the actual regression suite passes 43 tests.
 
 Seven bounded implementation tasks remain in the queue. The task context now explicitly forbids profile/Strata local paths and records invalid-call details. Some tasks previously retried after source-scope errors have been corrected and rescheduled.
+
+
+## Validated operational checkpoint – 2026-11-26T10:53:46Z
+
+The queue has 20 concrete pending/retry code and test tasks across PS5, Nagi and Strata; source existence checks passed. Review-loop generation is off, and duplicate probes are rejected before publication.
+
+Nagi's `build_context_summary.py` was automatically published at `35e509c4fbc345f64ffa546afe3023ebffa99474` after its declared tests passed; Codex reviewed the code and tests. The five Python build dependencies were verified in scratch/py. Other toolchain dependencies remain unresolved.
+
+The full focused suite passed 51 tests at this checkpoint. The eight-hour endurance start remains `2026-11-26T08:29:21Z`; latest stored counters before daemon restart were 5,293.2 work seconds, 1,410 idle seconds, 112 worker runs and 11 automatic recoveries.

@@ -1515,7 +1515,9 @@
         }
       ],
       "summary": "",
-      "commit": "2fb85236cd620bc6249130b0ba12fc3c15f555a9"
+      "commit": "2fb85236cd620bc6249130b0ba12fc3c15f555a9",
+      "review_status": "accepted_duplicate",
+      "review_disposition": "No code delta beyond already reviewed summary artifact; its auto-published task log is accepted, no additional engineering claim."
     },
     {
       "id": "PS5-SEGMENT-GROUP-01",
@@ -1554,11 +1556,21 @@
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
       "status": "retry_scheduled",
-      "invalid_tool_calls": 3,
-      "attempts": 1,
-      "retry_at": 1795688954.4277027,
+      "invalid_tool_calls": 4,
+      "attempts": 2,
+      "retry_at": 1795690018.2216265,
       "recovered_attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls"
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "invalid_tool_history": [
+        {
+          "tool": "read_file",
+          "argument_keys": [
+            "path"
+          ],
+          "path": "C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md",
+          "reason": "read path is not a declared task source"
+        }
+      ]
     },
     {
       "id": "PS5-VERSION-DELTA-01",
@@ -1680,12 +1692,11 @@
       "commit_message": "nagi: implement nagi build context 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
+      "status": "done",
       "invalid_tool_calls": 4,
       "attempts": 2,
       "retry_at": 1795689246.1085532,
       "recovered_attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
       "invalid_tool_history": [
         {
           "tool": "read_file",
@@ -1695,7 +1706,11 @@
           "path": "C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md",
           "reason": "read path is not a declared task source"
         }
-      ]
+      ],
+      "summary": "Done. Validation: `python -m unittest tools.tests.test_build_context_summary` → 5 tests, OK.\n\n**Artifacts**\n- `tools/release/build_context_summary.py` — `summarize(receipt, base)` + CLI (`main([\"receipt.json\", \"--base\", ...])`) emitting compact, key-sorted JSON: `schema`, `state_counts` (sorted), `complete`, `missing`, `problem`, `missing_inputs` (sorted, deduped).\n- `tools/tests/test_build_context_summary.py` — synthetic receipt covering directory/file/absent/unreadable/unsupported-link states, executables, environment and host blocks.\n\n**Behavior / guarantees**\n- Completion buckets: `file`/`directory` = complete; `absent` = missing; `unreadable`, `unsupported-link`, `unsupported-file-type`, `incomplete-directory`, `changed-during-read` = problem.\n- Identifiers come from an explicit `identifier` field, otherwise `path` rebased against `--base`; absolute paths, `..` escapes, and empty results are dropped (counted as missing but not emitted).\n- `environment`, `env`, `host`, `path_order`",
+      "commit": "35e509c4fbc345f64ffa546afe3023ebffa99474",
+      "review_status": "accepted_validated",
+      "review_disposition": "Codex reviewed the generated summary implementation; synthetic tests pass and paths/environment are omitted."
     },
     {
       "id": "NAGI-PYDEPS-VERIFY-01",
@@ -1738,10 +1753,9 @@
       "attempts": 1,
       "retry_at": 1795689114.8931808,
       "recovered_attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
       "summary": "Codex corrected generated package list to the build-playbook pins; five distributions verified in isolated scratch target and tests passed.",
       "review_status": "accepted_validated",
-      "review_disposition": "Corrected against docs/build.md and verified installed scratch metadata plus synthetic tests."
+      "review_disposition": "Corrected against documented pins; local isolated target and synthetic regression tests pass."
     },
     {
       "id": "NAGI-PYDEPS-TEST-01",
@@ -1784,7 +1798,7 @@
       "retry_at": 0,
       "recovered_attempts": 3,
       "review_status": "rejected_duplicate",
-      "review_disposition": "Overlaps an existing verifier/build-context implementation task."
+      "review_disposition": "Overlaps existing Nagi verifier/build-context implementation tests."
     },
     {
       "id": "NAGI-CONTEXT-TEST-01",
@@ -1827,7 +1841,7 @@
       "retry_at": 0,
       "recovered_attempts": 2,
       "review_status": "rejected_duplicate",
-      "review_disposition": "Overlaps an existing verifier/build-context implementation task."
+      "review_disposition": "Overlaps existing Nagi verifier/build-context implementation tests."
     },
     {
       "id": "STRATA-PUBLISH-GATE-01",
@@ -1903,11 +1917,13 @@
       "commit_message": "strata: implement strata area rotation 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "rejected",
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
-      "recovered_attempts": 2
+      "recovered_attempts": 2,
+      "review_status": "rejected_duplicate",
+      "review_disposition": "Duplicates existing deterministic scheduler/review-loop regression tests; the generated probe had no assertions and was not published."
     },
     {
       "id": "STRATA-REVIEW-LOOP-01",
@@ -1944,12 +1960,14 @@
       "commit_message": "strata: implement strata review loop 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "rejected",
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
       "recovered_attempts": 1,
-      "summary": ""
+      "summary": "",
+      "review_status": "rejected_duplicate",
+      "review_disposition": "Duplicates existing deterministic scheduler/review-loop regression tests; the generated probe had no assertions and was not published."
     },
     {
       "id": "STRATA-WATCHDOG-TEST-01",
@@ -1991,6 +2009,620 @@
       "attempts": 0,
       "retry_at": 0,
       "recovered_attempts": 2
+    },
+    {
+      "id": "PS5-SUMMARY-CLI-01",
+      "area": "PS5",
+      "objective": "Add an end-to-end CLI regression test for JSON inventory input/output, source hash emission and clean handling of a temporary fixture.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_cli.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_cli"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_cli"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary cli 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-SUMMARY-MALFORMED-01",
+      "area": "PS5",
+      "objective": "Reject malformed summary rows and counters with clear ValueError messages; add synthetic cases without reading firmware bytes.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_ps5_summary_malformed.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_malformed"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_malformed"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary malformed 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-SUMMARY-HASH-CASE-01",
+      "area": "PS5",
+      "objective": "Add focused regression coverage for case-insensitive SHA-256 grouping and candidates that omit hashes. Use synthetic metadata only.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_hash_case.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_hash_case"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_hash_case"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary hash case 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-SUMMARY-SPARSE-01",
+      "area": "PS5",
+      "objective": "Test sparse inventory rows with absent optional fields and document stable defaults through assertions; do not infer component names.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_sparse.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_sparse"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_sparse"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary sparse 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-SUMMARY-PROVENANCE-01",
+      "area": "PS5",
+      "objective": "Add a regression test proving the report hashes the exact source JSON bytes and distinguishes a changed inventory.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_provenance.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_provenance"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_provenance"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary provenance 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-GHIDRA-JSON-VALIDATOR-01",
+      "area": "PS5",
+      "objective": "Create a validator for exported Ghidra JSON metadata that reports architecture, block and function counts while rejecting missing required fields; use synthetic fixtures.",
+      "sources": [
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/firmware/ghidra_json_validator.py",
+        "tools/tests/test_ghidra_json_validator.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ghidra_json_validator"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ghidra_json_validator"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 ghidra json validator 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-SEGMENT-GROUP-EDGE-01",
+      "area": "PS5",
+      "objective": "Add synthetic tests for exact candidate hash grouping by source container in the existing summary report, including missing hashes and no component inference.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py",
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_segment_group_edges.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_segment_group_edges"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_segment_group_edges"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 segment group edge 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "PS5-VERSION-DELTA-EDGE-01",
+      "area": "PS5",
+      "objective": "Add synthetic regression tests for cross-version candidate hash comparisons using existing summary metadata, including missing digests and exact-match-only grouping.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py",
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_version_delta_edges.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_version_delta_edges"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_version_delta_edges"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 version delta edge 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "NAGI-VERIFIER-JSON-01",
+      "area": "NAGI",
+      "objective": "Add a machine-readable JSON output mode to the pinned Python dependency verifier and test expected/actual/missing fields using synthetic metadata.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py"
+      ],
+      "allowed_writes": [
+        "tools/release/verify_python_build_deps.py",
+        "tools/tests/test_nagi_verifier_json.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_verifier_json"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_verifier_json"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi verifier json 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "NAGI-VERIFIER-CASE-01",
+      "area": "NAGI",
+      "objective": "Test normalized distribution-name matching for hyphen, underscore and case variants using isolated synthetic dist-info directories.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_nagi_verifier_names.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_verifier_names"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_verifier_names"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi verifier case 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "NAGI-CONTEXT-UNC-01",
+      "area": "NAGI",
+      "objective": "Add path-safety tests for UNC roots, absolute paths and parent traversal in build-context summaries; ensure no host path is emitted.",
+      "sources": [
+        "tools/release/build_context_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_nagi_context_paths.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_context_paths"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_context_paths"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi context unc 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "NAGI-CONTEXT-JSON-01",
+      "area": "NAGI",
+      "objective": "Add CLI regression coverage for malformed and non-object build-context JSON; errors must be concise and must not emit receipt contents.",
+      "sources": [
+        "tools/release/build_context_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/release/build_context_summary.py",
+        "tools/tests/test_nagi_context_cli.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_context_cli"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_context_cli"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi context json 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "STRATA-INVALID-HISTORY-01",
+      "area": "STRATA",
+      "objective": "Add deterministic tests that unauthorized tool calls retain only bounded path/error metadata and checkpoint before rescheduling. Do not call the model or GitHub.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_invalid_history.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_invalid_history"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_invalid_history"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata invalid history 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "STRATA-PUBLISH-BRANCH-01",
+      "area": "STRATA",
+      "objective": "Add regression tests that auto-publication refuses main and branch mismatches before any Git mutation; mock all Git commands.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_publish_branch.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_publish_branch"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_publish_branch"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata publish branch 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "STRATA-PUBLISH-INDEX-01",
+      "area": "STRATA",
+      "objective": "Add a regression test that auto-publication refuses a non-empty Git index before staging declared outputs. Mock Git.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_publish_index.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_publish_index"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_publish_index"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata publish index 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
+    },
+    {
+      "id": "STRATA-HEARTBEAT-REVIEWS-01",
+      "area": "STRATA",
+      "objective": "Test that reviewed and rejected completed results do not inflate pending_reviews, while unreviewed done results do. Use temporary queues.",
+      "sources": [
+        "tools/strata_daemon.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_review_heartbeat.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_review_heartbeat"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_review_heartbeat"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata heartbeat reviews 01",
+      "origin": "implementation_template",
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "attempts": 0
     }
   ]
 }

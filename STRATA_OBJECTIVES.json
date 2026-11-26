@@ -804,76 +804,6 @@
       "origin": "implementation_template"
     },
     {
-      "id": "STRATA-AREA-ROTATION-01",
-      "area": "STRATA",
-      "objective": "Add regression tests for scheduler rotation across PS5, NAGI and STRATA queues, including delayed retry and recovery of a running task.",
-      "sources": [
-        "tools/strata_daemon.py"
-      ],
-      "allowed_writes": [
-        "tools/tests/test_strata_scheduler.py"
-      ],
-      "tools": [
-        "read_file",
-        "write_file",
-        "terminal"
-      ],
-      "allow_tests": true,
-      "test_command": [
-        "python",
-        "-m",
-        "unittest",
-        "tools.tests.test_strata_scheduler"
-      ],
-      "verify": [
-        [
-          "python",
-          "-m",
-          "unittest",
-          "tools.tests.test_strata_scheduler"
-        ]
-      ],
-      "publish": true,
-      "publication_policy": "unit-tested-code",
-      "commit_message": "strata: implement strata area rotation 01",
-      "origin": "implementation_template"
-    },
-    {
-      "id": "STRATA-REVIEW-LOOP-01",
-      "area": "STRATA",
-      "objective": "Add a regression test that completed review tasks never generate further review tasks and that review generation stays disabled when backlog is low.",
-      "sources": [
-        "tools/strata_daemon.py"
-      ],
-      "allowed_writes": [
-        "tools/tests/test_strata_review_queue.py"
-      ],
-      "tools": [
-        "read_file",
-        "write_file",
-        "terminal"
-      ],
-      "allow_tests": true,
-      "test_command": [
-        "python",
-        "-m",
-        "unittest",
-        "tools.tests.test_strata_review_queue"
-      ],
-      "verify": [
-        [
-          "python",
-          "-m",
-          "unittest",
-          "tools.tests.test_strata_review_queue"
-        ]
-      ],
-      "publish": true,
-      "publication_policy": "unit-tested-code",
-      "commit_message": "strata: implement strata review loop 01",
-      "origin": "implementation_template"
-    },
-    {
       "id": "STRATA-WATCHDOG-TEST-01",
       "area": "STRATA",
       "objective": "Add deterministic tests for watchdog ownership checks and transient process-inspection errors; prevent false-positive restart loops without weakening PID ownership validation.",
@@ -906,6 +836,572 @@
       "publish": true,
       "publication_policy": "unit-tested-code",
       "commit_message": "strata: implement strata watchdog test 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SUMMARY-CLI-01",
+      "area": "PS5",
+      "objective": "Add an end-to-end CLI regression test for JSON inventory input/output, source hash emission and clean handling of a temporary fixture.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_cli.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_cli"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_cli"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary cli 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SUMMARY-MALFORMED-01",
+      "area": "PS5",
+      "objective": "Reject malformed summary rows and counters with clear ValueError messages; add synthetic cases without reading firmware bytes.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_ps5_summary_malformed.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_malformed"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_malformed"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary malformed 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SUMMARY-HASH-CASE-01",
+      "area": "PS5",
+      "objective": "Add focused regression coverage for case-insensitive SHA-256 grouping and candidates that omit hashes. Use synthetic metadata only.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_hash_case.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_hash_case"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_hash_case"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary hash case 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SUMMARY-SPARSE-01",
+      "area": "PS5",
+      "objective": "Test sparse inventory rows with absent optional fields and document stable defaults through assertions; do not infer component names.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_sparse.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_sparse"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_sparse"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary sparse 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SUMMARY-PROVENANCE-01",
+      "area": "PS5",
+      "objective": "Add a regression test proving the report hashes the exact source JSON bytes and distinguishes a changed inventory.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_summary_provenance.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_provenance"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_provenance"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 summary provenance 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-GHIDRA-JSON-VALIDATOR-01",
+      "area": "PS5",
+      "objective": "Create a validator for exported Ghidra JSON metadata that reports architecture, block and function counts while rejecting missing required fields; use synthetic fixtures.",
+      "sources": [
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/firmware/ghidra_json_validator.py",
+        "tools/tests/test_ghidra_json_validator.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ghidra_json_validator"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ghidra_json_validator"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 ghidra json validator 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-SEGMENT-GROUP-EDGE-01",
+      "area": "PS5",
+      "objective": "Add synthetic tests for exact candidate hash grouping by source container in the existing summary report, including missing hashes and no component inference.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py",
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_segment_group_edges.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_segment_group_edges"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_segment_group_edges"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 segment group edge 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-VERSION-DELTA-EDGE-01",
+      "area": "PS5",
+      "objective": "Add synthetic regression tests for cross-version candidate hash comparisons using existing summary metadata, including missing digests and exact-match-only grouping.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py",
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_ps5_version_delta_edges.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_version_delta_edges"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_version_delta_edges"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: implement ps5 version delta edge 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "NAGI-VERIFIER-JSON-01",
+      "area": "NAGI",
+      "objective": "Add a machine-readable JSON output mode to the pinned Python dependency verifier and test expected/actual/missing fields using synthetic metadata.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py"
+      ],
+      "allowed_writes": [
+        "tools/release/verify_python_build_deps.py",
+        "tools/tests/test_nagi_verifier_json.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_verifier_json"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_verifier_json"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi verifier json 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "NAGI-VERIFIER-CASE-01",
+      "area": "NAGI",
+      "objective": "Test normalized distribution-name matching for hyphen, underscore and case variants using isolated synthetic dist-info directories.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_nagi_verifier_names.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_verifier_names"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_verifier_names"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi verifier case 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "NAGI-CONTEXT-UNC-01",
+      "area": "NAGI",
+      "objective": "Add path-safety tests for UNC roots, absolute paths and parent traversal in build-context summaries; ensure no host path is emitted.",
+      "sources": [
+        "tools/release/build_context_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_nagi_context_paths.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_context_paths"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_context_paths"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi context unc 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "NAGI-CONTEXT-JSON-01",
+      "area": "NAGI",
+      "objective": "Add CLI regression coverage for malformed and non-object build-context JSON; errors must be concise and must not emit receipt contents.",
+      "sources": [
+        "tools/release/build_context_summary.py"
+      ],
+      "allowed_writes": [
+        "tools/release/build_context_summary.py",
+        "tools/tests/test_nagi_context_cli.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_context_cli"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_context_cli"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: implement nagi context json 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "STRATA-INVALID-HISTORY-01",
+      "area": "STRATA",
+      "objective": "Add deterministic tests that unauthorized tool calls retain only bounded path/error metadata and checkpoint before rescheduling. Do not call the model or GitHub.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_invalid_history.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_invalid_history"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_invalid_history"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata invalid history 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "STRATA-PUBLISH-BRANCH-01",
+      "area": "STRATA",
+      "objective": "Add regression tests that auto-publication refuses main and branch mismatches before any Git mutation; mock all Git commands.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_publish_branch.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_publish_branch"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_publish_branch"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata publish branch 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "STRATA-PUBLISH-INDEX-01",
+      "area": "STRATA",
+      "objective": "Add a regression test that auto-publication refuses a non-empty Git index before staging declared outputs. Mock Git.",
+      "sources": [
+        "tools/strata_supervisor.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_publish_index.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_publish_index"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_publish_index"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata publish index 01",
+      "origin": "implementation_template"
+    },
+    {
+      "id": "STRATA-HEARTBEAT-REVIEWS-01",
+      "area": "STRATA",
+      "objective": "Test that reviewed and rejected completed results do not inflate pending_reviews, while unreviewed done results do. Use temporary queues.",
+      "sources": [
+        "tools/strata_daemon.py"
+      ],
+      "allowed_writes": [
+        "tools/tests/test_strata_review_heartbeat.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_strata_review_heartbeat"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_strata_review_heartbeat"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "strata: implement strata heartbeat reviews 01",
       "origin": "implementation_template"
     }
   ]

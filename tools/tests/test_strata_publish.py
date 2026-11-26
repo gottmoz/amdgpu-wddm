@@ -16,7 +16,7 @@ class PublishPolicyTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         target = self.root / 'tools/tests'
         target.mkdir(parents=True)
-        (target / 'sample.py').write_text('VALUE = 1\n', encoding='utf-8')
+        (target / 'sample.py').write_text('VALUE = 1\nassert VALUE == 1\n', encoding='utf-8')
 
     def task(self, **extra):
         result = {'id': 'PUBLISH-TEST-01', 'branch': 'agent/strata-v2', 'publication_policy': 'unit-tested-code',
@@ -25,6 +25,16 @@ class PublishPolicyTests(unittest.TestCase):
                   'commit_message': 'test: sample'}
         result.update(extra)
         return result
+
+    def test_success_transition_clears_stale_failure_fields(self):
+        task = {'id': 'retry', 'status': 'retry_scheduled', 'error': 'old rejection',
+                'validation_error': 'old lint failure', 'attempts': 2}
+        worker.mark_task_success(task, 'validated')
+        self.assertEqual(task['status'], 'done')
+        self.assertEqual(task['summary'], 'validated')
+        self.assertNotIn('error', task)
+        self.assertNotIn('validation_error', task)
+        self.assertEqual(task['attempts'], 2)
 
     def test_policy_requires_explicit_allowlist(self):
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run') as run:
@@ -73,6 +83,21 @@ class PublishPolicyTests(unittest.TestCase):
             return {'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', side_effect=git_result):
             with self.assertRaisesRegex(RuntimeError, 'large deletion'):
+                worker.publish(self.task())
+        self.assertFalse(any(argv[1] == 'add' for argv in calls))
+
+    def test_test_artifact_without_assertions_is_rejected(self):
+        (self.root / 'tools/tests/sample.py').write_text("print('source probe')\n", encoding='utf-8')
+        calls = []
+        def git_result(argv, timeout=120):
+            calls.append(argv)
+            if argv[1:3] == ['diff', '--cached']:
+                return {'exit_code': 0, 'stdout': '', 'stderr': ''}
+            if argv[1] == 'ls-files':
+                return {'exit_code': 1, 'stdout': '', 'stderr': 'not tracked'}
+            return {'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}
+        with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', side_effect=git_result):
+            with self.assertRaisesRegex(RuntimeError, 'assertion'):
                 worker.publish(self.task())
         self.assertFalse(any(argv[1] == 'add' for argv in calls))
 

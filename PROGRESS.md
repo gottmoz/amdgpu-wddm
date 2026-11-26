@@ -52,3 +52,13 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Restricted implementation tasks to new test/tool files and repaired source declarations. Failed tool calls now retain bounded diagnostic details; task context explicitly disallows undeclared profile/Strata paths and shows the exact test command.
 - Restored the full Strata daemon regression file after a generated test task replaced it with a temporary inspection probe. This specific replacement was caught before any test result was treated as valid; the full focused suite now passes 43 tests.
 - Seven concrete implementation tasks remain eligible; repetitive dependency test templates were removed.
+
+
+## Latest validated checkpoint – 2026-11-26T10:53:46Z
+
+- The published deterministic PS5 inventory summary remains 40 candidates, 40 parser-bounds valid, 34 zero-function Ghidra reports, six positive-function reports, and 40 distinct hashes. No component identity is inferred.
+- Strata's Nagi build-context utility and five synthetic tests were reviewed after auto-publication at commit `35e509c4fbc345f64ffa546afe3023ebffa99474`; they pass and emit relative identifiers only.
+- Nagi's five pinned Python build packages were verified in the isolated target, and the read-only verifier is published. LLVM/MinGW/glslang/NuGet remain open build dependencies.
+- Review recursion is disabled. Two duplicate test-probe tasks were rejected and never published. Publication now rejects unasserted test artifacts and large tracked-file deletions.
+- The persistent queue contains 20 pending/retry implementation tasks across PS5, Nagi and Strata. No source path is missing. The scheduler rotates among areas.
+- Focused tests pass: 51 tests across Strata, V2 smoke, binary audit, PS5 inventory summary, build-context summary and Nagi dependency verification.

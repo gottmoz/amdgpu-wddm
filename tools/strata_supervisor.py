@@ -46,6 +46,12 @@ def atomic_json(path, data):
     temp.replace(path)
 
 
+def mark_task_success(task, summary):
+    task.update(status="done", summary=summary[:1000])
+    task.pop("error", None)
+    task.pop("validation_error", None)
+
+
 def persist_metrics():
     """Merge counters monotonically so an older worker cannot roll metrics back."""
     latest = {}
@@ -248,6 +254,8 @@ def publish(task):
         content = path.read_text(encoding="utf-8")
         if re.search(r"-----BEGIN .*PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}", content):
             raise RuntimeError("possible credential in publication")
+        if relative.replace("\\", "/").startswith("tools/tests/") and not re.search(r"\bassert\b|\.assert[A-Z]\w*\(", content):
+            raise RuntimeError("automatic publication requires test assertions in each test artifact")
     review_log = ROOT / "STRATA_REVIEWED.json"
     review_data = json.loads(review_log.read_text(encoding="utf-8")) if review_log.exists() else {"schema_version": 1, "reviewed_task_ids": []}
     if task["id"] not in review_data["reviewed_task_ids"]:
@@ -367,7 +375,7 @@ def main():
             if task.get("verify"):
                 STATS["last_validation_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
                 with state_db: state_db.execute("INSERT INTO validations(task_id,result,created_utc) VALUES(?,?,?)",(task["id"],"passed",STATS["last_validation_utc"]))
-            task.update(status="done", summary=summary[:1000])
+            mark_task_success(task, summary)
             atomic_json(QUEUE, queue)
             commit = publish(task) if task.get("publish") else None
             if commit:
