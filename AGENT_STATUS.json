@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-26T11:19:00Z",
+  "utc": "2026-11-26T11:20:03Z",
   "state": "working",
   "current_task_id": "NAGI-VERIFIER-CASE-01",
   "research_area": "NAGI",
@@ -9,7 +9,7 @@
   "input_tokens": 4939042,
   "output_tokens": 511337,
   "last_successful_validation_utc": "2026-11-26T11:16:22Z",
-  "uptime_seconds": 10179,
+  "uptime_seconds": 10242,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 6700.6,
   "idle_seconds": 1410.0,
@@ -18,6 +18,6 @@
   "pending_reviews": 0,
   "published_commits": 33,
   "last_successful_commit": "196e40a2ca7435e636899696497336ed0096f660",
-  "next_task_id": "PS5-SUMMARY-CLI-01",
+  "next_task_id": "PS5-VERSION-DELTA-01",
   "work_branch": "agent/strata-v2"
 }
