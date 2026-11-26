@@ -40,3 +40,8 @@ VFCT*
 
 # Evidence logs are evidence (a global "*.log" exclude must not hide them)
 !/evidence/**/*.log
+
+# Local Strata SQLite state
+strata-state.sqlite3
+strata-state.sqlite3-shm
+strata-state.sqlite3-wal

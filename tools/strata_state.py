@@ -37,3 +37,13 @@ def recover_running(db):
         rows=db.execute("SELECT id,payload FROM tasks WHERE state='running'").fetchall()
         for task_id,payload in rows: db.execute("UPDATE tasks SET state='retry_scheduled',updated_utc=? WHERE id=?",(now(),task_id))
     return [x[0] for x in rows]
+
+def event(db, kind, payload):
+    with db: db.execute("INSERT INTO events(kind,payload,created_utc) VALUES(?,?,?)",(kind,json.dumps(payload),now()))
+
+def record_call(db, task_id, fingerprint, payload):
+    try:
+        with db: db.execute("INSERT INTO tool_calls(task_id,fingerprint,payload,created_utc) VALUES(?,?,?,?)",(task_id,fingerprint,json.dumps(payload),now()))
+        return True
+    except sqlite3.IntegrityError:
+        return False

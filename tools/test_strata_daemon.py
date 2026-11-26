@@ -94,7 +94,7 @@ class CoordinatorTests(unittest.TestCase):
     def test_compaction_keeps_more_than_sixteen_rounds_bounded(self):
         state = {"calls": 0, "max_messages": 0}
 
-        def fake_api(messages, _model):
+        def fake_api(messages, _model, _task):
             state["calls"] += 1
             state["max_messages"] = max(state["max_messages"], len(messages))
             if state["calls"] <= 17:
@@ -107,7 +107,7 @@ class CoordinatorTests(unittest.TestCase):
         metrics = Path(self.temp.name) / "metrics.json"
         with patch.object(worker, "api", side_effect=fake_api), patch.object(worker, "tool", return_value={"exit_code": 0}), \
              patch.object(worker, "CHECKPOINT", checkpoint), patch.object(worker, "METRICS", metrics):
-            result = worker.work({"id": "smoke", "objective": "prove more than 16 rounds", "allowed_writes": []}, "fake")
+            result = worker.work({"id": "smoke", "objective": "prove more than 16 rounds", "allowed_writes": [], "tools": ["terminal"]}, "fake")
         self.assertEqual(result, "done")
         self.assertEqual(state["calls"], 18)
         self.assertLess(state["max_messages"], 30)
@@ -116,3 +116,4 @@ class CoordinatorTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

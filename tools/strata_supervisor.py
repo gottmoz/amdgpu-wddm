@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 import time
+import strata_state
 from urllib.parse import urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
@@ -24,6 +25,7 @@ QUEUE = ROOT / "TASK_QUEUE.json"
 CHECKPOINT = RUNTIME / "STRATA_CHECKPOINT.json"
 MEMORY = RUNTIME / "STRATA_MEMORY.jsonl"
 METRICS = RUNTIME / "STRATA_METRICS.json"
+STATE_DB = RUNTIME / "strata-state.sqlite3"
 MODEL_URL = os.getenv("STRATA_URL", "http://127.0.0.1:8080").rstrip("/")
 PUBLIC_HOSTS = {"raw.githubusercontent.com", "github.com", "learn.microsoft.com", "www.xbox.com", "news.xbox.com", "www.amd.com", "blog.playstation.com"}
 STATS = {"tool_calls": 0, "input_tokens": 0, "output_tokens": 0, "last_validation_utc": None}
@@ -138,12 +140,12 @@ def tool(name, args, task):
     raise ValueError("unknown tool")
 
 
-def definitions():
+def definitions(task):
     def spec(name, description, properties, required):
         return {"type": "function", "function": {"name": name, "description": description, "parameters": {"type": "object", "properties": properties, "required": required}}}
     string = {"type": "string"}
     argv = {"type": "array", "items": string}
-    return [
+    all_tools = [
         spec("list_files", "List up to 80 matching repository paths", {"glob": string}, ["glob"]),
         spec("read_file", "Read at most 12k characters", {"path": string}, ["path"]),
         spec("fetch_url", "Read at most 12k bytes of an approved public source", {"url": string}, ["url"]),
@@ -153,20 +155,32 @@ def definitions():
         spec("compile", "Build KMD CompileOnly without installation", {}, []),
         spec("ghidra_headless", "Static analysis when GHIDRA_HEADLESS is configured", {"path": string}, ["path"]),
     ]
+    allowed=set(task.get("tools", []))
+    if task.get("sources"):
+        allowed.update(("read_file", "write_file"))
+        if task.get("allow_public_fetch"): allowed.add("fetch_url")
+    if not allowed: allowed.update(("read_file", "list_files", "write_file"))
+    return [item for item in all_tools if item["function"]["name"] in allowed]
 
 
-def api(messages, model):
-    body = json.dumps({"model": model, "messages": messages, "tools": definitions(), "tool_choice": "auto", "max_tokens": 2000, "temperature": 0}).encode()
+def api(messages, model, task):
+    tools=definitions(task)
+    body = json.dumps({"model": model, "messages": messages, "tools": tools, "tool_choice": "auto", "max_tokens": 2000, "temperature": 0}).encode()
     headers = {"Content-Type": "application/json"}
     if os.getenv("STRATA_API_KEY"):
         headers["Authorization"] = "Bearer " + os.environ["STRATA_API_KEY"]
     request = Request(MODEL_URL + "/v1/chat/completions", data=body, headers=headers)
-    with urlopen(request, timeout=180) as response:
+    with urlopen(request, timeout=float(os.getenv("STRATA_API_TIMEOUT", "240"))) as response:
         payload = json.load(response)
     usage = payload.get("usage") or {}
     STATS["input_tokens"] += usage.get("prompt_tokens", 0)
     STATS["output_tokens"] += usage.get("completion_tokens", 0)
-    return payload["choices"][0]
+    try:
+        choice=payload["choices"][0]
+        if not isinstance(choice.get("message"),dict): raise ValueError("missing message")
+        return choice
+    except (KeyError, IndexError, TypeError, ValueError) as exc:
+        raise RuntimeError(f"MALFORMED_MODEL_RESPONSE: {exc}") from exc
 
 
 def active_model():
@@ -204,15 +218,15 @@ def work(task, model):
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
     fixed_sources = task.get("sources", [])
     base = [
-        {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise. If sources are declared, read only those sources, then write the declared output promptly. Do not inspect unrelated files."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "system", "content": "You are a local BC-250 engineering agent. Follow task-scoped tool permissions. Never touch hardware, secrets or firmware bytes. Available tools are listed in the user task. For each tool call, use the exact schema: read_file {path}, write_file {path,content}. If source paths are listed, read only those. Complete the artifact and keep the final summary concise."},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": [x["function"]["name"] for x in definitions(task)], "examples": {"read_file": {"path": fixed_sources[0] if fixed_sources else "README.md"}, "write_file": {"path": task["allowed_writes"][0] if task["allowed_writes"] else "", "content": "..."}}, "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
     for step in range(100):
         summary = [{"role": "user", "content": "Earlier tool actions, compacted:\n" + "\n".join(compact[-20:])}] if compact else []
         messages = base + summary + [message for group in recent for message in group]
-        choice = api(messages, model)
+        choice = api(messages, model, task)
         message = choice["message"]
         group = [{k: v for k, v in message.items() if k in ("role", "content", "tool_calls")}]
         calls = message.get("tool_calls") or []
@@ -226,11 +240,22 @@ def work(task, model):
                 STATS["tool_calls"] += 1
                 try:
                     args = json.loads(call["function"]["arguments"])
-                    result = tool(call["function"]["name"], args, task)
+                    name=call["function"]["name"]
+                    if name not in {x["function"]["name"] for x in definitions(task)}:
+                        raise PermissionError(f"TOOL_NOT_ALLOWED: {name}")
+                    result = tool(name, args, task)
                 except Exception as error:
-                    result = {"error": str(error)}
+                    code="TOOL_NOT_ALLOWED" if isinstance(error,PermissionError) else "INVALID_TOOL_CALL"
+                    result = {"error_code":code,"reason":str(error),"available_tools":[x["function"]["name"] for x in definitions(task)],"suggested_action":"Use read_file for a declared source, then write_file to the declared output."}
+                    invalid=int(task.get("invalid_tool_calls",0))+1; task["invalid_tool_calls"]=invalid
+                    if invalid>=3:
+                        atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid})
+                        raise RuntimeError("RETRY_SCHEDULED: repeated invalid tool calls")
                 group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
                 atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
+                db = strata_state.connect(STATE_DB)
+                try: strata_state.checkpoint(db, task["id"], {"step": step, "tool": call["function"]["name"], "result": str(result)[:1000]})
+                finally: db.close()
                 atomic_json(METRICS, STATS)
         recent.append(group)
         if len(recent) > 6:
@@ -251,15 +276,18 @@ def main():
     args = parser.parse_args()
     QUEUE = args.queue if args.queue.is_absolute() else ROOT / args.queue
     model = active_model()
+    state_db = strata_state.connect(STATE_DB)
+    strata_state.recover_running(state_db)
     while True:
         queue = json.loads(QUEUE.read_text(encoding="utf-8"))
-        task = next((item for item in queue["tasks"] if item["status"] in ("pending", "running") and (not args.task_id or item["id"] == args.task_id)), None)
+        task = next((item for item in queue["tasks"] if item["status"] in ("pending", "retry_scheduled") and item.get("retry_at",0)<=time.time() and (not args.task_id or item["id"] == args.task_id)), None)
         if task is None:
             return 0
         if current_branch() != task["branch"] or task["branch"] == "main":
             raise RuntimeError("switch to the task branch before running")
         task["status"] = "running"
         atomic_json(QUEUE, queue)
+        strata_state.upsert_task(state_db, task, "running")
         try:
             summary = work(task, model)
             if not all(confined(path).is_file() for path in task["allowed_writes"]):
@@ -270,20 +298,26 @@ def main():
                     raise RuntimeError("verification failed: " + str(check) + " " + result["stderr"][-1000:])
             if task.get("verify"):
                 STATS["last_validation_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                with state_db: state_db.execute("INSERT INTO validations(task_id,result,created_utc) VALUES(?,?,?)",(task["id"],"passed",STATS["last_validation_utc"]))
             task.update(status="done", summary=summary[:1000])
             atomic_json(QUEUE, queue)
             commit = publish(task) if task.get("publish") else None
             if commit:
                 task["commit"] = commit
         except Exception as error:
-            task.update(status="blocked", error=str(error)[:1000])
-        atomic_json(QUEUE, queue)
-        with MEMORY.open("a", encoding="utf-8") as file:
-            file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
-        atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"]})
-        atomic_json(METRICS, STATS)
-        if args.once or task["status"] == "blocked":
-            return 0 if task["status"] == "done" else 1
+            attempts=int(task.get("attempts",0))+1
+            task.update(status="retry_scheduled" if attempts<=3 else "quarantined",attempts=attempts,error=str(error)[:1000],retry_at=time.time()+min(60*2**(attempts-1),900))
+        finally:
+            try:
+                atomic_json(QUEUE, queue)
+                strata_state.upsert_task(state_db, task, task["status"])
+                with MEMORY.open("a", encoding="utf-8") as file:
+                    file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
+                atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"], "attempts": task.get("attempts",0)})
+                atomic_json(METRICS, STATS)
+            except Exception as persist_error:
+                strata_state.event(state_db,"persistence_error",{"task":task.get("id"),"error":str(persist_error)})
+        if args.once: state_db.close(); return 0 if task["status"]=="done" else 1
         time.sleep(1)
 
 
