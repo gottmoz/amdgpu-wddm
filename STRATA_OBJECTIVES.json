@@ -1403,6 +1403,43 @@
       "publication_policy": "unit-tested-code",
       "commit_message": "strata: implement strata heartbeat reviews 01",
       "origin": "implementation_template"
+    },
+    {
+      "id": "PS5-ELF-SUMMARY-MD-01",
+      "area": "PS5",
+      "objective": "Add a deterministic Markdown renderer for the existing PS5 ELF inventory summary and a CLI flag. Include counts and explicit metadata-only limitations; add synthetic output assertions. Do not infer component identity.",
+      "sources": [
+        "tools/firmware/elf_inventory_summary.py",
+        "PS5_ELF_INVENTORY_SUMMARY.json"
+      ],
+      "allowed_writes": [
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_ps5_summary_markdown.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_ps5_summary_markdown"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_ps5_summary_markdown"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "ps5: add deterministic inventory markdown report",
+      "origin": "implementation_template"
     }
   ]
 }
