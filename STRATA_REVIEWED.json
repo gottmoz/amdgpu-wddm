@@ -44,8 +44,9 @@
     "S005",
     "STRATA-OPS-02",
     "STRATA-OPS-03",
-    "STRATA-PUBLISH-GATE-01"
+    "STRATA-PUBLISH-GATE-01",
+    "PS5-SUMMARY-STRICT-01"
   ],
-  "reviewed_utc": "2026-11-26T10:24:33Z",
-  "review_basis": "Codex source review plus deterministic test verification; low-risk Python artifacts follow restricted auto-publication policy."
+  "reviewed_utc": "2026-11-26T10:31:50Z",
+  "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
