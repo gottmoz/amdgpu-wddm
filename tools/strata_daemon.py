@@ -266,6 +266,8 @@ def update_failure(path, task, stalled=False, reason=None):
     if checkpoint.get("task") == task["id"]:
         current["output_tokens_total"] = max(int(current.get("output_tokens_total", 0)),
                                               int(checkpoint.get("output_tokens_total", 0)))
+        current["input_tokens_total"] = max(int(current.get("input_tokens_total", 0)),
+                                             int(checkpoint.get("input_tokens_total", 0)))
     retriable = stalled or any(word in error.lower() for word in ("worker failed before checkpoint", "urlerror", "timed out", "connection", "http 5"))
     attempts = current.get("attempts", 0) + 1
     current["attempts"] = attempts
@@ -319,8 +321,10 @@ def run_task(path, task, stall_seconds=None, tick=None):
             process.wait(timeout=10)
             prior = json.loads(worker.CHECKPOINT.read_text(encoding="utf-8")) if worker.CHECKPOINT.exists() else {}
             output_tokens_total = prior.get("output_tokens_total", task.get("output_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("output_tokens_total", 0)
+            input_tokens_total = prior.get("input_tokens_total", task.get("input_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("input_tokens_total", 0)
             worker.atomic_json(worker.CHECKPOINT, {"task": task["id"], "status": "worker_timeout",
                                                    "elapsed_seconds": round(elapsed, 1),
+                                                   "input_tokens_total": input_tokens_total,
                                                    "output_tokens_total": output_tokens_total})
             update_failure(path, task, stalled=True, reason="TASK_EXECUTION_TIMEOUT")
             return "timed_out"
@@ -331,8 +335,10 @@ def run_task(path, task, stall_seconds=None, tick=None):
             process.wait(timeout=10)
             prior = json.loads(worker.CHECKPOINT.read_text(encoding="utf-8")) if worker.CHECKPOINT.exists() else {}
             output_tokens_total = prior.get("output_tokens_total", task.get("output_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("output_tokens_total", 0)
+            input_tokens_total = prior.get("input_tokens_total", task.get("input_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("input_tokens_total", 0)
             worker.atomic_json(worker.CHECKPOINT, {"task": task["id"], "status": "progress_stalled",
                                                    "elapsed_seconds": round(elapsed, 1),
+                                                   "input_tokens_total": input_tokens_total,
                                                    "output_tokens_total": output_tokens_total})
             update_failure(path, task, stalled=True)
             return "stalled"

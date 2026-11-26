@@ -68,6 +68,7 @@ class StrataLimitTests(unittest.TestCase):
                     checkpoint = json.loads((root / "checkpoint.json").read_text(encoding="utf-8"))
                     self.assertEqual(checkpoint["status"], "response_token_limit_exceeded")
                     self.assertEqual(checkpoint["output_tokens_this_response"], 8193)
+                    self.assertEqual(checkpoint["input_tokens_total"], 20)
                     import sqlite3
                     db = sqlite3.connect(root / "state.sqlite3")
                     try:
@@ -76,6 +77,7 @@ class StrataLimitTests(unittest.TestCase):
                         db.close()
                     self.assertEqual(event[0], "model_response")
                     self.assertIn("8193", event[1])
+                    self.assertIn("input_tokens_this_response", event[1])
             finally:
                 worker.STATS.clear()
                 worker.STATS.update(old_stats)

@@ -279,11 +279,14 @@ def api(messages, model, task, step=0):
     output_tokens = usage.get("completion_tokens", max_tokens)
     if isinstance(prompt_tokens, int) and prompt_tokens > 0:
         STATS["input_tokens"] += prompt_tokens
+        task["input_tokens_total"] = int(task.get("input_tokens_total", 0)) + prompt_tokens
     if not isinstance(output_tokens, int) or output_tokens < 0:
         output_tokens = max_tokens
     STATS["output_tokens"] += output_tokens
     task["output_tokens_total"] = int(task.get("output_tokens_total", 0)) + output_tokens
     telemetry = {"task": task["id"], "step": step, "status": "model_response",
+                             "input_tokens_this_response": prompt_tokens if isinstance(prompt_tokens, int) and prompt_tokens > 0 else None,
+                             "input_tokens_total": task.get("input_tokens_total", 0),
                              "output_tokens_this_response": output_tokens,
                              "output_tokens_total": task["output_tokens_total"],
                              "max_tokens_this_response": max_tokens}
@@ -292,7 +295,8 @@ def api(messages, model, task, step=0):
     db = strata_state.connect(STATE_DB)
     try:
         strata_state.event(db, "model_response", {key: telemetry[key] for key in (
-            "task", "step", "output_tokens_this_response", "output_tokens_total",
+            "task", "step", "input_tokens_this_response", "input_tokens_total",
+            "output_tokens_this_response", "output_tokens_total",
             "max_tokens_this_response")})
     finally:
         db.close()
@@ -376,6 +380,8 @@ def work(task, model):
     if checkpoint.get("task") == task["id"]:
         task["output_tokens_total"] = max(int(task.get("output_tokens_total", 0)),
                                            int(checkpoint.get("output_tokens_total", 0)))
+        task["input_tokens_total"] = max(int(task.get("input_tokens_total", 0)),
+                                          int(checkpoint.get("input_tokens_total", 0)))
     started = time.monotonic()
     tool_guard = ToolCallGuard(limits["max_identical_tool_calls"])
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
