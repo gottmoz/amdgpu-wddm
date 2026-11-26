@@ -46,6 +46,21 @@ def atomic_json(path, data):
     temp.replace(path)
 
 
+def persist_metrics():
+    """Merge counters monotonically so an older worker cannot roll metrics back."""
+    latest = {}
+    if METRICS.exists():
+        try:
+            latest = json.loads(METRICS.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            latest = {}
+    for key in ("tool_calls", "input_tokens", "output_tokens"):
+        STATS[key] = max(int(STATS.get(key, 0)), int(latest.get(key, 0)))
+    timestamps = [value for value in (STATS.get("last_validation_utc"), latest.get("last_validation_utc")) if value]
+    STATS["last_validation_utc"] = max(timestamps) if timestamps else None
+    atomic_json(METRICS, STATS)
+
+
 def confined(relative, *, writable=False):
     path = (ROOT / relative).resolve()
     public_manifest = relative == "tools/firmware/cyan_skillfish2.json" and not writable
@@ -278,7 +293,7 @@ def work(task, model):
                 db = strata_state.connect(STATE_DB)
                 try: strata_state.checkpoint(db, task["id"], {"step": step, "tool": call["function"]["name"], "result": str(result)[:1000]})
                 finally: db.close()
-                atomic_json(METRICS, STATS)
+                persist_metrics()
         recent.append(group)
         if len(recent) > 6:
             old = recent.pop(0)
@@ -338,7 +353,7 @@ def main():
                 with MEMORY.open("a", encoding="utf-8") as file:
                     file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
                 atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"], "attempts": task.get("attempts",0)})
-                atomic_json(METRICS, STATS)
+                persist_metrics()
             except Exception as persist_error:
                 strata_state.event(state_db,"persistence_error",{"task":task.get("id"),"error":str(persist_error)})
         if args.once: state_db.close(); return 0 if task["status"]=="done" else 1

@@ -50,6 +50,19 @@ class PublishPolicyTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'credential'):
                 worker.publish(self.task())
 
+    def test_metrics_merge_never_moves_counters_or_validation_backwards(self):
+        metrics = self.root / 'metrics.json'
+        metrics.write_text('{"tool_calls": 900, "input_tokens": 4000, "output_tokens": 300, "last_validation_utc": "2026-11-26T10:18:37Z"}\n', encoding='utf-8')
+        with patch.object(worker, 'METRICS', metrics), patch.dict(worker.STATS, {
+            'tool_calls': 800, 'input_tokens': 3500, 'output_tokens': 280,
+            'last_validation_utc': '2026-11-26T09:52:03Z'}):
+            worker.persist_metrics()
+        actual = __import__('json').loads(metrics.read_text(encoding='utf-8'))
+        self.assertEqual(actual['tool_calls'], 900)
+        self.assertEqual(actual['input_tokens'], 4000)
+        self.assertEqual(actual['output_tokens'], 300)
+        self.assertEqual(actual['last_validation_utc'], '2026-11-26T10:18:37Z')
+
 
 if __name__ == '__main__':
     unittest.main()
