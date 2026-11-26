@@ -65,3 +65,5 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 
 
 - PS5 segment-hash tool reviewed and tightened at 2026-11-26T11:02:10Z: accepts only 64-character hexadecimal SHA-256 values and requires `validated: true`; malformed hashes and unvalidated rows are excluded. Its declared source summary contains no per-segment hashes, so actual firmware-version grouping remains unavailable until structured per-segment metadata is present. The synthetic suite passes.
+
+- Follow-up validation at 2026-11-26T11:12:15Z: 67 focused tests passed, including the Nagi JSON verifier tests and corrected PS5 segment digest rules.

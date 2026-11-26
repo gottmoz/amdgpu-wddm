@@ -52,3 +52,5 @@ The full focused suite passed 51 tests at this checkpoint. The eight-hour endura
 ## PS5 tool review – 2026-11-26T11:02:10Z
 
 Reviewed the automatically published segment-hash utility. Corrected SHA-256 syntax validation and the requirement for explicit validation; the 9-test module and 60-test focused suite pass. Current PS5 summary input lacks per-segment digests, so no real cross-version segment match has been established.
+
+Follow-up regression validation at 2026-11-26T11:12:15Z passed 67 tests across Strata, Nagi, PS5 inventory/segment metadata and binary audit tooling.
