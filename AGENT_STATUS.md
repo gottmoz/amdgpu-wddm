@@ -1,23 +1,23 @@
 # Strata status
 
-- utc: `2026-11-26T12:57:38Z`
+- utc: `2026-11-26T12:57:47Z`
 - state: `idle`
 - current task id: `None`
 - research area: `None`
-- completed count: `54`
+- completed count: `55`
 - failed count: `11`
 - tool calls: `1362`
 - input tokens: `6448235`
 - output tokens: `830069`
-- last successful validation utc: `2026-11-26T12:57:34Z`
-- uptime seconds: `16097`
+- last successful validation utc: `2026-11-26T12:57:42Z`
+- uptime seconds: `16106`
 - endurance target seconds: `28800`
-- actual work seconds: `12581.2`
+- actual work seconds: `12586.2`
 - idle seconds: `1410.0`
 - idle reason: `None`
 - automatic recoveries: `12`
 - pending reviews: `0`
-- published commits: `45`
-- last successful commit: `01a9c3e1894d5d50fcad551600f8187aa43d66e6`
-- next task id: `PS5-GHIDRA-JSON-VALIDATOR-01`
+- published commits: `46`
+- last successful commit: `d15d2d3a7ff31cf4ece0d5173b2d3bd397134357`
+- next task id: `PS5-SEGMENT-GROUP-EDGE-01`
 - work branch: `agent/strata-v2`
