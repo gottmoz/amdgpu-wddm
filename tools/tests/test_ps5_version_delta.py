@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 
-from tools.firmware.ps5_version_delta import SCHEMA, compare_containers, main
+from tools.firmware.ps5_version_delta import SCHEMA, compare_containers, inventory_summary, main
 
 SUMMARY = {
     "schema_version": 1,
@@ -62,6 +62,20 @@ class TestPs5VersionDelta(unittest.TestCase):
         self.assertEqual(result["hash_equality"]["only_in_target"], ["b" * 64])
         self.assertEqual(result["field_deltas"]["candidate_count"]["delta"], 1)
         self.assertIn("component identity", " ".join(result["limitations"]))
+
+    def test_three_version_inventory_has_pairwise_deltas(self):
+        rows = [
+            {"source_container": "v1", "sha256": "a" * 64, "bounds_valid": True,
+             "ghidra_functions": 0, "validated_executable_bytes": 20},
+            {"source_container": "v2", "sha256": "a" * 64, "bounds_valid": True,
+             "ghidra_functions": 0, "validated_executable_bytes": 25},
+            {"source_container": "v3", "sha256": "b" * 64, "bounds_valid": True,
+             "ghidra_functions": 0, "validated_executable_bytes": 30},
+        ]
+        result = inventory_summary(rows, ["v1", "v2", "v3"])
+        self.assertEqual(len(result["pairwise_comparison"]), 3)
+        self.assertEqual(result["pairwise_comparison"][0]["identical_hash_count"], 1)
+        self.assertEqual(result["pairwise_comparison"][2]["only_in_target_count"], 1)
 
     def test_exact_overlap_and_deltas(self):
         result = compare_containers(SUMMARY, "1100_PS5UPDATE1.PUP.dec", "1120_PS5UPDATE1.PUP.dec")

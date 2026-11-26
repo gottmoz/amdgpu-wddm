@@ -149,6 +149,39 @@ def compare_containers(summary: Any, base: str, target: str) -> Dict[str, Any]:
     }
 
 
+def inventory_summary(summary: Any, versions: Iterable[str]) -> Dict[str, Any]:
+    """Summarize candidate counts and pairwise exact-hash deltas for versions."""
+    containers = _containers(summary)
+    names = list(versions)
+    missing = [name for name in names if name not in containers]
+    if missing:
+        raise ValueError("unknown container(s): " + ", ".join(missing))
+    pairs = []
+    for index, base in enumerate(names):
+        for target in names[index + 1:]:
+            result = compare_containers(summary, base, target)
+            equality = result["hash_equality"]
+            pairs.append({
+                "base": base,
+                "target": target,
+                "identical_hash_count": equality["identical_count"],
+                "only_in_base_count": len(equality["only_in_base"]),
+                "only_in_target_count": len(equality["only_in_target"]),
+                "candidate_count_delta": result["field_deltas"].get("candidate_count", {}).get("delta", 0),
+                "validated_executable_bytes_delta": result["field_deltas"].get("validated_executable_bytes", {}).get("delta", 0),
+            })
+    return {
+        "schema": SCHEMA,
+        "versions": {name: containers[name] for name in names},
+        "pairwise_comparison": pairs,
+        "limitations": [
+            "SHA-256 equality compares complete candidate files, not individual ELF segments.",
+            "Hash equality is byte-level only and does not establish component identity.",
+            "Candidate counts can differ because extraction yielded different numbers of bounded candidates.",
+        ],
+    }
+
+
 def main(argv: List[str]) -> int:
     if len(argv) != 3:
         print("usage: ps5_version_delta.py <summary.json> <base> <target>", file=sys.stderr)

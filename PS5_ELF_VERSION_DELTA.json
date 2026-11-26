@@ -1,0 +1,69 @@
+{
+  "limitations": [
+    "SHA-256 equality compares complete candidate files, not individual ELF segments.",
+    "Hash equality is byte-level only and does not establish component identity.",
+    "Candidate counts can differ because extraction yielded different numbers of bounded candidates."
+  ],
+  "pairwise_comparison": [
+    {
+      "base": "1100_PS5UPDATE1.PUP.dec",
+      "candidate_count_delta": 0,
+      "identical_hash_count": 0,
+      "only_in_base_count": 10,
+      "only_in_target_count": 10,
+      "target": "1120_PS5UPDATE1.PUP.dec",
+      "validated_executable_bytes_delta": -1441984
+    },
+    {
+      "base": "1100_PS5UPDATE1.PUP.dec",
+      "candidate_count_delta": 4,
+      "identical_hash_count": 0,
+      "only_in_base_count": 10,
+      "only_in_target_count": 14,
+      "target": "1140_PS5UPDATE1.PUP.dec",
+      "validated_executable_bytes_delta": 71984104
+    },
+    {
+      "base": "1120_PS5UPDATE1.PUP.dec",
+      "candidate_count_delta": 4,
+      "identical_hash_count": 0,
+      "only_in_base_count": 10,
+      "only_in_target_count": 14,
+      "target": "1140_PS5UPDATE1.PUP.dec",
+      "validated_executable_bytes_delta": 73426088
+    }
+  ],
+  "parser": "tools/firmware/binary_audit.py (recorded inventory; no new Ghidra imports)",
+  "schema": "bc250-ps5-version-delta/1",
+  "source_inventory": "PS5_ELF_INVENTORY.json",
+  "source_inventory_sha256": "4f812aefe17ad7cd5b66400841605013c42c57905fc307e28e96bee85e1360a4",
+  "versions": {
+    "1100_PS5UPDATE1.PUP.dec": {
+      "bounds_invalid_count": 0,
+      "bounds_valid_count": 10,
+      "candidate_count": 10,
+      "ghidra_function_total": 0,
+      "ghidra_positive_function_count": 0,
+      "ghidra_zero_function_count": 10,
+      "validated_executable_bytes": 46213492
+    },
+    "1120_PS5UPDATE1.PUP.dec": {
+      "bounds_invalid_count": 0,
+      "bounds_valid_count": 10,
+      "candidate_count": 10,
+      "ghidra_function_total": 0,
+      "ghidra_positive_function_count": 0,
+      "ghidra_zero_function_count": 10,
+      "validated_executable_bytes": 44771508
+    },
+    "1140_PS5UPDATE1.PUP.dec": {
+      "bounds_invalid_count": 0,
+      "bounds_valid_count": 14,
+      "candidate_count": 14,
+      "ghidra_function_total": 0,
+      "ghidra_positive_function_count": 0,
+      "ghidra_zero_function_count": 14,
+      "validated_executable_bytes": 118197596
+    }
+  }
+}
