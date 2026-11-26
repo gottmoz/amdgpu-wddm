@@ -1,18 +1,18 @@
 # Strata status
 
-- utc: `2026-11-26T13:13:19Z`
-- state: `working`
-- current task id: `PS5-ELF-SUMMARY-MD-01`
-- research area: `PS5`
+- utc: `2026-11-26T13:13:47Z`
+- state: `idle`
+- current task id: `None`
+- research area: `None`
 - completed count: `56`
 - failed count: `12`
 - tool calls: `1397`
-- input tokens: `6679360`
-- output tokens: `886939`
+- input tokens: `6691182`
+- output tokens: `889244`
 - last successful validation utc: `2026-11-26T13:01:44Z`
-- uptime seconds: `17038`
+- uptime seconds: `17066`
 - endurance target seconds: `28800`
-- actual work seconds: `13187.3`
+- actual work seconds: `13529.5`
 - idle seconds: `1410.0`
 - idle reason: `None`
 - automatic recoveries: `12`
