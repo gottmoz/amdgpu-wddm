@@ -4,19 +4,20 @@
     {
       "instruction_id": "SUP-001",
       "processed_utc": "2026-11-26T13:28:30Z",
-      "disposition": "automation_installed; first scheduled run pending verification",
+      "disposition": "automation installed; periodic execution verification pending",
       "evidence": [
-        "Codex local cron automation bc-250-instruction-inbox created ACTIVE for project D:\\BC250-Development.",
-        "Scheduler accepted 15-minute recurrence FREQ=MINUTELY;INTERVAL=15.",
-        "Automation targets authenticated reads of gottmoz/amdgpu-wddm/CODEX_INSTRUCTIONS.md on agent/strata-inbox.",
-        "CODEX_ACK.json is being written on agent/strata-status; AGENT_STATUS.json is untouched."
+        "Codex local cron automation bc-250-instruction-inbox is ACTIVE for D:\\BC250-Development.",
+        "Scheduler accepted a 15-minute recurrence.",
+        "Authenticated reads are restricted to gottmoz/amdgpu-wddm/CODEX_INSTRUCTIONS.md on agent/strata-inbox.",
+        "CODEX_ACK.json is isolated to agent/strata-status. AGENT_STATUS.json was not changed.",
+        "Reviewed SHA-256 validators and replaced anchored match checks with fullmatch; commit c93250b20 on agent/strata-v2."
       ],
       "validation": [
-        "Automation configuration inspected at C:\\Users\\jimmy\\.codex\\automations\\bc-250-instruction-inbox\\automation.toml.",
-        "Repository branch agent/strata-status confirmed to exist."
+        "Automation config inspected at C:\\Users\\jimmy\\.codex\\automations\\bc-250-instruction-inbox\\automation.toml and reports ACTIVE with a 15-minute interval.",
+        "Regression suites tools.tests.test_ps5_summary_malformed and tools.tests.test_ghidra_json_validator passed: 51 tests."
       ],
       "blockers": [
-        "The scheduler has not yet produced an observed recurring run; verify its first run and follow-up acknowledgement."
+        "Awaiting observation of the first scheduler-triggered run and its acknowledgement update."
       ]
     }
   ]
