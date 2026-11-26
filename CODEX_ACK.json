@@ -19,6 +19,27 @@
       "blockers": [
         "Awaiting observation of the first scheduler-triggered run and its acknowledgement update."
       ]
+    },
+    {
+      "instruction_id": "SUP-002-20261126T1417Z",
+      "observed_utc": "2026-11-26T14:29:33Z",
+      "disposition": "blocked",
+      "run_status": "scheduler-triggered, partial validation complete",
+      "evidence": [
+        "Existing active 15-minute Codex automation. Scheduler reports previous run 2026-11-26T14:13:03.808Z and local memory records its authenticated read at 14:13:20Z. This run was delivered by the scheduler.",
+        "Strata endurance snapshot reports no eligible ready task, 5580 idle seconds and 156 worker runs. Inbox queue empty. Generated queue entries AUTO-XRE03-01 and AUTO-XRE06-01 are done."
+      ],
+      "validation": [
+        "Re-ran release-tester.39.json in plan-only mode. Exit 1 before preflight. Context SHA256 2E7A645EB522C781D08988DEB13956FBA0631F3058AA76D616B060DCBDE81883. See scratch/release-plan-after-sdk-x86-v2/build-context.json."
+      ],
+      "blockers": [
+        "19 absent inputs and two unsupported links remain as documented in 47debf029: reference headers, eight AMD firmware inputs, two Linux inputs, four toolchain paths, two package paths, and SDK/WDK c links.",
+        "Queue intake and retry contract not verified. No task enqueued or new engineering commit published."
+      ]
     }
-  ]
+  ],
+  "last_poll_utc": "2026-11-26T14:29:33Z",
+  "observed_instruction_id": "SUP-002-20261126T1417Z",
+  "trigger": "scheduler-triggered",
+  "result": "blocked"
 }
