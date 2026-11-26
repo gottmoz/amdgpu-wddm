@@ -1,23 +1,23 @@
 # Strata status
 
-- utc: `2026-11-26T09:05:15Z`
+- utc: `2026-11-26T09:05:34Z`
 - state: `idle`
 - current task id: `None`
 - research area: `None`
 - completed count: `19`
 - failed count: `2`
-- tool calls: `836`
-- input tokens: `3676997`
-- output tokens: `220308`
+- tool calls: `838`
+- input tokens: `3682278`
+- output tokens: `220871`
 - last successful validation utc: `2026-11-26T09:04:59Z`
-- uptime seconds: `2154`
+- uptime seconds: `2173`
 - endurance target seconds: `28800`
-- actual work seconds: `1519.6`
+- actual work seconds: `1534.7`
 - idle seconds: `0`
 - idle reason: `None`
 - automatic recoveries: `6`
 - pending reviews: `14`
 - published commits: `13`
 - last successful commit: `bf84ebd2201964be72084340896600d5316a9c8d`
-- next task id: `PS5-INV-11`
+- next task id: `REVIEW-PS5-INV-01`
 - work branch: `agent/strata-v2`
