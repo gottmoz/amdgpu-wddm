@@ -436,8 +436,7 @@ def main():
                     endurance = endurance_state()
                     endurance["worker_runs"] = endurance.get("worker_runs", 0) + 1
                     save(ENDURANCE, endurance)
-                    _, upcoming = next_task(branch)
-                    state = "working" if upcoming else "idle"
+                    state = "idle"
                     heartbeat(args.repo, branch, state, None)
                     last_heartbeat = time.time()
             except Exception as error:
