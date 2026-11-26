@@ -84,6 +84,19 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(saved["status"], "retry_scheduled")
         self.assertEqual(saved["attempts"], 1)
 
+    def test_unexpected_worker_exit_is_rescheduled_then_quarantined(self):
+        path = Path(self.temp.name) / "worker-exit.json"
+        task = {"id": "T-worker-exit", "branch": "agent/strata-v2", "status": "running"}
+        daemon.save(path, {"schema_version": 1, "tasks": [task]})
+        for attempt in range(3):
+            daemon.update_failure(path, task)
+            saved = daemon.load(path)["tasks"][0]
+            self.assertEqual(saved["status"], "pending")
+            self.assertEqual(saved["attempts"], attempt + 1)
+            task = saved
+        daemon.update_failure(path, task)
+        self.assertEqual(daemon.load(path)["tasks"][0]["status"], "blocked")
+
     def test_low_backlog_generates_source_review_once(self):
         base = Path(self.temp.name)
         (base / "source.md").write_text("Source claim.\n", encoding="utf-8")

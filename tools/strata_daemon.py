@@ -278,7 +278,7 @@ def update_failure(path, task, stalled=False):
     if current.get("status") in ("retry_scheduled", "quarantined"):
         return
     error = current.get("error", "stalled worker" if stalled else "worker failed before checkpoint")
-    retriable = stalled or any(word in error.lower() for word in ("urlerror", "timed out", "connection", "http 5"))
+    retriable = stalled or any(word in error.lower() for word in ("worker failed before checkpoint", "urlerror", "timed out", "connection", "http 5"))
     attempts = current.get("attempts", 0) + 1
     current["attempts"] = attempts
     if retriable and attempts <= 3:
