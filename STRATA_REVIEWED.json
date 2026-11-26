@@ -47,8 +47,9 @@
     "STRATA-OPS-02",
     "STRATA-OPS-03",
     "STRATA-PUBLISH-GATE-01",
-    "NAGI-BUILD-CONTEXT-01"
+    "NAGI-BUILD-CONTEXT-01",
+    "NAGI-VERIFIER-JSON-01"
   ],
-  "reviewed_utc": "2026-11-26T10:44:41Z",
+  "reviewed_utc": "2026-11-26T10:56:14Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
