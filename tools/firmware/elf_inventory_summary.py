@@ -16,7 +16,7 @@ import sys
 
 
 SCHEMA_VERSION = 1
-SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+SHA256_RE = re.compile(r"[0-9a-fA-F]{64}")
 REQUIRED_FIELDS = (
     "candidate",
     "sha256",
@@ -85,7 +85,7 @@ def _validate_row(row, index):
     digest = row["sha256"]
     if digest is None:
         raise ValueError(f"inventory row {index} field 'sha256' must be a 64-character hex string, got None")
-    if not isinstance(digest, str) or not SHA256_RE.match(digest):
+    if not isinstance(digest, str) or not SHA256_RE.fullmatch(digest):
         raise ValueError(
             f"inventory row {index} field 'sha256' must be a 64-character hex string, got {digest!r}"
         )

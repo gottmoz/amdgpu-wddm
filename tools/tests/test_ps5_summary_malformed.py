@@ -85,7 +85,7 @@ class MalformedSha256Test(unittest.TestCase):
         self.assertIn("got None", str(ctx.exception))
 
     def test_short_and_long_and_non_hex_sha256(self):
-        for value in ("abc", "0" * 63, "0" * 65, "z" * 64, "0" * 64 + " "):
+        for value in ("abc", "0" * 63, "0" * 65, "z" * 64, "0" * 64 + " ", "0" * 64 + "\n"):
             with self.assertRaises(ValueError) as ctx:
                 summarize([row(sha256=value)])
             self.assertIn("64-character hex string", str(ctx.exception))

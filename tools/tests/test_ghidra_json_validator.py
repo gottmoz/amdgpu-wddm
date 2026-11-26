@@ -219,7 +219,7 @@ class InvalidValueRejectionTest(unittest.TestCase):
             validate_metadata(payload)
 
     def test_bad_sha256(self):
-        for bad in ("4F812AEFE17AD7CD5B66400841605013C42C57905FC307E28E96BEE85E1360A4", "abc", 123):
+        for bad in ("4F812AEFE17AD7CD5B66400841605013C42C57905FC307E28E96BEE85E1360A4", "abc", 123, "a" * 64 + "\n"):
             payload = base_metadata()
             payload["source_inventory_sha256"] = bad
             with self.assertRaises(ValueError):

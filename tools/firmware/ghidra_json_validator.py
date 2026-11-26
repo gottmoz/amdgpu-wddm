@@ -20,7 +20,7 @@ import re
 from typing import Any, Dict, Mapping, Tuple
 
 SCHEMA_VERSION = 1
-SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 REQUIRED_TOP_LEVEL: Tuple[str, ...] = (
     "schema_version",
@@ -97,7 +97,7 @@ def validate_metadata(payload: Any) -> Dict[str, Any]:
         raise ValueError(f"unsupported schema_version: {payload['schema_version']!r}")
 
     sha = payload["source_inventory_sha256"]
-    if not isinstance(sha, str) or not SHA256_RE.match(sha):
+    if not isinstance(sha, str) or not SHA256_RE.fullmatch(sha):
         raise ValueError("source_inventory_sha256 must be a lowercase 64-char hex digest")
 
     limitations = payload["limitations"]
