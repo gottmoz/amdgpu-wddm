@@ -45,6 +45,7 @@ DEFAULT_TASK_LIMITS = {
     "max_execution_seconds": ("STRATA_TASK_TIMEOUT_SECONDS", 900),
     "max_progress_stall_seconds": ("STRATA_PROGRESS_TIMEOUT_SECONDS", 900),
     "max_identical_tool_calls": ("STRATA_MAX_IDENTICAL_TOOL_CALLS", 2),
+    "max_history_groups": ("STRATA_MAX_HISTORY_GROUPS", 3),
 }
 
 
@@ -79,9 +80,14 @@ def response_token_limit(task):
 class ToolCallGuard:
     """Stop a task after it repeats the same tool call beyond its configured allowance."""
 
-    def __init__(self, limit=2):
+    def __init__(self, limit=2, counts=None):
         self.limit = limit
-        self.counts = {}
+        self.counts = {
+            fingerprint: int(count)
+            for fingerprint, count in (counts or {}).items()
+            if isinstance(fingerprint, str) and re.fullmatch(r"[0-9a-f]{64}", fingerprint)
+            and isinstance(count, int) and not isinstance(count, bool) and count > 0
+        }
 
     def observe(self, name, arguments):
         canonical = json.dumps({"tool": name, "arguments": arguments}, sort_keys=True,
@@ -90,6 +96,17 @@ class ToolCallGuard:
         count = self.counts.get(fingerprint, 0) + 1
         self.counts[fingerprint] = count
         return {"fingerprint": fingerprint, "count": count, "repeated_limit": count > self.limit}
+
+
+def compact_history(recent, compact, step, max_groups):
+    while len(recent) > max_groups:
+        old = recent.pop(0)
+        for item in old:
+            for call in item.get("tool_calls", []):
+                compact.append(f"step {step}: {call['function']['name']} {call['function']['arguments'][:120]}")
+            if item.get("role") == "tool":
+                compact.append(f"step {step}: tool result {str(item.get('content', ''))[:240]}")
+    return compact[-12:]
 
 
 def atomic_json(path, data):
@@ -382,8 +399,9 @@ def work(task, model):
                                            int(checkpoint.get("output_tokens_total", 0)))
         task["input_tokens_total"] = max(int(task.get("input_tokens_total", 0)),
                                           int(checkpoint.get("input_tokens_total", 0)))
+        task["tool_call_counts"] = checkpoint.get("tool_call_counts", task.get("tool_call_counts", {}))
     started = time.monotonic()
-    tool_guard = ToolCallGuard(limits["max_identical_tool_calls"])
+    tool_guard = ToolCallGuard(limits["max_identical_tool_calls"], task.get("tool_call_counts"))
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
     fixed_sources = task.get("sources", [])
     available_tools = [item["function"]["name"] for item in definitions(task)]
@@ -434,6 +452,7 @@ def work(task, model):
                     args = json.loads(call["function"]["arguments"])
                     name=call["function"]["name"]
                     loop = tool_guard.observe(name, args)
+                    task["tool_call_counts"] = dict(tool_guard.counts)
                     db = strata_state.connect(STATE_DB)
                     try:
                         strata_state.event(db, "tool_call", {
@@ -445,6 +464,8 @@ def work(task, model):
                         atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "repeated_tool_call",
                                                  "tool": name, "fingerprint": loop["fingerprint"],
                                                  "repeat_count": loop["count"],
+                                                 "tool_call_counts": task["tool_call_counts"],
+                                                 "input_tokens_total": task.get("input_tokens_total", 0),
                                                  "output_tokens_total": task.get("output_tokens_total", 0)})
                         raise RuntimeError("TASK_LOOP_DETECTED: repeated identical tool call")
                     if name not in {x["function"]["name"] for x in definitions(task)}:
@@ -466,18 +487,17 @@ def work(task, model):
                         atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid,"last_error":history[-1]})
                         raise RuntimeError("RETRY_SCHEDULED: repeated invalid tool calls")
                 group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
-                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000], "output_tokens_total": task.get("output_tokens_total", 0)})
+                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool",
+                                         "tool": call["function"]["name"], "result": str(result)[:1000],
+                                         "tool_call_counts": task.get("tool_call_counts", {}),
+                                         "input_tokens_total": task.get("input_tokens_total", 0),
+                                         "output_tokens_total": task.get("output_tokens_total", 0)})
                 db = strata_state.connect(STATE_DB)
-                try: strata_state.checkpoint(db, task["id"], {"step": step, "tool": call["function"]["name"], "result": str(result)[:1000]})
+                try: strata_state.checkpoint(db, task["id"], {"step": step, "tool": call["function"]["name"], "tool_call_counts": task.get("tool_call_counts", {}), "result": str(result)[:1000]})
                 finally: db.close()
                 persist_metrics()
         recent.append(group)
-        if len(recent) > 6:
-            old = recent.pop(0)
-            for item in old:
-                for call in item.get("tool_calls", []):
-                    compact.append(f"step {step}: {call['function']['name']} {call['function']['arguments'][:120]}")
-            compact = compact[-20:]
+        compact = compact_history(recent, compact, step, limits["max_history_groups"])
     raise RuntimeError("tool round limit reached; split the task")
 
 
@@ -543,7 +563,9 @@ def main():
                 with MEMORY.open("a", encoding="utf-8") as file:
                     file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
                 atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"], "attempts": task.get("attempts",0),
-                                         "output_tokens_total": task.get("output_tokens_total", 0)})
+                                         "input_tokens_total": task.get("input_tokens_total", 0),
+                                         "output_tokens_total": task.get("output_tokens_total", 0),
+                                         "tool_call_counts": task.get("tool_call_counts", {})})
                 persist_metrics()
             except Exception as persist_error:
                 strata_state.event(state_db,"persistence_error",{"task":task.get("id"),"error":str(persist_error)})

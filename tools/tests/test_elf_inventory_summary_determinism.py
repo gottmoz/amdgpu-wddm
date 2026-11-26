@@ -29,6 +29,7 @@ EXPECTED_LIMITATIONS = [
     "Function counts are reported Ghidra metadata and do not establish analysis completeness.",
     "Valid parser bounds do not establish component identity or executable behavior.",
     "This report reads the JSON inventory only and does not open firmware bytes.",
+    "Container names, hashes and counters are metadata; no component identity is inferred.",
 ]
 
 

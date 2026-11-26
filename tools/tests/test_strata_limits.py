@@ -18,6 +18,7 @@ class StrataLimitTests(unittest.TestCase):
         self.assertEqual(limits["max_output_tokens"], 20000)
         self.assertEqual(limits["max_execution_seconds"], 900)
         self.assertEqual(limits["max_progress_stall_seconds"], 900)
+        self.assertEqual(limits["max_history_groups"], 3)
 
     def test_task_can_set_justified_larger_budget(self):
         task = {"execution_limits": {"max_output_tokens": 40000},
@@ -39,6 +40,27 @@ class StrataLimitTests(unittest.TestCase):
         self.assertFalse(guard.observe("read_file", args)["repeated_limit"])
         self.assertTrue(guard.observe("read_file", args)["repeated_limit"])
         self.assertFalse(guard.observe("read_file", {"path": "tools/other.py"})["repeated_limit"])
+
+    def test_identical_call_counts_survive_a_task_retry(self):
+        first_attempt = worker.ToolCallGuard(limit=2)
+        args = {"path": "tools/source.py"}
+        first_attempt.observe("read_file", args)
+        first_attempt.observe("read_file", args)
+        retry = worker.ToolCallGuard(limit=2, counts=first_attempt.counts)
+        self.assertTrue(retry.observe("read_file", args)["repeated_limit"])
+
+    def test_history_compaction_bounds_groups_and_keeps_short_tool_result_notes(self):
+        recent = []
+        for step in range(5):
+            recent.append([
+                {"role": "assistant", "tool_calls": [{"function": {"name": "read_file", "arguments": "{}"}}]},
+                {"role": "tool", "content": f"result-{step}-" + ("x" * 500)},
+            ])
+        compact = worker.compact_history(recent, [], step=5, max_groups=3)
+        self.assertEqual(len(recent), 3)
+        self.assertLessEqual(len(compact), 12)
+        self.assertTrue(any("result-0" in item for item in compact))
+        self.assertTrue(all(len(item) <= 300 for item in compact))
 
     def test_daemon_deadline_is_based_on_elapsed_wall_time(self):
         self.assertFalse(daemon.task_timeout_reached(10, 909.9, 900))

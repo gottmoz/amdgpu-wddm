@@ -63,8 +63,9 @@
     "PS5-GHIDRA-JSON-VALIDATOR-01",
     "PS5-SEGMENT-GROUP-EDGE-01",
     "PS5-VERSION-DELTA-EDGE-01",
-    "PS5-ELF-SUMMARY-MD-01"
+    "PS5-ELF-SUMMARY-MD-01",
+    "PS5-SUMMARY-MALFORMED-01"
   ],
-  "reviewed_utc": "2026-11-26T13:15:04Z",
-  "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
+  "reviewed_utc": "2026-11-26T13:16:44Z",
+  "review_basis": "Codex reviewed changed parser and synthetic tests; 23 tests passed; published on agent/strata-v2."
 }
