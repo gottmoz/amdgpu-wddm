@@ -109,7 +109,8 @@
       "attempts": 1,
       "error": "validation failed. Correct the declared output and retry. docs/research/strata/ps5-elf-counts.md:1:18 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-elf-counts.md:3:48 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:68 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:129 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md: 4 findings\n",
       "retry_at": 1795681546.1773386,
-      "summary": "Wrote `docs/research/strata/ps5-elf-counts.md` (905 B, ~90 words).\n\n**Direct observations from the only declared source** (`PS5_ELF_INVENTORY.json`, read truncated at 12k chars): 10 complete records, all from `1100_PS5UPDATE1.PUP.dec`. Each is x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, `bounds_valid: true`, empty `error_codes`, declared == validated executable bytes (46,213,492 total), `ghidra_functions: 0`, confidence medium. Entry points: 0 (6), 112 (3), 128 (1). Sizes 1,526,028 to 35,660,836 B.\n\n**Unknowns flagged:** total record count (an 11th `1120_PS5UPDATE1.PUP.dec` record is cut off mid-field), unseen bounds failures or non-zero function counts, Ghidra version/loader options, and the cause of zero functions.\n\nStyle note: no em dashes or semicolons used, per the prior doclint findings."
+      "summary": "Wrote `docs/research/strata/ps5-elf-counts.md` (905 B, ~90 words).\n\n**Direct observations from the only declared source** (`PS5_ELF_INVENTORY.json`, read truncated at 12k chars): 10 complete records, all from `1100_PS5UPDATE1.PUP.dec`. Each is x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, `bounds_valid: true`, empty `error_codes`, declared == validated executable bytes (46,213,492 total), `ghidra_functions: 0`, confidence medium. Entry points: 0 (6), 112 (3), 128 (1). Sizes 1,526,028 to 35,660,836 B.\n\n**Unknowns flagged:** total record count (an 11th `1120_PS5UPDATE1.PUP.dec` record is cut off mid-field), unseen bounds failures or non-zero function counts, Ghidra version/loader options, and the cause of zero functions.\n\nStyle note: no em dashes or semicolons used, per the prior doclint findings.",
+      "reviewed": true
     },
     {
       "id": "PS5-INV-02",
@@ -137,7 +138,8 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-parser-reassessment.md` (~79 words).\n\nKey points from the only declared source:\n- Every visible record was rejected by parser v1 for \"ELF bounds\", but parser v2 reports \"No ELF bounds violations\", `bounds_valid: true`, and empty `error_codes`.\n- All visible candidates are x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, with declared == validated executable bytes, 0 Ghidra functions, medium confidence.\n- Unknowns flagged: total record count, the truncated eighth record's fields, whether any candidate remained rejected under v2, and the cause of zero Ghidra functions.\n\nNote: the source read was truncated by the 12k-character limit, so conclusions cover only the 8 visible records."
+      "summary": "Wrote `docs/research/strata/ps5-parser-reassessment.md` (~79 words).\n\nKey points from the only declared source:\n- Every visible record was rejected by parser v1 for \"ELF bounds\", but parser v2 reports \"No ELF bounds violations\", `bounds_valid: true`, and empty `error_codes`.\n- All visible candidates are x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, with declared == validated executable bytes, 0 Ghidra functions, medium confidence.\n- Unknowns flagged: total record count, the truncated eighth record's fields, whether any candidate remained rejected under v2, and the cause of zero Ghidra functions.\n\nNote: the source read was truncated by the 12k-character limit, so conclusions cover only the 8 visible records.",
+      "reviewed": true
     },
     {
       "id": "PS5-INV-03",
@@ -165,7 +167,8 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 2,
-      "summary": "Wrote `docs/research/strata/ps5-entry-hash-summary.md` (651 B, ~99 words).\n\nFindings from the only declared source:\n- 33 visible entries for `1100_PS5UPDATE1.PUP.dec` (index 0-32), all sha256 values distinct.\n- Same size, different hash: index 11 vs 13 (477396 B), index 24 vs 25 (443328 B).\n- Index 0 is identical across 1100 and 1120 (id 3842, 4096 B, `ad7facb2...892ca7`).\n- Unknown: the source read was truncated at the 12k limit, so 1120 entries from index 1 onward and the total record count are not observable. No component inference was made."
+      "summary": "Wrote `docs/research/strata/ps5-entry-hash-summary.md` (651 B, ~99 words).\n\nFindings from the only declared source:\n- 33 visible entries for `1100_PS5UPDATE1.PUP.dec` (index 0-32), all sha256 values distinct.\n- Same size, different hash: index 11 vs 13 (477396 B), index 24 vs 25 (443328 B).\n- Index 0 is identical across 1100 and 1120 (id 3842, 4096 B, `ad7facb2...892ca7`).\n- Unknown: the source read was truncated at the 12k limit, so 1120 entries from index 1 onward and the total record count are not observable. No component inference was made.",
+      "reviewed": true
     },
     {
       "id": "PS5-INV-04",
@@ -193,7 +196,8 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-ghidra-settings-gap.md` (~84 words, 740 B).\n\n**Completed settings (directly observed in `GHIDRA_ANALYSIS_STATUS.md`):**\n- 40 successful imports, batch not repeated.\n- ELF auto-loader used for extracted candidates.\n- Six `EXEC` ELF files reported one function each; the other 34 reported zero functions despite executable load segments.\n\n**Missing/unknown (not in the source):**\n- Compiler spec and analysis options are explicitly absent from the saved batch logs.\n- Ghidra version, entry-point selection, per-file logs, total candidate count, and the cause of zero-function results are not stated.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` could not be read - the tool rejected it as \"read path is not a declared task source\", so only the declared source was used."
+      "summary": "Wrote `docs/research/strata/ps5-ghidra-settings-gap.md` (~84 words, 740 B).\n\n**Completed settings (directly observed in `GHIDRA_ANALYSIS_STATUS.md`):**\n- 40 successful imports, batch not repeated.\n- ELF auto-loader used for extracted candidates.\n- Six `EXEC` ELF files reported one function each; the other 34 reported zero functions despite executable load segments.\n\n**Missing/unknown (not in the source):**\n- Compiler spec and analysis options are explicitly absent from the saved batch logs.\n- Ghidra version, entry-point selection, per-file logs, total candidate count, and the cause of zero-function results are not stated.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` could not be read - the tool rejected it as \"read path is not a declared task source\", so only the declared source was used.",
+      "reviewed": true
     },
     {
       "id": "PS5-INV-05",
@@ -221,7 +225,8 @@
       "status": "done",
       "publish": false,
       "invalid_tool_calls": 1,
-      "summary": "Wrote `docs/research/strata/ps5-component-evidence.md` (~109 words, 917 B).\n\n**Direct observations from the only declared source:** 40 bounded ELF64 candidates across three PUP files plus `kdata1001.bin`, Ghidra still in progress. PUP IDs `0x103`, `0x104`, `0x106`, `0x107` begin with `e4db7c02`, and a public unpacker labels some IDs as Oberon secure loaders. No complete PUP entry hash matches the eight public Cyan Skillfish files. PUP tables, one nested PUP and SLB2 markers exist.\n\n**Unknowns:** PSP processor type and contract, SMU identity, memory-init identity, nested GPU microcode, and boot roles of platform-init markers.\n\nNote: `STRATA_SKILLS.md` was rejected as a non-declared source, so it was not read."
+      "summary": "Wrote `docs/research/strata/ps5-component-evidence.md` (~109 words, 917 B).\n\n**Direct observations from the only declared source:** 40 bounded ELF64 candidates across three PUP files plus `kdata1001.bin`, Ghidra still in progress. PUP IDs `0x103`, `0x104`, `0x106`, `0x107` begin with `e4db7c02`, and a public unpacker labels some IDs as Oberon secure loaders. No complete PUP entry hash matches the eight public Cyan Skillfish files. PUP tables, one nested PUP and SLB2 markers exist.\n\n**Unknowns:** PSP processor type and contract, SMU identity, memory-init identity, nested GPU microcode, and boot roles of platform-init markers.\n\nNote: `STRATA_SKILLS.md` was rejected as a non-declared source, so it was not read.",
+      "reviewed": true
     },
     {
       "id": "PS5-INV-06",
@@ -590,11 +595,11 @@
       "branch": "agent/strata-v2",
       "status": "retry_scheduled",
       "publish": false,
-      "invalid_tool_calls": 1,
+      "invalid_tool_calls": 3,
       "validation_error": "docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:14:22 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:15:15 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:16:28 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md: 10 findings\n",
-      "attempts": 1,
-      "error": "validation failed. Correct the declared output and retry. docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/resea",
-      "retry_at": 1795683589.8165958
+      "attempts": 2,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795683751.3462465
     },
     {
       "id": "STRATA-OPS-02",
@@ -619,8 +624,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "running",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/strata-state-coverage.md` (~706 B, ~70 words) from `tools/strata_state.py`.\n\n**Direct observations:** seven tables are declared: `meta`, `tasks`, `checkpoints`, `tool_calls`, `events`, `validations`, and `review_queue`. `tasks` and `review_queue` carry state columns. `upsert_task` inserts or replaces a task and defaults state to `pending`. `recover_running` moves `running` tasks to `retry_scheduled`. `checkpoint`, `event`, and `record_call` write records but do not change state.\n\n**Unknowns:** no implemented transitions for `review_queue`, `validations`, checkpoints, or completion states. Allowed state values and lifecycle are not defined."
     },
     {
       "id": "STRATA-OPS-03",
@@ -645,8 +652,13 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "retry_scheduled",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "validation_error": "docs/research/strata/strata-watchdog-review.md:7:9 synonym-rotation: 'launch' and 'start' name the same action. Pick one and use it every time. [launches]\ndocs/research/strata/strata-watchdog-review.md:10:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/strata-watchdog-review.md: 2 findings\n",
+      "attempts": 1,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/strata-watchdog-review.md:7:9 synonym-rotation: 'launch' and 'start' name the same action. Pick one and use it every time. [launches]\ndocs/research/strata/strata-watchdog-review.md:10:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/strata-watchdog-review.md: 2 findings\n",
+      "retry_at": 1795683674.8984334
     },
     {
       "id": "PS5-INV-09",
@@ -671,7 +683,7 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "running",
       "publish": false
     },
     {
@@ -729,15 +741,13 @@
     {
       "id": "PS5-INV-11",
       "area": "PS5",
-      "objective": "Check whether this review exists; if missing, report that without substituting another source. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
-      "sources": [
-        "docs/research/ps5-dump-static-analysis.md"
-      ],
+      "objective": "List only files matching docs/research/ps5-dump-strata-review.md. Report whether the review artifact exists. Do not read any other file. Write a concise note under 120 words.",
+      "sources": [],
       "allowed_writes": [
         "docs/research/strata/ps5-review-artifact-status.md"
       ],
       "tools": [
-        "read_file",
+        "list_files",
         "write_file"
       ],
       "verify": [
