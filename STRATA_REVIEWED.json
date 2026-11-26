@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "reviewed_task_ids": [
+    "PS5-INV-01",
+    "PS5-INV-02",
+    "PS5-INV-03",
+    "PS5-INV-04",
+    "PS5-INV-05"
+  ],
+  "reviewed_utc": "2026-11-26T08:50:00Z",
+  "review_basis": "Source cross-check and doclint passed for each listed artifact."
+}

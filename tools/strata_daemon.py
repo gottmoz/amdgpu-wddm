@@ -26,6 +26,7 @@ INBOX_QUEUE = RUNTIME / "STRATA_INBOX_QUEUE.json"
 GENERATED_QUEUE = RUNTIME / "STRATA_GENERATED_QUEUE.json"
 XBOX_QUEUE = ROOT / "XBOX_TASK_QUEUE.json"
 OBJECTIVES = ROOT / "STRATA_OBJECTIVES.json"
+REVIEW_LOG = ROOT / "STRATA_REVIEWED.json"
 LOCK = RUNTIME / ".strata-daemon.lock"
 STOP = RUNTIME / "STRATA_STOP"
 REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
@@ -344,6 +345,7 @@ def status_payload(branch, state, task):
     now = datetime.now(timezone.utc)
     started = datetime.strptime(endurance["started_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     recoveries = load(RECOVERIES).get("automatic_recoveries", 0)
+    reviewed_ids = set(load(REVIEW_LOG).get("reviewed_task_ids", []))
     next_item = next((item["id"] for item in tasks if item.get("branch") == branch and item.get("status") in ("pending", "retry_scheduled") and item.get("retry_at", 0) <= time.time()), None)
     return {"utc": utc_now(), "state": state, "current_task_id": task.get("id") if task else None,
             "research_area": task.get("area") if task else None,
@@ -358,7 +360,7 @@ def status_payload(branch, state, task):
             "idle_seconds": endurance["idle_seconds"],
             "idle_reason": endurance.get("idle_reason"),
             "automatic_recoveries": recoveries,
-            "pending_reviews": sum(item.get("branch") == branch and item.get("status") == "done" and not item.get("reviewed") for item in tasks),
+            "pending_reviews": sum(item.get("branch") == branch and item.get("status") == "done" and item["id"] not in reviewed_ids for item in tasks),
             "published_commits": int(git("rev-list", "--count", f"--since={endurance['started_utc']}", "HEAD") or 0),
             "last_successful_commit": git("rev-parse", "HEAD"), "next_task_id": next_item,
             "work_branch": branch}
