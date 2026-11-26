@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T17:43:57Z",
+      "observed_utc": "2026-11-26T18:00:28Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, isolated LLVM PE imports inspected",
+      "run_status": "scheduler-triggered, isolated gfx1013 compilation passed, release plan blocked",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -76,23 +76,24 @@
         "mingw-w64-x86_64-llvm-22.1.8-3-any.pkg.tar.zst SHA256 551273499170D15A532E5FB98299B67AC2846A6788E6A352CE77889FB746D40B",
         "mingw-w64-x86_64-llvm-libs-22.1.8-3-any.pkg.tar.zst SHA256 AB50A733CBAFD24E5180C00DEDE15014ECB7C133B836CE59262C22C27D46D659",
         "Extracted the four archives under scratch/msys2-llvm-22.1.8-3/candidate. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. clang --version exited 0xC0000135. PE imports include libstdc++-6.dll, libclang-cpp.dll and libLLVM-22.dll. Compiler identity remains unverified. Plan not rerun.",
-        "PE import inspection of clang.exe, libclang-cpp.dll and libLLVM-22.dll identified six additional non-system DLL names: libstdc++-6.dll, libwinpthread-1.dll, libffi-8.dll, libxml2-16.dll, zlib1.dll and libzstd.dll. PID 2940 remained present during this poll. Compiler identity and plan remain unverified."
+        "PE import inspection of clang.exe, libclang-cpp.dll and libLLVM-22.dll identified six additional non-system DLL names: libstdc++-6.dll, libwinpthread-1.dll, libffi-8.dll, libxml2-16.dll, zlib1.dll and libzstd.dll. PID 2940 remained present during this poll. Compiler identity and plan remain unverified.",
+        "Staged eight official MSYS2 runtime archives matching LLVM .BUILDINFO into the isolated candidate. clang --version exited 0 with 22.1.8 at d34feaaa1d0aff624c870910b6f2589aa40d20de. gfx1013 smoke compile exit 0, object SHA256 CAE0758527817C4D12222978DA3AA03CD32C248D53E9DE5808B864C9DB8E85F2.",
+        "tester.39 -Plan exit 1 before preflight. scratch/release-plan-after-amdgpu-smoke/build-context.json reports the same two missing release LLVM paths and two unsupported SDK/WDK c junctions. PID 2940 present; no live enqueue."
       ],
       "blockers": [
         "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
-        "AMDGPU LLVM 22.1.8 mingw64 and mingw64/bin absent. Unsupported SDK and WDK c junctions remain.",
-        "The isolated MSYS2 candidate needs its matching runtime DLLs before compiler identity can be checked."
+        "AMDGPU LLVM 22.1.8 mingw64 and mingw64/bin absent. Unsupported SDK and WDK c junctions remain."
       ]
     }
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: candidate runtime dependencies identified; SDK/WDK junctions and Strata intake mismatch remain",
-  "last_poll_utc": "2026-11-26T17:43:57Z",
+  "result": "blocked: gfx1013 smoke compile passed; release input and Strata intake blockers remain",
+  "last_poll_utc": "2026-11-26T18:00:28Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T17:43:57Z",
-    "trigger": "scheduler-triggered",
+    "last_poll_utc": "2026-11-26T18:00:28Z",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "result": "blocked: candidate runtime dependencies identified; SDK/WDK junctions and Strata intake mismatch remain"
+    "trigger": "scheduler-triggered",
+    "result": "blocked: gfx1013 smoke compile passed; release input and Strata intake blockers remain"
   }
 }
