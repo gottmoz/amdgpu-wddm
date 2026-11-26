@@ -190,6 +190,10 @@ class CoordinatorTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "outside allowed"):
             worker.confined("tools/firmware/cyan_skillfish2.json", writable=True)
 
+    def test_project_firmware_analysis_python_is_scoped_source(self):
+        path = worker.confined("tools/firmware/elf_inventory_summary.py")
+        self.assertEqual(path.name, "elf_inventory_summary.py")
+
     def test_budget_split_and_retry_limit(self):
         task = {"id": "AUTO-test", "area": "XRE03", "branch": "research/xbox-firmware",
                 "objective": "Read two sources", "allowed_writes": ["docs/research/test-note.md"],

@@ -63,8 +63,11 @@ def persist_metrics():
 
 def confined(relative, *, writable=False):
     path = (ROOT / relative).resolve()
+    repo_relative = path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else ""
     public_manifest = relative == "tools/firmware/cyan_skillfish2.json" and not writable
-    if (not path.is_relative_to(ROOT) or (FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts) and not public_manifest)
+    public_tool_source = repo_relative.startswith("tools/firmware/") and path.suffix.lower() == ".py"
+    if (not path.is_relative_to(ROOT) or (FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts)
+                                           and not public_manifest and not public_tool_source)
             or path.name.lower().startswith((".env", "credential", "secret"))
             or path.suffix.lower() in {".pem", ".key", ".pfx", ".p12"}):
         raise ValueError("path outside allowed source and documentation tree")
