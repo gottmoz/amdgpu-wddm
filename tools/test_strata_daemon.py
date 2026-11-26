@@ -46,6 +46,11 @@ class CoordinatorTests(unittest.TestCase):
         task = {"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]}
         self.assertNotIn("terminal", {item["function"]["name"] for item in worker.definitions(task)})
 
+    def test_metadata_check_can_list_only_its_declared_glob(self):
+        tools = worker.definitions({"sources": [], "tools": ["list_files", "write_file"],
+                                    "allowed_writes": ["docs/research/result.md"]})
+        self.assertEqual({item["function"]["name"] for item in tools}, {"list_files", "write_file"})
+
     def test_generated_task_and_checkpoint_recovery(self):
         task = daemon.generate_task("research/xbox-firmware")
         self.assertEqual(task["origin"], "generated")

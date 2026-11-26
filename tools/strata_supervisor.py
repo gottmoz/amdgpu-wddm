@@ -217,9 +217,17 @@ def publish(task):
 def work(task, model):
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
     fixed_sources = task.get("sources", [])
+    available_tools = [item["function"]["name"] for item in definitions(task)]
+    examples = {}
+    if "read_file" in available_tools:
+        examples["read_file"] = {"path": fixed_sources[0] if fixed_sources else "README.md"}
+    if "list_files" in available_tools:
+        examples["list_files"] = {"glob": task.get("list_glob", "docs/research/ps5-dump-strata-review.md")}
+    if "write_file" in available_tools:
+        examples["write_file"] = {"path": task["allowed_writes"][0] if task.get("allowed_writes") else "", "content": "..."}
     base = [
-        {"role": "system", "content": "You are a local BC-250 engineering agent. Follow task-scoped tool permissions. Never touch hardware, secrets or firmware bytes. Available tools are listed in the user task. For each tool call, use the exact schema: read_file {path}, write_file {path,content}. If source paths are listed, read only those. Complete the artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": [x["function"]["name"] for x in definitions(task)], "examples": {"read_file": {"path": fixed_sources[0] if fixed_sources else "README.md"}, "write_file": {"path": task["allowed_writes"][0] if task["allowed_writes"] else "", "content": "..."}}, "previous_validation_error": task.get("validation_error"), "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "system", "content": "You are a local BC-250 engineering agent. Follow the task-scoped tool permissions and use only tools exposed for this task. Never touch hardware, secrets or firmware bytes. If source paths are listed, read only those. Complete the declared artifact and keep the final summary concise."},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "examples": examples, "previous_validation_error": task.get("validation_error"), "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []

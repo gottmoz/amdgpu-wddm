@@ -534,15 +534,13 @@
     {
       "id": "PS5-INV-11",
       "area": "PS5",
-      "objective": "Check whether this review exists; if missing, report that without substituting another source. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
-      "sources": [
-        "docs/research/ps5-dump-static-analysis.md"
-      ],
+      "objective": "List only files matching docs/research/ps5-dump-strata-review.md. Report whether the review artifact exists. Do not read any other file. Write a concise note under 120 words.",
+      "sources": [],
       "allowed_writes": [
         "docs/research/strata/ps5-review-artifact-status.md"
       ],
       "tools": [
-        "read_file",
+        "list_files",
         "write_file"
       ],
       "verify": [
