@@ -1,18 +1,18 @@
 # Strata status
 
-- utc: `2026-11-26T09:21:01Z`
-- state: `working`
-- current task id: `REVIEW-PS5-INV-08`
-- research area: `PS5`
+- utc: `2026-11-26T09:21:49Z`
+- state: `idle`
+- current task id: `None`
+- research area: `None`
 - completed count: `25`
 - failed count: `4`
-- tool calls: `883`
-- input tokens: `3848301`
-- output tokens: `265683`
+- tool calls: `884`
+- input tokens: `3863229`
+- output tokens: `271516`
 - last successful validation utc: `2026-11-26T09:19:18Z`
-- uptime seconds: `3100`
+- uptime seconds: `3148`
 - endurance target seconds: `28800`
-- actual work seconds: `2354.2`
+- actual work seconds: `2462.4`
 - idle seconds: `0`
 - idle reason: `None`
 - automatic recoveries: `6`
