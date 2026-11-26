@@ -123,17 +123,35 @@
         "llvm-config SHA256 x64 92C89237A8B08FA67835E0B7BB736D19B6CAA6813A5F73364D9F9B9A83DFFD67, x86 E6258F8FE4613AA3B0AE6AF267A194EB62C30743C9722236155CA42DBCDF4031. Plan log scratch/sup004-plan-llvm-config.log."
       ],
       "run_status": "scheduler-triggered, blocked"
+    },
+    {
+      "validation": [
+        "Verified V2 PID 2940 in the PS5 worktree, an empty Strata inbox, and an absent watchdog PID 4160. Last legacy validation was 13:15:04 UTC. Local V2 queue snapshots contain one done task each. No ready task, new task ID, publication or token delta was verified. Endurance snapshot: 13539.5 work seconds, 31860.1 idle seconds, 156 runs. Existing tester.39 plan remains blocked for both ROCm rows."
+      ],
+      "evidence": [
+        "scratch/strata-runtime/STRATA_ENDURANCE.json",
+        "scratch/strata-runtime/STRATA_METRICS.json",
+        "research daemon tools/strata_daemon.py heartbeat"
+      ],
+      "instruction_id": "SUP-005-OVERNIGHT-20261126",
+      "blockers": [
+        "V2 runs on agent/strata-v2, outside the research intake allowlist. The available research daemon publishes AGENT_STATUS.json, which this automation is forbidden to overwrite. Provide an isolated research worker configuration with a permitted status target or operator-managed publication.",
+        "Full LLVM install remains unverified. The tester.39 ROCm rows still require the original TheRock input record and hash-pinned prior payload.json."
+      ],
+      "run_status": "scheduler-triggered, blocked before live acceptance",
+      "disposition": "blocked",
+      "observed_utc": "2026-11-26T22:14:34Z"
     }
   ],
-  "observed_instruction_id": "SUP-004-20261126T1920Z",
+  "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T21:58:53Z",
+  "last_poll_utc": "2026-11-26T22:14:34Z",
   "heartbeat": {
-    "observed_instruction_id": "SUP-004-20261126T1920Z",
-    "result": "blocked",
-    "validation": "Authenticated scheduled read confirmed pending SUP-004. Both pinned workspace inputs are still absent at the paths recorded in sup004-plan-llvm-config.log. Latest tester.39 plan exited 1 for extra-rocm-release and extra-rocm-lab. No planner rerun.",
+    "last_poll_utc": "2026-11-26T22:14:34Z",
+    "validation": "Verified V2 PID 2940 in the PS5 worktree, an empty Strata inbox, and an absent watchdog PID 4160. Last legacy validation was 13:15:04 UTC. Local V2 queue snapshots contain one done task each. No ready task, new task ID, publication or token delta was verified. Endurance snapshot: 13539.5 work seconds, 31860.1 idle seconds, 156 runs. Existing tester.39 plan remains blocked for both ROCm rows.",
+    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "scheduler-triggered",
-    "last_poll_utc": "2026-11-26T21:58:53Z"
+    "result": "blocked"
   }
 }
