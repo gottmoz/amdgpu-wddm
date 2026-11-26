@@ -1,6 +1,6 @@
 # Strata status
 
-- utc: `2026-11-26T12:48:22Z`
+- utc: `2026-11-26T12:49:25Z`
 - state: `working`
 - current task id: `PS5-GHIDRA-JSON-VALIDATOR-01`
 - research area: `PS5`
@@ -10,7 +10,7 @@
 - input tokens: `6314736`
 - output tokens: `794847`
 - last successful validation utc: `2026-11-26T12:45:55Z`
-- uptime seconds: `15541`
+- uptime seconds: `15604`
 - endurance target seconds: `28800`
 - actual work seconds: `11976.2`
 - idle seconds: `1410.0`
