@@ -55,7 +55,7 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T18:58:53Z",
+      "observed_utc": "2026-11-26T19:13:38Z",
       "disposition": "blocked",
       "run_status": "scheduler-triggered, blocked",
       "evidence": [
@@ -98,12 +98,12 @@
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T18:58:53Z",
+  "last_poll_utc": "2026-11-26T19:13:38Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T18:58:53Z",
+    "last_poll_utc": "2026-11-26T19:13:38Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "validation": "Five required workspace paths remain absent. No build plan was rerun and no Strata task was queued."
+    "validation": "Verified all five required paths are absent and Strata PID 2940 is present. Prior planner and intake blockers remain. No build plan rerun or queue changes."
   }
 }
