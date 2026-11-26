@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T10:32:10Z`
-- state: `idle`
-- current task id: `None`
-- research area: `None`
+- utc: `2026-11-26T10:33:13Z`
+- state: `working`
+- current task id: `STRATA-REVIEW-LOOP-01`
+- research area: `STRATA`
 - completed count: `40`
 - failed count: `6`
-- tool calls: `1070`
-- input tokens: `4382358`
-- output tokens: `392341`
+- tool calls: `1077`
+- input tokens: `4421179`
+- output tokens: `394970`
 - last successful validation utc: `2026-11-26T10:31:49Z`
-- uptime seconds: `7369`
+- uptime seconds: `7432`
 - endurance target seconds: `28800`
 - actual work seconds: `4916.9`
 - idle seconds: `1410.0`
