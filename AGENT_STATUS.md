@@ -1,22 +1,22 @@
 # Strata status
 
-- utc: `2026-11-26T08:38:28Z`
+- utc: `2026-11-26T08:38:51Z`
 - state: `working`
-- current task id: `NAGI-DEP-01`
-- research area: `NAGI`
-- completed count: `14`
+- current task id: `None`
+- research area: `None`
+- completed count: `15`
 - failed count: `0`
-- tool calls: `759`
-- input tokens: `3360828`
-- output tokens: `148657`
-- last successful validation utc: `2026-11-26T08:36:49Z`
-- uptime seconds: `547`
+- tool calls: `760`
+- input tokens: `3370037`
+- output tokens: `151096`
+- last successful validation utc: `2026-11-26T08:38:46Z`
+- uptime seconds: `570`
 - endurance target seconds: `28800`
-- actual work seconds: `261.2`
+- actual work seconds: `314.3`
 - idle seconds: `0`
 - idle reason: `None`
 - automatic recoveries: `3`
-- pending reviews: `7`
+- pending reviews: `8`
 - published commits: `2`
 - last successful commit: `c7f03ba6dbda455dca2694a91e0d59dff3c73983`
 - next task id: `NAGI-DEP-02`
