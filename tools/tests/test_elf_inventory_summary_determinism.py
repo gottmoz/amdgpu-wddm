@@ -12,15 +12,16 @@ from tools.firmware.elf_inventory_summary import main, summarize
 ROWS = [
     {"source_container": "b.bin", "candidate": "cand-b", "architecture": "x86-64",
      "elf_type": "EXEC", "bounds_valid": True, "ghidra_functions": 3,
-     "validated_executable_bytes": 100, "sha256": "AA11"},
+     "validated_executable_bytes": 100, "sha256": "A" * 64},
     {"source_container": "a.pup", "candidate": "cand-a2", "architecture": "x86-64",
      "elf_type": "other", "bounds_valid": False, "ghidra_functions": 0,
-     "validated_executable_bytes": 50, "sha256": "bb22"},
+     "validated_executable_bytes": 50, "sha256": "b" * 64},
     {"source_container": "a.pup", "candidate": "cand-a1", "architecture": "x86-64",
-     "elf_type": "other", "bounds_valid": True, "ghidra_functions": None,
-     "validated_executable_bytes": 25, "sha256": "BB22"},
-    {"source_container": "unknown", "architecture": "arm64", "bounds_valid": True,
-     "validated_executable_bytes": None},
+     "elf_type": "other", "bounds_valid": True, "ghidra_functions": 2,
+     "validated_executable_bytes": 25, "sha256": "B" * 64},
+    {"source_container": "unknown", "candidate": "cand-unknown", "architecture": "arm64",
+     "elf_type": "unknown", "bounds_valid": True, "ghidra_functions": 0,
+     "validated_executable_bytes": 0, "sha256": "c" * 64},
 ]
 SOURCE_BYTES = json.dumps(ROWS).encode("utf-8")
 
@@ -65,8 +66,8 @@ class TestElfInventorySummaryDeterminism(unittest.TestCase):
     def test_duplicate_hashes_sorted_deterministically(self):
         report = summarize(ROWS, SOURCE_BYTES)
         dup = report["duplicate_candidate_hashes"]
-        self.assertEqual(dup, [{"sha256": "bb22", "candidates": ["cand-a1", "cand-a2"]}])
-        self.assertEqual(report["distinct_candidate_hash_count"], 2)
+        self.assertEqual(dup, [{"sha256": "b" * 64, "candidates": ["cand-a1", "cand-a2"]}])
+        self.assertEqual(report["distinct_candidate_hash_count"], 3)
 
     def test_metadata_only_limitations_are_stated(self):
         report = summarize(ROWS, SOURCE_BYTES)

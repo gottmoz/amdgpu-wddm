@@ -5,6 +5,7 @@ Only task-declared text files can be published. Never run on main.
 """
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -38,6 +39,57 @@ SAFE_COMMANDS = {
     "python": {"-m", "-B"},
     "git": {"status", "diff", "log", "show", "branch", "rev-parse"},
 }
+DEFAULT_TASK_LIMITS = {
+    "max_response_tokens": ("STRATA_MAX_RESPONSE_TOKENS", 8192),
+    "max_output_tokens": ("STRATA_MAX_TASK_OUTPUT_TOKENS", 20000),
+    "max_execution_seconds": ("STRATA_TASK_TIMEOUT_SECONDS", 900),
+    "max_progress_stall_seconds": ("STRATA_PROGRESS_TIMEOUT_SECONDS", 900),
+    "max_identical_tool_calls": ("STRATA_MAX_IDENTICAL_TOOL_CALLS", 2),
+}
+
+
+def task_limits(task):
+    limits = {}
+    for name, (env_name, default) in DEFAULT_TASK_LIMITS.items():
+        value = int(os.getenv(env_name, str(default)))
+        if value <= 0:
+            raise ValueError(f"{env_name} must be a positive integer")
+        limits[name] = value
+    overrides = task.get("execution_limits", {})
+    if not isinstance(overrides, dict) or set(overrides) - set(limits):
+        raise ValueError("execution_limits contains an unsupported setting")
+    justification = task.get("budget_justification", "")
+    for name, value in overrides.items():
+        if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+            raise ValueError(f"execution_limits.{name} must be a positive integer")
+        if value > limits[name] and not (isinstance(justification, str) and justification.strip()):
+            raise ValueError("larger task budgets require budget_justification")
+        limits[name] = value
+    return limits
+
+
+def response_token_limit(task):
+    limits = task_limits(task)
+    remaining = limits["max_output_tokens"] - int(task.get("output_tokens_total", 0))
+    if remaining <= 0:
+        raise RuntimeError("TASK_OUTPUT_TOKEN_BUDGET_EXCEEDED")
+    return min(limits["max_response_tokens"], remaining)
+
+
+class ToolCallGuard:
+    """Stop a task after it repeats the same tool call beyond its configured allowance."""
+
+    def __init__(self, limit=2):
+        self.limit = limit
+        self.counts = {}
+
+    def observe(self, name, arguments):
+        canonical = json.dumps({"tool": name, "arguments": arguments}, sort_keys=True,
+                               separators=(",", ":"), ensure_ascii=True)
+        fingerprint = hashlib.sha256(canonical.encode("ascii")).hexdigest()
+        count = self.counts.get(fingerprint, 0) + 1
+        self.counts[fingerprint] = count
+        return {"fingerprint": fingerprint, "count": count, "repeated_limit": count > self.limit}
 
 
 def atomic_json(path, data):
@@ -50,6 +102,29 @@ def mark_task_success(task, summary):
     task.update(status="done", summary=summary[:1000])
     task.pop("error", None)
     task.pop("validation_error", None)
+
+
+def publication_review_reason(task, error):
+    """Return a review disposition for deterministic publication-policy holds."""
+    if task.get("status") != "done":
+        return None
+    message = str(error).lower()
+    markers = ("automatic publication rejects", "automatic publication requires",
+               "publication requires", "possible credential in publication",
+               "publication branch mismatch or main")
+    return "validated result is awaiting manual publication review" if any(marker in message for marker in markers) else None
+
+
+def mark_publication_held(task, error):
+    reason = publication_review_reason(task, error)
+    if reason is None:
+        return False
+    task["status"] = "done"
+    task["review_status"] = "pending"
+    task["publication_error"] = str(error)[:500]
+    task["error"] = reason
+    task.pop("retry_at", None)
+    return True
 
 
 def persist_metrics():
@@ -189,9 +264,10 @@ def definitions(task):
     return [item for item in all_tools if item["function"]["name"] in allowed]
 
 
-def api(messages, model, task):
+def api(messages, model, task, step=0):
     tools=definitions(task)
-    body = json.dumps({"model": model, "messages": messages, "tools": tools, "tool_choice": "auto", "max_tokens": 2000, "temperature": 0}).encode()
+    max_tokens = response_token_limit(task)
+    body = json.dumps({"model": model, "messages": messages, "tools": tools, "tool_choice": "auto", "max_tokens": max_tokens, "temperature": 0}).encode()
     headers = {"Content-Type": "application/json"}
     if os.getenv("STRATA_API_KEY"):
         headers["Authorization"] = "Bearer " + os.environ["STRATA_API_KEY"]
@@ -199,8 +275,31 @@ def api(messages, model, task):
     with urlopen(request, timeout=float(os.getenv("STRATA_API_TIMEOUT", "240"))) as response:
         payload = json.load(response)
     usage = payload.get("usage") or {}
-    STATS["input_tokens"] += usage.get("prompt_tokens", 0)
-    STATS["output_tokens"] += usage.get("completion_tokens", 0)
+    prompt_tokens = usage.get("prompt_tokens", 0)
+    output_tokens = usage.get("completion_tokens", max_tokens)
+    if isinstance(prompt_tokens, int) and prompt_tokens > 0:
+        STATS["input_tokens"] += prompt_tokens
+    if not isinstance(output_tokens, int) or output_tokens < 0:
+        output_tokens = max_tokens
+    STATS["output_tokens"] += output_tokens
+    task["output_tokens_total"] = int(task.get("output_tokens_total", 0)) + output_tokens
+    telemetry = {"task": task["id"], "step": step, "status": "model_response",
+                             "output_tokens_this_response": output_tokens,
+                             "output_tokens_total": task["output_tokens_total"],
+                             "max_tokens_this_response": max_tokens}
+    atomic_json(CHECKPOINT, telemetry)
+    persist_metrics()
+    db = strata_state.connect(STATE_DB)
+    try:
+        strata_state.event(db, "model_response", {key: telemetry[key] for key in (
+            "task", "step", "output_tokens_this_response", "output_tokens_total",
+            "max_tokens_this_response")})
+    finally:
+        db.close()
+    if output_tokens > max_tokens:
+        telemetry["status"] = "response_token_limit_exceeded"
+        atomic_json(CHECKPOINT, telemetry)
+        raise RuntimeError("MODEL_RESPONSE_TOKEN_LIMIT_EXCEEDED")
     try:
         choice=payload["choices"][0]
         if not isinstance(choice.get("message"),dict): raise ValueError("missing message")
@@ -272,6 +371,13 @@ def publish(task):
 
 
 def work(task, model):
+    limits = task_limits(task)
+    checkpoint = json.loads(CHECKPOINT.read_text(encoding="utf-8")) if CHECKPOINT.exists() else {}
+    if checkpoint.get("task") == task["id"]:
+        task["output_tokens_total"] = max(int(task.get("output_tokens_total", 0)),
+                                           int(checkpoint.get("output_tokens_total", 0)))
+    started = time.monotonic()
+    tool_guard = ToolCallGuard(limits["max_identical_tool_calls"])
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
     fixed_sources = task.get("sources", [])
     available_tools = [item["function"]["name"] for item in definitions(task)]
@@ -286,14 +392,26 @@ def work(task, model):
         examples["terminal"] = {"argv": task.get("test_command", ["python", "-m", "unittest", "tools.test_strata_daemon"])}
     base = [
         {"role": "system", "content": "You are a local BC-250 engineering agent. Use only the exposed task-scoped tools. File access is not implicit: read_file may read only exact paths in sources, and write_file may write only exact paths in allowed_writes. Never read user-profile, Strata application, environment, secret or undeclared paths. Do not touch hardware or firmware bytes. For terminal, run only the supplied test_command. If a source is insufficient, continue with a bounded implementation from the declared source and document the limitation in the output. Complete the declared artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "tool_limits": {"read_file": "exact paths listed in sources only", "write_file": "exact paths listed in allowed_writes only", "terminal": "only test_command"}, "examples": examples, "test_command": task.get("test_command"), "previous_validation_error": task.get("validation_error"), "prior_tool_errors": task.get("invalid_tool_history", []), "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "tool_limits": {"read_file": "exact paths listed in sources only", "write_file": "exact paths listed in allowed_writes only", "terminal": "only test_command"}, "execution_limits": limits, "examples": examples, "test_command": task.get("test_command"), "previous_validation_error": task.get("validation_error"), "prior_tool_errors": [{"tool": item.get("tool"), "reason": "A prior call was rejected by task-scoped permissions."} for item in task.get("invalid_tool_history", [])[-3:] if isinstance(item, dict)], "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
     for step in range(100):
+        elapsed = time.monotonic() - started
+        if elapsed >= limits["max_execution_seconds"]:
+            atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "task_timeout",
+                                     "elapsed_seconds": round(elapsed, 1),
+                                     "output_tokens_total": task.get("output_tokens_total", 0)})
+            raise RuntimeError("TASK_EXECUTION_TIMEOUT")
+        if int(task.get("output_tokens_total", 0)) >= limits["max_output_tokens"]:
+            if all(confined(path).is_file() for path in task.get("allowed_writes", [])):
+                return "Output artifact exists at the task output-token limit. It will be validated."
+            atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "output_budget_exhausted",
+                                     "output_tokens_total": task.get("output_tokens_total", 0)})
+            raise RuntimeError("TASK_OUTPUT_TOKEN_BUDGET_EXCEEDED")
         summary = [{"role": "user", "content": "Earlier tool actions, compacted:\n" + "\n".join(compact[-20:])}] if compact else []
         messages = base + summary + [message for group in recent for message in group]
-        choice = api(messages, model, task)
+        choice = api(messages, model, task, step=step)
         message = choice["message"]
         group = [{k: v for k, v in message.items() if k in ("role", "content", "tool_calls")}]
         calls = message.get("tool_calls") or []
@@ -309,10 +427,26 @@ def work(task, model):
                 try:
                     args = json.loads(call["function"]["arguments"])
                     name=call["function"]["name"]
+                    loop = tool_guard.observe(name, args)
+                    db = strata_state.connect(STATE_DB)
+                    try:
+                        strata_state.event(db, "tool_call", {
+                            "task": task["id"], "step": step, "tool": name,
+                            "fingerprint": loop["fingerprint"], "occurrence": loop["count"]})
+                    finally:
+                        db.close()
+                    if loop["repeated_limit"]:
+                        atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "repeated_tool_call",
+                                                 "tool": name, "fingerprint": loop["fingerprint"],
+                                                 "repeat_count": loop["count"],
+                                                 "output_tokens_total": task.get("output_tokens_total", 0)})
+                        raise RuntimeError("TASK_LOOP_DETECTED: repeated identical tool call")
                     if name not in {x["function"]["name"] for x in definitions(task)}:
                         raise PermissionError(f"TOOL_NOT_ALLOWED: {name}")
                     result = tool(name, args, task)
                 except Exception as error:
+                    if isinstance(error, RuntimeError) and str(error).startswith("TASK_LOOP_DETECTED"):
+                        raise
                     code="TOOL_NOT_ALLOWED" if isinstance(error,PermissionError) else "INVALID_TOOL_CALL"
                     history = task.setdefault("invalid_tool_history", [])
                     history.append({"tool": call.get("function", {}).get("name", "unknown"),
@@ -326,7 +460,7 @@ def work(task, model):
                         atomic_json(CHECKPOINT,{"task":task["id"],"status":"retry_scheduled","reason":code,"invalid_calls":invalid,"last_error":history[-1]})
                         raise RuntimeError("RETRY_SCHEDULED: repeated invalid tool calls")
                 group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
-                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
+                atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000], "output_tokens_total": task.get("output_tokens_total", 0)})
                 db = strata_state.connect(STATE_DB)
                 try: strata_state.checkpoint(db, task["id"], {"step": step, "tool": call["function"]["name"], "result": str(result)[:1000]})
                 finally: db.close()
@@ -359,6 +493,7 @@ def main():
             return 0
         if current_branch() != task["branch"] or task["branch"] == "main":
             raise RuntimeError("switch to the task branch before running")
+        task["invalid_tool_calls"] = 0
         task["status"] = "running"
         atomic_json(QUEUE, queue)
         strata_state.upsert_task(state_db, task, "running")
@@ -382,14 +517,27 @@ def main():
                 task["commit"] = commit
         except Exception as error:
             attempts=int(task.get("attempts",0))+1
-            task.update(status="retry_scheduled" if attempts<=3 else "quarantined",attempts=attempts,error=str(error)[:1000],retry_at=time.time()+min(60*2**(attempts-1),900))
+            detail = str(error)
+            if mark_publication_held(task, detail):
+                pass
+            elif detail.startswith("TASK_LOOP_DETECTED"):
+                loops = int(task.get("loop_retries", 0)) + 1
+                task["loop_retries"] = loops
+                status = "retry_scheduled" if loops == 1 else "quarantined"
+            elif detail.startswith("TASK_OUTPUT_TOKEN_BUDGET_EXCEEDED"):
+                status = "quarantined"
+            else:
+                status = "retry_scheduled" if attempts <= 3 else "quarantined"
+            task.update(status=status, attempts=attempts, error=detail[:1000],
+                        retry_at=time.time()+min(60*2**(attempts-1),900))
         finally:
             try:
                 atomic_json(QUEUE, queue)
                 strata_state.upsert_task(state_db, task, task["status"])
                 with MEMORY.open("a", encoding="utf-8") as file:
                     file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
-                atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"], "attempts": task.get("attempts",0)})
+                atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"], "attempts": task.get("attempts",0),
+                                         "output_tokens_total": task.get("output_tokens_total", 0)})
                 persist_metrics()
             except Exception as persist_error:
                 strata_state.event(state_db,"persistence_error",{"task":task.get("id"),"error":str(persist_error)})

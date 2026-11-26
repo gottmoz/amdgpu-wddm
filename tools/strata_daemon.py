@@ -255,13 +255,17 @@ def next_task(branch):
     return selected
 
 
-def update_failure(path, task, stalled=False):
+def update_failure(path, task, stalled=False, reason=None):
     queue = load(path)
     current = next(item for item in queue["tasks"] if item["id"] == task["id"])
     # The worker persists retry/quarantine state itself. Preserve that decision.
     if current.get("status") in ("retry_scheduled", "quarantined"):
         return
-    error = current.get("error", "stalled worker" if stalled else "worker failed before checkpoint")
+    error = current.get("error", reason or ("stalled worker" if stalled else "worker failed before checkpoint"))
+    checkpoint = json.loads(worker.CHECKPOINT.read_text(encoding="utf-8")) if worker.CHECKPOINT.exists() else {}
+    if checkpoint.get("task") == task["id"]:
+        current["output_tokens_total"] = max(int(current.get("output_tokens_total", 0)),
+                                              int(checkpoint.get("output_tokens_total", 0)))
     retriable = stalled or any(word in error.lower() for word in ("worker failed before checkpoint", "urlerror", "timed out", "connection", "http 5"))
     attempts = current.get("attempts", 0) + 1
     current["attempts"] = attempts
@@ -289,7 +293,14 @@ def update_failure(path, task, stalled=False):
     save(path, queue)
 
 
-def run_task(path, task, stall_seconds, tick=None):
+def task_timeout_reached(started, now, timeout_seconds):
+    return now - started >= timeout_seconds
+
+
+def run_task(path, task, stall_seconds=None, tick=None):
+    limits = worker.task_limits(task)
+    execution_timeout = limits["max_execution_seconds"]
+    progress_timeout = limits["max_progress_stall_seconds"] if stall_seconds is None else stall_seconds
     command = [sys.executable, str(ROOT / "tools/strata_supervisor.py"), "--once", "--queue", str(path), "--task-id", task["id"]]
     flags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
     process = subprocess.Popen(command, cwd=ROOT, creationflags=flags,
@@ -302,11 +313,27 @@ def run_task(path, task, stall_seconds, tick=None):
             process.terminate()
             process.wait(timeout=10)
             return "stopped"
-        checkpoint = worker.CHECKPOINT
-        last = checkpoint.stat().st_mtime if checkpoint.exists() else start
-        if time.time() - max(last, start) > stall_seconds:
+        elapsed = time.time() - start
+        if task_timeout_reached(start, time.time(), execution_timeout):
             process.kill()
             process.wait(timeout=10)
+            prior = json.loads(worker.CHECKPOINT.read_text(encoding="utf-8")) if worker.CHECKPOINT.exists() else {}
+            output_tokens_total = prior.get("output_tokens_total", task.get("output_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("output_tokens_total", 0)
+            worker.atomic_json(worker.CHECKPOINT, {"task": task["id"], "status": "worker_timeout",
+                                                   "elapsed_seconds": round(elapsed, 1),
+                                                   "output_tokens_total": output_tokens_total})
+            update_failure(path, task, stalled=True, reason="TASK_EXECUTION_TIMEOUT")
+            return "timed_out"
+        checkpoint = worker.CHECKPOINT
+        last = checkpoint.stat().st_mtime if checkpoint.exists() else start
+        if time.time() - max(last, start) > progress_timeout:
+            process.kill()
+            process.wait(timeout=10)
+            prior = json.loads(worker.CHECKPOINT.read_text(encoding="utf-8")) if worker.CHECKPOINT.exists() else {}
+            output_tokens_total = prior.get("output_tokens_total", task.get("output_tokens_total", 0)) if prior.get("task") == task["id"] else task.get("output_tokens_total", 0)
+            worker.atomic_json(worker.CHECKPOINT, {"task": task["id"], "status": "progress_stalled",
+                                                   "elapsed_seconds": round(elapsed, 1),
+                                                   "output_tokens_total": output_tokens_total})
             update_failure(path, task, stalled=True)
             return "stalled"
         time.sleep(5)
@@ -380,7 +407,7 @@ def main():
     parser.add_argument("--repo", default="gottmoz/amdgpu-wddm")
     parser.add_argument("--poll-seconds", type=int, default=60)
     parser.add_argument("--heartbeat-seconds", type=int, default=300)
-    parser.add_argument("--stall-seconds", type=int, default=600)
+    parser.add_argument("--stall-seconds", type=int)
     parser.add_argument("--once", action="store_true", help="one poll and at most one task")
     parser.add_argument("--bootstrap-only", action="store_true", help="create inbox and publish an idle heartbeat")
     args = parser.parse_args()

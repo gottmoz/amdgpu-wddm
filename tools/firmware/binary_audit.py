@@ -79,7 +79,9 @@ def detect(path):
                     if typ != 8: valid &= off <= p.stat().st_size and size <= p.stat().st_size-off
                     sections.append({"name_offset":name,"type":typ,"flags":flags,"address":addr,"offset":off,"size":size,"executable":bool(flags&4)})
         execs=[x for x in segments if x["type"]==1 and x["executable"] and x["filesz"] and x["bounded"]]
-        entry_map=next((x for x in execs if x["vaddr"]<=entry<x["vaddr"]+x["filesz"]),None)
+        # ELF specifies e_entry=0 when the file has no associated entry point.
+        # Do not treat that sentinel as mapped merely because a PT_LOAD starts at VA 0.
+        entry_map=next((x for x in execs if entry != 0 and x["vaddr"]<=entry<x["vaddr"]+x["filesz"]),None)
         overlaps=[]
         loads=[x for x in segments if x["type"]==1]
         for i,a in enumerate(loads):

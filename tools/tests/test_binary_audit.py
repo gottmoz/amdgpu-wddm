@@ -36,6 +36,12 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(e["section_header_count"], 0)
             self.assertTrue(e["bounds_valid"])
 
+    def test_zero_entry_is_not_mapped_when_load_begins_at_zero(self):
+        with tempfile.TemporaryDirectory() as d:
+            e = audit.detect(self.fixture(d, va=0, poff=64, entry=0))["elf"]
+            self.assertFalse(e["entry_valid"])
+            self.assertIn("entry point is outside file-backed executable PT_LOAD", e["warnings"])
+
     def test_invalid_header_entry_sizes(self):
         with tempfile.TemporaryDirectory() as d:
             self.assertIn("ELF_PHENTSIZE_INVALID", audit.detect(self.fixture(d, phentsize=0))["elf"]["error_codes"])

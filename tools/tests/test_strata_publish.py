@@ -36,6 +36,21 @@ class PublishPolicyTests(unittest.TestCase):
         self.assertNotIn('validation_error', task)
         self.assertEqual(task['attempts'], 2)
 
+    def test_deterministic_publication_policy_rejection_is_reviewable_not_retried(self):
+        task = {'status': 'done'}
+        message = 'automatic publication rejects large deletion from an existing file'
+        reason = worker.publication_review_reason(task, message)
+        self.assertIsNotNone(reason)
+        task['retry_at'] = 1
+        self.assertTrue(worker.mark_publication_held(task, message))
+        self.assertEqual(task['status'], 'done')
+        self.assertEqual(task['review_status'], 'pending')
+        self.assertNotIn('retry_at', task)
+        self.assertIn('manual publication review', task['error'])
+        self.assertIsNone(worker.publication_review_reason({'status': 'running'},
+            'automatic publication rejects large deletion from an existing file'))
+        self.assertIsNone(worker.publication_review_reason({'status': 'done'}, 'git push failed'))
+
     def test_policy_requires_explicit_allowlist(self):
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run') as run:
             with self.assertRaisesRegex(RuntimeError, 'policy'):

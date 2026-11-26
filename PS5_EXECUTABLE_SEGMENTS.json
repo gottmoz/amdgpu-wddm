@@ -1,0 +1,1433 @@
+{
+  "candidate_count": 34,
+  "format_interpretation": {
+    "generic_elf_meaning": "Both fall within the GABI OS-specific e_type range 0xfe00-0xfeff.",
+    "observed_e_type_values": [
+      "0xfe10",
+      "0xfe18"
+    ],
+    "public_reverse_engineered_names": {
+      "0xfe10": "ET_SCE_EXEC_ASLR",
+      "0xfe18": "ET_SCE_DYNAMIC"
+    },
+    "status": "Source-derived names; not confirmed against an official Sony loader contract."
+  },
+  "limitations": [
+    "Candidate source provenance has not been independently verified.",
+    "All 34 PUP candidates had one bounded executable PT_LOAD segment; this does not establish file completeness or loader acceptance.",
+    "SHA-256 equality establishes byte equality only, not component identity.",
+    "Ghidra was not rerun; existing logs report zero functions for these 34 PUP candidates.",
+    "No firmware or extracted binary bytes are included."
+  ],
+  "method": "Read-only binary_audit.detect() on each pre-existing ELF extract; SHA-256 and Shannon entropy computed over bounded file-backed executable PT_LOAD bytes.",
+  "pairwise": [
+    {
+      "base": "1100",
+      "identical_hash_count": 0,
+      "segments_base": 10,
+      "segments_target": 10,
+      "target": "1120",
+      "unique_hashes_base": 10,
+      "unique_hashes_target": 10
+    },
+    {
+      "base": "1100",
+      "identical_hash_count": 0,
+      "segments_base": 10,
+      "segments_target": 14,
+      "target": "1140",
+      "unique_hashes_base": 10,
+      "unique_hashes_target": 14
+    },
+    {
+      "base": "1120",
+      "identical_hash_count": 0,
+      "segments_base": 10,
+      "segments_target": 14,
+      "target": "1140",
+      "unique_hashes_base": 10,
+      "unique_hashes_target": 14
+    }
+  ],
+  "references": [
+    "https://gabi.xinuos.com/v42/elf/02-eheader.html",
+    "https://github.com/EchoStretch/kstuff/blob/elfldr-compatability/ps5-kstuff/porting_tool/make_fself.py"
+  ],
+  "schema": "ps5.executable-segments/1",
+  "segment_count": 34,
+  "segments": [
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_11cc1895.elf",
+      "candidate_sha256": "06d86935de1e5e013aee9769efbaa3844155f1a265634e262fb325bf1ec70ecc",
+      "candidate_size": 8871624,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99992,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2280638,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2280638,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "e8266785f08ede2094c8493f4333386443a094d230e1b9eeb4a5e5a0729f3f7a",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_13b11295.elf",
+      "candidate_sha256": "84e76cb5415093eb61212d621f7144e376dc3539c4131fa7dc2987677210f5f3",
+      "candidate_size": 1526028,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99763,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 985772,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 985772,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "b5e270bd1999a527c2aa21ade49a973688be901fa9daa38f64a4a6f1633b9880",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_14ba9895.elf",
+      "candidate_sha256": "113857df436f6ef88d15685dbe28d3fe39888572627014a460bb77450af2d723",
+      "candidate_size": 33921044,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99859,
+      "entry_point": 128,
+      "entry_valid": true,
+      "file_backed_bytes": 25593244,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 25593244,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "369b9c25eef98548a9dfdc13908e3754484d85bea814137aae69f4c090b14e97",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_1978385d.elf",
+      "candidate_sha256": "954786fb311d0c9aaa2a9599c8f55fb20181ab74091f5bc8ffb353cfc4a73b2d",
+      "candidate_size": 5062124,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99924,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 3759468,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3759468,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "83d862be343ae3dd24e6a89aff2844b36018519c7de18f3af42817b3b5ba8c5e",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_281f765d.elf",
+      "candidate_sha256": "9047647a0bf1e821139ce5725458ba3163de23402356f26a646eb0b10bfa09db",
+      "candidate_size": 8310904,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99992,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 3717278,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3717278,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "a0c60301f51da0594b9fd8a4edb87fcbb26f67c0fc2478294177b7fab278117f",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_2855da5d.elf",
+      "candidate_sha256": "c409094d338d4ac124a0fbf24ab480d85012b7b4d4b922b4f8b5969c074c1cbd",
+      "candidate_size": 1949084,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99981,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 1237484,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1237484,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "c45cf82ff2b8ba957c52d180d5005d81be07a5568d31d7471fcea283b2038bca",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_28cac85d.elf",
+      "candidate_sha256": "6cf100ae612b7e1ffd3cb02c4afd9d3b7b1bef6cb7201ead31c326b6c4449bfc",
+      "candidate_size": 35660836,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99992,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2493134,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2493134,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "0efdbfc98c53d2db6df45d02ef23b18bfcd585dffc58604da99b2ba15f6256eb",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_2bb7d65d.elf",
+      "candidate_sha256": "2ea278bec548827c79d243cf63f09e9b2366e7e3ea0ea447ce68b1f97d5c3da2",
+      "candidate_size": 2861076,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99984,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 1976270,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1976270,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "3e97e177c02169435e8ca4c9136a5aa7f86c37d28203fbaf528fa1dfff20da16",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_5fa1295.elf",
+      "candidate_sha256": "51caf5bc2d12b83e51746e1dedbf72a8bab391ca65191ce340c4d60af121f39d",
+      "candidate_size": 4002716,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99984,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2830590,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2830590,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "2b5d86229e40220aab3a522d4d6c48c94c36563dd0e62f20d74ec3f1dd2961f1",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1100_PS5UPDATE1.PUP_offset_7564a95.elf",
+      "candidate_sha256": "ecbf96cdf4aac0722b0cc59f5d6d1e87a5132e38218fe8785a61abc30a1fbef1",
+      "candidate_size": 2099960,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99979,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 1339614,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1339614,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "f2a03187d806435e08248adc24d9530b5d2268d43324a4c964f6e45c6c018fda",
+      "validated": true,
+      "version": "1100",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_11cc1b15.elf",
+      "candidate_sha256": "063895743c907365231d275cefc6faa52a5d4409ab102f5e1bffce5519d46a33",
+      "candidate_size": 8871624,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99991,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2280638,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2280638,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "d7db3522b644b6e21b04af493479815c028a738e49501e5fe3fbc47b23fa6d66",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_13b11515.elf",
+      "candidate_sha256": "61a34b8514aeee149a85c66f3356d8ab4f54993fa417a57105797fb41590950a",
+      "candidate_size": 1526028,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99773,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 986060,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 986060,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "b53c41c2627a3133cd176ca64e1b4c91dd248f76f0f4070e71cab6b5f3ae979a",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_14ba7915.elf",
+      "candidate_sha256": "4a4bebc9eb44685ce2660bb12053c05e2baf802fbfbcb29a67059d5c11d7d34b",
+      "candidate_size": 33937444,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99798,
+      "entry_point": 128,
+      "entry_valid": true,
+      "file_backed_bytes": 25594268,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 25594268,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "64e2c12ff889490179b8cbd0cb0bf5176b6672d72102c2fc0b950d4b1041d3b7",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_19227d4d.elf",
+      "candidate_sha256": "e59f6b9ccc5809d0114a6f7985b29bafb496abac0cfcdb128a8895e8a1cdfd45",
+      "candidate_size": 5062124,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.9992,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 3759468,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3759468,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "a2ddfcb56349efd9114be9cce2135ead08fc57aab2e58112b6390c4fdc16941b",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_1e82cb4d.elf",
+      "candidate_sha256": "80142441c6a7fff3c0bd64cb0d49827ed65cbdeb4a19d4e418efc3489b0bba7f",
+      "candidate_size": 2661296,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99991,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 1772972,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1772972,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "a9c0d503ea09ba11c93d8b07471534424b76e1ac5e9e858de7e08fe04f54a2ca",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_24ff094d.elf",
+      "candidate_sha256": "6b734dafdb7e9698db9f159a0ad450780cb054d8540238461352fb3f3108a689",
+      "candidate_size": 5986216,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99993,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2795966,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2795966,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "9c4d9980e9062ee3513040ec9052b4ba70e651cde344d772763f10850af24547",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_2b86ab4d.elf",
+      "candidate_sha256": "7f27c4e2d826b3acc4e7fa588c1279c3864e9fac9b53804957582c16c40b9a69",
+      "candidate_size": 4311612,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99987,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2437086,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2437086,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "27d36ef7bbe2cb6afe814d7dcb803b5b2602195f822e3943dc1006b57a078aa5",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_2c1b634d.elf",
+      "candidate_sha256": "943cedaeac7dfd41b842929ba7e4d08169bba42c5ff59826022e5a678b18e387",
+      "candidate_size": 1726952,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99975,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 974846,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 974846,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "5ebac31fe8aaa84dbdc2ac0970806f05724d99c95c630df2edd078f36049a4d2",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_5fa1315.elf",
+      "candidate_sha256": "a2b05ccf9d46dd42d1f6d1327f805bfe027ca6212041ea7a8b47f887ddbc054b",
+      "candidate_size": 4002716,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99986,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2830590,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2830590,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "f3d70919bcf0829b069beae6d39a11e6d0b49166552b3f6166943ffed40434b4",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1120_PS5UPDATE1.PUP_offset_7564d15.elf",
+      "candidate_sha256": "80d3a9152c14dae86380bd96f4874ca3af59aeed7b275a519ec69a3e7b80c5e9",
+      "candidate_size": 2099960,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99982,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 1339614,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1339614,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "3098e00382caac8d25ea36b40a8c17e880189f86e37ef1bdfbf37d232966c015",
+      "validated": true,
+      "version": "1120",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_11cc2535.elf",
+      "candidate_sha256": "64cb6f22bf20e8285c3c97dbf3d28009ea68df0a309a4e9aa16d4213a92470b5",
+      "candidate_size": 8871624,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99991,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2280638,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2280638,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "7315d38c89ceb0e35bf9d2f30c09b7d4f3a9dd56390f8a57ce6ba3ab85a1e5a6",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_13b11f35.elf",
+      "candidate_sha256": "9fc5d20a49774658e0183fa854cc0233da06b967019e05cb10ca294731354246",
+      "candidate_size": 1526028,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99762,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 986060,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 986060,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "64fbae9a9b8a9132fb115b2aa880c499b8e1dbcf6a55823be5320d0f69587083",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_14baa735.elf",
+      "candidate_sha256": "8cf7e6b5705e2fae0e89a0ffa3cf3cff6f1af1b1bea9742853e2219ea8886686",
+      "candidate_size": 33937636,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99796,
+      "entry_point": 128,
+      "entry_valid": true,
+      "file_backed_bytes": 25603292,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 25603292,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "339641dea2c92f7c9c20b047338faaf575e56dbe36906563c725c98a1a87382d",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_1922c995.elf",
+      "candidate_sha256": "a9b9935953037ce66be7ea89a4cff30f840fc5af7b851b8bfe79c29062bee562",
+      "candidate_size": 5062124,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99921,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 3759468,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3759468,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "e33e8c80a7a0927ff753cce9a09ba7bd40da89435293be71b64e31f0aa9df693",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_1e835f95.elf",
+      "candidate_sha256": "812735b0c8b1bba3ee4a763619ad9928771c9995132f887ac6868823c898b453",
+      "candidate_size": 2661376,
+      "elf_type": 65040,
+      "elf_type_hex": "0xfe10",
+      "entropy_bits_per_byte": 7.99988,
+      "entry_point": 112,
+      "entry_valid": true,
+      "file_backed_bytes": 1777212,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1777212,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "8a743d25faf31f3d9fda11be112439b837d9ffa98498a5f33fe8677fd43ebcde",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_24ffdd95.elf",
+      "candidate_sha256": "3357ea89f4b901e4ef7b0e04f357a7ca452895e55ffd9ad846fb2f148ba19e0d",
+      "candidate_size": 5986216,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99994,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2796078,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2796078,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "e21541e98d1edff0b32b6c68c0cbb5ce57bbfe054ad3989ed166581058d8495b",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_25687395.elf",
+      "candidate_sha256": "43940692bed4bedb050ad7d587226abcafdd550358cab68b8dbe3bec80a6339d",
+      "candidate_size": 18123524,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99993,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 8650734,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 8650734,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "2eee35492e20dbe600143ae0dd59863f697fcc7ed7c490ec67012f933341ae80",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_275c3b95.elf",
+      "candidate_sha256": "2b87ee730f1be43662683bb96213e6d943a5d5c290539ae868083e9ce193d187",
+      "candidate_size": 8340516,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99993,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 3129678,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3129678,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "5974956e323f0e8e5c1e1e421dd767daba881adda35ac79a6a5f0c3fc14b6fd5",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_27975d95.elf",
+      "candidate_sha256": "ece51da113e69f2681afbc624fc160a5c336d7c307797a394bb80ce0c259ed1a",
+      "candidate_size": 1583092,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99951,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 589790,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 589790,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "5d0e6ba6d40f326a20936da0375fadbb09e718614b50db0a98e14c7c8022860c",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_29d2b795.elf",
+      "candidate_sha256": "800b935d43bac3a904413acf1dcb937bd0646641cca54522d9e27807d6c2a862",
+      "candidate_size": 62243516,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99999,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 46643774,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 46643774,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "1d08ee125d6ca7bf5136c441454c2e73724003d3d1939eb55ef0a924ef47ca9e",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_2c2a4395.elf",
+      "candidate_sha256": "41aba6a39c805151677134e9810ced918e583aad2bd220be67c3540e747a8a0f",
+      "candidate_size": 5359044,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99994,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 3984830,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 3984830,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "db132d88d207461ceab3b654569796ac6d71d56ae102674d498dfef57f185cae",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_2c522f95.elf",
+      "candidate_sha256": "0bf8a0cbaf237264f7567bfd3bfcf7cac550c241800d61575d761acf0e2275e9",
+      "candidate_size": 24605592,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99997,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 13825838,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 13825838,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "b78040c84537234386c9851532544e40ab6104372d7ef00c2a7bd6e7f8e2403e",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_5fa1335.elf",
+      "candidate_sha256": "86c970a7cba1e937ae862e132cb2d49c7aaf50a95f4911e1d0fa05dc04735ccf",
+      "candidate_size": 4002716,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99985,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 2830590,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 2830590,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "f9597f3c242c78cf9e412275f7095a34cdacd2e8cb8a7b4071e374273ba4155c",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    },
+    {
+      "architecture": "x86-64",
+      "candidate": "1140_PS5UPDATE1.PUP_offset_7565135.elf",
+      "candidate_sha256": "80cb774917358a850886e7d0dcc3743377de698b5406da442849af821e2292b7",
+      "candidate_size": 2099960,
+      "elf_type": 65048,
+      "elf_type_hex": "0xfe18",
+      "entropy_bits_per_byte": 7.99984,
+      "entry_point": 0,
+      "entry_valid": false,
+      "file_backed_bytes": 1339614,
+      "file_offset": 16384,
+      "flags": 1,
+      "memory_bytes": 1339614,
+      "osabi_byte": 9,
+      "permissions": {
+        "execute": true,
+        "read": false,
+        "write": false
+      },
+      "segment_index": 0,
+      "segment_sha256": "608f5b2df018c067aaa3f44a0758f7ba8a89d111e41cec408318f5b5cb98b2ab",
+      "validated": true,
+      "version": "1140",
+      "virtual_address": 0,
+      "zero_initialized_bytes": 0
+    }
+  ],
+  "shared_hash_groups": {
+    "group_count": 34,
+    "groups": [
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_28cac85d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "0efdbfc98c53d2db6df45d02ef23b18bfcd585dffc58604da99b2ba15f6256eb",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_29d2b795.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "1d08ee125d6ca7bf5136c441454c2e73724003d3d1939eb55ef0a924ef47ca9e",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_2b86ab4d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "27d36ef7bbe2cb6afe814d7dcb803b5b2602195f822e3943dc1006b57a078aa5",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_5fa1295.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "2b5d86229e40220aab3a522d4d6c48c94c36563dd0e62f20d74ec3f1dd2961f1",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_25687395.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "2eee35492e20dbe600143ae0dd59863f697fcc7ed7c490ec67012f933341ae80",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_7564d15.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "3098e00382caac8d25ea36b40a8c17e880189f86e37ef1bdfbf37d232966c015",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_14baa735.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "339641dea2c92f7c9c20b047338faaf575e56dbe36906563c725c98a1a87382d",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_14ba9895.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "369b9c25eef98548a9dfdc13908e3754484d85bea814137aae69f4c090b14e97",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_2bb7d65d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "3e97e177c02169435e8ca4c9136a5aa7f86c37d28203fbaf528fa1dfff20da16",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_275c3b95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "5974956e323f0e8e5c1e1e421dd767daba881adda35ac79a6a5f0c3fc14b6fd5",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_27975d95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "5d0e6ba6d40f326a20936da0375fadbb09e718614b50db0a98e14c7c8022860c",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_2c1b634d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "5ebac31fe8aaa84dbdc2ac0970806f05724d99c95c630df2edd078f36049a4d2",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_7565135.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "608f5b2df018c067aaa3f44a0758f7ba8a89d111e41cec408318f5b5cb98b2ab",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_14ba7915.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "64e2c12ff889490179b8cbd0cb0bf5176b6672d72102c2fc0b950d4b1041d3b7",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_13b11f35.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "64fbae9a9b8a9132fb115b2aa880c499b8e1dbcf6a55823be5320d0f69587083",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_11cc2535.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "7315d38c89ceb0e35bf9d2f30c09b7d4f3a9dd56390f8a57ce6ba3ab85a1e5a6",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_1978385d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "83d862be343ae3dd24e6a89aff2844b36018519c7de18f3af42817b3b5ba8c5e",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_1e835f95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "8a743d25faf31f3d9fda11be112439b837d9ffa98498a5f33fe8677fd43ebcde",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_24ff094d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "9c4d9980e9062ee3513040ec9052b4ba70e651cde344d772763f10850af24547",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_281f765d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "a0c60301f51da0594b9fd8a4edb87fcbb26f67c0fc2478294177b7fab278117f",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_19227d4d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "a2ddfcb56349efd9114be9cce2135ead08fc57aab2e58112b6390c4fdc16941b",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_1e82cb4d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "a9c0d503ea09ba11c93d8b07471534424b76e1ac5e9e858de7e08fe04f54a2ca",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_13b11515.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "b53c41c2627a3133cd176ca64e1b4c91dd248f76f0f4070e71cab6b5f3ae979a",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_13b11295.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "b5e270bd1999a527c2aa21ade49a973688be901fa9daa38f64a4a6f1633b9880",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_2c522f95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "b78040c84537234386c9851532544e40ab6104372d7ef00c2a7bd6e7f8e2403e",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_2855da5d.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "c45cf82ff2b8ba957c52d180d5005d81be07a5568d31d7471fcea283b2038bca",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_11cc1b15.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "d7db3522b644b6e21b04af493479815c028a738e49501e5fe3fbc47b23fa6d66",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_2c2a4395.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "db132d88d207461ceab3b654569796ac6d71d56ae102674d498dfef57f185cae",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_24ffdd95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "e21541e98d1edff0b32b6c68c0cbb5ce57bbfe054ad3989ed166581058d8495b",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_1922c995.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "e33e8c80a7a0927ff753cce9a09ba7bd40da89435293be71b64e31f0aa9df693",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_11cc1895.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "e8266785f08ede2094c8493f4333386443a094d230e1b9eeb4a5e5a0729f3f7a",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1100_PS5UPDATE1.PUP_offset_7564a95.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1100"
+        ],
+        "hash": "f2a03187d806435e08248adc24d9530b5d2268d43324a4c964f6e45c6c018fda",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1120_PS5UPDATE1.PUP_offset_5fa1315.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1120"
+        ],
+        "hash": "f3d70919bcf0829b069beae6d39a11e6d0b49166552b3f6166943ffed40434b4",
+        "occurrences": 1,
+        "shared_across_versions": false
+      },
+      {
+        "containers": [
+          "1140_PS5UPDATE1.PUP_offset_5fa1335.elf"
+        ],
+        "firmware_version_count": 1,
+        "firmware_versions": [
+          "1140"
+        ],
+        "hash": "f9597f3c242c78cf9e412275f7095a34cdacd2e8cb8a7b4071e374273ba4155c",
+        "occurrences": 1,
+        "shared_across_versions": false
+      }
+    ],
+    "missing_hash_count": 0,
+    "missing_hash_records": [],
+    "record_count": 34,
+    "schema": "bc250-segment-hash-groups/1",
+    "shared_group_count": 0,
+    "unique_hash_count": 34,
+    "unvalidated_count": 0,
+    "unvalidated_records": []
+  },
+  "source_audit_sha256": "4a6ae86ac815952440a43fbb84cf896ebbc3cb48a87dcc2bb8826c11ab7302b2",
+  "source_extract_set": "D:/BC250-Development/scratch/ps5-ghidra/elf-inputs (path recorded locally; not included in Git)",
+  "versions": {
+    "1100": {
+      "candidate_count": 10,
+      "e_entry_zero_count": 6,
+      "e_type_counts": {
+        "0xfe10": 4,
+        "0xfe18": 6
+      },
+      "entry_valid_count": 4,
+      "segment_count": 10
+    },
+    "1120": {
+      "candidate_count": 10,
+      "e_entry_zero_count": 6,
+      "e_type_counts": {
+        "0xfe10": 4,
+        "0xfe18": 6
+      },
+      "entry_valid_count": 4,
+      "segment_count": 10
+    },
+    "1140": {
+      "candidate_count": 14,
+      "e_entry_zero_count": 10,
+      "e_type_counts": {
+        "0xfe10": 4,
+        "0xfe18": 10
+      },
+      "entry_valid_count": 4,
+      "segment_count": 14
+    }
+  }
+}
