@@ -22,7 +22,7 @@
     },
     {
       "instruction_id": "SUP-002-20261126T1417Z",
-      "observed_utc": "2026-11-26T14:59:44Z",
+      "observed_utc": "2026-11-26T15:14:39Z",
       "disposition": "blocked",
       "run_status": "scheduler-triggered, partial validation complete",
       "evidence": [
@@ -31,20 +31,22 @@
         "A subsequent scheduled run verified recurrence.",
         "Cloned official GPUOpen AGS SDK v6.3.0 outside the project repository at ref/AGS_SDK-v6.3.0, commit 5d8812d703d0335741b6f7ffc37838eeb8b967f7.",
         "Strata inbox empty, 156 worker runs and 6450 idle seconds. No task added because the intake contract remains unverified.",
-        "Scheduler delivered this independent poll. Downloaded Microsoft.Direct3D.D3D12 1.619.6 from NuGet, verified d3d12.h is present and recorded package SHA256 08F0489281401AA430FC37322D6C3FC98A8025175AACD714C10D562F4963F1E9."
+        "Scheduler delivered this independent poll. Downloaded Microsoft.Direct3D.D3D12 1.619.6 from NuGet, verified d3d12.h is present and recorded package SHA256 08F0489281401AA430FC37322D6C3FC98A8025175AACD714C10D562F4963F1E9.",
+        "Staged the two required Linux AMDGPU source files from upstream v6.18 commit 7d0a66e4bb9081d75c82ec4957c50034cb0ea449 as local plan inputs. Strata inbox is empty; snapshot reports 156 worker runs and 8130 idle seconds."
       ],
       "validation": [
         "Re-ran release-tester.39.json in plan-only mode. Exit 1 before preflight. Context SHA256 2E7A645EB522C781D08988DEB13956FBA0631F3058AA76D616B060DCBDE81883. See scratch/release-plan-after-sdk-x86-v2/build-context.json.",
         "tester.39 plan-only rerun recognized AGS and exited 1 before preflight. Context identity 8DFFAE5B898CC177CFCB0C73D43FE8C0A6F7E61251C44F7DC29AC6E06A0A95AA.",
-        "tester.39 -Plan exited 1 before planning/preflight. Context SHA256 55D135D3C5EE3E84D6B4810F5CE12230560A63C1E4644E80B88152ACAF7473E6. No build. Exact paths: scratch/release-plan-after-agility/build-context.json."
+        "tester.39 -Plan exited 1 before planning/preflight. Context SHA256 55D135D3C5EE3E84D6B4810F5CE12230560A63C1E4644E80B88152ACAF7473E6. No build. Exact paths: scratch/release-plan-after-agility/build-context.json.",
+        "tester.39 -Plan recognized both sources and exited 1 before planning or preflight. Context D0DE171CFFCE0BE4C33A75A29C8FD916FB9A56E6C090F83A6C5C9F3857772D7B; exact paths in scratch/release-plan-after-agility/build-context.json."
       ],
       "blockers": [
-        "17 absent inputs: two display references, eight firmware files, two Linux sources, four toolchain paths and one WDK include path. SDK and WDK c links remain unsupported.",
+        "15 absent inputs: two display references, eight firmware files, four toolchain paths and one WDK include path. SDK and WDK c links remain unsupported.",
         "Strata queue intake and retry contract remains unverified. No new engineering commit or task ID."
       ]
     }
   ],
-  "last_poll_utc": "2026-11-26T14:59:44Z",
+  "last_poll_utc": "2026-11-26T15:14:39Z",
   "observed_instruction_id": "SUP-002-20261126T1417Z",
   "trigger": "scheduler-triggered",
   "result": "blocked"
