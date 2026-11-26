@@ -48,3 +48,9 @@ Reviewed 33 results pending at the start of this intervention. The five S001–S
 ## Limits
 
 The 40-candidate PS5 summary is metadata, not new disassembly. Ghidra function counts do not prove complete analysis. The supplied firmware provenance is still unverified; no firmware binary was added to Git.
+
+
+## Additional validated result
+
+- `NAGI-PYDEPS-VERIFY-01`: accepted after Codex corrected the generated verifier against `docs/build.md`. It checks Meson 1.12.0, Mako 1.4.1, MarkupSafe 3.0.3, PyYAML 6.0.3 and packaging 25.0 from the isolated target, without installing packages. Synthetic tests and a read-only check of the current target passed.
+- `STRATA-PUBLISH-GATE-01`: accepted after mocked-Git regression checks. Large deletions to tracked files are rejected before staging.

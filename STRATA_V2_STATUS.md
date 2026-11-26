@@ -29,3 +29,12 @@ The 33 outstanding task results now have explicit accepted/corrected/rejected di
 The five pinned Nagi Python dependencies are verified in the isolated scratch target. Focused regressions pass: 34 tests. Automatic publication is gated to explicitly opted-in Python/JSON tools artifacts with declared unittest validation; the test suite mocks Git and performs no push.
 
 The eight-hour endurance run is still in progress. Nagi's LLVM, MinGW, glslang, NuGet, SDK and full-build dependencies remain outstanding.
+
+
+## Recovery checkpoint – 2026-11-26 10:26 UTC
+
+The original eight-hour endurance start and counters remain intact. The daemon/watchdog were briefly stopped to recover the original full regression file and load the corrected task-scoped prompts; the watchdog is being resumed. The latest run counters before this checkpoint were 4,599.3 work seconds, 1,350 idle seconds, 97 worker runs and 9 automatic recoveries.
+
+The generated Nagi dependency verifier was incorrect on first pass (unrelated package pins and global environment lookup). Codex corrected it against `docs/build.md`; five pinned distributions in isolated `scratch\\py` all match, and tests pass. Publication now rejects large deletions from existing files. A Strata task had replaced the daemon tests with an inspection probe; it was restored from the reviewed revision and the actual regression suite passes 43 tests.
+
+Seven bounded implementation tasks remain in the queue. The task context now explicitly forbids profile/Strata local paths and records invalid-call details. Some tasks previously retried after source-scope errors have been corrected and rescheduled.

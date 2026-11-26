@@ -43,3 +43,12 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - Added 12 concrete PS5, Nagi and Strata implementation templates; 12 ready tasks are queued. The running queue is being handled by the detached daemon.
 - Installed and verified in `D:\BC250-Development\scratch\py`: Meson 1.12.0, Mako 1.4.1, MarkupSafe 3.0.3, PyYAML 6.0.3, packaging 25.0. This does not complete Nagi's other toolchain dependencies or a full build.
 - Restarted only the daemon through its existing watchdog. Endurance state was preserved: start `2026-11-26T08:29:21Z`, target 28,800 seconds; latest local counters before new worker execution: 4,259.9 work seconds, 1,350 idle seconds, 74 worker runs. Recovery count: 7.
+
+
+## Strata review and implementation recovery – 2026-11-26
+
+- Corrected a Strata-generated Nagi verifier that named unrelated packages and queried global Python. The read-only verifier now checks the five documented Nagi pins from `D:\\BC250-Development\\scratch\\py`; all five installed versions match. Its synthetic and local-target tests pass.
+- Tightened publication checks to reject large deletions from tracked files. A regression test reproduced a test-file truncation attempt and verified it is rejected before `git add`.
+- Restricted implementation tasks to new test/tool files and repaired source declarations. Failed tool calls now retain bounded diagnostic details; task context explicitly disallows undeclared profile/Strata paths and shows the exact test command.
+- Restored the full Strata daemon regression file after a generated test task replaced it with a temporary inspection probe. This specific replacement was caught before any test result was treated as valid; the full focused suite now passes 43 tests.
+- Seven concrete implementation tasks remain eligible; repetitive dependency test templates were removed.

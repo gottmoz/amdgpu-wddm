@@ -1458,14 +1458,13 @@
     {
       "id": "PS5-SUMMARY-STRICT-01",
       "area": "PS5",
-      "objective": "Add strict row/type validation to the inventory summary and edge-case tests. Keep behavior metadata-only; malformed inventories must fail with actionable messages.",
+      "objective": "Add edge-case regression tests for the JSON inventory summarizer, including wrong row types, missing hashes and malformed counters. Do not change the existing parser.",
       "sources": [
         "tools/firmware/elf_inventory_summary.py",
         "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
-        "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "tools/tests/test_elf_inventory_summary_edgecases.py"
       ],
       "tools": [
         "read_file",
@@ -1477,14 +1476,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.tests.test_elf_inventory_summary"
+        "tools.tests.test_elf_inventory_summary_edgecases"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.tests.test_elf_inventory_summary"
+          "tools.tests.test_elf_inventory_summary_edgecases"
         ]
       ],
       "publish": true,
@@ -1492,11 +1491,31 @@
       "commit_message": "ps5: implement ps5 summary strict 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "invalid_tool_calls": 0,
-      "attempts": 0,
-      "retry_at": 0,
-      "recovered_attempts": 4
+      "status": "done",
+      "invalid_tool_calls": 2,
+      "attempts": 1,
+      "retry_at": 1795688908.9489088,
+      "recovered_attempts": 4,
+      "invalid_tool_history": [
+        {
+          "tool": "read_file",
+          "argument_keys": [
+            "path"
+          ],
+          "path": "C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md",
+          "reason": "read path is not a declared task source"
+        },
+        {
+          "tool": "terminal",
+          "argument_keys": [
+            "argv"
+          ],
+          "path": null,
+          "reason": "only approved host tests are allowed"
+        }
+      ],
+      "summary": "",
+      "commit": "2fb85236cd620bc6249130b0ba12fc3c15f555a9"
     },
     {
       "id": "PS5-SEGMENT-GROUP-01",
@@ -1534,11 +1553,12 @@
       "commit_message": "ps5: implement ps5 segment group 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "invalid_tool_calls": 0,
-      "attempts": 0,
-      "retry_at": 0,
-      "recovered_attempts": 3
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 3,
+      "attempts": 1,
+      "retry_at": 1795688954.4277027,
+      "recovered_attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls"
     },
     {
       "id": "PS5-VERSION-DELTA-01",
@@ -1585,14 +1605,13 @@
     {
       "id": "PS5-REPORT-VALIDATE-01",
       "area": "PS5",
-      "objective": "Add tests that validate the PS5 inventory summary schema and its explicit analysis limitations using synthetic JSON only.",
+      "objective": "Add tests proving the summary is deterministic and reports source inventory hashes and metadata-only limitations. Do not rewrite the existing utility.",
       "sources": [
         "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
-        "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "tools/tests/test_elf_inventory_summary_determinism.py"
       ],
       "tools": [
         "read_file",
@@ -1604,14 +1623,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.tests.test_elf_inventory_summary"
+        "tools.tests.test_elf_inventory_summary_determinism"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.tests.test_elf_inventory_summary"
+          "tools.tests.test_elf_inventory_summary_determinism"
         ]
       ],
       "publish": true,
@@ -1661,11 +1680,22 @@
       "commit_message": "nagi: implement nagi build context 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "invalid_tool_calls": 0,
-      "attempts": 0,
-      "retry_at": 0,
-      "recovered_attempts": 3
+      "status": "retry_scheduled",
+      "invalid_tool_calls": 4,
+      "attempts": 2,
+      "retry_at": 1795689246.1085532,
+      "recovered_attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "invalid_tool_history": [
+        {
+          "tool": "read_file",
+          "argument_keys": [
+            "path"
+          ],
+          "path": "C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md",
+          "reason": "read path is not a declared task source"
+        }
+      ]
     },
     {
       "id": "NAGI-PYDEPS-VERIFY-01",
@@ -1703,11 +1733,15 @@
       "commit_message": "nagi: implement nagi pydeps verify 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "invalid_tool_calls": 0,
-      "attempts": 0,
-      "retry_at": 0,
-      "recovered_attempts": 3
+      "status": "done",
+      "invalid_tool_calls": 3,
+      "attempts": 1,
+      "retry_at": 1795689114.8931808,
+      "recovered_attempts": 3,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "summary": "Codex corrected generated package list to the build-playbook pins; five distributions verified in isolated scratch target and tests passed.",
+      "review_status": "accepted_validated",
+      "review_disposition": "Corrected against docs/build.md and verified installed scratch metadata plus synthetic tests."
     },
     {
       "id": "NAGI-PYDEPS-TEST-01",
@@ -1744,11 +1778,13 @@
       "commit_message": "nagi: implement nagi pydeps test 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "rejected",
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
-      "recovered_attempts": 3
+      "recovered_attempts": 3,
+      "review_status": "rejected_duplicate",
+      "review_disposition": "Overlaps an existing verifier/build-context implementation task."
     },
     {
       "id": "NAGI-CONTEXT-TEST-01",
@@ -1785,11 +1821,13 @@
       "commit_message": "nagi: implement nagi context test 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "rejected",
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
-      "recovered_attempts": 2
+      "recovered_attempts": 2,
+      "review_status": "rejected_duplicate",
+      "review_disposition": "Overlaps an existing verifier/build-context implementation task."
     },
     {
       "id": "STRATA-PUBLISH-GATE-01",
@@ -1838,7 +1876,7 @@
         "tools/strata_daemon.py"
       ],
       "allowed_writes": [
-        "tools/test_strata_daemon.py"
+        "tools/tests/test_strata_scheduler.py"
       ],
       "tools": [
         "read_file",
@@ -1850,14 +1888,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.test_strata_daemon"
+        "tools.tests.test_strata_scheduler"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.test_strata_daemon"
+          "tools.tests.test_strata_scheduler"
         ]
       ],
       "publish": true,
@@ -1869,7 +1907,7 @@
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
-      "recovered_attempts": 3
+      "recovered_attempts": 2
     },
     {
       "id": "STRATA-REVIEW-LOOP-01",
@@ -1879,7 +1917,7 @@
         "tools/strata_daemon.py"
       ],
       "allowed_writes": [
-        "tools/test_strata_daemon.py"
+        "tools/tests/test_strata_review_queue.py"
       ],
       "tools": [
         "read_file",
@@ -1891,14 +1929,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.test_strata_daemon"
+        "tools.tests.test_strata_review_queue"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.test_strata_daemon"
+          "tools.tests.test_strata_review_queue"
         ]
       ],
       "publish": true,
@@ -1910,7 +1948,8 @@
       "invalid_tool_calls": 0,
       "attempts": 0,
       "retry_at": 0,
-      "recovered_attempts": 3
+      "recovered_attempts": 1,
+      "summary": ""
     },
     {
       "id": "STRATA-WATCHDOG-TEST-01",

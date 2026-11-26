@@ -231,6 +231,16 @@ def publish(task):
         raise RuntimeError("publication requires an empty Git index")
     paths = list(declared)
     for relative in paths:
+        tracked = run(["git", "ls-files", "--error-unmatch", "--", relative])
+        if tracked["exit_code"] == 0:
+            change = run(["git", "diff", "--numstat", "--", relative])
+            if change["stdout"].strip():
+                fields = change["stdout"].splitlines()[0].split("\t")
+                if len(fields) != 3 or not fields[0].isdigit() or not fields[1].isdigit():
+                    raise RuntimeError("could not validate changed-line counts")
+                added, deleted = int(fields[0]), int(fields[1])
+                if deleted > 20 or deleted > added:
+                    raise RuntimeError("automatic publication rejects large deletion from an existing file")
         path = confined(relative)
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES or path.stat().st_size > 100_000:
             raise RuntimeError("publication requires small declared text files")

@@ -33,9 +33,13 @@ class PublishPolicyTests(unittest.TestCase):
             run.assert_not_called()
 
     def test_validated_python_artifact_uses_mocked_git(self):
-        with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', return_value={'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}) as run:
+        def git_result(argv, timeout=120):
+            if argv[1] == 'ls-files':
+                return {'exit_code': 1, 'stdout': '', 'stderr': 'not tracked'}
+            return {'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}
+        with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', side_effect=git_result) as run:
             self.assertEqual(worker.publish(self.task()), 'abc123')
-        self.assertEqual(run.call_count, 5)
+        self.assertEqual(run.call_count, 6)
         reviewed = __import__('json').loads((self.root / 'STRATA_REVIEWED.json').read_text(encoding='utf-8'))
         self.assertEqual(reviewed['reviewed_task_ids'], ['PUBLISH-TEST-01'])
 
@@ -51,6 +55,22 @@ class PublishPolicyTests(unittest.TestCase):
         with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', return_value={'exit_code': 0, 'stdout': '', 'stderr': ''}):
             with self.assertRaisesRegex(RuntimeError, 'credential'):
                 worker.publish(self.task())
+
+    def test_large_deletion_from_tracked_test_file_is_rejected(self):
+        calls = []
+        def git_result(argv, timeout=120):
+            calls.append(argv)
+            if argv[1:3] == ['diff', '--cached']:
+                return {'exit_code': 0, 'stdout': '', 'stderr': ''}
+            if argv[1] == 'ls-files':
+                return {'exit_code': 0, 'stdout': 'tools/tests/sample.py', 'stderr': ''}
+            if argv[1:2] == ['diff']:
+                return {'exit_code': 0, 'stdout': '2\t90\ttools/tests/sample.py\n', 'stderr': ''}
+            return {'exit_code': 0, 'stdout': 'abc123', 'stderr': ''}
+        with patch.object(worker, 'ROOT', self.root), patch.object(worker, 'current_branch', return_value='agent/strata-v2'), patch.object(worker, 'run', side_effect=git_result):
+            with self.assertRaisesRegex(RuntimeError, 'large deletion'):
+                worker.publish(self.task())
+        self.assertFalse(any(argv[1] == 'add' for argv in calls))
 
     def test_metrics_merge_never_moves_counters_or_validation_backwards(self):
         metrics = self.root / 'metrics.json'

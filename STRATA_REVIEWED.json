@@ -5,6 +5,7 @@
     "NAGI-DEP-03",
     "NAGI-DEP-04",
     "NAGI-DEP-05",
+    "NAGI-PYDEPS-VERIFY-01",
     "PS5-AMD-01",
     "PS5-AMD-02",
     "PS5-AMD-03",
@@ -20,6 +21,7 @@
     "PS5-INV-09",
     "PS5-INV-10",
     "PS5-INV-11",
+    "PS5-SUMMARY-STRICT-01",
     "REVIEW-NAGI-DEP-01",
     "REVIEW-NAGI-DEP-03",
     "REVIEW-NAGI-DEP-04",
@@ -44,9 +46,8 @@
     "S005",
     "STRATA-OPS-02",
     "STRATA-OPS-03",
-    "STRATA-PUBLISH-GATE-01",
-    "PS5-SUMMARY-STRICT-01"
+    "STRATA-PUBLISH-GATE-01"
   ],
-  "reviewed_utc": "2026-11-26T10:31:50Z",
-  "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
+  "reviewed_utc": "2026-11-26T10:37:37Z",
+  "review_basis": "Codex source review plus passing deterministic regression validation; low-risk artifacts are published under the restricted policy."
 }

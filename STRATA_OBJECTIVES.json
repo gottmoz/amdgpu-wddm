@@ -555,14 +555,13 @@
     {
       "id": "PS5-SUMMARY-STRICT-01",
       "area": "PS5",
-      "objective": "Add strict row/type validation to the inventory summary and edge-case tests. Keep behavior metadata-only; malformed inventories must fail with actionable messages.",
+      "objective": "Add edge-case regression tests for the JSON inventory summarizer, including wrong row types, missing hashes and malformed counters. Do not change the existing parser.",
       "sources": [
         "tools/firmware/elf_inventory_summary.py",
         "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
-        "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "tools/tests/test_elf_inventory_summary_edgecases.py"
       ],
       "tools": [
         "read_file",
@@ -574,14 +573,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.tests.test_elf_inventory_summary"
+        "tools.tests.test_elf_inventory_summary_edgecases"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.tests.test_elf_inventory_summary"
+          "tools.tests.test_elf_inventory_summary_edgecases"
         ]
       ],
       "publish": true,
@@ -664,14 +663,13 @@
     {
       "id": "PS5-REPORT-VALIDATE-01",
       "area": "PS5",
-      "objective": "Add tests that validate the PS5 inventory summary schema and its explicit analysis limitations using synthetic JSON only.",
+      "objective": "Add tests proving the summary is deterministic and reports source inventory hashes and metadata-only limitations. Do not rewrite the existing utility.",
       "sources": [
         "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
-        "tools/firmware/elf_inventory_summary.py",
-        "tools/tests/test_elf_inventory_summary.py"
+        "tools/tests/test_elf_inventory_summary_determinism.py"
       ],
       "tools": [
         "read_file",
@@ -683,14 +681,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.tests.test_elf_inventory_summary"
+        "tools.tests.test_elf_inventory_summary_determinism"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.tests.test_elf_inventory_summary"
+          "tools.tests.test_elf_inventory_summary_determinism"
         ]
       ],
       "publish": true,
@@ -771,76 +769,6 @@
       "origin": "implementation_template"
     },
     {
-      "id": "NAGI-PYDEPS-TEST-01",
-      "area": "NAGI",
-      "objective": "Add regression tests for missing, wrong-version and correctly-installed pinned Python build dependencies without accessing the network.",
-      "sources": [
-        "docs/build-playbook.md"
-      ],
-      "allowed_writes": [
-        "tools/tests/test_verify_python_build_deps.py"
-      ],
-      "tools": [
-        "read_file",
-        "write_file",
-        "terminal"
-      ],
-      "allow_tests": true,
-      "test_command": [
-        "python",
-        "-m",
-        "unittest",
-        "tools.tests.test_verify_python_build_deps"
-      ],
-      "verify": [
-        [
-          "python",
-          "-m",
-          "unittest",
-          "tools.tests.test_verify_python_build_deps"
-        ]
-      ],
-      "publish": true,
-      "publication_policy": "unit-tested-code",
-      "commit_message": "nagi: implement nagi pydeps test 01",
-      "origin": "implementation_template"
-    },
-    {
-      "id": "NAGI-CONTEXT-TEST-01",
-      "area": "NAGI",
-      "objective": "Add synthetic tests for build-context summaries, including absent paths, complete inputs and malformed records; ensure output omits machine-specific absolute paths.",
-      "sources": [
-        "tools/release/build_context.py"
-      ],
-      "allowed_writes": [
-        "tools/tests/test_build_context_summary.py"
-      ],
-      "tools": [
-        "read_file",
-        "write_file",
-        "terminal"
-      ],
-      "allow_tests": true,
-      "test_command": [
-        "python",
-        "-m",
-        "unittest",
-        "tools.tests.test_build_context_summary"
-      ],
-      "verify": [
-        [
-          "python",
-          "-m",
-          "unittest",
-          "tools.tests.test_build_context_summary"
-        ]
-      ],
-      "publish": true,
-      "publication_policy": "unit-tested-code",
-      "commit_message": "nagi: implement nagi context test 01",
-      "origin": "implementation_template"
-    },
-    {
       "id": "STRATA-PUBLISH-GATE-01",
       "area": "STRATA",
       "objective": "Add unit tests for the automatic publication policy: require explicit policy, unittest verification, allowed paths and rejection of secrets. Mock Git; never push from tests.",
@@ -883,7 +811,7 @@
         "tools/strata_daemon.py"
       ],
       "allowed_writes": [
-        "tools/test_strata_daemon.py"
+        "tools/tests/test_strata_scheduler.py"
       ],
       "tools": [
         "read_file",
@@ -895,14 +823,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.test_strata_daemon"
+        "tools.tests.test_strata_scheduler"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.test_strata_daemon"
+          "tools.tests.test_strata_scheduler"
         ]
       ],
       "publish": true,
@@ -918,7 +846,7 @@
         "tools/strata_daemon.py"
       ],
       "allowed_writes": [
-        "tools/test_strata_daemon.py"
+        "tools/tests/test_strata_review_queue.py"
       ],
       "tools": [
         "read_file",
@@ -930,14 +858,14 @@
         "python",
         "-m",
         "unittest",
-        "tools.test_strata_daemon"
+        "tools.tests.test_strata_review_queue"
       ],
       "verify": [
         [
           "python",
           "-m",
           "unittest",
-          "tools.test_strata_daemon"
+          "tools.tests.test_strata_review_queue"
         ]
       ],
       "publish": true,
