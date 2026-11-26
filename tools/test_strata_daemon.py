@@ -37,6 +37,15 @@ class CoordinatorTests(unittest.TestCase):
             self.assertEqual(daemon.import_inbox("owner/repo", task["branch"]), 0)
         self.assertEqual(len(daemon.load(daemon.INBOX_QUEUE)["tasks"]), 1)
 
+    def test_task_scoped_tool_schema_hides_terminal(self):
+        tools = worker.definitions({"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]})
+        names = {item["function"]["name"] for item in tools}
+        self.assertEqual(names, {"read_file", "write_file"})
+
+    def test_unauthorized_terminal_is_not_exposed(self):
+        task = {"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]}
+        self.assertNotIn("terminal", {item["function"]["name"] for item in worker.definitions(task)})
+
     def test_generated_task_and_checkpoint_recovery(self):
         task = daemon.generate_task("research/xbox-firmware")
         self.assertEqual(task["origin"], "generated")
