@@ -55,20 +55,26 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T17:00:28Z",
+      "observed_utc": "2026-11-26T17:14:50Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, WDK candidate staged, plan blocked before preflight",
+      "run_status": "scheduler-triggered, official LLVM candidate archives staged",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
         "strata_daemon.py:235-255 selects matching-branch tasks in pending, retry_scheduled or running state once retry_at is due. Running leases take precedence, then areas rotate.",
         "Official LLVM 23.1.4 archive SHA-256 verified against GitHub release digest. Staged toolchain/llvm-23.1.4-win64 and verified clang-cl 23.1.4. Strata PID 2940 present, no queue changes.",
-        "Verified the Microsoft NuGet signature on WDK x64 10.0.26100.6584 (SHA256 C393D03DFB640B5C92F546B32F6770EF68CD3AAF691956E7D66D8E2C28A1B55E) and staged 125 UM files at toolchain/nuget/wdk-26100.6584-um. Live PID 2940 remained on agent/strata-v2; runtime inbox had zero tasks."
+        "Verified the Microsoft NuGet signature on WDK x64 10.0.26100.6584 (SHA256 C393D03DFB640B5C92F546B32F6770EF68CD3AAF691956E7D66D8E2C28A1B55E) and staged 125 UM files at toolchain/nuget/wdk-26100.6584-um. Live PID 2940 remained on agent/strata-v2; runtime inbox had zero tasks.",
+        "Recorded compiler banner points to MSYS2 commit d34feaaa1d0aff624c870910b6f2589aa40d20de. Its mingw-w64-llvm PKGBUILD specifies pkgrel=3. Four matching MSYS2 MinGW64 archives downloaded to scratch/msys2-llvm-22.1.8-3."
       ],
       "validation": [
         "tools/test_strata_daemon.py CoordinatorTests.test_inbox_scope_and_duplicate passed (1 test). Fixture IN-RE03-NAGI-LLVM validated for research/ps5-firmware and was rejected for the live agent/strata-v2 branch. No live enqueue.",
         "tester.39 -Plan exited 1 before preflight. Evidence: scratch/release-plan-after-llvm/build-context.json.",
-        "tester.39 -Plan exit 1 before preflight. Context 5D938D2733AEAE89065762CD9A0CA9013C3574702ECA8B5008E1CB4937CD8353 at scratch/release-plan-after-wdk-26100/build-context.json. The two missing LLVM paths and both unsupported c junctions remain."
+        "tester.39 -Plan exit 1 before preflight. Context 5D938D2733AEAE89065762CD9A0CA9013C3574702ECA8B5008E1CB4937CD8353 at scratch/release-plan-after-wdk-26100/build-context.json. The two missing LLVM paths and both unsupported c junctions remain.",
+        "All four archive PKGINFO records report 22.1.8-3. Compiler identity unverified and plan not rerun.",
+        "mingw-w64-x86_64-clang-22.1.8-3-any.pkg.tar.zst SHA256 834F6B80A81388610CC077CB6CCCCC20EA02DCF21F525FB7CFB037CEB9273E6A",
+        "mingw-w64-x86_64-clang-libs-22.1.8-3-any.pkg.tar.zst SHA256 9B1A59F9DB49F24BC03BA137C307E5D20D986EAA4EC1CC179EA5E889047AC965",
+        "mingw-w64-x86_64-llvm-22.1.8-3-any.pkg.tar.zst SHA256 551273499170D15A532E5FB98299B67AC2846A6788E6A352CE77889FB746D40B",
+        "mingw-w64-x86_64-llvm-libs-22.1.8-3-any.pkg.tar.zst SHA256 AB50A733CBAFD24E5180C00DEDE15014ECB7C133B836CE59262C22C27D46D659"
       ],
       "blockers": [
         "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
@@ -78,12 +84,12 @@
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: AMDGPU LLVM paths, SDK/WDK junctions and Strata intake branch mismatch",
-  "last_poll_utc": "2026-11-26T17:00:28Z",
+  "result": "blocked: MSYS2 packages staged, compiler identity and SDK/WDK junctions unresolved, Strata intake branch mismatch",
+  "last_poll_utc": "2026-11-26T17:14:50Z",
   "heartbeat": {
-    "observed_instruction_id": "SUP-003-20261126T1625Z",
+    "last_poll_utc": "2026-11-26T17:14:50Z",
     "trigger": "scheduler-triggered",
-    "last_poll_utc": "2026-11-26T17:00:28Z",
-    "result": "blocked: AMDGPU LLVM paths, SDK/WDK junctions and Strata intake branch mismatch"
+    "observed_instruction_id": "SUP-003-20261126T1625Z",
+    "result": "blocked: MSYS2 packages staged, compiler identity and SDK/WDK junctions unresolved, Strata intake branch mismatch"
   }
 }
