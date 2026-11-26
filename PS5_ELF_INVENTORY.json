@@ -8,17 +8,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2830590,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2830590,
+    "validated_executable_bytes": 2830590,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -30,17 +27,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1339614,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1339614,
+    "validated_executable_bytes": 1339614,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -52,17 +46,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2280638,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2280638,
+    "validated_executable_bytes": 2280638,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -74,17 +65,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 985772,
-    "bounds_valid": false,
+    "declared_executable_bytes": 985772,
+    "validated_executable_bytes": 985772,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -96,17 +84,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 128,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 25593244,
-    "bounds_valid": false,
+    "declared_executable_bytes": 25593244,
+    "validated_executable_bytes": 25593244,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -118,17 +103,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3759468,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3759468,
+    "validated_executable_bytes": 3759468,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -140,17 +122,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3717278,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3717278,
+    "validated_executable_bytes": 3717278,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -162,17 +141,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1237484,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1237484,
+    "validated_executable_bytes": 1237484,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -184,17 +160,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2493134,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2493134,
+    "validated_executable_bytes": 2493134,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -206,17 +179,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1976270,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1976270,
+    "validated_executable_bytes": 1976270,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -228,17 +198,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2830590,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2830590,
+    "validated_executable_bytes": 2830590,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -250,17 +217,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1339614,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1339614,
+    "validated_executable_bytes": 1339614,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -272,17 +236,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2280638,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2280638,
+    "validated_executable_bytes": 2280638,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -294,17 +255,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 986060,
-    "bounds_valid": false,
+    "declared_executable_bytes": 986060,
+    "validated_executable_bytes": 986060,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -316,17 +274,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 128,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 25594268,
-    "bounds_valid": false,
+    "declared_executable_bytes": 25594268,
+    "validated_executable_bytes": 25594268,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -338,17 +293,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3759468,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3759468,
+    "validated_executable_bytes": 3759468,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -360,17 +312,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1772972,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1772972,
+    "validated_executable_bytes": 1772972,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -382,17 +331,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2795966,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2795966,
+    "validated_executable_bytes": 2795966,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -404,17 +350,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2437086,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2437086,
+    "validated_executable_bytes": 2437086,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -426,17 +369,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 974846,
-    "bounds_valid": false,
+    "declared_executable_bytes": 974846,
+    "validated_executable_bytes": 974846,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -448,17 +388,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2830590,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2830590,
+    "validated_executable_bytes": 2830590,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -470,17 +407,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1339614,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1339614,
+    "validated_executable_bytes": 1339614,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -492,17 +426,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2280638,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2280638,
+    "validated_executable_bytes": 2280638,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -514,17 +445,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 986060,
-    "bounds_valid": false,
+    "declared_executable_bytes": 986060,
+    "validated_executable_bytes": 986060,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -536,17 +464,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 128,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 25603292,
-    "bounds_valid": false,
+    "declared_executable_bytes": 25603292,
+    "validated_executable_bytes": 25603292,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -558,17 +483,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3759468,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3759468,
+    "validated_executable_bytes": 3759468,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -580,17 +502,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 112,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 1777212,
-    "bounds_valid": false,
+    "declared_executable_bytes": 1777212,
+    "validated_executable_bytes": 1777212,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -602,17 +521,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2796078,
-    "bounds_valid": false,
+    "declared_executable_bytes": 2796078,
+    "validated_executable_bytes": 2796078,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -624,17 +540,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 8650734,
-    "bounds_valid": false,
+    "declared_executable_bytes": 8650734,
+    "validated_executable_bytes": 8650734,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -646,17 +559,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3129678,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3129678,
+    "validated_executable_bytes": 3129678,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -668,17 +578,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 589790,
-    "bounds_valid": false,
+    "declared_executable_bytes": 589790,
+    "validated_executable_bytes": 589790,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -690,17 +597,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 46643774,
-    "bounds_valid": false,
+    "declared_executable_bytes": 46643774,
+    "validated_executable_bytes": 46643774,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -712,17 +616,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 3984830,
-    "bounds_valid": false,
+    "declared_executable_bytes": 3984830,
+    "validated_executable_bytes": 3984830,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -734,17 +635,14 @@
     "architecture": "x86-64",
     "elf_type": "other",
     "entry_point": 0,
-    "entry_valid": true,
     "program_header_count": 14,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 13825838,
-    "bounds_valid": false,
+    "declared_executable_bytes": 13825838,
+    "validated_executable_bytes": 13825838,
+    "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 0,
-    "warnings": [
-      "invalid or truncated ELF header/segment/section bounds"
-    ],
-    "classification": "partial/unidentified ELF",
     "confidence": "medium"
   },
   {
@@ -756,15 +654,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 186412,
+    "declared_executable_bytes": 186412,
+    "validated_executable_bytes": 186412,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   },
   {
@@ -776,15 +673,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 479612,
+    "declared_executable_bytes": 479612,
+    "validated_executable_bytes": 479612,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   },
   {
@@ -796,15 +692,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 571452,
+    "declared_executable_bytes": 571452,
+    "validated_executable_bytes": 571452,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   },
   {
@@ -816,15 +711,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 2470524,
+    "declared_executable_bytes": 2470524,
+    "validated_executable_bytes": 2470524,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   },
   {
@@ -836,15 +730,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 685564,
+    "declared_executable_bytes": 685564,
+    "validated_executable_bytes": 685564,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   },
   {
@@ -856,15 +749,14 @@
     "architecture": "x86-64",
     "elf_type": "EXEC",
     "entry_point": 4194432,
-    "entry_valid": true,
     "program_header_count": 6,
     "section_header_count": 0,
     "executable_segment_count": 1,
-    "executable_bytes": 142700,
+    "declared_executable_bytes": 142700,
+    "validated_executable_bytes": 142700,
     "bounds_valid": true,
+    "error_codes": [],
     "ghidra_functions": 1,
-    "warnings": [],
-    "classification": "complete executable",
     "confidence": "medium"
   }
 ]
