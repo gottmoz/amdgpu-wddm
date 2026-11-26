@@ -48,8 +48,9 @@
     "STRATA-OPS-03",
     "STRATA-PUBLISH-GATE-01",
     "NAGI-BUILD-CONTEXT-01",
-    "NAGI-VERIFIER-JSON-01"
+    "NAGI-VERIFIER-JSON-01",
+    "PS5-SEGMENT-GROUP-01"
   ],
-  "reviewed_utc": "2026-11-26T10:56:14Z",
+  "reviewed_utc": "2026-11-26T10:58:37Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
