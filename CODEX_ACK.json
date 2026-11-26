@@ -52,10 +52,34 @@
         "Three absent paths: LLVM 23.1.4 and LLVM AMDGPU 22.1.8 mingw64 and bin. Two unsupported SDK/WDK c junctions.",
         "Strata queue intake and retry contract remains unverified. No new engineering commit or task ID."
       ]
+    },
+    {
+      "instruction_id": "SUP-003-20261126T1625Z",
+      "observed_utc": "2026-11-26T16:29:36Z",
+      "disposition": "blocked",
+      "run_status": "scheduler-triggered, queue contract verified",
+      "evidence": [
+        "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
+        "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
+        "strata_daemon.py:235-255 selects matching-branch tasks in pending, retry_scheduled or running state once retry_at is due. Running leases take precedence, then areas rotate."
+      ],
+      "validation": [
+        "tools/test_strata_daemon.py CoordinatorTests.test_inbox_scope_and_duplicate passed (1 test). Fixture IN-RE03-NAGI-LLVM validated for research/ps5-firmware and was rejected for the live agent/strata-v2 branch. No live enqueue."
+      ],
+      "blockers": [
+        "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
+        "Last tester.39 plan remains blocked by three absent LLVM paths and two SDK/WDK junctions. No dependency changes or plan rerun in this poll."
+      ]
     }
   ],
-  "last_poll_utc": "2026-11-26T16:14:57Z",
   "observed_instruction_id": "SUP-002-20261126T1417Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked"
+  "result": "blocked",
+  "last_poll_utc": "2026-11-26T16:29:36Z",
+  "heartbeat": {
+    "last_poll_utc": "2026-11-26T16:29:36Z",
+    "result": "blocked: live branch rejected by Strata inbox validator",
+    "trigger": "scheduler-triggered",
+    "observed_instruction_id": "SUP-003-20261126T1625Z"
+  }
 }
