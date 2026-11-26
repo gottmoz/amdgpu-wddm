@@ -280,7 +280,7 @@ def main():
     strata_state.recover_running(state_db)
     while True:
         queue = json.loads(QUEUE.read_text(encoding="utf-8"))
-        task = next((item for item in queue["tasks"] if item["status"] in ("pending", "retry_scheduled") and item.get("retry_at",0)<=time.time() and (not args.task_id or item["id"] == args.task_id)), None)
+        task = next((item for item in queue["tasks"] if (item["status"] in ("pending", "retry_scheduled") or (args.task_id and item["id"] == args.task_id and item["status"] == "running")) and item.get("retry_at",0)<=time.time() and (not args.task_id or item["id"] == args.task_id)), None)
         if task is None:
             return 0
         if current_branch() != task["branch"] or task["branch"] == "main":

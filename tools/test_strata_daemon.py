@@ -104,7 +104,7 @@ class CoordinatorTests(unittest.TestCase):
     def test_simulated_api_failure_persists_retry_and_returns(self):
         base = Path(self.temp.name)
         queue = base / "queue.json"
-        task = {"id": "T-api-fail", "branch": "agent/strata-v2", "status": "pending",
+        task = {"id": "T-api-fail", "branch": "agent/strata-v2", "status": "running",
                 "objective": "Read a declared source", "allowed_writes": ["docs/research/test.md"]}
         worker.atomic_json(queue, {"schema_version": 1, "tasks": [task]})
         paths = {name: base / f"{name}.json" for name in ("STATE_DB", "MEMORY", "CHECKPOINT", "METRICS")}
