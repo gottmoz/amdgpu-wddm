@@ -1440,6 +1440,43 @@
       "publication_policy": "unit-tested-code",
       "commit_message": "ps5: add deterministic inventory markdown report",
       "origin": "implementation_template"
+    },
+    {
+      "id": "NAGI-VERIFIER-REDACT-PATH-01",
+      "area": "NAGI",
+      "objective": "Prevent the dependency verifier JSON report from emitting an absolute local target path. Emit a stable relative label and add tests that reject user-profile or drive-letter paths.",
+      "sources": [
+        "tools/release/verify_python_build_deps.py",
+        "tools/tests/test_nagi_verifier_json.py"
+      ],
+      "allowed_writes": [
+        "tools/release/verify_python_build_deps.py",
+        "tools/tests/test_nagi_verifier_path_privacy.py"
+      ],
+      "tools": [
+        "read_file",
+        "write_file",
+        "terminal"
+      ],
+      "allow_tests": true,
+      "test_command": [
+        "python",
+        "-m",
+        "unittest",
+        "tools.tests.test_nagi_verifier_path_privacy"
+      ],
+      "verify": [
+        [
+          "python",
+          "-m",
+          "unittest",
+          "tools.tests.test_nagi_verifier_path_privacy"
+        ]
+      ],
+      "publish": true,
+      "publication_policy": "unit-tested-code",
+      "commit_message": "nagi: avoid absolute paths in dependency reports",
+      "origin": "implementation_template"
     }
   ]
 }
