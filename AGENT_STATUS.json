@@ -1,15 +1,15 @@
 {
-  "utc": "2026-11-26T08:47:42Z",
+  "utc": "2026-11-26T08:48:45Z",
   "state": "working",
   "current_task_id": "NAGI-DEP-02",
   "research_area": "NAGI",
   "completed_count": 9,
   "failed_count": 1,
-  "tool_calls": 775,
-  "input_tokens": 3460571,
-  "output_tokens": 168443,
+  "tool_calls": 778,
+  "input_tokens": 3467193,
+  "output_tokens": 170560,
   "last_successful_validation_utc": "2026-11-26T08:46:56Z",
-  "uptime_seconds": 1101,
+  "uptime_seconds": 1164,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 611.5,
   "idle_seconds": 0,
@@ -18,6 +18,6 @@
   "pending_reviews": 9,
   "published_commits": 5,
   "last_successful_commit": "b35331cae284688de57a0e8cb385b76fe7fd53e4",
-  "next_task_id": "NAGI-DEP-02",
+  "next_task_id": "NAGI-DEP-04",
   "work_branch": "agent/strata-v2"
 }
