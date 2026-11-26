@@ -46,8 +46,9 @@
     "S005",
     "STRATA-OPS-02",
     "STRATA-OPS-03",
-    "STRATA-PUBLISH-GATE-01"
+    "STRATA-PUBLISH-GATE-01",
+    "NAGI-BUILD-CONTEXT-01"
   ],
-  "reviewed_utc": "2026-11-26T10:37:37Z",
-  "review_basis": "Codex source review plus passing deterministic regression validation; low-risk artifacts are published under the restricted policy."
+  "reviewed_utc": "2026-11-26T10:44:41Z",
+  "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
