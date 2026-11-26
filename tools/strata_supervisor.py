@@ -90,7 +90,8 @@ def command(args):
         raise ValueError("command is outside the read-only allowlist")
     if executable == "git" and (len(argv) < 2 or argv[1] not in SAFE_COMMANDS["git"]):
         raise ValueError("git mutation is reserved for the supervisor")
-    if executable == "python" and (len(argv) < 3 or argv[1:3] not in (["-m", "unittest"], ["-B", "tools/facts/gen_facts.py"])):
+    approved_python = argv[1:3] == ["-m", "unittest"] or argv[1:4] == ["-B", "-m", "unittest"] or argv[1:3] == ["-B", "tools/facts/gen_facts.py"]
+    if executable == "python" and not approved_python:
         raise ValueError("only approved host tests are allowed")
     if executable == "rg" and any(x.startswith("-") and x not in SAFE_COMMANDS["rg"] for x in argv[1:]):
         raise ValueError("unsupported rg option")

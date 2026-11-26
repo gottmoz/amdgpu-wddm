@@ -32,6 +32,10 @@ class PublishPolicyTests(unittest.TestCase):
                 worker.publish(self.task(publication_policy=None))
             run.assert_not_called()
 
+    def test_approved_unittest_command_accepts_python_bytecode_flag(self):
+        result = worker.command({'argv': ['python', '-B', '-m', 'unittest', 'tools.tests.test_binary_audit']})
+        self.assertEqual(result['exit_code'], 0)
+
     def test_validated_python_artifact_uses_mocked_git(self):
         def git_result(argv, timeout=120):
             if argv[1] == 'ls-files':
