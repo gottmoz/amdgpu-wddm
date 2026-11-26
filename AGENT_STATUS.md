@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T11:23:12Z`
+- utc: `2026-11-26T11:24:15Z`
 - state: `working`
 - current task id: `NAGI-VERIFIER-CASE-01`
 - research area: `NAGI`
 - completed count: `45`
 - failed count: `6`
-- tool calls: `1166`
-- input tokens: `4996611`
-- output tokens: `529995`
+- tool calls: `1170`
+- input tokens: `5030361`
+- output tokens: `534011`
 - last successful validation utc: `2026-11-26T11:16:22Z`
-- uptime seconds: `10431`
+- uptime seconds: `10494`
 - endurance target seconds: `28800`
 - actual work seconds: `6700.6`
 - idle seconds: `1410.0`
