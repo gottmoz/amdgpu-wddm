@@ -128,12 +128,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T21:43:35Z",
+  "last_poll_utc": "2026-11-26T21:58:53Z",
   "heartbeat": {
-    "validation": "Authenticated scheduled read confirmed SUP-004 is pending. Latest tester.39 plan exited 1 for both ROCm rows. No new pinned artifact provenance or validation this poll.",
-    "result": "blocked",
     "observed_instruction_id": "SUP-004-20261126T1920Z",
+    "result": "blocked",
+    "validation": "Authenticated scheduled read confirmed pending SUP-004. Both pinned workspace inputs are still absent at the paths recorded in sup004-plan-llvm-config.log. Latest tester.39 plan exited 1 for extra-rocm-release and extra-rocm-lab. No planner rerun.",
     "trigger": "scheduler-triggered",
-    "last_poll_utc": "2026-11-26T21:43:35Z"
+    "last_poll_utc": "2026-11-26T21:58:53Z"
   }
 }
