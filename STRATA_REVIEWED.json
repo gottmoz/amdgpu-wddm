@@ -50,8 +50,9 @@
     "NAGI-BUILD-CONTEXT-01",
     "NAGI-VERIFIER-JSON-01",
     "PS5-SEGMENT-GROUP-01",
-    "PS5-REPORT-VALIDATE-01"
+    "PS5-REPORT-VALIDATE-01",
+    "NAGI-VERIFIER-CASE-01"
   ],
-  "reviewed_utc": "2026-11-26T11:16:22Z",
+  "reviewed_utc": "2026-11-26T11:24:33Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
