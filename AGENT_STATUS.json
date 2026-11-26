@@ -1,15 +1,15 @@
 {
-  "utc": "2026-11-26T11:28:37Z",
+  "utc": "2026-11-26T11:29:40Z",
   "state": "working",
   "current_task_id": "NAGI-CONTEXT-UNC-01",
   "research_area": "NAGI",
   "completed_count": 46,
   "failed_count": 6,
-  "tool_calls": 1175,
-  "input_tokens": 5061765,
-  "output_tokens": 538537,
+  "tool_calls": 1176,
+  "input_tokens": 5084041,
+  "output_tokens": 549062,
   "last_successful_validation_utc": "2026-11-26T11:24:33Z",
-  "uptime_seconds": 10756,
+  "uptime_seconds": 10819,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 7144.3,
   "idle_seconds": 1410.0,
@@ -18,6 +18,6 @@
   "pending_reviews": 0,
   "published_commits": 34,
   "last_successful_commit": "aa63cd8a984e7584d75d9d0f96d9c5315810ed05",
-  "next_task_id": "STRATA-WATCHDOG-TEST-01",
+  "next_task_id": "PS5-VERSION-DELTA-01",
   "work_branch": "agent/strata-v2"
 }
