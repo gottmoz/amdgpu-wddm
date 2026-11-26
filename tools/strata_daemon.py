@@ -56,6 +56,8 @@ def add_duration(field, seconds, reason=None):
     state[field] = round(state.get(field, 0) + max(0, seconds), 1)
     if reason:
         state["idle_reason"] = reason
+    elif field == "work_seconds":
+        state["idle_reason"] = None
     save(ENDURANCE, state)
 
 
@@ -332,7 +334,11 @@ def run_task(path, task, stall_seconds, tick=None):
 
 
 def status_payload(branch, state, task):
-    tasks = [item for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, ROOT / "TASK_QUEUE.json") for item in load(path)["tasks"]]
+    tasks_by_id = {}
+    for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, ROOT / "TASK_QUEUE.json"):
+        for item in load(path)["tasks"]:
+            tasks_by_id[item["id"]] = item
+    tasks = list(tasks_by_id.values())
     metrics = json.loads(worker.METRICS.read_text(encoding="utf-8")) if worker.METRICS.exists() else {}
     endurance = endurance_state()
     now = datetime.now(timezone.utc)
@@ -341,8 +347,8 @@ def status_payload(branch, state, task):
     next_item = next((item["id"] for item in tasks if item.get("branch") == branch and item.get("status") in ("pending", "retry_scheduled") and item.get("retry_at", 0) <= time.time()), None)
     return {"utc": utc_now(), "state": state, "current_task_id": task.get("id") if task else None,
             "research_area": task.get("area") if task else None,
-            "completed_count": sum(item.get("status") == "done" for item in tasks),
-            "failed_count": sum(item.get("status") == "blocked" for item in tasks),
+            "completed_count": sum(item.get("branch") == branch and item.get("status") == "done" for item in tasks),
+            "failed_count": sum(item.get("branch") == branch and item.get("status") in ("blocked", "quarantined") for item in tasks),
             "tool_calls": metrics.get("tool_calls", 0), "input_tokens": metrics.get("input_tokens"),
             "output_tokens": metrics.get("output_tokens"),
             "last_successful_validation_utc": metrics.get("last_validation_utc"),
@@ -414,6 +420,7 @@ def main():
     task = None
     try:
         while not (STOP.exists() or STOPPING):
+            task = None
             try:
                 import_inbox(args.repo, branch)
                 generate_task(branch)
@@ -448,14 +455,15 @@ def main():
                     pass
             if args.once:
                 break
+            if task and state != "error":
+                continue
             idle_started = time.monotonic()
             for _ in range(max(1, args.poll_seconds)):
                 if STOP.exists() or STOPPING:
                     break
                 time.sleep(1)
             idle_elapsed = time.monotonic() - idle_started
-            if not task:
-                add_duration("idle_seconds", idle_elapsed, "no eligible ready task (queue empty or waiting for retry)")
+            add_duration("idle_seconds", idle_elapsed, "no eligible ready task (queue empty or waiting for retry)")
         if not args.once:
             heartbeat(args.repo, branch, "idle", None)
     finally:
