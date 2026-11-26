@@ -1,6 +1,6 @@
 # Strata status
 
-- utc: `2026-11-26T13:04:30Z`
+- utc: `2026-11-26T13:05:34Z`
 - state: `working`
 - current task id: `PS5-VERSION-DELTA-EDGE-01`
 - research area: `PS5`
@@ -10,7 +10,7 @@
 - input tokens: `6600195`
 - output tokens: `849608`
 - last successful validation utc: `2026-11-26T13:01:44Z`
-- uptime seconds: `16509`
+- uptime seconds: `16573`
 - endurance target seconds: `28800`
 - actual work seconds: `12916.0`
 - idle seconds: `1410.0`
