@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T09:29:31Z`
-- state: `idle`
-- current task id: `None`
-- research area: `None`
+- utc: `2026-11-26T09:30:34Z`
+- state: `working`
+- current task id: `REVIEW-PS5-AMD-01`
+- research area: `PS5`
 - completed count: `28`
 - failed count: `4`
-- tool calls: `910`
-- input tokens: `3949082`
-- output tokens: `295454`
+- tool calls: `914`
+- input tokens: `3954716`
+- output tokens: `297644`
 - last successful validation utc: `2026-11-26T09:29:04Z`
-- uptime seconds: `3610`
+- uptime seconds: `3673`
 - endurance target seconds: `28800`
 - actual work seconds: `2897.5`
 - idle seconds: `0`
@@ -19,5 +19,5 @@
 - pending reviews: `23`
 - published commits: `13`
 - last successful commit: `bf84ebd2201964be72084340896600d5316a9c8d`
-- next task id: `REVIEW-PS5-AMD-01`
+- next task id: `REVIEW-PS5-AMD-02`
 - work branch: `agent/strata-v2`
