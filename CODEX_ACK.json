@@ -93,17 +93,39 @@
         "scratch/t36/f11-rocm/rocm-input",
         "scratch/t36/f11-rocm/tmp/kit8-qwen-split"
       ]
+    },
+    {
+      "observed_utc": "2026-11-26T19:35:31Z",
+      "disposition": "blocked",
+      "blockers": [
+        "Recover exact TheRock input record and matching local artifacts.",
+        "Recover prior payload.json with pinned SHA256 1d212df471d25b1e41c92f0d123a81abf8524ac8778e3c59fc2f837a37605bc2.",
+        "LLVM trees are configured and still need compilation.",
+        "Live Strata uses agent/strata-v2. An authorized separate research-branch worker is required for live research intake."
+      ],
+      "instruction_id": "SUP-004-20261126T1920Z",
+      "validation": [
+        "tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.",
+        "Two offline Strata tests passed for intake scope/dedupe and delayed retry. No live queue changes."
+      ],
+      "evidence": [
+        "Evidence note on dev/build-ci at f3337eabf0a9250ade42da037bdcb8aaa59a9e71",
+        "Pinned LLVM 23.1.2 checkout 85ac560262434c9ccfc0c183ec22d4138ed647fb. ConfigureOnly exited 0 for x64 and x86 with 28 and 29 matching cache values.",
+        "Pinned HIP layer 1 host build exited 0. bc250hsa.lib SHA256 4D07C234A3EDA71CCE55D6DE01DA6D262BD935EE16F95B2B8FBA3E874D948EDD.",
+        "Strata endurance snapshot: 13539.5 work seconds, 22890.1 idle seconds, 28800 target. No final report located in the live runtime directory."
+      ],
+      "run_status": "scheduler-triggered, blocked"
     }
   ],
-  "observed_instruction_id": "SUP-003-20261126T1625Z",
+  "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T19:13:38Z",
+  "last_poll_utc": "2026-11-26T19:35:31Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T19:13:38Z",
+    "observed_instruction_id": "SUP-004-20261126T1920Z",
     "trigger": "scheduler-triggered",
-    "result": "blocked",
-    "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "validation": "Verified all five required paths are absent and Strata PID 2940 is present. Prior planner and intake blockers remain. No build plan rerun or queue changes."
+    "validation": "tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.",
+    "last_poll_utc": "2026-11-26T19:35:31Z",
+    "result": "blocked"
   }
 }
