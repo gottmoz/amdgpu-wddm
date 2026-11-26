@@ -19,3 +19,13 @@ Snapshot: 2026-11-26T09:04:03Z. Branch: `agent/strata-v2`. The eight-hour endura
 - Five PS5 summaries were reviewed against their declared sources and passed doclint. They are listed in `STRATA_REVIEWED.json`.
 
 The endurance run has not reached eight hours. The daemon uses a local model API, so that service and the Windows host must remain available after Codex closes.
+
+## Latest intervention
+
+Snapshot: 2026-11-26T10:18:05Z. The original endurance start and counters were preserved. At the last read, the run recorded 4,259.9 seconds of work, 1,350 seconds idle, 74 worker runs, and 7 automatic recoveries. The detached watchdog restarted the daemon after its code update.
+
+The 33 outstanding task results now have explicit accepted/corrected/rejected dispositions. Review generation is disabled to prevent review recursion. Twelve implementation tasks are queued across PS5, Nagi and Strata. Scheduler selection rotates across available areas. The verified PS5 inventory summary reports 40 metadata candidates, all parser-bounds valid, with 34 zero-function and six positive-function Ghidra records; this does not identify components.
+
+The five pinned Nagi Python dependencies are verified in the isolated scratch target. Focused regressions pass: 34 tests. Automatic publication is gated to explicitly opted-in Python/JSON tools artifacts with declared unittest validation; the test suite mocks Git and performs no push.
+
+The eight-hour endurance run is still in progress. Nagi's LLVM, MinGW, glslang, NuGet, SDK and full-build dependencies remain outstanding.

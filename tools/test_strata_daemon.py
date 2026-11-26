@@ -130,7 +130,7 @@ class CoordinatorTests(unittest.TestCase):
             _, selected = daemon.next_task("agent/strata-v2")
         self.assertEqual(selected["id"], "T-next")
 
-    def test_low_backlog_generates_source_review_once(self):
+    def test_review_generation_is_disabled_to_prevent_review_loops(self):
         base = Path(self.temp.name)
         (base / "source.md").write_text("Source claim.\n", encoding="utf-8")
         output = base / "docs/research/strata/result.md"
@@ -141,11 +141,23 @@ class CoordinatorTests(unittest.TestCase):
         queue_path = base / "TASK_QUEUE.json"
         daemon.save(queue_path, {"schema_version": 1, "tasks": [task]})
         with patch.object(daemon, "ROOT", base):
-            self.assertEqual(daemon.generate_followup_reviews("agent/strata-v2", floor=5), 1)
+            self.assertEqual(daemon.generate_followup_reviews("agent/strata-v2", floor=5), 0)
             self.assertEqual(daemon.generate_followup_reviews("agent/strata-v2", floor=5), 0)
         result = daemon.load(queue_path)["tasks"]
-        self.assertEqual(result[1]["id"], "REVIEW-P-1")
-        self.assertEqual(result[1]["sources"], ["docs/research/strata/result.md", "source.md"])
+        self.assertEqual([item["id"] for item in result], ["P-1"])
+
+    def test_scheduler_rotates_between_independent_areas(self):
+        base = Path(self.temp.name)
+        root = base / "TASK_QUEUE.json"
+        daemon.save(root, {"schema_version": 1, "tasks": [
+            {"id": "PS5-1", "branch": "agent/strata-v2", "area": "PS5", "status": "pending"},
+            {"id": "PS5-2", "branch": "agent/strata-v2", "area": "PS5", "status": "pending"},
+            {"id": "NAGI-1", "branch": "agent/strata-v2", "area": "NAGI", "status": "pending"},
+        ]})
+        with patch.object(daemon, "ROOT", base), patch.object(daemon, "AREA_ROTATION", base / "rotation.json"):
+            first = daemon.next_task("agent/strata-v2")[1]
+            second = daemon.next_task("agent/strata-v2")[1]
+        self.assertEqual((first["area"], second["area"]), ("PS5", "NAGI"))
 
     def test_simulated_api_failure_persists_retry_and_returns(self):
         base = Path(self.temp.name)

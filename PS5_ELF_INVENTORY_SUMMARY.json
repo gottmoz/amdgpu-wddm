@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "source_inventory_sha256": "4f812aefe17ad7cd5b66400841605013c42c57905fc307e28e96bee85e1360a4",
+  "candidate_count": 40,
+  "bounds_valid_count": 40,
+  "bounds_invalid_count": 0,
+  "ghidra_zero_function_count": 34,
+  "ghidra_positive_function_count": 6,
+  "ghidra_function_total": 6,
+  "distinct_candidate_hash_count": 40,
+  "duplicate_candidate_hashes": [],
+  "by_source_container": {
+    "1100_PS5UPDATE1.PUP.dec": {
+      "candidate_count": 10,
+      "architectures": {
+        "x86-64": 10
+      },
+      "elf_types": {
+        "other": 10
+      },
+      "bounds_valid_count": 10,
+      "bounds_invalid_count": 0,
+      "ghidra_zero_function_count": 10,
+      "ghidra_positive_function_count": 0,
+      "ghidra_function_total": 0,
+      "validated_executable_bytes": 46213492,
+      "distinct_candidate_hash_count": 10
+    },
+    "1120_PS5UPDATE1.PUP.dec": {
+      "candidate_count": 10,
+      "architectures": {
+        "x86-64": 10
+      },
+      "elf_types": {
+        "other": 10
+      },
+      "bounds_valid_count": 10,
+      "bounds_invalid_count": 0,
+      "ghidra_zero_function_count": 10,
+      "ghidra_positive_function_count": 0,
+      "ghidra_function_total": 0,
+      "validated_executable_bytes": 44771508,
+      "distinct_candidate_hash_count": 10
+    },
+    "1140_PS5UPDATE1.PUP.dec": {
+      "candidate_count": 14,
+      "architectures": {
+        "x86-64": 14
+      },
+      "elf_types": {
+        "other": 14
+      },
+      "bounds_valid_count": 14,
+      "bounds_invalid_count": 0,
+      "ghidra_zero_function_count": 14,
+      "ghidra_positive_function_count": 0,
+      "ghidra_function_total": 0,
+      "validated_executable_bytes": 118197596,
+      "distinct_candidate_hash_count": 14
+    },
+    "kdata1001.bin": {
+      "candidate_count": 6,
+      "architectures": {
+        "x86-64": 6
+      },
+      "elf_types": {
+        "EXEC": 6
+      },
+      "bounds_valid_count": 6,
+      "bounds_invalid_count": 0,
+      "ghidra_zero_function_count": 0,
+      "ghidra_positive_function_count": 6,
+      "ghidra_function_total": 6,
+      "validated_executable_bytes": 4536264,
+      "distinct_candidate_hash_count": 6
+    }
+  },
+  "limitations": [
+    "Function counts are reported Ghidra metadata and do not establish analysis completeness.",
+    "Valid parser bounds do not establish component identity or executable behavior.",
+    "This report reads the JSON inventory only and does not open firmware bytes."
+  ]
+}

@@ -86,7 +86,7 @@ def tool(name, args, task):
             raise ValueError("read path is not a declared task source")
         if name == "fetch_url" and args["url"] not in sources:
             raise ValueError("URL is not a declared task source")
-        if name not in ("read_file", "fetch_url", "write_file"):
+        if name not in ("read_file", "fetch_url", "write_file") and not (name == "terminal" and task.get("allow_tests")):
             raise ValueError("source-scoped task permits only source reads and declared writes")
     if name == "list_files":
         if Path(args["glob"]).is_absolute() or ".." in Path(args["glob"]).parts:
@@ -159,6 +159,7 @@ def definitions(task):
     if task.get("sources"):
         allowed.update(("read_file", "write_file"))
         if task.get("allow_public_fetch"): allowed.add("fetch_url")
+        if task.get("allow_tests"): allowed.add("terminal")
     if not allowed: allowed.update(("read_file", "list_files", "write_file"))
     return [item for item in all_tools if item["function"]["name"] in allowed]
 
@@ -194,12 +195,23 @@ def current_branch():
 
 
 def publish(task):
+    if task.get("publication_policy") != "unit-tested-code":
+        raise RuntimeError("automatic publication requires unit-tested-code policy")
+    allowed_prefixes = ("tools/firmware/", "tools/tests/", "tools/release/")
+    declared = task.get("allowed_writes", [])
+    if not declared or any(not path.replace("\\", "/").startswith(allowed_prefixes)
+                           or Path(path).suffix.lower() not in {".py", ".json"} for path in declared):
+        raise RuntimeError("automatic publication is limited to declared Python tools/tests and JSON metadata")
+    checks = task.get("verify", [])
+    if not any(isinstance(check, list) and len(check) >= 3 and check[:2] == ["python", "-m"]
+               and check[2] == "unittest" for check in checks):
+        raise RuntimeError("automatic publication requires a declared unittest validation")
     branch = current_branch()
     if branch != task["branch"] or branch == "main":
         raise RuntimeError("publication branch mismatch or main")
     if run(["git", "diff", "--cached", "--quiet"])["exit_code"] != 0:
         raise RuntimeError("publication requires an empty Git index")
-    paths = [*task["allowed_writes"], "TASK_QUEUE.json"]
+    paths = list(declared)
     for relative in paths:
         path = confined(relative)
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES or path.stat().st_size > 100_000:
@@ -225,6 +237,8 @@ def work(task, model):
         examples["list_files"] = {"glob": task.get("list_glob", "docs/research/ps5-dump-strata-review.md")}
     if "write_file" in available_tools:
         examples["write_file"] = {"path": task["allowed_writes"][0] if task.get("allowed_writes") else "", "content": "..."}
+    if "terminal" in available_tools:
+        examples["terminal"] = {"argv": task.get("test_command", ["python", "-m", "unittest", "tools.test_strata_daemon"])}
     base = [
         {"role": "system", "content": "You are a local BC-250 engineering agent. Follow the task-scoped tool permissions and use only tools exposed for this task. Never touch hardware, secrets or firmware bytes. If source paths are listed, read only those. Complete the declared artifact and keep the final summary concise."},
         {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "examples": examples, "previous_validation_error": task.get("validation_error"), "prior_memory": memory}, ensure_ascii=False)},

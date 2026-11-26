@@ -32,3 +32,14 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 - 2026-11-26: User-provided PS5 files found in `D:\BC250-Development\ps5 pups`. SHA-256 and byte counts are in `PS5_DUMP_INVENTORY.json`. Source acquisition provenance was not supplied. Originals remain unchanged.
 - Read-only PUP table scan found 33 bounded entries in each of 11.00, 11.20 and 11.40 named files. Seven entry positions have identical packed hashes across the three files. Forty bounded ELF64 x86-64 candidates were copied to `D:\BC250-Development\scratch\ps5-ghidra` and analyzed with Ghidra 12.1.4. All 40 imports exited successfully. Ghidra reported six functions across six `kdata1001.bin` ELF candidates and zero functions across 34 PUP ELF candidates. Detailed reports and logs stay outside Git.
 - No complete PUP entry hash matches the eight public Cyan Skillfish microcode hashes. This does not exclude nested components. No PSP, SMU, GPU microcode, memory-init or platform-init component identity is verified.
+
+## Productivity intervention – 2026-11-26 10:18 UTC
+
+- Reviewed and dispositioned all 33 outstanding result/review artifacts. Corrected the PS5 consistency note, rejected repetitive review tasks, and recorded each decision in `STRATA_REVIEW_DIGEST.md` and `TASK_QUEUE.json`. S001–S005 remain recorded as previously source-reviewed.
+- Deterministic PS5 inventory summary: 40 candidates, all 40 bounds-valid; Ghidra metadata reports 34 zero-function and six positive-function candidates; 40 distinct candidate hashes. This is inventory metadata only, not component identification or new disassembly.
+- Added `tools/firmware/elf_inventory_summary.py` and synthetic tests. A focused suite passed 34 tests, including binary parser, Strata daemon, V2 smoke, inventory summary and auto-publication gate tests.
+- Fixed review-loop starvation by disabling automatic review generation; scheduler rotates between available areas and continues a running task before taking new work.
+- Added a restricted automatic-publication policy: Python/JSON artifacts in tools directories only, explicit unittest verification, declared outputs, safe branch, empty index and credential scan. Git operations were mocked in regression tests.
+- Added 12 concrete PS5, Nagi and Strata implementation templates; 12 ready tasks are queued. The running queue is being handled by the detached daemon.
+- Installed and verified in `D:\BC250-Development\scratch\py`: Meson 1.12.0, Mako 1.4.1, MarkupSafe 3.0.3, PyYAML 6.0.3, packaging 25.0. This does not complete Nagi's other toolchain dependencies or a full build.
+- Restarted only the daemon through its existing watchdog. Endurance state was preserved: start `2026-11-26T08:29:21Z`, target 28,800 seconds; latest local counters before new worker execution: 4,259.9 work seconds, 1,350 idle seconds, 74 worker runs. Recovery count: 7.

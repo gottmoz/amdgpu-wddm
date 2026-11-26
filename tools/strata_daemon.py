@@ -32,6 +32,7 @@ STOP = RUNTIME / "STRATA_STOP"
 REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
 ENDURANCE = RUNTIME / "STRATA_ENDURANCE.json"
 RECOVERIES = RUNTIME / "STRATA_RECOVERIES.json"
+AREA_ROTATION = RUNTIME / "STRATA_AREA_ROTATION.json"
 STATUS_BRANCH = "agent/strata-status"
 INBOX_BRANCH = "agent/strata-inbox"
 APPROVED_AREAS = {*(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
@@ -224,54 +225,31 @@ def replenish_backlog(branch, floor=20):
 
 
 def generate_followup_reviews(branch, floor=5):
-    """Create source-to-result consistency checks when the useful queue is low."""
-    if branch != "agent/strata-v2":
-        return 0
-    root_queue = load(ROOT / "TASK_QUEUE.json")
-    other_paths = [INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE]
-    all_tasks = root_queue["tasks"] + [task for path in other_paths for task in load(path)["tasks"]]
-    ready = sum(task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running") for task in all_tasks)
-    if ready >= floor:
-        return 0
-    known = {task["id"] for task in all_tasks}
-    added = 0
-    for source_task in root_queue["tasks"]:
-        if ready >= 20:
-            break
-        if source_task.get("branch") != branch or source_task.get("status") != "done":
-            continue
-        outputs = source_task.get("allowed_writes", [])
-        sources = source_task.get("sources", [])
-        if len(outputs) != 1 or len(sources) != 1:
-            continue
-        output_path = ROOT / outputs[0]
-        source_path = ROOT / sources[0]
-        review_id = f"REVIEW-{source_task['id']}"
-        review_path = f"docs/research/strata/reviews/{source_task['id'].lower()}-review.md"
-        if review_id in known or not output_path.is_file() or not source_path.is_file():
-            continue
-        root_queue["tasks"].append({
-            "id": review_id, "branch": branch, "area": source_task.get("area", "PS5"),
-            "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
-            "sources": [outputs[0], sources[0]], "allowed_writes": [review_path],
-            "tools": ["read_file", "write_file"], "status": "pending", "publish": False,
-            "origin": "generated_review", "verify": [["python", "tools/quality/doclint.py", "--files", review_path]],
-        })
-        known.add(review_id)
-        ready += 1
-        added += 1
-    if added:
-        save(ROOT / "TASK_QUEUE.json", root_queue)
-    return added
+    """Review generation is deliberately disabled; reviews are human-gated work."""
+    return 0
 
 
 def next_task(branch):
     now = time.time()
-    for path in (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, ROOT / "TASK_QUEUE.json"):
-        for task in load(path)["tasks"]:
-            if task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running") and task.get("retry_at", 0) <= now:
-                return path, task
-    return None, None
+    paths = (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, ROOT / "TASK_QUEUE.json")
+    candidates = [(path, task) for path in paths for task in load(path)["tasks"]
+                  if task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running")
+                  and task.get("retry_at", 0) <= now]
+    if not candidates:
+        return None, None
+    # Recover an existing lease first; otherwise rotate areas so a large queue
+    # in one project cannot starve independent work.
+    running = next(((path, task) for path, task in candidates if task.get("status") == "running"), None)
+    if running:
+        return running
+    rotation = load(AREA_ROTATION)
+    areas = list(dict.fromkeys(task.get("area", "GENERAL") for _, task in candidates))
+    last = rotation.get("last_area")
+    start = (areas.index(last) + 1) % len(areas) if last in areas else 0
+    selected_area = areas[start]
+    selected = next(item for item in candidates if item[1].get("area", "GENERAL") == selected_area)
+    save(AREA_ROTATION, {"schema_version": 1, "last_area": selected_area, "updated_utc": utc_now()})
+    return selected
 
 
 def update_failure(path, task, stalled=False):
