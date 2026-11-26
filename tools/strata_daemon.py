@@ -266,7 +266,7 @@ def next_task(branch):
     now = time.time()
     for path in (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, ROOT / "TASK_QUEUE.json"):
         for task in load(path)["tasks"]:
-            if task.get("branch") == branch and task.get("status") in ("pending", "running") and task.get("retry_at", 0) <= now:
+            if task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running") and task.get("retry_at", 0) <= now:
                 return path, task
     return None, None
 

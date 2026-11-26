@@ -57,6 +57,16 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(path, daemon.GENERATED_QUEUE)
         self.assertEqual(selected["id"], "AUTO-XRE03-01")
 
+    def test_retry_scheduled_task_is_selected_after_delay(self):
+        task = {"id": "T-retry", "branch": "agent/strata-v2", "status": "retry_scheduled",
+                "retry_at": 0, "objective": "retry"}
+        path = Path(self.temp.name) / "TASK_QUEUE.json"
+        daemon.save(path, {"schema_version": 1, "tasks": [task]})
+        with patch.object(daemon, "ROOT", Path(self.temp.name)):
+            selected_path, selected = daemon.next_task("agent/strata-v2")
+        self.assertEqual(selected_path, path)
+        self.assertEqual(selected["id"], "T-retry")
+
     def test_strata_backlog_replenishes_to_floor_and_runs_root_queue(self):
         base = Path(self.temp.name)
         root_queue = base / "TASK_QUEUE.json"
