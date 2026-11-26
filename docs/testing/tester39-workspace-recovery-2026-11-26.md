@@ -22,3 +22,5 @@ For a separate authorized run, provision a checkout of the approved research bra
 The LLVM checkout completed at the pinned commit. Both ConfigureOnly runs exited 0, with 28 x64 and 29 x86 cache values matching the recipe. These trees still need compilation and llvm-config validation.
 
 The pinned HIP layer 1 recipe exited 0 with its host validation enabled. The local bc250hsa.lib SHA-256 is 4D07C234A3EDA71CCE55D6DE01DA6D262BD935EE16F95B2B8FBA3E874D948EDD.
+
+tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.
