@@ -127,7 +127,8 @@
     {
       "validation": [
         "Verified V2 PID 2940 in the PS5 worktree, an empty Strata inbox, and an absent watchdog PID 4160. Last legacy validation was 13:15:04 UTC. Local V2 queue snapshots contain one done task each. No ready task, new task ID, publication or token delta was verified. Endurance snapshot: 13539.5 work seconds, 31860.1 idle seconds, 156 runs. Existing tester.39 plan remains blocked for both ROCm rows.",
-        "LLVM 23.1.2 x64 host install completed: llvm-config returned 23.1.2 and x86_64-pc-windows-msvc; installed LLVMCore.lib exists. Started documented x86 host build at four jobs (PID 8696); CMake reported i686-pc-windows-msvc, install pending. V2 PID 2940 present, watchdog PID 4160 absent, inbox empty. Endurance snapshot: 156 runs, 13539.5 work seconds, 35250.1 idle seconds. No accepted task, publication or token delta verified."
+        "LLVM 23.1.2 x64 host install completed: llvm-config returned 23.1.2 and x86_64-pc-windows-msvc; installed LLVMCore.lib exists. Started documented x86 host build at four jobs (PID 8696); CMake reported i686-pc-windows-msvc, install pending. V2 PID 2940 present, watchdog PID 4160 absent, inbox empty. Endurance snapshot: 156 runs, 13539.5 work seconds, 35250.1 idle seconds. No accepted task, publication or token delta verified.",
+        "2026-11-26T23:29:06Z | Documented LLVM x86 host install log reports completion and installed LLVMCore.lib exists. Build-tree llvm-config returned 23.1.2 and i686-pc-windows-msvc, exit 0. No Mesa or release validation in this poll. V2 PID 2940 present, watchdog PID 4160 absent, research inbox empty, V2 live queue has one done task. No new task, queue refill, or token delta verified. Endurance snapshot: 156 runs, 13539.5 work seconds, 36090.1 idle seconds."
       ],
       "evidence": [
         "scratch/strata-runtime/STRATA_ENDURANCE.json",
@@ -142,7 +143,8 @@
       ],
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
-      "observed_utc": "2026-11-26T22:14:34Z"
+      "observed_utc": "2026-11-26T22:14:34Z",
+      "last_checked_utc": "2026-11-26T23:29:06Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
