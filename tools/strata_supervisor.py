@@ -12,14 +12,23 @@ import re
 import subprocess
 import sys
 import time
-from urllib.request import Request, urlopen
+from urllib.parse import urlparse
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE = Path(os.getenv("BC250_ROOT", str(ROOT.parent))).resolve()
+RUNTIME = Path(os.getenv("STRATA_RUNTIME_DIR", str(ROOT))).resolve()
+RUNTIME.mkdir(parents=True, exist_ok=True)
 QUEUE = ROOT / "TASK_QUEUE.json"
-CHECKPOINT = ROOT / "STRATA_CHECKPOINT.json"
-MEMORY = ROOT / "STRATA_MEMORY.jsonl"
+CHECKPOINT = RUNTIME / "STRATA_CHECKPOINT.json"
+MEMORY = RUNTIME / "STRATA_MEMORY.jsonl"
+METRICS = RUNTIME / "STRATA_METRICS.json"
 MODEL_URL = os.getenv("STRATA_URL", "http://127.0.0.1:8080").rstrip("/")
+PUBLIC_HOSTS = {"raw.githubusercontent.com", "github.com", "learn.microsoft.com", "www.xbox.com", "news.xbox.com", "www.amd.com", "blog.playstation.com"}
+STATS = {"tool_calls": 0, "input_tokens": 0, "output_tokens": 0, "last_validation_utc": None}
+if METRICS.exists():
+    STATS.update(json.loads(METRICS.read_text(encoding="utf-8")))
 TEXT_SUFFIXES = {".md", ".json", ".py", ".ps1", ".yml", ".yaml", ".txt", ".c", ".h"}
 FORBIDDEN_PARTS = {".git", "evidence", "secrets", "firmware", "scratch", "toolchain"}
 SAFE_COMMANDS = {
@@ -37,7 +46,8 @@ def atomic_json(path, data):
 
 def confined(relative, *, writable=False):
     path = (ROOT / relative).resolve()
-    if (not path.is_relative_to(ROOT) or FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts)
+    public_manifest = relative == "tools/firmware/cyan_skillfish2.json" and not writable
+    if (not path.is_relative_to(ROOT) or (FORBIDDEN_PARTS.intersection(path.relative_to(ROOT).parts) and not public_manifest)
             or path.name.lower().startswith((".env", "credential", "secret"))
             or path.suffix.lower() in {".pem", ".key", ".pfx", ".p12"}):
         raise ValueError("path outside allowed source and documentation tree")
@@ -68,12 +78,37 @@ def command(args):
 
 
 def tool(name, args, task):
+    sources = task.get("sources")
+    if sources:
+        if name == "read_file" and args["path"] not in sources:
+            raise ValueError("read path is not a declared task source")
+        if name == "fetch_url" and args["url"] not in sources:
+            raise ValueError("URL is not a declared task source")
+        if name not in ("read_file", "fetch_url", "write_file"):
+            raise ValueError("source-scoped task permits only source reads and declared writes")
     if name == "list_files":
         if Path(args["glob"]).is_absolute() or ".." in Path(args["glob"]).parts:
             raise ValueError("glob must stay within repository")
         return {"files": [str(p.relative_to(ROOT)).replace("\\", "/") for p in ROOT.glob(args["glob"]) if p.is_file() and not FORBIDDEN_PARTS.intersection(p.relative_to(ROOT).parts)][:80]}
     if name == "read_file":
         return {"content": confined(args["path"]).read_text(encoding="utf-8", errors="replace")[:12000]}
+    if name == "fetch_url":
+        url = args["url"]
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or parsed.hostname not in PUBLIC_HOSTS or parsed.username or parsed.password:
+            raise ValueError("URL is outside approved public source hosts")
+        class PublicRedirects(HTTPRedirectHandler):
+            def redirect_request(self, request, fp, code, msg, headers, new_url):
+                target = urlparse(new_url)
+                if target.scheme != "https" or target.hostname not in PUBLIC_HOSTS:
+                    raise ValueError("redirect leaves approved public source hosts")
+                return super().redirect_request(request, fp, code, msg, headers, new_url)
+        request = Request(url, headers={"User-Agent": "BC250-source-review/1.0"})
+        with build_opener(PublicRedirects()).open(request, timeout=30) as response:
+            content_type = response.headers.get("Content-Type", "").lower()
+            if not any(value in content_type for value in ("text/", "application/json")):
+                raise ValueError("only public text sources are admitted")
+            return {"url": response.url, "content": response.read(12000).decode("utf-8", errors="replace")}
     if name == "write_file":
         if args["path"] not in task["allowed_writes"]:
             raise ValueError("write target is not declared in task")
@@ -87,17 +122,17 @@ def tool(name, args, task):
     if name in ("terminal", "git"):
         return command(args)
     if name == "compile":
-        return run(["pwsh", "-NoProfile", "-File", "driver/kmd/build.ps1", "-Kits", str(ROOT.parent / "toolchain/nuget"), "-Out", str(ROOT.parent / "scratch/strata-kmd"), "-QualityWorkspace", str(ROOT.parent), "-CompileOnly", "-Flavour", "release"], 1800)
+        return run(["pwsh", "-NoProfile", "-File", "driver/kmd/build.ps1", "-Kits", str(WORKSPACE / "toolchain/nuget"), "-Out", str(WORKSPACE / "scratch/strata-kmd"), "-QualityWorkspace", str(WORKSPACE), "-CompileOnly", "-Flavour", "release"], 1800)
     if name == "ghidra_headless":
         ghidra = os.getenv("GHIDRA_HEADLESS")
         if not ghidra or not Path(ghidra).is_file():
             return {"error": "GHIDRA_HEADLESS is not configured"}
-        target = (ROOT.parent / args["path"]).resolve()
-        if not target.is_relative_to(ROOT.parent) or not target.is_file():
+        target = (WORKSPACE / args["path"]).resolve()
+        if not target.is_relative_to(WORKSPACE) or not target.is_file():
             raise ValueError("analysis input must be an existing workspace file")
         if target.suffix.lower() not in {".bin", ".elf", ".exe", ".dll", ".sys"}:
             raise ValueError("unsupported static analysis input")
-        project = ROOT.parent / "scratch/ghidra"
+        project = WORKSPACE / "scratch/ghidra"
         project.mkdir(parents=True, exist_ok=True)
         return run([ghidra, str(project), "strata", "-import", str(target), "-deleteProject"], 1200)
     raise ValueError("unknown tool")
@@ -111,6 +146,7 @@ def definitions():
     return [
         spec("list_files", "List up to 80 matching repository paths", {"glob": string}, ["glob"]),
         spec("read_file", "Read at most 12k characters", {"path": string}, ["path"]),
+        spec("fetch_url", "Read at most 12k bytes of an approved public source", {"url": string}, ["url"]),
         spec("write_file", "Write only a task-declared text file", {"path": string, "content": string}, ["path", "content"]),
         spec("terminal", "Read-only search or approved host test", {"argv": argv}, ["argv"]),
         spec("git", "Read-only Git inspection", {"argv": argv}, ["argv"]),
@@ -126,7 +162,11 @@ def api(messages, model):
         headers["Authorization"] = "Bearer " + os.environ["STRATA_API_KEY"]
     request = Request(MODEL_URL + "/v1/chat/completions", data=body, headers=headers)
     with urlopen(request, timeout=180) as response:
-        return json.load(response)["choices"][0]
+        payload = json.load(response)
+    usage = payload.get("usage") or {}
+    STATS["input_tokens"] += usage.get("prompt_tokens", 0)
+    STATS["output_tokens"] += usage.get("completion_tokens", 0)
+    return payload["choices"][0]
 
 
 def active_model():
@@ -162,9 +202,10 @@ def publish(task):
 
 def work(task, model):
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
+    fixed_sources = task.get("sources", [])
     base = [
-        {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "system", "content": "You are a local BC-250 research and development agent. Work on exactly one small task. Inspect evidence and cite repository paths. Distinguish verified observations from hypotheses. Do not touch hardware, secrets, or firmware bytes. Use tools when needed. Keep output concise. If sources are declared, read only those sources, then write the declared output promptly. Do not inspect unrelated files."},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []
@@ -182,6 +223,7 @@ def work(task, model):
             group.append({"role": "user", "content": "Write the declared output file using write_file now. Keep it short."})
         else:
             for call in calls:
+                STATS["tool_calls"] += 1
                 try:
                     args = json.loads(call["function"]["arguments"])
                     result = tool(call["function"]["name"], args, task)
@@ -189,6 +231,7 @@ def work(task, model):
                     result = {"error": str(error)}
                 group.append({"role": "tool", "tool_call_id": call["id"], "content": json.dumps(result, ensure_ascii=False)[:7000]})
                 atomic_json(CHECKPOINT, {"task": task["id"], "step": step, "status": "tool", "tool": call["function"]["name"], "result": str(result)[:1000]})
+                atomic_json(METRICS, STATS)
         recent.append(group)
         if len(recent) > 6:
             old = recent.pop(0)
@@ -200,13 +243,17 @@ def work(task, model):
 
 
 def main():
+    global QUEUE
     parser = argparse.ArgumentParser()
     parser.add_argument("--once", action="store_true")
+    parser.add_argument("--queue", type=Path, default=QUEUE)
+    parser.add_argument("--task-id")
     args = parser.parse_args()
+    QUEUE = args.queue if args.queue.is_absolute() else ROOT / args.queue
     model = active_model()
     while True:
         queue = json.loads(QUEUE.read_text(encoding="utf-8"))
-        task = next((item for item in queue["tasks"] if item["status"] in ("pending", "running")), None)
+        task = next((item for item in queue["tasks"] if item["status"] in ("pending", "running") and (not args.task_id or item["id"] == args.task_id)), None)
         if task is None:
             return 0
         if current_branch() != task["branch"] or task["branch"] == "main":
@@ -221,6 +268,8 @@ def main():
                 result = run(check, 180)
                 if result["exit_code"]:
                     raise RuntimeError("verification failed: " + str(check) + " " + result["stderr"][-1000:])
+            if task.get("verify"):
+                STATS["last_validation_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             task.update(status="done", summary=summary[:1000])
             atomic_json(QUEUE, queue)
             commit = publish(task) if task.get("publish") else None
@@ -232,6 +281,7 @@ def main():
         with MEMORY.open("a", encoding="utf-8") as file:
             file.write(json.dumps({"id": task["id"], "status": task["status"], "summary": task.get("summary"), "error": task.get("error"), "commit": task.get("commit")}, ensure_ascii=False) + "\n")
         atomic_json(CHECKPOINT, {"task": task["id"], "status": task["status"]})
+        atomic_json(METRICS, STATS)
         if args.once or task["status"] == "blocked":
             return 0 if task["status"] == "done" else 1
         time.sleep(1)
