@@ -54,8 +54,9 @@
     "NAGI-VERIFIER-CASE-01",
     "NAGI-CONTEXT-UNC-01",
     "PS5-VERSION-DELTA-01",
-    "NAGI-CONTEXT-JSON-01"
+    "NAGI-CONTEXT-JSON-01",
+    "PS5-SUMMARY-CLI-01"
   ],
-  "reviewed_utc": "2026-11-26T11:37:42Z",
+  "reviewed_utc": "2026-11-26T11:57:27Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
