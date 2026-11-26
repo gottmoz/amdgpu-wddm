@@ -338,7 +338,7 @@ def status_payload(branch, state, task):
     now = datetime.now(timezone.utc)
     started = datetime.strptime(endurance["started_utc"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     recoveries = load(RECOVERIES).get("automatic_recoveries", 0)
-    next_item = next((item["id"] for item in tasks if item.get("branch") == branch and item.get("status") == "pending"), None)
+    next_item = next((item["id"] for item in tasks if item.get("branch") == branch and item.get("status") in ("pending", "retry_scheduled") and item.get("retry_at", 0) <= time.time()), None)
     return {"utc": utc_now(), "state": state, "current_task_id": task.get("id") if task else None,
             "research_area": task.get("area") if task else None,
             "completed_count": sum(item.get("status") == "done" for item in tasks),
@@ -352,8 +352,8 @@ def status_payload(branch, state, task):
             "idle_seconds": endurance["idle_seconds"],
             "idle_reason": endurance.get("idle_reason"),
             "automatic_recoveries": recoveries,
-            "pending_reviews": sum(item.get("status") == "done" and not item.get("reviewed") for item in tasks),
-            "published_commits": sum(bool(item.get("commit")) for item in tasks),
+            "pending_reviews": sum(item.get("branch") == branch and item.get("status") == "done" and not item.get("reviewed") for item in tasks),
+            "published_commits": int(git("rev-list", "--count", f"--since={endurance['started_utc']}", "HEAD") or 0),
             "last_successful_commit": git("rev-parse", "HEAD"), "next_task_id": next_item,
             "work_branch": branch}
 
@@ -436,7 +436,8 @@ def main():
                     endurance = endurance_state()
                     endurance["worker_runs"] = endurance.get("worker_runs", 0) + 1
                     save(ENDURANCE, endurance)
-                    state = "blocked" if result in ("failed", "stalled") else "idle"
+                    _, upcoming = next_task(branch)
+                    state = "working" if upcoming else "idle"
                     heartbeat(args.repo, branch, state, None)
                     last_heartbeat = time.time()
             except Exception as error:
