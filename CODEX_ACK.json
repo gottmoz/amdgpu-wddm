@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T18:31:35Z",
+      "observed_utc": "2026-11-26T18:43:53Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, physical SDK and WDK staged",
+      "run_status": "scheduler-triggered, five required workspace paths absent",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -82,7 +82,8 @@
         "Staged eight official MSYS2 runtime archives matching LLVM .BUILDINFO into the isolated candidate. clang --version exited 0 with 22.1.8 at d34feaaa1d0aff624c870910b6f2589aa40d20de. gfx1013 smoke compile exit 0, object SHA256 CAE0758527817C4D12222978DA3AA03CD32C248D53E9DE5808B864C9DB8E85F2.",
         "tester.39 -Plan exit 1 before preflight. scratch/release-plan-after-amdgpu-smoke/build-context.json reports the same two missing release LLVM paths and two unsupported SDK/WDK c junctions. PID 2940 present; no live enqueue.",
         "tester.39 -Plan exited 1 before preflight. Context 8979D47902CFC3091784EAB5B96C4755149976ECA47DB1D786AB743CCF9BA961. Remaining inputs: unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.sdk.cpp\\c | unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.wdk.x64\\c. Evidence: scratch/release-plan-after-llvm-staging/build-context.json.",
-        "tester.39 -Plan exited 1 after successful context capture (complete=True, 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90). Both unsupported-link failures cleared. Planner reported 12 row failures across five missing workspace paths. Evidence: scratch/release-plan-after-physical-kits/build-context.json. No build started."
+        "tester.39 -Plan exited 1 after successful context capture (complete=True, 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90). Both unsupported-link failures cleared. Planner reported 12 row failures across five missing workspace paths. Evidence: scratch/release-plan-after-physical-kits/build-context.json. No build started.",
+        "Rechecked all five workspace paths listed by tester.39. All remain absent. Project reproducibility docs identify the x64 and x86 LLVM paths as local LLVM 23.1.2 build trees. Strata Python PID 2940 was present. No build or enqueue was attempted."
       ],
       "blockers": [
         "The GitHub intake validator rejects the live agent/strata-v2 branch.",
@@ -96,11 +97,11 @@
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: SDK and WDK staged; see validation and intake blocker",
-  "last_poll_utc": "2026-11-26T18:31:35Z",
+  "result": "blocked: five workspace paths absent and live Strata branch rejected",
+  "last_poll_utc": "2026-11-26T18:43:53Z",
   "heartbeat": {
-    "result": "blocked: SDK and WDK staged; see validation and intake blocker",
-    "last_poll_utc": "2026-11-26T18:31:35Z",
+    "result": "blocked: five workspace paths absent and live Strata branch rejected",
+    "last_poll_utc": "2026-11-26T18:43:53Z",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
     "trigger": "scheduler-triggered"
   }
