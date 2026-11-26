@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T18:18:47Z",
+      "observed_utc": "2026-11-26T18:31:35Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, compiler staged, release plan blocked",
+      "run_status": "scheduler-triggered, physical SDK and WDK staged",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -65,7 +65,8 @@
         "Official LLVM 23.1.4 archive SHA-256 verified against GitHub release digest. Staged toolchain/llvm-23.1.4-win64 and verified clang-cl 23.1.4. Strata PID 2940 present, no queue changes.",
         "Verified the Microsoft NuGet signature on WDK x64 10.0.26100.6584 (SHA256 C393D03DFB640B5C92F546B32F6770EF68CD3AAF691956E7D66D8E2C28A1B55E) and staged 125 UM files at toolchain/nuget/wdk-26100.6584-um. Live PID 2940 remained on agent/strata-v2; runtime inbox had zero tasks.",
         "Recorded compiler banner points to MSYS2 commit d34feaaa1d0aff624c870910b6f2589aa40d20de. Its mingw-w64-llvm PKGBUILD specifies pkgrel=3. Four matching MSYS2 MinGW64 archives downloaded to scratch/msys2-llvm-22.1.8-3.",
-        "Copied the previously smoke-tested MSYS2 package tree to the physical release toolchain path. clang --version exited 0 with 22.1.8 at d34feaaa1d0aff624c870910b6f2589aa40d20de. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. Strata PID 2940 was present and endurance snapshot reported 18360.1 idle seconds. No live enqueue."
+        "Copied the previously smoke-tested MSYS2 package tree to the physical release toolchain path. clang --version exited 0 with 22.1.8 at d34feaaa1d0aff624c870910b6f2589aa40d20de. clang.exe SHA256 49BD90436620BD252AA2BC82E62309EE52ED16B61238CA0CCB54594DBC288BED. Strata PID 2940 was present and endurance snapshot reported 18360.1 idle seconds. No live enqueue.",
+        "Staged Microsoft SDK CPP and WDK x64 10.0.26100.6584 as physical c directories. NuGet SDK signature verification exited 0; SDK package SHA256 5D31B38205BDD9AC761B4CB39FBBC6B7209B01C11194324AFC674D7D119483A0. WDK matched the prior verified SHA256. Original junctions retained locally. Strata PID 2940 present; no live enqueue."
       ],
       "validation": [
         "tools/test_strata_daemon.py CoordinatorTests.test_inbox_scope_and_duplicate passed (1 test). Fixture IN-RE03-NAGI-LLVM validated for research/ps5-firmware and was rejected for the live agent/strata-v2 branch. No live enqueue.",
@@ -80,23 +81,27 @@
         "PE import inspection of clang.exe, libclang-cpp.dll and libLLVM-22.dll identified six additional non-system DLL names: libstdc++-6.dll, libwinpthread-1.dll, libffi-8.dll, libxml2-16.dll, zlib1.dll and libzstd.dll. PID 2940 remained present during this poll. Compiler identity and plan remain unverified.",
         "Staged eight official MSYS2 runtime archives matching LLVM .BUILDINFO into the isolated candidate. clang --version exited 0 with 22.1.8 at d34feaaa1d0aff624c870910b6f2589aa40d20de. gfx1013 smoke compile exit 0, object SHA256 CAE0758527817C4D12222978DA3AA03CD32C248D53E9DE5808B864C9DB8E85F2.",
         "tester.39 -Plan exit 1 before preflight. scratch/release-plan-after-amdgpu-smoke/build-context.json reports the same two missing release LLVM paths and two unsupported SDK/WDK c junctions. PID 2940 present; no live enqueue.",
-        "tester.39 -Plan exited 1 before preflight. Context 8979D47902CFC3091784EAB5B96C4755149976ECA47DB1D786AB743CCF9BA961. Remaining inputs: unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.sdk.cpp\\c | unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.wdk.x64\\c. Evidence: scratch/release-plan-after-llvm-staging/build-context.json."
+        "tester.39 -Plan exited 1 before preflight. Context 8979D47902CFC3091784EAB5B96C4755149976ECA47DB1D786AB743CCF9BA961. Remaining inputs: unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.sdk.cpp\\c | unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.wdk.x64\\c. Evidence: scratch/release-plan-after-llvm-staging/build-context.json.",
+        "tester.39 -Plan exited 1 after successful context capture (complete=True, 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90). Both unsupported-link failures cleared. Planner reported 12 row failures across five missing workspace paths. Evidence: scratch/release-plan-after-physical-kits/build-context.json. No build started."
       ],
       "blockers": [
-        "The live branch agent/strata-v2 is accepted by the launcher but rejected by the GitHub intake validator. The supported inbox cannot feed this live coordinator.",
-        "unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.sdk.cpp\\c",
-        "unsupported-link D:\\BC250-Development\\toolchain\\nuget\\microsoft.windows.wdk.x64\\c"
+        "The GitHub intake validator rejects the live agent/strata-v2 branch.",
+        "scratch/llvm2312-build",
+        "scratch/wow64/llvm2312-x86-build",
+        "scratch/t36/f11-rocm/release/hip-layer1-6115ab35",
+        "scratch/t36/f11-rocm/rocm-input",
+        "scratch/t36/f11-rocm/tmp/kit8-qwen-split"
       ]
     }
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: AMDGPU LLVM staged; release input and Strata intake blockers remain",
-  "last_poll_utc": "2026-11-26T18:18:47Z",
+  "result": "blocked: SDK and WDK staged; see validation and intake blocker",
+  "last_poll_utc": "2026-11-26T18:31:35Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T18:18:47Z",
+    "result": "blocked: SDK and WDK staged; see validation and intake blocker",
+    "last_poll_utc": "2026-11-26T18:31:35Z",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "trigger": "scheduler-triggered",
-    "result": "blocked: AMDGPU LLVM staged; release input and Strata intake blockers remain"
+    "trigger": "scheduler-triggered"
   }
 }
