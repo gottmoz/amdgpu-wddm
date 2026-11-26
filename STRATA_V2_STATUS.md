@@ -1,18 +1,20 @@
 # Strata V2 operational checkpoint
 
-Date: 2026-11-26. Branch: `agent/strata-v2`.
+Snapshot: 2026-11-26T08:47:42Z. Branch: `agent/strata-v2`. The eight-hour endurance run is in progress.
 
-## Verified execution
+## Live operation
 
-- Local model API responds with `qwen3.8-flash-next-q2_0`.
-- Three live tasks ran through the supervisor. Task A read approved source files and produced `docs/research/strata-v2-live-a.md`, validated by doclint. Task B generated `tools/v2_smoke.py` and `tools/tests/test_v2_smoke.py`; two unapproved tool attempts were returned as recoverable errors, then the task completed and its two tests passed. Task C read the structured PS5 JSON reports and wrote `docs/research/strata-v2-ps5-followup.md`. Codex corrected two doclint findings and reran validation successfully.
-- Watchdog recovery test: terminate owned daemon PID, wait one watchdog interval, confirm new daemon PID and watchdog still alive.
-- GitHub heartbeat on `agent/strata-status` reports idle, validation timestamp, and commit `4bf73967882ece48c36d39035f49469e6b06a865`.
-- Combined regression suite: 19 tests passed. Python syntax and report doclint pass.
+- Watchdog and daemon run as detached, hidden Windows processes. The local model API returned HTTP 200 and reported `qwen3.8-flash-next-q2_0` as loaded.
+- Endurance start: 2026-11-26T08:29:21Z. Target: 28,800 seconds.
+- Snapshot counters: 1,101 seconds uptime, 611.5 seconds worker time, 0 idle seconds, and 5 automatic daemon recoveries.
+- The branch queue held 9 completed tasks, 12 pending tasks, 1 delayed retry, 1 running task, and 1 quarantined task. The quarantined task reached the repeated invalid-tool-call limit. Other work continued.
+- The GitHub heartbeat is on `agent/strata-status`. At the snapshot it reported the last successful validation at 2026-11-26T08:46:56Z and commit `b35331cae284688de57a0e8cb385b76fe7fd53e4`.
 
-## Limits
+## Recovery and validation
 
-- API failure and unexpected worker termination have not yet been exercised as automated supervisor integration tests.
-- Daemon currently idles when its existing branch queues have no matching tasks. A durable cross-project planner is not yet connected to SQLite.
-- Task Scheduler registration remains disabled. The watchdog and daemon are running as hidden user processes, not as a boot-start service independent of login.
-- SQLite checkpoints are written by the worker. Lease ownership and abandoned-task recovery still need stronger integration tests.
+- A generated PS5 note failed doclint because it contained an em dash. The validation error was sent back to Strata. Strata corrected the note on retry and doclint passed.
+- A task worker was terminated during a Nagi task. The daemon rescheduled it, then started independent work while the retry waited.
+- A mocked model API timeout test confirmed that a running task moves to a retry state. Regression tests passed: 26 tests.
+- Five PS5 summaries were reviewed against their declared sources and each passed doclint. Their task outputs remain separate from the proprietary firmware inputs.
+
+The endurance run has not reached eight hours. The daemon uses a local model API, so that model service and the Windows host must remain available after Codex closes.

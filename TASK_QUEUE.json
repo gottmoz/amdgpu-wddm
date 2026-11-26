@@ -13,7 +13,7 @@
       "commit_message": "research: inventory PS5 source leads",
       "status": "done",
       "commit": null,
-      "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).Evidence used (2 reads only):- `docs/research/gfx1013-isa-leads-ps5-decoders.md` \u2014 the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Y\u014dtei lead.- `docs/01-evidence-rules.md` \u2014 status vocabulary and the positive-control requirement, applied to label everything as unmeasured.Verified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
+      "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).Evidence used (2 reads only):- `docs/research/gfx1013-isa-leads-ps5-decoders.md` — the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Yōtei lead.- `docs/01-evidence-rules.md` — status vocabulary and the positive-control requirement, applied to label everything as unmeasured.Verified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
     },
     {
       "id": "S002",
@@ -26,7 +26,7 @@
       "publish": false,
       "commit_message": "research: record PSP loader boundaries",
       "status": "done",
-      "summary": "Written `docs/research/psp-loader-boundaries.md` (~244 words, 1.96 KB).**Evidence used (2 reads only, as scoped):**- `driver/shim/bc250_psp.c` \u2014 `bc250_fw_locate()` header validation and the MEC/JT split; file-name and FW-type tables.- `driver/shim/include/amdgpu_ucode.h` \u2014 the four header structs actually taken over (common, gfx v1.0, rlc v2.0, sdma v1.0).**Verified (code-level observations):**- Size floor of `sizeof(gfx_firmware_header_v1_0)`; `size_bytes` must equal the supplied `file_size` (the shim does not trust `request_firmware()` the way upstream does); `header_size_bytes \u2264 ucode_array_offset_bytes \u2264 file_size`; `ucode_size_bytes` non-zero and within the file.- RLC_G is hard-gated to header v2.0 with `header_size_bytes \u2265 sizeof(rlc_firmware_header_v2_0)` \u2014 later RLC minor layouts are refused, not partially loaded.- MEC1/2 and their JT halves require gfx header major == 1, with `jt_size`/`jt_offset` bounds checked; CP_MEC gets `ucode_size - jt_size*4` at `array_offset`"
+      "summary": "Written `docs/research/psp-loader-boundaries.md` (~244 words, 1.96 KB).**Evidence used (2 reads only, as scoped):**- `driver/shim/bc250_psp.c` — `bc250_fw_locate()` header validation and the MEC/JT split; file-name and FW-type tables.- `driver/shim/include/amdgpu_ucode.h` — the four header structs actually taken over (common, gfx v1.0, rlc v2.0, sdma v1.0).**Verified (code-level observations):**- Size floor of `sizeof(gfx_firmware_header_v1_0)`; `size_bytes` must equal the supplied `file_size` (the shim does not trust `request_firmware()` the way upstream does); `header_size_bytes ≤ ucode_array_offset_bytes ≤ file_size`; `ucode_size_bytes` non-zero and within the file.- RLC_G is hard-gated to header v2.0 with `header_size_bytes ≥ sizeof(rlc_firmware_header_v2_0)` — later RLC minor layouts are refused, not partially loaded.- MEC1/2 and their JT halves require gfx header major == 1, with `jt_size`/`jt_offset` bounds checked; CP_MEC gets `ucode_size - jt_size*4` at `array_offset`"
     },
     {
       "id": "S003",
@@ -78,6 +78,660 @@
       "commit_message": "research: record firmware image provenance",
       "status": "done",
       "summary": "User-provided PS5 PUP files and kdata were hashed and inventoried outside Git. Read-only table scans found bounded ELF64 candidates. Ghidra 12.1.4 analyzed 40 bounded ELFs: 6 functions across six kdata ELFs, zero across 34 PUP ELFs. No proprietary firmware was published."
+    },
+    {
+      "id": "PS5-INV-01",
+      "area": "PS5",
+      "objective": "Summarize verified ELF architecture and Ghidra counts. Preserve uncertainty. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_ELF_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-elf-counts.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-elf-counts.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 2,
+      "validation_error": "docs/research/strata/ps5-elf-counts.md:1:18 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-elf-counts.md:3:48 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:68 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:129 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md: 4 findings\n",
+      "attempts": 1,
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/ps5-elf-counts.md:1:18 dash: em dash in prose. Use a plain hyphen - (docs/style.md). [—]\ndocs/research/strata/ps5-elf-counts.md:3:48 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:68 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md:9:129 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/ps5-elf-counts.md: 4 findings\n",
+      "retry_at": 1795681546.1773386,
+      "summary": "Wrote `docs/research/strata/ps5-elf-counts.md` (905 B, ~90 words).\n\n**Direct observations from the only declared source** (`PS5_ELF_INVENTORY.json`, read truncated at 12k chars): 10 complete records, all from `1100_PS5UPDATE1.PUP.dec`. Each is x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, `bounds_valid: true`, empty `error_codes`, declared == validated executable bytes (46,213,492 total), `ghidra_functions: 0`, confidence medium. Entry points: 0 (6), 112 (3), 128 (1). Sizes 1,526,028 to 35,660,836 B.\n\n**Unknowns flagged:** total record count (an 11th `1120_PS5UPDATE1.PUP.dec` record is cut off mid-field), unseen bounds failures or non-zero function counts, Ghidra version/loader options, and the cause of zero functions.\n\nStyle note: no em dashes or semicolons used, per the prior doclint findings."
+    },
+    {
+      "id": "PS5-INV-02",
+      "area": "PS5",
+      "objective": "Summarize parser-v2 rejection outcomes and previous parser defects. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_ELF_REJECTION_REPORT.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-parser-reassessment.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-parser-reassessment.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-parser-reassessment.md` (~79 words).\n\nKey points from the only declared source:\n- Every visible record was rejected by parser v1 for \"ELF bounds\", but parser v2 reports \"No ELF bounds violations\", `bounds_valid: true`, and empty `error_codes`.\n- All visible candidates are x86-64, `elf_type: other`, 14 program headers, 0 section headers, 1 executable segment, with declared == validated executable bytes, 0 Ghidra functions, medium confidence.\n- Unknowns flagged: total record count, the truncated eighth record's fields, whether any candidate remained rejected under v2, and the cause of zero Ghidra functions.\n\nNote: the source read was truncated by the 12k-character limit, so conclusions cover only the 8 visible records."
+    },
+    {
+      "id": "PS5-INV-03",
+      "area": "PS5",
+      "objective": "Identify entry positions with identical hashes and differing hashes. No component inference. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_SEGMENT_COMPARISON.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-entry-hash-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-entry-hash-summary.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 2,
+      "summary": "Wrote `docs/research/strata/ps5-entry-hash-summary.md` (651 B, ~99 words).\n\nFindings from the only declared source:\n- 33 visible entries for `1100_PS5UPDATE1.PUP.dec` (index 0-32), all sha256 values distinct.\n- Same size, different hash: index 11 vs 13 (477396 B), index 24 vs 25 (443328 B).\n- Index 0 is identical across 1100 and 1120 (id 3842, 4096 B, `ad7facb2...892ca7`).\n- Unknown: the source read was truncated at the 12k limit, so 1120 entries from index 1 onward and the total record count are not observable. No component inference was made."
+    },
+    {
+      "id": "PS5-INV-04",
+      "area": "PS5",
+      "objective": "List the actual completed batch settings and clearly state missing settings. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "GHIDRA_ANALYSIS_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-ghidra-settings-gap.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-ghidra-settings-gap.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-ghidra-settings-gap.md` (~84 words, 740 B).\n\n**Completed settings (directly observed in `GHIDRA_ANALYSIS_STATUS.md`):**\n- 40 successful imports, batch not repeated.\n- ELF auto-loader used for extracted candidates.\n- Six `EXEC` ELF files reported one function each; the other 34 reported zero functions despite executable load segments.\n\n**Missing/unknown (not in the source):**\n- Compiler spec and analysis options are explicitly absent from the saved batch logs.\n- Ghidra version, entry-point selection, per-file logs, total candidate count, and the cause of zero-function results are not stated.\n\nNote: `C:\\Users\\jimmy\\AppData\\Local\\Strata\\STRATA_SKILLS.md` could not be read - the tool rejected it as \"read path is not a declared task source\", so only the declared source was used."
+    },
+    {
+      "id": "PS5-INV-05",
+      "area": "PS5",
+      "objective": "Summarize known and unknown PSP/SMU/microcode/memory-init identities. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_COMPONENT_MATRIX.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-component-evidence.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-component-evidence.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-component-evidence.md` (~109 words, 917 B).\n\n**Direct observations from the only declared source:** 40 bounded ELF64 candidates across three PUP files plus `kdata1001.bin`, Ghidra still in progress. PUP IDs `0x103`, `0x104`, `0x106`, `0x107` begin with `e4db7c02`, and a public unpacker labels some IDs as Oberon secure loaders. No complete PUP entry hash matches the eight public Cyan Skillfish files. PUP tables, one nested PUP and SLB2 markers exist.\n\n**Unknowns:** PSP processor type and contract, SMU identity, memory-init identity, nested GPU microcode, and boot roles of platform-init markers.\n\nNote: `STRATA_SKILLS.md` was rejected as a non-declared source, so it was not read."
+    },
+    {
+      "id": "PS5-INV-06",
+      "area": "PS5",
+      "objective": "Check counts and limitations against PS5_ELF_INVENTORY.json. Report only discrepancies. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-dump-static-analysis.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-report-consistency.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-report-consistency.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "summary": "Wrote `docs/research/strata/ps5-report-consistency.md` (~100 words, 783 B).\n\n**Direct observations from the only declared source:**\n- Counts are internally consistent: 33 entries per PUP, and 7 identical + 26 differing = 33.\n- ELF markers 11 + 11 + 15 + 7 = 44, bounded files 10 + 10 + 14 + 6 = 40, matching the stated four failed extent checks.\n- 99 complete entries = 33 x 3, consistent with the eight Skillfish hash comparison.\n\n**Discrepancy:** the source references `PS5_DUMP_INVENTORY.json`, not `PS5_ELF_INVENTORY.json`. That file was not declared or readable, so no external cross-check was possible.\n\n**Wording gap:** the \"Forty candidates ... within ... their containing PUP entry\" claim cannot cover the six `kdata1001.bin` candidates, which have no PUP entry.\n\n**Unknowns:** nested PUP payloads, per-file Ghidra logs, final function counts."
+    },
+    {
+      "id": "PS5-INV-07",
+      "area": "PS5",
+      "objective": "Describe currently validated ELF fields and list concrete uncovered ELF checks. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/firmware/binary_audit.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/binary-audit-coverage.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/binary-audit-coverage.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "quarantined",
+      "publish": false,
+      "invalid_tool_calls": 6,
+      "attempts": 4,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795683110.019847
+    },
+    {
+      "id": "PS5-INV-08",
+      "area": "PS5",
+      "objective": "Map test names to the corresponding parser invariants. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/tests/test_binary_audit.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/binary-audit-test-map.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/binary-audit-test-map.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/binary-audit-test-map.md` (~107 words, 1294 B).\n\n**Direct observations from the only declared source** (`tools/tests/test_binary_audit.py`, 8 tests):\n- Accept path: ELF64 x86-64 with 0 section headers passes with `bounds_valid: true`.\n- Header-size rules: `phentsize=0` and `shentsize=0` with `shnum>0` raise `ELF_PHENTSIZE_INVALID` / `ELF_SHENTSIZE_INVALID`.\n- Table bounds: `phoff=400` and `shoff=400` raise `ELF_PHDR_TABLE_TRUNCATED` / `ELF_SHDR_TABLE_TRUNCATED`.\n- Segments: `poff=1000` raises `SEGMENT_FILE_RANGE_INVALID`, `ptype=4` yields 0 validated executable bytes, overlap is `[[0,1]]`, entry `0x500000` is invalid, and `memsz - filesz` is reported as 32 zero-initialized bytes.\n- `shoff` with `shnum=0` raises `ELF_EXTENDED_NUMBERING_UNSUPPORTED`.\n- `entropy_range` is non-negative, `hash_range(p, 9999, 3)` raises `RANGE_OUT_OF_BOUNDS`, and a stale cache `parser_version` is rewritten to `audit.PARSER_VERSION`.\n\n**Unknowns:** `binary_audit.py` was not declare"
+    },
+    {
+      "id": "NAGI-DEP-01",
+      "area": "NAGI",
+      "objective": "Summarize missing build inputs by type from structured JSON. Do not edit build files. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/build-playbook.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-dependency-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-dependency-summary.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/nagi-dependency-summary.md` (872 B, ~99 words).\n\n**Direct observations from the only declared source (`docs/build-playbook.md`):** five input classes that the planner can reject or leave untracked — manifest pins (source/recipe revisions, arguments, outputs, host tests), payload inputs from `release-sources.json`, row-declared `workspace` inputs, tool/SDK/reference inputs from `build-context-inputs.json`, and implicit or override-moved paths (`-Root`, `-QualityWorkspace`, `-Kits`) needing review.\n\n**Unknowns flagged:** the declared source is Markdown, not structured JSON, and it names no concrete missing item. The read was truncated at the 12k character limit. No build files were touched."
+    },
+    {
+      "id": "NAGI-DEP-02",
+      "area": "NAGI",
+      "objective": "Summarize documented local KMD build prerequisites and commands. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/build.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-build-prerequisites.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-build-prerequisites.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "retry_scheduled",
+      "publish": false,
+      "attempts": 3,
+      "retry_at": 1795683207.7333753,
+      "validation_error": "docs/research/strata/nagi-build-prerequisites.md:6:14 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md:14:39 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md: 2 findings\n",
+      "error": "validation failed. Correct the declared output and retry. docs/research/strata/nagi-build-prerequisites.md:6:14 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md:14:39 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/nagi-build-prerequisites.md: 2 findings\n",
+      "invalid_tool_calls": 1
+    },
+    {
+      "id": "NAGI-DEP-03",
+      "area": "NAGI",
+      "objective": "List release components in manifest order and flag absent input references. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/release/release-tester.39.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-release-manifest-gaps.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-release-manifest-gaps.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/nagi-release-manifest-gaps.md` (878 B, ~81 words).\n\n**Direct observations from the only declared source** (`tools/release/release-tester.39.json`):\n- Order: release `tester.39` / version `0.7.216.113-tester.39`, recipe `amdgpu-wddm` at `ad7b90d9d`, then 7 repositories, then containment entries BD-212, BD-312, BD-313, BD-315, BD-315, BD-320, BD-299, BD-306, BD-327, BD-330.\n- Gaps: `amdgpu-wddm` checkout is the unresolved literal `{repo}`; `dxbc-spirv`, `dxil-spirv` and `Vulkan-Headers` declare no base commit; the note cites `0b80967d2` and `4cf4e386f` only in short form; BD-315 appears twice with different commits; 25 row references across 10 entries and 9 defect ids with no row definition table.\n\n**Unknowns:** the read truncated at 12k characters, so the BD-205 entry and any later sections were not seen."
+    },
+    {
+      "id": "NAGI-DEP-04",
+      "area": "NAGI",
+      "objective": "Summarize required source closures for KMD and identify input paths for follow-up. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/release/build-context-inputs.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-reference-closure.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-reference-closure.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "running",
+      "publish": false
+    },
+    {
+      "id": "PS5-AMD-01",
+      "area": "PS5",
+      "objective": "Summarize public manifest component names and pinned provenance without describing binary contents. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/firmware/cyan_skillfish2.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-public-amd-manifest.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-public-amd-manifest.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-AMD-02",
+      "area": "PS5",
+      "objective": "List supported local loader behavior and unanswered PS5 compatibility questions. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/psp-loader-boundaries.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/psp-loader-open-questions.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/psp-loader-open-questions.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-AMD-03",
+      "area": "PS5",
+      "objective": "Separate historical source observations from current SMU operating policy. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/bc250-smu-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/smu-source-boundary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/smu-source-boundary.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-AMD-04",
+      "area": "PS5",
+      "objective": "Summarize what local sources do and do not establish about memory initialization. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/bc250-memory-init-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/memory-init-evidence.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/memory-init-evidence.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-AMD-05",
+      "area": "PS5",
+      "objective": "Summarize documented portability blockers and unverified assumptions. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-firmware-portability.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-portability-blockers.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-portability-blockers.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "STRATA-OPS-01",
+      "area": "STRATA",
+      "objective": "Review operational status claims against current tests described in the file. List measurable next acceptance tests. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "STRATA_V2_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-acceptance-gaps.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-acceptance-gaps.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "STRATA-OPS-02",
+      "area": "STRATA",
+      "objective": "Identify state tables and which state transitions are currently implemented. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/strata_state.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-state-coverage.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-state-coverage.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "STRATA-OPS-03",
+      "area": "STRATA",
+      "objective": "Summarize watchdog ownership checks and one failure mode requiring a test. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "tools/strata_watchdog.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/strata-watchdog-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/strata-watchdog-review.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-INV-09",
+      "area": "PS5",
+      "objective": "Summarize file provenance limitations and which originals remain outside Git. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_DUMP_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-provenance-summary.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-provenance-summary.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-INV-10",
+      "area": "PS5",
+      "objective": "Summarize the observed across-version entry count and limits of the comparison. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PS5_VERSION_COMPARISON.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-version-limits.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-version-limits.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "NAGI-DEP-05",
+      "area": "NAGI",
+      "objective": "Extract the latest verified Nagi build result and current blocker. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "PROGRESS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-progress-state.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-progress-state.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
+    },
+    {
+      "id": "PS5-INV-11",
+      "area": "PS5",
+      "objective": "Check whether this review exists; if missing, report that without substituting another source. Write a concise note under 120 words. Use only the declared source. Distinguish direct observations from unknowns.",
+      "sources": [
+        "docs/research/ps5-dump-static-analysis.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-review-artifact-status.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-review-artifact-status.md"
+        ]
+      ],
+      "branch": "agent/strata-v2",
+      "status": "pending",
+      "publish": false
     }
   ]
 }
