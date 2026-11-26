@@ -1,23 +1,23 @@
 # Strata status
 
-- utc: `2026-11-26T10:26:10Z`
+- utc: `2026-11-26T10:26:19Z`
 - state: `idle`
 - current task id: `None`
 - research area: `None`
 - completed count: `39`
 - failed count: `6`
-- tool calls: `1035`
-- input tokens: `4276259`
-- output tokens: `378573`
+- tool calls: `1036`
+- input tokens: `4277413`
+- output tokens: `378718`
 - last successful validation utc: `2026-11-26T10:19:49Z`
-- uptime seconds: `7009`
+- uptime seconds: `7018`
 - endurance target seconds: `28800`
-- actual work seconds: `4619.7`
+- actual work seconds: `4624.7`
 - idle seconds: `1380.0`
 - idle reason: `None`
 - automatic recoveries: `9`
 - pending reviews: `0`
 - published commits: `17`
 - last successful commit: `49be18cd7f5fb14d37093d38ac6966370613b940`
-- next task id: `NAGI-CONTEXT-TEST-01`
+- next task id: `None`
 - work branch: `agent/strata-v2`
