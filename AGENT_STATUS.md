@@ -1,16 +1,16 @@
 # Strata status
 
-- utc: `2026-11-26T12:22:24Z`
-- state: `idle`
-- current task id: `None`
-- research area: `None`
+- utc: `2026-11-26T12:23:28Z`
+- state: `working`
+- current task id: `PS5-SUMMARY-MALFORMED-01`
+- research area: `PS5`
 - completed count: `50`
 - failed count: `7`
-- tool calls: `1271`
-- input tokens: `5874664`
-- output tokens: `717390`
+- tool calls: `1272`
+- input tokens: `5877004`
+- output tokens: `717484`
 - last successful validation utc: `2026-11-26T12:03:11Z`
-- uptime seconds: `13983`
+- uptime seconds: `14047`
 - endurance target seconds: `28800`
 - actual work seconds: `10520.9`
 - idle seconds: `1410.0`
@@ -19,5 +19,5 @@
 - pending reviews: `0`
 - published commits: `39`
 - last successful commit: `4191bf34d880774520c50e06451aae144d27c081`
-- next task id: `PS5-SUMMARY-MALFORMED-01`
+- next task id: `PS5-SUMMARY-HASH-CASE-01`
 - work branch: `agent/strata-v2`
