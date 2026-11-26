@@ -57,8 +57,9 @@
     "NAGI-CONTEXT-JSON-01",
     "PS5-SUMMARY-CLI-01",
     "NAGI-VERIFIER-REDACT-PATH-01",
-    "PS5-SUMMARY-HASH-CASE-01"
+    "PS5-SUMMARY-HASH-CASE-01",
+    "PS5-SUMMARY-SPARSE-01"
   ],
-  "reviewed_utc": "2026-11-26T12:39:50Z",
+  "reviewed_utc": "2026-11-26T12:42:56Z",
   "review_basis": "Automatically published after declared deterministic unittest validation and restricted-path/credential checks."
 }
