@@ -1,23 +1,23 @@
 # Strata status
 
-- utc: `2026-11-26T10:24:26Z`
-- state: `working`
-- current task id: `PS5-REPORT-VALIDATE-01`
-- research area: `PS5`
+- utc: `2026-11-26T10:24:44Z`
+- state: `idle`
+- current task id: `None`
+- research area: `None`
 - completed count: `39`
 - failed count: `6`
-- tool calls: `1023`
-- input tokens: `4264354`
-- output tokens: `377378`
+- tool calls: `1027`
+- input tokens: `4267874`
+- output tokens: `377762`
 - last successful validation utc: `2026-11-26T10:19:49Z`
-- uptime seconds: `6905`
+- uptime seconds: `6923`
 - endurance target seconds: `28800`
-- actual work seconds: `4569.0`
+- actual work seconds: `4584.1`
 - idle seconds: `1350.0`
 - idle reason: `None`
 - automatic recoveries: `9`
-- pending reviews: `1`
-- published commits: `16`
-- last successful commit: `a7dfbf931b78545421988ce2e19b1b9588364f92`
-- next task id: `PS5-REPORT-VALIDATE-01`
+- pending reviews: `0`
+- published commits: `17`
+- last successful commit: `49be18cd7f5fb14d37093d38ac6966370613b940`
+- next task id: `NAGI-CONTEXT-TEST-01`
 - work branch: `agent/strata-v2`
