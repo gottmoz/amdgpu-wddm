@@ -1460,7 +1460,8 @@
       "area": "PS5",
       "objective": "Add strict row/type validation to the inventory summary and edge-case tests. Keep behavior metadata-only; malformed inventories must fail with actionable messages.",
       "sources": [
-        "tools/firmware/elf_inventory_summary.py"
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
         "tools/firmware/elf_inventory_summary.py",
@@ -1491,18 +1492,18 @@
       "commit_message": "ps5: implement ps5 summary strict 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 5,
-      "attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688806.4609597
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 4
     },
     {
       "id": "PS5-SEGMENT-GROUP-01",
       "area": "PS5",
       "objective": "Implement a deterministic JSON-only grouping utility for identical validated executable segment hashes across firmware versions, with explicit missing-hash handling and synthetic regression tests.",
       "sources": [
-        "tools/firmware/segment_hash_groups.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
         "tools/firmware/segment_hash_groups.py",
@@ -1533,18 +1534,18 @@
       "commit_message": "ps5: implement ps5 segment group 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 5,
-      "attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688888.2843661
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "PS5-VERSION-DELTA-01",
       "area": "PS5",
       "objective": "Implement a deterministic comparison utility for candidate metadata across PS5 versions. Report only exact hash equality and field deltas; do not infer component identities. Add synthetic tests.",
       "sources": [
-        "tools/firmware/ps5_version_delta.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
         "tools/firmware/ps5_version_delta.py",
@@ -1575,18 +1576,19 @@
       "commit_message": "ps5: implement ps5 version delta 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 4,
-      "attempts": 2,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688741.9324753
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "PS5-REPORT-VALIDATE-01",
       "area": "PS5",
       "objective": "Add tests that validate the PS5 inventory summary schema and its explicit analysis limitations using synthetic JSON only.",
       "sources": [
-        "tools/firmware/elf_inventory_summary.py"
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
         "tools/firmware/elf_inventory_summary.py",
@@ -1617,7 +1619,11 @@
       "commit_message": "ps5: implement ps5 report validate 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "running"
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 2
     },
     {
       "id": "NAGI-BUILD-CONTEXT-01",
@@ -1655,11 +1661,11 @@
       "commit_message": "nagi: implement nagi build context 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 5,
-      "attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688815.6479452
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "NAGI-PYDEPS-VERIFY-01",
@@ -1697,18 +1703,18 @@
       "commit_message": "nagi: implement nagi pydeps verify 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 5,
-      "attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688896.235389
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "NAGI-PYDEPS-TEST-01",
       "area": "NAGI",
       "objective": "Add regression tests for missing, wrong-version and correctly-installed pinned Python build dependencies without accessing the network.",
       "sources": [
-        "tools/release/verify_python_build_deps.py"
+        "docs/build-playbook.md"
       ],
       "allowed_writes": [
         "tools/tests/test_verify_python_build_deps.py"
@@ -1738,18 +1744,18 @@
       "commit_message": "nagi: implement nagi pydeps test 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 4,
-      "attempts": 2,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688750.426697
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "NAGI-CONTEXT-TEST-01",
       "area": "NAGI",
       "objective": "Add synthetic tests for build-context summaries, including absent paths, complete inputs and malformed records; ensure output omits machine-specific absolute paths.",
       "sources": [
-        "tools/release/build_context_summary.py"
+        "tools/release/build_context.py"
       ],
       "allowed_writes": [
         "tools/tests/test_build_context_summary.py"
@@ -1779,7 +1785,11 @@
       "commit_message": "nagi: implement nagi context test 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "pending"
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 2
     },
     {
       "id": "STRATA-PUBLISH-GATE-01",
@@ -1818,9 +1828,7 @@
       "branch": "agent/strata-v2",
       "status": "done",
       "invalid_tool_calls": 1,
-      "summary": "",
-      "review_status": "accepted_validated",
-      "review_disposition": "Regression tests passed; implementation and test artifacts are present in committed branch."
+      "summary": ""
     },
     {
       "id": "STRATA-AREA-ROTATION-01",
@@ -1857,11 +1865,11 @@
       "commit_message": "strata: implement strata area rotation 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 5,
-      "attempts": 3,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688879.523561
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "STRATA-REVIEW-LOOP-01",
@@ -1898,11 +1906,11 @@
       "commit_message": "strata: implement strata review loop 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 4,
-      "attempts": 2,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688675.3626013
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 3
     },
     {
       "id": "STRATA-WATCHDOG-TEST-01",
@@ -1939,11 +1947,11 @@
       "commit_message": "strata: implement strata watchdog test 01",
       "origin": "implementation_template",
       "branch": "agent/strata-v2",
-      "status": "retry_scheduled",
-      "invalid_tool_calls": 3,
-      "attempts": 1,
-      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795688672.020989
+      "status": "pending",
+      "invalid_tool_calls": 0,
+      "attempts": 0,
+      "retry_at": 0,
+      "recovered_attempts": 2
     }
   ]
 }

@@ -557,7 +557,8 @@
       "area": "PS5",
       "objective": "Add strict row/type validation to the inventory summary and edge-case tests. Keep behavior metadata-only; malformed inventories must fail with actionable messages.",
       "sources": [
-        "tools/firmware/elf_inventory_summary.py"
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
         "tools/firmware/elf_inventory_summary.py",
@@ -593,7 +594,7 @@
       "area": "PS5",
       "objective": "Implement a deterministic JSON-only grouping utility for identical validated executable segment hashes across firmware versions, with explicit missing-hash handling and synthetic regression tests.",
       "sources": [
-        "tools/firmware/segment_hash_groups.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
         "tools/firmware/segment_hash_groups.py",
@@ -629,7 +630,7 @@
       "area": "PS5",
       "objective": "Implement a deterministic comparison utility for candidate metadata across PS5 versions. Report only exact hash equality and field deltas; do not infer component identities. Add synthetic tests.",
       "sources": [
-        "tools/firmware/ps5_version_delta.py"
+        "PS5_ELF_INVENTORY_SUMMARY.json"
       ],
       "allowed_writes": [
         "tools/firmware/ps5_version_delta.py",
@@ -665,7 +666,8 @@
       "area": "PS5",
       "objective": "Add tests that validate the PS5 inventory summary schema and its explicit analysis limitations using synthetic JSON only.",
       "sources": [
-        "tools/firmware/elf_inventory_summary.py"
+        "tools/firmware/elf_inventory_summary.py",
+        "tools/tests/test_elf_inventory_summary.py"
       ],
       "allowed_writes": [
         "tools/firmware/elf_inventory_summary.py",
@@ -773,7 +775,7 @@
       "area": "NAGI",
       "objective": "Add regression tests for missing, wrong-version and correctly-installed pinned Python build dependencies without accessing the network.",
       "sources": [
-        "tools/release/verify_python_build_deps.py"
+        "docs/build-playbook.md"
       ],
       "allowed_writes": [
         "tools/tests/test_verify_python_build_deps.py"
@@ -808,7 +810,7 @@
       "area": "NAGI",
       "objective": "Add synthetic tests for build-context summaries, including absent paths, complete inputs and malformed records; ensure output omits machine-specific absolute paths.",
       "sources": [
-        "tools/release/build_context_summary.py"
+        "tools/release/build_context.py"
       ],
       "allowed_writes": [
         "tools/tests/test_build_context_summary.py"
