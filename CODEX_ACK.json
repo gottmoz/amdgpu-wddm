@@ -22,23 +22,27 @@
     },
     {
       "instruction_id": "SUP-002-20261126T1417Z",
-      "observed_utc": "2026-11-26T14:29:33Z",
+      "observed_utc": "2026-11-26T14:44:38Z",
       "disposition": "blocked",
       "run_status": "scheduler-triggered, partial validation complete",
       "evidence": [
         "Existing active 15-minute Codex automation. Scheduler reports previous run 2026-11-26T14:13:03.808Z and local memory records its authenticated read at 14:13:20Z. This run was delivered by the scheduler.",
-        "Strata endurance snapshot reports no eligible ready task, 5580 idle seconds and 156 worker runs. Inbox queue empty. Generated queue entries AUTO-XRE03-01 and AUTO-XRE06-01 are done."
+        "Strata endurance snapshot reports no eligible ready task, 5580 idle seconds and 156 worker runs. Inbox queue empty. Generated queue entries AUTO-XRE03-01 and AUTO-XRE06-01 are done.",
+        "A subsequent scheduled run verified recurrence.",
+        "Cloned official GPUOpen AGS SDK v6.3.0 outside the project repository at ref/AGS_SDK-v6.3.0, commit 5d8812d703d0335741b6f7ffc37838eeb8b967f7.",
+        "Strata inbox empty, 156 worker runs and 6450 idle seconds. No task added because the intake contract remains unverified."
       ],
       "validation": [
-        "Re-ran release-tester.39.json in plan-only mode. Exit 1 before preflight. Context SHA256 2E7A645EB522C781D08988DEB13956FBA0631F3058AA76D616B060DCBDE81883. See scratch/release-plan-after-sdk-x86-v2/build-context.json."
+        "Re-ran release-tester.39.json in plan-only mode. Exit 1 before preflight. Context SHA256 2E7A645EB522C781D08988DEB13956FBA0631F3058AA76D616B060DCBDE81883. See scratch/release-plan-after-sdk-x86-v2/build-context.json.",
+        "tester.39 plan-only rerun recognized AGS and exited 1 before preflight. Context identity 8DFFAE5B898CC177CFCB0C73D43FE8C0A6F7E61251C44F7DC29AC6E06A0A95AA."
       ],
       "blockers": [
-        "19 absent inputs and two unsupported links remain as documented in 47debf029: reference headers, eight AMD firmware inputs, two Linux inputs, four toolchain paths, two package paths, and SDK/WDK c links.",
-        "Queue intake and retry contract not verified. No task enqueued or new engineering commit published."
+        "18 absent inputs: two reference paths, eight AMD firmware files, two Linux source files, four toolchain paths, and two package paths. SDK and WDK c links remain unsupported. Exact paths are in scratch/release-plan-after-sdk-x86-v2/build-context.json.",
+        "Strata queue intake and retry contract remains unverified. No new engineering commit or task ID."
       ]
     }
   ],
-  "last_poll_utc": "2026-11-26T14:29:33Z",
+  "last_poll_utc": "2026-11-26T14:44:38Z",
   "observed_instruction_id": "SUP-002-20261126T1417Z",
   "trigger": "scheduler-triggered",
   "result": "blocked"
