@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-26T09:06:37Z",
+  "utc": "2026-11-26T09:07:40Z",
   "state": "working",
   "current_task_id": "REVIEW-PS5-INV-01",
   "research_area": "PS5",
@@ -9,7 +9,7 @@
   "input_tokens": 3683915,
   "output_tokens": 221169,
   "last_successful_validation_utc": "2026-11-26T09:04:59Z",
-  "uptime_seconds": 2236,
+  "uptime_seconds": 2299,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 1534.7,
   "idle_seconds": 0,
@@ -18,6 +18,6 @@
   "pending_reviews": 14,
   "published_commits": 13,
   "last_successful_commit": "bf84ebd2201964be72084340896600d5316a9c8d",
-  "next_task_id": "PS5-INV-11",
+  "next_task_id": "STRATA-OPS-01",
   "work_branch": "agent/strata-v2"
 }
