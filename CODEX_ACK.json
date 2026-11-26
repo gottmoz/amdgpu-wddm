@@ -128,12 +128,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T21:14:06Z",
+  "last_poll_utc": "2026-11-26T21:28:50Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-26T21:14:06Z",
+    "validation": "Authenticated read confirmed the same pending instruction. Last tester.39 plan exited 1 for both ROCm rows. No new pinned artifact provenance or build validation this poll.",
+    "result": "blocked",
     "observed_instruction_id": "SUP-004-20261126T1920Z",
     "trigger": "scheduler-triggered",
-    "result": "blocked",
-    "validation": "Authenticated GitHub Actions artifacts API reported zero artifacts. Original TheRock input record and hash-pinned prior payload.json remain unavailable. Latest tester.39 plan exited 1 for both ROCm rows; no rerun this poll."
+    "last_poll_utc": "2026-11-26T21:28:50Z"
   }
 }
