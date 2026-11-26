@@ -29,3 +29,6 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 
 - No firmware flash, driver installation, reboot, or voltage change without approval.
 - No proprietary firmware or credentials in Git. Do not change `main` automatically.
+- 2026-11-26: User-provided PS5 files found in `D:\BC250-Development\ps5 pups`. SHA-256 and byte counts are in `PS5_DUMP_INVENTORY.json`. Source acquisition provenance was not supplied. Originals remain unchanged.
+- Read-only PUP table scan found 33 bounded entries in each of 11.00, 11.20 and 11.40 named files. Seven entry positions have identical packed hashes across the three files. Forty bounded ELF64 x86-64 candidates were copied to `D:\BC250-Development\scratch\ps5-ghidra` and analyzed with Ghidra 12.1.4. All 40 imports exited successfully. Ghidra reported six functions across six `kdata1001.bin` ELF candidates and zero functions across 34 PUP ELF candidates. Detailed reports and logs stay outside Git.
+- No complete PUP entry hash matches the eight public Cyan Skillfish microcode hashes. This does not exclude nested components. No PSP, SMU, GPU microcode, memory-init or platform-init component identity is verified.

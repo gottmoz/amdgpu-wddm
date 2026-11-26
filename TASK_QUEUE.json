@@ -13,7 +13,7 @@
       "commit_message": "research: inventory PS5 source leads",
       "status": "done",
       "commit": null,
-      "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).\n\nEvidence used (2 reads only):\n- `docs/research/gfx1013-isa-leads-ps5-decoders.md` — the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Yōtei lead.\n- `docs/01-evidence-rules.md` — status vocabulary and the positive-control requirement, applied to label everything as unmeasured.\n\nVerified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
+      "summary": "Written `docs/research/ps5-source-inventory.md` (~2.7 KB, under 400 words).Evidence used (2 reads only):- `docs/research/gfx1013-isa-leads-ps5-decoders.md` \u2014 the three decoder projects, their commits/licences/entry counts, the LLVM 22.1.8 gfx1013 cross-check method, the layout-artefact exclusions, lead group A (18 AMD-XML-only MIMG slots), and the 0xE5 Ghost of Y\u014dtei lead.- `docs/01-evidence-rules.md` \u2014 status vocabulary and the positive-control requirement, applied to label everything as unmeasured.Verified vs. hypothesis split: the inventory section reports only what the source page states as read/checked (commit pins, counts, LLVM/AMD-ISA cross-checks, withdrawn GFX11 reading); the questions section flags the open portability issues (decoder tables measured mostly on RDNA2 parts, 0xE5 semantics, AMD-XML-only slots, GPL-2.0 reuse, cross-decoder agreement). No firmware bytes touched."
     },
     {
       "id": "S002",
@@ -26,7 +26,7 @@
       "publish": false,
       "commit_message": "research: record PSP loader boundaries",
       "status": "done",
-      "summary": "Written `docs/research/psp-loader-boundaries.md` (~244 words, 1.96 KB).\n\n**Evidence used (2 reads only, as scoped):**\n- `driver/shim/bc250_psp.c` — `bc250_fw_locate()` header validation and the MEC/JT split; file-name and FW-type tables.\n- `driver/shim/include/amdgpu_ucode.h` — the four header structs actually taken over (common, gfx v1.0, rlc v2.0, sdma v1.0).\n\n**Verified (code-level observations):**\n- Size floor of `sizeof(gfx_firmware_header_v1_0)`; `size_bytes` must equal the supplied `file_size` (the shim does not trust `request_firmware()` the way upstream does); `header_size_bytes ≤ ucode_array_offset_bytes ≤ file_size`; `ucode_size_bytes` non-zero and within the file.\n- RLC_G is hard-gated to header v2.0 with `header_size_bytes ≥ sizeof(rlc_firmware_header_v2_0)` — later RLC minor layouts are refused, not partially loaded.\n- MEC1/2 and their JT halves require gfx header major == 1, with `jt_size`/`jt_offset` bounds checked; CP_MEC gets `ucode_size - jt_size*4` at `array_offset`"
+      "summary": "Written `docs/research/psp-loader-boundaries.md` (~244 words, 1.96 KB).**Evidence used (2 reads only, as scoped):**- `driver/shim/bc250_psp.c` \u2014 `bc250_fw_locate()` header validation and the MEC/JT split; file-name and FW-type tables.- `driver/shim/include/amdgpu_ucode.h` \u2014 the four header structs actually taken over (common, gfx v1.0, rlc v2.0, sdma v1.0).**Verified (code-level observations):**- Size floor of `sizeof(gfx_firmware_header_v1_0)`; `size_bytes` must equal the supplied `file_size` (the shim does not trust `request_firmware()` the way upstream does); `header_size_bytes \u2264 ucode_array_offset_bytes \u2264 file_size`; `ucode_size_bytes` non-zero and within the file.- RLC_G is hard-gated to header v2.0 with `header_size_bytes \u2265 sizeof(rlc_firmware_header_v2_0)` \u2014 later RLC minor layouts are refused, not partially loaded.- MEC1/2 and their JT halves require gfx header major == 1, with `jt_size`/`jt_offset` bounds checked; CP_MEC gets `ucode_size - jt_size*4` at `array_offset`"
     },
     {
       "id": "S003",
@@ -76,7 +76,8 @@
       "verify": [],
       "publish": false,
       "commit_message": "research: record firmware image provenance",
-      "status": "needs_input"
+      "status": "done",
+      "summary": "User-provided PS5 PUP files and kdata were hashed and inventoried outside Git. Read-only table scans found bounded ELF64 candidates. Ghidra 12.1.4 analyzed 40 bounded ELFs: 6 functions across six kdata ELFs, zero across 34 PUP ELFs. No proprietary firmware was published."
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-11-25",
+  "source_directory": "D:\\BC250-Development\\ps5 pups",
+  "provenance": "User-provided local files; original acquisition source and chain of custody not supplied",
+  "originals_modified": false,
+  "analysis_directory": "D:\\BC250-Development\\scratch\\ps5-ghidra",
+  "files": [
+    {"name": "1100_PS5UPDATE1.PUP.dec", "bytes": 1346487485, "sha256": "96f0dee277f1d58cd4d03bd9f85bbbfa738fedec0dee4d373ac779bac8864df1", "type": "PUP container by header", "version": "11.00 inferred from filename only", "entries": 33, "bounded_elf64": 10},
+    {"name": "1120_PS5UPDATE1.PUP.dec", "bytes": 1336713645, "sha256": "b0219e692f9b00347dc609987f943174cf4a600d73064aa13dd2a87ce727336b", "type": "PUP container by header", "version": "11.20 inferred from filename only", "entries": 33, "bounded_elf64": 10},
+    {"name": "1140_PS5UPDATE1.PUP.dec", "bytes": 1336953845, "sha256": "e7233d619200c0cbd8630170e325c90a32ac5aa6b8cf2532416aa89f5f6b0eba", "type": "PUP container by header", "version": "11.40 inferred from filename only", "entries": 33, "bounded_elf64": 14},
+    {"name": "kdata1001.bin", "bytes": 86965816, "sha256": "c2a2b400a3347cc672f04ba74d45c83d470d91717cfb0e23f20c6489a4303ee2", "type": "unknown binary with embedded ELF64 headers", "version": null, "bounded_elf64": 6}
+  ],
+  "other_files": [
+    {"name": "mgs4.zip", "status": "archive metadata only; 41 entries, no executable extension"},
+    {"name": "idpsset (2).rar", "status": "key-related archive; no extraction or Ghidra import"},
+    {"name": "temp.whiteslim (2).rar", "status": "key-related archive; no extraction or Ghidra import"},
+    {"name": "mgs4_eid_root_key", "status": "key material; not read or hashed"},
+    {"name": "whiteslim_eid_root_key", "status": "key material; not read or hashed"}
+  ]
+}

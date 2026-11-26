@@ -19,3 +19,11 @@
 - The feasibility of porting PS5 system software has not been established. Check boot chain, trust/signature requirements, firmware interfaces, GPU microcode and memory topology with primary sources and permitted static artifacts.
 
 No new hardware fact is asserted here. Use `docs/facts/data/*.yaml` for measured claims.
+
+## PS5 local dump analysis (2026-11-26)
+
+- User-provided PUP files and `kdata1001.bin` are inventoried with SHA-256 in `PS5_DUMP_INVENTORY.json`. Acquisition provenance is unknown. Original files were not modified.
+- The three named PUP files have 33 table entries each and no out-of-bounds entry. Seven corresponding entries have identical packed hashes across all three versions.
+- Ghidra 12.1.4 imported 40 bounded ELF64 x86-64 files. It reported one function in each of six ELF candidates from `kdata1001.bin`, and zero functions in the 34 PUP-contained ELF candidates. This is a tool result, not a full component inventory.
+- No full PUP entry SHA-256 matches public Cyan Skillfish microcode. Nested component identity remains unknown. No PSP, SMU, GPU microcode, memory-init or platform-init component is confirmed.
+- Full report: `docs/research/ps5-dump-static-analysis.md`. Scratch inputs, hashes, projects and logs remain under `D:\BC250-Development\scratch\ps5-ghidra`.
