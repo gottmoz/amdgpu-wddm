@@ -95,12 +95,12 @@
       ]
     },
     {
-      "observed_utc": "2026-11-26T19:59:07Z",
+      "observed_utc": "2026-11-26T20:19:02Z",
       "disposition": "blocked",
       "blockers": [
         "Recover exact TheRock input record and matching local artifacts.",
         "Recover prior payload.json with pinned SHA256 1d212df471d25b1e41c92f0d123a81abf8524ac8778e3c59fc2f837a37605bc2.",
-        "LLVM trees are configured and still need compilation.",
+        "Full LLVM build and installation remain unverified.",
         "Live Strata uses agent/strata-v2. An authorized separate research-branch worker is required for live research intake."
       ],
       "instruction_id": "SUP-004-20261126T1920Z",
@@ -108,13 +108,15 @@
         "tester.39 -Plan exited 1 with complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The four remaining diagnostics are absent TheRock and history inputs for each of extra-rocm-release and extra-rocm-lab. The plan checks these paths and does not establish that the configured LLVM trees contain compiled libraries.",
         "Two offline Strata tests passed for intake scope/dedupe and delayed retry. No live queue changes.",
         "Ninja llvm-config dry runs exited 0 for x64 (245 steps) and x86 (241 steps). The documented x64 host recipe matched 28 cache values and entered Ninja compilation. Build still running at poll; log scratch/sup004-llvm-x64-build.log. Local workspace filename scan found neither payload.json nor therock.json. No planner rerun or Strata changes this poll.",
-        "The x64 Ninja process is no longer active. Its build log ends at invocation, no llvm-config.exe exists in the build tree or install prefix, and Ninja dry run shows 1498 steps remaining for llvm-config install. No successful exit is established. Local Git history traces the pinned prior payload hash to release registration a1c7a47fe and has no path history for payload.json or therock.json. Previous tester.39 plan remains blocked on TheRock and history inputs for both ROCm rows."
+        "The x64 Ninja process is no longer active. Its build log ends at invocation, no llvm-config.exe exists in the build tree or install prefix, and Ninja dry run shows 1498 steps remaining for llvm-config install. No successful exit is established. Local Git history traces the pinned prior payload hash to release registration a1c7a47fe and has no path history for payload.json or therock.json. Previous tester.39 plan remains blocked on TheRock and history inputs for both ROCm rows.",
+        "Ninja llvm-config builds exited 0 on x64 and x86. Both tools reported 23.1.2 with exit 0. PE machine values: x64 0x8664, x86 0x014C. Full LLVM install and consumer builds remain unverified. tester.39 -Plan rerun exited 1 after complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. Both ROCm rows still lack TheRock and history inputs. No release build or live Strata change."
       ],
       "evidence": [
         "Evidence note on dev/build-ci at f3337eabf0a9250ade42da037bdcb8aaa59a9e71",
         "Pinned LLVM 23.1.2 checkout 85ac560262434c9ccfc0c183ec22d4138ed647fb. ConfigureOnly exited 0 for x64 and x86 with 28 and 29 matching cache values.",
         "Pinned HIP layer 1 host build exited 0. bc250hsa.lib SHA256 4D07C234A3EDA71CCE55D6DE01DA6D262BD935EE16F95B2B8FBA3E874D948EDD.",
-        "Strata endurance snapshot: 13539.5 work seconds, 22890.1 idle seconds, 28800 target. No final report located in the live runtime directory."
+        "Strata endurance snapshot: 13539.5 work seconds, 22890.1 idle seconds, 28800 target. No final report located in the live runtime directory.",
+        "llvm-config SHA256 x64 92C89237A8B08FA67835E0B7BB736D19B6CAA6813A5F73364D9F9B9A83DFFD67, x86 E6258F8FE4613AA3B0AE6AF267A194EB62C30743C9722236155CA42DBCDF4031. Plan log scratch/sup004-plan-llvm-config.log."
       ],
       "run_status": "scheduler-triggered, blocked"
     }
@@ -122,12 +124,12 @@
   "observed_instruction_id": "SUP-004-20261126T1920Z",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T19:59:07Z",
+  "last_poll_utc": "2026-11-26T20:19:02Z",
   "heartbeat": {
+    "validation": "Ninja llvm-config builds exited 0 on x64 and x86. Both tools reported 23.1.2 with exit 0. PE machine values: x64 0x8664, x86 0x014C. Full LLVM install and consumer builds remain unverified. tester.39 -Plan rerun exited 1 after complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. Both ROCm rows still lack TheRock and history inputs. No release build or live Strata change.",
+    "last_poll_utc": "2026-11-26T20:19:02Z",
     "observed_instruction_id": "SUP-004-20261126T1920Z",
-    "validation": "The x64 Ninja process is no longer active. Its build log ends at invocation, no llvm-config.exe exists in the build tree or install prefix, and Ninja dry run shows 1498 steps remaining for llvm-config install. No successful exit is established. Local Git history traces the pinned prior payload hash to release registration a1c7a47fe and has no path history for payload.json or therock.json. Previous tester.39 plan remains blocked on TheRock and history inputs for both ROCm rows.",
     "result": "blocked",
-    "last_poll_utc": "2026-11-26T19:59:07Z",
     "trigger": "scheduler-triggered"
   }
 }
