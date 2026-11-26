@@ -1,6 +1,6 @@
 # Strata status
 
-- utc: `2026-11-26T12:28:26Z`
+- utc: `2026-11-26T12:29:29Z`
 - state: `working`
 - current task id: `STRATA-INVALID-HISTORY-01`
 - research area: `STRATA`
@@ -10,7 +10,7 @@
 - input tokens: `5947917`
 - output tokens: `732176`
 - last successful validation utc: `2026-11-26T12:27:17Z`
-- uptime seconds: `14345`
+- uptime seconds: `14408`
 - endurance target seconds: `28800`
 - actual work seconds: `10814.5`
 - idle seconds: `1410.0`
@@ -19,5 +19,5 @@
 - pending reviews: `0`
 - published commits: `39`
 - last successful commit: `4191bf34d880774520c50e06451aae144d27c081`
-- next task id: `PS5-SUMMARY-HASH-CASE-01`
+- next task id: `PS5-SUMMARY-MALFORMED-01`
 - work branch: `agent/strata-v2`
