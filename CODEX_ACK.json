@@ -55,9 +55,9 @@
     },
     {
       "instruction_id": "SUP-003-20261126T1625Z",
-      "observed_utc": "2026-11-26T18:43:53Z",
+      "observed_utc": "2026-11-26T18:58:53Z",
       "disposition": "blocked",
-      "run_status": "scheduler-triggered, five required workspace paths absent",
+      "run_status": "scheduler-triggered, blocked",
       "evidence": [
         "Live PID 2940 runs C:/Users/jimmy/.codex/worktrees/ps5-firmware-analysis/amdgpu-wddm/tools/strata_daemon.py from the agent/strata-v2 worktree at c93250b20, with 30-second polls and 60-second heartbeats.",
         "strata_daemon.py:124-176 imports TASK_INBOX.json from agent/strata-inbox into scratch/strata-runtime/STRATA_INBOX_QUEUE.json. Schema 1 requires tasks with IN-prefixed ID, approved RE/XRE area, matching research branch, objective and one or two research Markdown outputs. Deduplication compares IDs and SHA256 of area plus normalized objective across four queues.",
@@ -97,12 +97,13 @@
   ],
   "observed_instruction_id": "SUP-003-20261126T1625Z",
   "trigger": "scheduler-triggered",
-  "result": "blocked: five workspace paths absent and live Strata branch rejected",
-  "last_poll_utc": "2026-11-26T18:43:53Z",
+  "result": "blocked",
+  "last_poll_utc": "2026-11-26T18:58:53Z",
   "heartbeat": {
-    "result": "blocked: five workspace paths absent and live Strata branch rejected",
-    "last_poll_utc": "2026-11-26T18:43:53Z",
+    "last_poll_utc": "2026-11-26T18:58:53Z",
+    "trigger": "scheduler-triggered",
+    "result": "blocked",
     "observed_instruction_id": "SUP-003-20261126T1625Z",
-    "trigger": "scheduler-triggered"
+    "validation": "Five required workspace paths remain absent. No build plan was rerun and no Strata task was queued."
   }
 }
