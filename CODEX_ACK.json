@@ -126,17 +126,19 @@
     },
     {
       "validation": [
-        "Verified V2 PID 2940 in the PS5 worktree, an empty Strata inbox, and an absent watchdog PID 4160. Last legacy validation was 13:15:04 UTC. Local V2 queue snapshots contain one done task each. No ready task, new task ID, publication or token delta was verified. Endurance snapshot: 13539.5 work seconds, 31860.1 idle seconds, 156 runs. Existing tester.39 plan remains blocked for both ROCm rows."
+        "Verified V2 PID 2940 in the PS5 worktree, an empty Strata inbox, and an absent watchdog PID 4160. Last legacy validation was 13:15:04 UTC. Local V2 queue snapshots contain one done task each. No ready task, new task ID, publication or token delta was verified. Endurance snapshot: 13539.5 work seconds, 31860.1 idle seconds, 156 runs. Existing tester.39 plan remains blocked for both ROCm rows.",
+        "LLVM 23.1.2 x64 host install completed: llvm-config returned 23.1.2 and x86_64-pc-windows-msvc; installed LLVMCore.lib exists. Started documented x86 host build at four jobs (PID 8696); CMake reported i686-pc-windows-msvc, install pending. V2 PID 2940 present, watchdog PID 4160 absent, inbox empty. Endurance snapshot: 156 runs, 13539.5 work seconds, 35250.1 idle seconds. No accepted task, publication or token delta verified."
       ],
       "evidence": [
         "scratch/strata-runtime/STRATA_ENDURANCE.json",
         "scratch/strata-runtime/STRATA_METRICS.json",
-        "research daemon tools/strata_daemon.py heartbeat"
+        "research daemon tools/strata_daemon.py heartbeat",
+        "scratch/sup005-llvm-x64.log",
+        "scratch/sup005-llvm-x86.log"
       ],
       "instruction_id": "SUP-005-OVERNIGHT-20261126",
       "blockers": [
-        "V2 runs on agent/strata-v2, outside the research intake allowlist. The available research daemon publishes AGENT_STATUS.json, which this automation is forbidden to overwrite. Provide an isolated research worker configuration with a permitted status target or operator-managed publication.",
-        "Full LLVM install remains unverified. The tester.39 ROCm rows still require the original TheRock input record and hash-pinned prior payload.json."
+        "Live V2 branch is outside the research intake allowlist. The available research daemon publishes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records."
       ],
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
@@ -146,13 +148,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-26T22:59:32Z",
+  "last_poll_utc": "2026-11-26T23:13:56Z",
   "heartbeat": {
-    "trigger": "scheduler-triggered",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-26T22:59:32Z",
-    "blocker": "V2 branch is outside supported research intake. The research daemon writes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records.",
-    "validation": "V2 PID 2940 present, watchdog PID 4160 absent, inbox has zero tasks. Endurance snapshot: 156 runs, 13539.5 work seconds, 34410.1 idle seconds. No accepted task, publication or token delta verified. Verified llvmorg-23.1.2 source tag and started the documented x64 host build at four jobs. Configure gate passed and install remains pending. Evidence: scratch/sup005-llvm-x64.log. x86 remains pending.",
-    "result": "blocked"
+    "last_poll_utc": "2026-11-26T23:13:56Z",
+    "trigger": "scheduler-triggered",
+    "result": "blocked",
+    "validation": "LLVM 23.1.2 x64 host install completed: llvm-config returned 23.1.2 and x86_64-pc-windows-msvc; installed LLVMCore.lib exists. Started documented x86 host build at four jobs (PID 8696); CMake reported i686-pc-windows-msvc, install pending. V2 PID 2940 present, watchdog PID 4160 absent, inbox empty. Endurance snapshot: 156 runs, 13539.5 work seconds, 35250.1 idle seconds. No accepted task, publication or token delta verified.",
+    "blocker": "Live V2 branch is outside the research intake allowlist. The available research daemon publishes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records."
   }
 }
