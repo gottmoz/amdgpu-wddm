@@ -1,15 +1,15 @@
 {
-  "utc": "2026-11-26T10:46:06Z",
+  "utc": "2026-11-26T10:47:09Z",
   "state": "working",
   "current_task_id": "STRATA-AREA-ROTATION-01",
   "research_area": "STRATA",
   "completed_count": 42,
   "failed_count": 6,
-  "tool_calls": 1110,
-  "input_tokens": 4622153,
-  "output_tokens": 428676,
+  "tool_calls": 1118,
+  "input_tokens": 4671969,
+  "output_tokens": 430909,
   "last_successful_validation_utc": "2026-11-26T10:44:41Z",
-  "uptime_seconds": 8205,
+  "uptime_seconds": 8268,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 5293.2,
   "idle_seconds": 1410.0,
@@ -18,6 +18,6 @@
   "pending_reviews": 0,
   "published_commits": 25,
   "last_successful_commit": "35e509c4fbc345f64ffa546afe3023ebffa99474",
-  "next_task_id": "PS5-VERSION-DELTA-01",
+  "next_task_id": "PS5-SEGMENT-GROUP-01",
   "work_branch": "agent/strata-v2"
 }
