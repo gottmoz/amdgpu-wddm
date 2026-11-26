@@ -1,4 +1,8 @@
-"""Read-only verifier for the pinned Nagi Python build dependencies."""
+"""Read-only verifier for the pinned Nagi Python build dependencies.
+
+The JSON report never carries a host-local absolute path: ``target`` is either
+``None`` or a forward-slash label relative to the declared BC250 root.
+"""
 from __future__ import annotations
 
 import argparse
@@ -17,8 +21,14 @@ EXPECTED = {
     "pyyaml": "6.0.3",
     "packaging": "25.0",
 }
-DEFAULT_TARGET = Path(os.environ.get("BC250_ROOT", r"D:\BC250-Development")) / "scratch" / "py"
+DEFAULT_ROOT = Path(os.environ.get("BC250_ROOT", r"D:\BC250-Development"))
+DEFAULT_TARGET = DEFAULT_ROOT / "scratch" / "py"
 PINNAMES = tuple(EXPECTED)
+
+# Any string starting with a drive letter, a POSIX root, or a UNC/Windows root.
+_ABSOLUTE_PREFIX = re.compile(r"^(?:[A-Za-z]:[\\/]*|[\\/])")
+_DRIVE = re.compile(r"^[A-Za-z]:[\\/]*$")
+_PROFILE_SEGMENT = re.compile(r"^(?:home|users|profiles|codex)$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -34,6 +44,43 @@ class Check:
 
 def normalize(name: str) -> str:
     return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def relative_label(target: Path | str | None) -> str | None:
+    """Stable, host-free label for a target: always relative, forward-slash form.
+
+    Never emits a drive letter, UNC share, user-profile directory, or any other
+    absolute local path. Absolute targets are only labelled when they sit under
+    the declared BC250 root (reported relative to it); every other absolute
+    path, including UNC shares and profile paths, is dropped to ``None``.
+    """
+    if target is None:
+        return None
+    raw = str(target).strip()
+    if not raw or raw.startswith("~"):
+        return None
+
+    path = Path(raw)
+    if _ABSOLUTE_PREFIX.match(raw):
+        try:
+            rel = path.relative_to(DEFAULT_ROOT)
+        except ValueError:
+            return None
+    else:
+        rel = path
+
+    if not rel.parts or any(part in ("", "..") for part in rel.parts):
+        return None
+
+    label = rel.as_posix()
+    if not label or label == ".":
+        return None
+    if "\\" in label or _DRIVE.match(label) or label.startswith(("/", "\\")):
+        return None
+    first = label.split("/", 1)[0]
+    if first == "~" or _PROFILE_SEGMENT.match(first):
+        return None
+    return label
 
 
 def installed_versions(target: Path) -> dict[str, str]:
@@ -54,7 +101,7 @@ def report_json(checks: list[Check], target: Path | None = None) -> dict:
     """Machine-readable report: expected/actual/missing plus mismatch detail."""
     return {
         "schema": SCHEMA,
-        "target": str(Path(target).resolve()) if target is not None else None,
+        "target": relative_label(target),
         "ok": all(check.ok for check in checks),
         "expected": {check.name: check.expected for check in checks},
         "actual": {check.name: check.actual for check in checks if check.actual is not None},
