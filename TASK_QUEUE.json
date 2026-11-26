@@ -595,11 +595,11 @@
       "branch": "agent/strata-v2",
       "status": "retry_scheduled",
       "publish": false,
-      "invalid_tool_calls": 3,
+      "invalid_tool_calls": 4,
       "validation_error": "docs/research/strata/strata-acceptance-gaps.md:4:42 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:33 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:54 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:5:64 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:46 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:8:74 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:13:16 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:14:22 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:15:15 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md:16:28 semicolon: STE bans the semicolon (Rule 8.1). Split into separate sentences. [;]\ndocs/research/strata/strata-acceptance-gaps.md: 10 findings\n",
-      "attempts": 2,
+      "attempts": 3,
       "error": "RETRY_SCHEDULED: repeated invalid tool calls",
-      "retry_at": 1795683751.3462465
+      "retry_at": 1795684012.0282545
     },
     {
       "id": "STRATA-OPS-02",
@@ -654,11 +654,11 @@
       "branch": "agent/strata-v2",
       "status": "retry_scheduled",
       "publish": false,
-      "invalid_tool_calls": 1,
+      "invalid_tool_calls": 3,
       "validation_error": "docs/research/strata/strata-watchdog-review.md:7:9 synonym-rotation: 'launch' and 'start' name the same action. Pick one and use it every time. [launches]\ndocs/research/strata/strata-watchdog-review.md:10:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/strata-watchdog-review.md: 2 findings\n",
-      "attempts": 1,
-      "error": "validation failed. Correct the declared output and retry. docs/research/strata/strata-watchdog-review.md:7:9 synonym-rotation: 'launch' and 'start' name the same action. Pick one and use it every time. [launches]\ndocs/research/strata/strata-watchdog-review.md:10:21 synonym-rotation: 'verify' and 'check' name the same action. Pick one and use it every time. [verify]\ndocs/research/strata/strata-watchdog-review.md: 2 findings\n",
-      "retry_at": 1795683674.8984334
+      "attempts": 2,
+      "error": "RETRY_SCHEDULED: repeated invalid tool calls",
+      "retry_at": 1795683877.005807
     },
     {
       "id": "PS5-INV-09",
@@ -683,8 +683,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "running",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-provenance-summary.md` (593 B, ~68 words) from the single declared source `PS5_DUMP_INVENTORY.json`.\n\n**Direct observations:** four analyzed originals (three PUP.dec containers plus `kdata1001.bin`) with recorded bytes, SHA-256, type, and bounded ELF64 counts; `originals_modified` is false; five additional files are listed only as archives or key material with no extraction or Ghidra import; no Git status is recorded.\n\n**Unknowns:** acquisition source and chain of custody, PUP versions (filename-inferred), `kdata1001.bin` type, and whether any originals remain outside Git."
     },
     {
       "id": "PS5-INV-10",
@@ -709,8 +711,10 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
-      "publish": false
+      "status": "done",
+      "publish": false,
+      "invalid_tool_calls": 1,
+      "summary": "Wrote `docs/research/strata/ps5-version-limits.md` (616 bytes, ~90 words) from the single declared source `PS5_VERSION_COMPARISON.md`.\n\n**Direct observations:** three local update files each contain 33 table entries. Packed entry SHA-256 comparison shows 7 positions byte-identical across all three and 26 differing positions. Entry IDs are kept only as table metadata and are not treated as confirmed component identities.\n\n**Unknowns:** file version labels, meaning of the differing entries, contents of the referenced `PS5_SEGMENT_COMPARISON.json`, and whether all 33 entries are valid or complete."
     },
     {
       "id": "NAGI-DEP-05",
@@ -735,7 +739,7 @@
         ]
       ],
       "branch": "agent/strata-v2",
-      "status": "pending",
+      "status": "running",
       "publish": false
     },
     {
@@ -761,6 +765,454 @@
       "branch": "agent/strata-v2",
       "status": "pending",
       "publish": false
+    },
+    {
+      "id": "REVIEW-PS5-INV-01",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-elf-counts.md",
+        "PS5_ELF_INVENTORY.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-01-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-01-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-02",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-parser-reassessment.md",
+        "PS5_ELF_REJECTION_REPORT.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-02-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-02-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-03",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-entry-hash-summary.md",
+        "PS5_SEGMENT_COMPARISON.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-03-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-03-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-04",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-ghidra-settings-gap.md",
+        "GHIDRA_ANALYSIS_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-04-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-04-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-05",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-component-evidence.md",
+        "PS5_COMPONENT_MATRIX.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-05-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-05-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-06",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-report-consistency.md",
+        "docs/research/ps5-dump-static-analysis.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-06-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-06-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-INV-08",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/binary-audit-test-map.md",
+        "tools/tests/test_binary_audit.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-inv-08-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-inv-08-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-NAGI-DEP-01",
+      "branch": "agent/strata-v2",
+      "area": "NAGI",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/nagi-dependency-summary.md",
+        "docs/build-playbook.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/nagi-dep-01-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/nagi-dep-01-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-NAGI-DEP-03",
+      "branch": "agent/strata-v2",
+      "area": "NAGI",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/nagi-release-manifest-gaps.md",
+        "tools/release/release-tester.39.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/nagi-dep-03-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/nagi-dep-03-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-NAGI-DEP-04",
+      "branch": "agent/strata-v2",
+      "area": "NAGI",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/nagi-reference-closure.md",
+        "tools/release/build-context-inputs.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/nagi-dep-04-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/nagi-dep-04-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-AMD-01",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-public-amd-manifest.md",
+        "tools/firmware/cyan_skillfish2.json"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-amd-01-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-amd-01-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-AMD-02",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/psp-loader-open-questions.md",
+        "docs/research/psp-loader-boundaries.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-amd-02-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-amd-02-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-AMD-03",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/smu-source-boundary.md",
+        "docs/research/bc250-smu-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-amd-03-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-amd-03-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-AMD-04",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/memory-init-evidence.md",
+        "docs/research/bc250-memory-init-source-map.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-amd-04-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-amd-04-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-PS5-AMD-05",
+      "branch": "agent/strata-v2",
+      "area": "PS5",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/ps5-portability-blockers.md",
+        "docs/research/ps5-firmware-portability.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/ps5-amd-05-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/ps5-amd-05-review.md"
+        ]
+      ]
+    },
+    {
+      "id": "REVIEW-STRATA-OPS-02",
+      "branch": "agent/strata-v2",
+      "area": "STRATA",
+      "objective": "Compare the declared source with the completed Strata note. Identify unsupported claims, omitted limitations or factual mismatches. Do not add claims from memory. Write a concise review with source paths and quote-free paraphrases.",
+      "sources": [
+        "docs/research/strata/strata-state-coverage.md",
+        "tools/strata_state.py"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/reviews/strata-ops-02-review.md"
+      ],
+      "tools": [
+        "read_file",
+        "write_file"
+      ],
+      "status": "pending",
+      "publish": false,
+      "origin": "generated_review",
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/reviews/strata-ops-02-review.md"
+        ]
+      ]
     }
   ]
 }
