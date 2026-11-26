@@ -4,6 +4,8 @@ Reports completion-state counts and missing relative input identifiers.
 Absolute paths, environment values and host details are never emitted.
 Tool names (resolved executables) are counted as missing states but are not
 relative input identifiers.
+
+CLI errors are concise one-line JSON and never echo receipt contents.
 """
 import argparse
 import json
@@ -47,6 +49,8 @@ def _relative(path, base):
 
 
 def summarize(receipt, base=""):
+    if not isinstance(receipt, dict):
+        raise ValueError("receipt must be a JSON object")
     counts = {}
     missing = []
     for entry in _walk(receipt):
@@ -57,7 +61,7 @@ def summarize(receipt, base=""):
             if name:
                 missing.append(name)
     return {
-        "schema": receipt.get("schema") if isinstance(receipt, dict) else None,
+        "schema": receipt.get("schema"),
         "state_counts": dict(sorted(counts.items())),
         "complete": sum(counts.get(s, 0) for s in COMPLETE_STATES),
         "missing": sum(counts.get(s, 0) for s in MISSING_STATES),
@@ -66,14 +70,36 @@ def summarize(receipt, base=""):
     }
 
 
+def load_receipt(path):
+    """Parse a receipt, raising a concise ValueError on malformed/non-object JSON."""
+    try:
+        with open(path, "r", encoding="utf-8") as stream:
+            text = stream.read()
+    except OSError as exc:
+        raise ValueError("cannot read receipt") from exc
+    if not text.strip():
+        raise ValueError("receipt is empty")
+    try:
+        receipt = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError("receipt is not valid JSON") from exc
+    if not isinstance(receipt, dict):
+        raise ValueError("receipt must be a JSON object")
+    return receipt
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Summarize a build-context receipt.")
     parser.add_argument("receipt", help="path to a JSON receipt file")
     parser.add_argument("--base", default="", help="root used to make input identifiers relative")
     args = parser.parse_args(argv)
-    with open(args.receipt, "r", encoding="utf-8") as stream:
-        receipt = json.load(stream)
-    sys.stdout.write(json.dumps(summarize(receipt, args.base), sort_keys=True,
+    try:
+        receipt = load_receipt(args.receipt)
+        report = summarize(receipt, args.base)
+    except ValueError as exc:
+        sys.stderr.write(json.dumps({"error": str(exc)}, separators=(",", ":")) + "\n")
+        return 1
+    sys.stdout.write(json.dumps(report, sort_keys=True,
                                 separators=(",", ":"), ensure_ascii=True) + "\n")
     return 0
 
