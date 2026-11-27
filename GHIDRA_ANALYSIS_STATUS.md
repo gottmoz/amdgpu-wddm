@@ -1,6 +1,6 @@
 # Ghidra analysis status
 
-The original batch had 40 successful imports and was not repeated. Two targeted imports were run on 2026-11-27. They used one PUP candidate and one kdata positive control. SHA-256 correlation reports six `EXEC` ELF files with one function each. The other 34 have zero reported functions despite executable load segments.
+The original batch had 40 successful imports and was not repeated. Two samples were imported twice for targeted metadata reports on 2026-11-27. They were one PUP candidate and one kdata positive control. SHA-256 correlation reports six `EXEC` ELF files with one function each. The other 34 have zero reported functions despite executable load segments.
 
 The saved batch script uses Ghidra 12.1.4 with `-analysisTimeoutPerFile 120` and `-max-cpu 4`. It sets no explicit processor, compiler specification or analyzer options. The batch deletes each temporary project. No saved Ghidra project exists for these imports.
 
