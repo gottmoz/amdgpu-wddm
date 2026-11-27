@@ -173,13 +173,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:00:01Z",
+  "last_poll_utc": "2026-11-27T10:07:49Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:00:01Z",
+    "last_poll_utc": "2026-11-27T10:07:49Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "Nagi artifact audit published at 9c5ca2062. Adapter owner host regression commit 36981dc93 passes 96 checks and detects all five fault mutations. PS5 ELF type correction f645405d8 and Ghidra log audit bd627d117 are pushed on research/ps5-firmware; doclint passed. STRATA_PS5_STATUS.json at 2026-11-27T09:59:31Z reports idle, 5 completed, 1 quarantined, 0 pending reviews, 14 published commits, and last validation 08:56:04Z. STRATA_NAGI_STATUS.json reports idle, 2 completed, 1 quarantined, 0 pending reviews; last validation 09:36:36Z.",
+    "validation": "PS5 Ghidra entry report and metadata-only script published at research/ps5-firmware commit 57028387b. Two targeted samples show the PUP e_entry 0x70 maps but has no function or Ghidra external entry point; the kdata e_entry 0x400200 maps but its one external entry/function is at 0x400080. This does not identify the PUP zero-function cause. Doclint passed; full Ghidra batch was not repeated. PS5 ELF source correction is at f645405d8. Nagi artifact report 9c5ca2062 and dev/build-ci host test 36981dc93 remain validated.",
     "workers": [
       {
         "pid": 21908,
