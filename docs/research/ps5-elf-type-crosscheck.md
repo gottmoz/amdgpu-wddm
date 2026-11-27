@@ -53,16 +53,15 @@ It does not inspect firmware binaries. It does not identify components. It does 
 
 ## The 34 local PS5 ELF candidates
 - `PS5_ELF_INVENTORY.json` has 40 rows: 34 PUP candidates and six `kdata1001.bin` candidates.
-- All 34 PUP rows currently store `elf_type: "other"`. None stores a raw `e_type` field.
-- The session baseline reports 12 values of 0xFE10 and 22 of 0xFE18. The checked-in inventory cannot map those counts to candidate rows.
-- The labels cannot identify candidates or components. They provide naming context only.
-- A candidate with e_type 0xFE10 matches the pkg-to-anyps5 comment. That is a label match, not an identity claim.
-- A candidate with e_type 0xFE18 matches the same comment's module label. That is also a label match only.
-- A candidate with any other e_type falls outside the two documented values in these sources.
-- Confidence for candidate-level classification: none, because the checked-in rows lack numeric e_type values.
+- The refreshed inventory records raw e_type, mapped executable segments and their hashes for every row.
+- The 34 PUP rows contain 12 values of 0xFE10 and 22 values of 0xFE18. Every candidate hash matches the earlier inventory.
+- Each PUP candidate has one bounded executable PT_LOAD segment. All 34 segment hashes are unique.
+- Twelve entry points are nonzero and map into executable segments. The other 22 entry fields are zero.
+- The 0xFE10 and 0xFE18 values match the pkg-to-anyps5 comment labels. This is a value match, not a component identity claim.
+- The labels cannot establish Sony loader behavior or candidate roles. No official loader specification was found in these sources.
 
 ## Bounded next step
-- Extend the deterministic inventory output to retain raw e_type for each existing PUP candidate row.
-- Reconcile those row values with the session baseline counts without repeating Ghidra imports.
+- Investigate why Ghidra reported zero functions for the 34 candidates despite bounded executable segments.
+- Compare the existing import settings and warnings before any candidate-specific reimport.
 - Do not assign roles from e_type alone.
-- Inspect program-header kinds such as `PT_SCE_VERSION` only when that metadata is available.
+- Do not repeat the full Ghidra batch.
