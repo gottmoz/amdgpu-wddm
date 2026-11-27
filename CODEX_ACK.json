@@ -216,19 +216,19 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 upstream parity and worker state verified.",
-  "last_poll_utc": "2026-11-27T23:14:31.4584599Z",
+  "result": "SUP-006 pending. RC5 parity verified; Nagi inbox item rejected by bounded-source validation.",
+  "last_poll_utc": "2026-11-27T23:29:14.0010481Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T23:14:31.4584599Z",
+    "last_poll_utc": "2026-11-27T23:29:14.0010481Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. RC5 upstream parity and worker state verified.",
-    "validation": "Clean RC5 integration matches authenticated upstream ca95cf88e (0/0 divergence). PS5 worker 21908 under watchdog 5712, queue empty. Nagi worker 37252 under watchdog 31704, queue 9 done and 3 quarantined. Prior x64/x86 RC5 gates exited 0 with five expected raw failures per architecture.",
+    "result": "SUP-006 pending. RC5 parity verified; Nagi inbox item rejected by bounded-source validation.",
+    "validation": "Clean RC5 matches authenticated upstream ca95cf88e at divergence 0/0. PS5 21908/5712 and Nagi 37252/31704 worker/watchdog links live. PS5 queue empty with six inbox entries; Nagi queue nine done, three quarantined. Existing x64/x86 record-pair TSVs present.",
     "blockers": [
-      "Automatic refill and publication after refill remain unverified.",
-      "Full RC5 graphics package validation pending.",
-      "Tester.39 pinned TheRock and build-history inputs missing.",
-      "Local scheduler launch evidence unavailable."
+      "Nagi IN-NAGI-INF-IDENTITY-REVIEW-01 rejected: source path must be an existing bounded text file. PS5 rejected the same task for its research area.",
+      "Automatic refill and publication after refill unverified.",
+      "Full RC5 graphics package and pinned tester.39 TheRock/history inputs remain pending.",
+      "No local scheduler launch evidence."
     ]
   }
 }
