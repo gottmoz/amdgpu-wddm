@@ -13,6 +13,28 @@
       "allowed_writes": [
         "docs/research/ps5-segment-hash-interpretation.md"
       ]
+    },
+    {
+      "id": "IN-RE03-SUP5-KDATA-CANDIDATE-TRIAGE",
+      "area": "RE03",
+      "branch": "research/ps5-firmware",
+      "task_type": "PS5",
+      "objective": "Using only PS5_ELF_INVENTORY.json and GHIDRA_ANALYSIS_STATUS.md, triage the six inventory rows whose source_container is kdata1001.bin. Verify their architecture, ELF type, executable segment counts, validated executable byte counts, entry points, full-file hashes and Ghidra function counts. Identify exact duplicates only if the available hashes prove them. State what the metadata does not establish about component identity. Recommend one bounded next metadata check. Do not open firmware binaries or publish extracted content. Keep prose sentences to 25 words or fewer. Avoid semicolons and em or en dashes.",
+      "sources": [
+        "PS5_ELF_INVENTORY.json",
+        "GHIDRA_ANALYSIS_STATUS.md"
+      ],
+      "allowed_writes": [
+        "docs/research/ps5-kdata-candidate-triage.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/ps5-kdata-candidate-triage.md"
+        ]
+      ]
     }
   ]
 }
