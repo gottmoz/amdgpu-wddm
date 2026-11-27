@@ -134,7 +134,11 @@
         "2026-11-27T00:18:52Z | tester.39 -Plan -Only kmd-rel,kmd-lab exited 1 despite complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The planner still validates both ROCm rows and reported four missing TheRock/history inputs. No build started. Strata PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 38670.1 idle seconds at observation. No queue mutation or token delta verified.",
         "2026-11-27T00:29:43Z | Standalone release-flavour KMD -CompileOnly exited 0 and linked unsigned bc250kmd.sys (SHA256 11E6DAF5E2A1D733688557BC0D52E6FDCDCB09D32C9CD16F7869DF1820B624F4). No release package. V2 PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 39480.1 idle seconds at observation. No new task acceptance, queue refill or token delta verified.",
         "doclint.py reported zero findings for docs/research/ps5-segment-hash-interpretation.md. The structured source audit confirmed 3 versions, 33 compared positions, 7 identical and 26 changed.",
-        "dumpbin /headers reported machine 8664 (x64). dumpbin /dependents listed api-ms-win-core-synch-l1-2-0.dll, dwmapi.dll, KERNEL32.dll, USER32.dll and GDI32.dll. No hardware or runtime test was performed."
+        "dumpbin /headers reported machine 8664 (x64). dumpbin /dependents listed api-ms-win-core-synch-l1-2-0.dll, dwmapi.dll, KERNEL32.dll, USER32.dll and GDI32.dll. No hardware or runtime test was performed.",
+        "A fresh x64 ConfigureOnly run passed the 19-option gate, and the x64 build exited 0.",
+        "An x86 ConfigureOnly run passed the 19-option gate. The x86 build exited 0 after 581 Ninja steps.",
+        "dumpbin verified both PE machine fields, 49 named exports and four system imports. Doclint reported zero findings for the updated build note.",
+        "Latest STRATA_PS5_STATUS.json at 2026-11-27T07:24:00Z reports idle, three completed tasks, one quarantined failure, zero pending reviews, three recoveries and an empty ready queue."
       ],
       "evidence": [
         "scratch/strata-runtime/STRATA_ENDURANCE.json",
@@ -149,29 +153,33 @@
         "Strata completed two bounded PS5 tasks. PS5 note commit bc3c67948 interprets the 33-position comparison as seven identical and 26 changed indices. The note passed doclint and was committed to research/ps5-firmware.",
         "The PS5 watchdog recovered after Codex terminated only the identified worker PID. The new worker remains its child. STRATA_PS5_STATUS.json reports three automatic recoveries.",
         "A third bounded Strata task, IN-RE03-SUP5-KDATA-CANDIDATE-TRIAGE, is running from structured JSON sources.",
-        "Pinned RADV target built with Nagi build-mesa.ps1, exit 0. Output is a 22,586,368-byte x64 DLL with SHA-256 D4175A7CC72DDAB639A323E6778B8DB666C9965DE0DF93627E0DE7C1091C1566. Scratch-only MSVC fixes and the CRT link result are recorded in docs/testing/mesa-radv-msvc-build-2026-11-27.md on dev/build-ci commit effbb2785."
+        "Pinned RADV target built with Nagi build-mesa.ps1, exit 0. Output is a 22,586,368-byte x64 DLL with SHA-256 D4175A7CC72DDAB639A323E6778B8DB666C9965DE0DF93627E0DE7C1091C1566. Scratch-only MSVC fixes and the CRT link result are recorded in docs/testing/mesa-radv-msvc-build-2026-11-27.md on dev/build-ci commit effbb2785.",
+        "Development-only zink-umd-dev x64 UMD build exited 0. PE machine 8664, 13,317,120 bytes, SHA-256 D89E7D31353DA30F949D89D088AA67704DCA0E842910C690ADAE5E8C0703EB3E.",
+        "Development-only zink-umd-dev x86 UMD build exited 0. PE machine 14C, 12,041,728 bytes, SHA-256 39A58C149FDD9520A89D5652016E8D3650B117523E19F5FD223DC33539EACCF8.",
+        "Both UMD builds expose 49 named exports, including OpenAdapter10 and OpenAdapter10_2, and import api-ms-win-core-synch-l1-2-0.dll, KERNEL32.dll, USER32.dll and GDI32.dll.",
+        "Build profile and evidence were published on dev/build-ci in commits 19c4ed71e, 43e9c31fe and 931820c88. Binaries remain outside Git."
       ],
       "instruction_id": "SUP-005-OVERNIGHT-20261126",
       "blockers": [
         "The tester.39 candidate release remains blocked on the pinned TheRock and prior payload records for its historical ROCm rows.",
         "The current V3 endurance run has not completed its eight-hour target. Keep the worker active and report only its live counters."
       ],
-      "run_status": "manual Codex run; V3 worker remains active and a third bounded task is running",
-      "disposition": "partially executed; isolated Strata worker and RADV host build verified",
+      "run_status": "manual Codex run; V3 worker remains active and the ready queue is empty",
+      "disposition": "partially executed; isolated Strata worker and x64/x86 Zink UMD host builds verified",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T07:03:24Z"
+      "last_checked_utc": "2026-11-27T07:25:00Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "in_progress",
-  "last_poll_utc": "2026-11-27T07:14:12Z",
+  "last_poll_utc": "2026-11-27T07:25:00Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T07:14:12Z",
+    "last_poll_utc": "2026-11-27T07:25:00Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "in_progress",
-    "validation": "PS5 worker PID 1936 is a child of watchdog 16392. Three reviewed tasks. IN-RE03-SUP5-KDATA-TRIAGE-SHORT completed; review records six verified rows, source SHA-256, doclint pass and commit a4edca61a39c. Queue snapshot contains zero ready tasks. V3 counters: 333.1 work seconds, 1324 idle seconds and 7 runs; latest token totals 50139 input and 16699 output, with no comparable prior snapshot for a delta. Latest verified RADV host build exited 0 (effbb2785).",
-    "blocker": "Tester.39 historical ROCm pins remain missing. V3 has an empty ready queue and has not met the eight-hour productive target."
+    "validation": "Published the development-only Zink UMD profile and build record to dev/build-ci. Fresh ConfigureOnly gates passed for x64 and x86. Both builds succeeded. dumpbin verified PE architectures, 49 named exports and four system imports. Latest PS5 status at 07:24Z reports three completed tasks, zero reviews and an empty ready queue.",
+    "blocker": "The V3 PS5 queue is empty. The eight-hour endurance target is not complete. Tester.39 still lacks historical pinned ROCm inputs. The UMD builds are host-only and have not been runtime-tested or installed."
   }
 }
