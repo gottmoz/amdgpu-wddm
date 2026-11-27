@@ -131,7 +131,8 @@
         "2026-11-26T23:29:06Z | Documented LLVM x86 host install log reports completion and installed LLVMCore.lib exists. Build-tree llvm-config returned 23.1.2 and i686-pc-windows-msvc, exit 0. No Mesa or release validation in this poll. V2 PID 2940 present, watchdog PID 4160 absent, research inbox empty, V2 live queue has one done task. No new task, queue refill, or token delta verified. Endurance snapshot: 156 runs, 13539.5 work seconds, 36090.1 idle seconds.",
         "2026-11-26T23:43:57Z | PID 2940 is the PS5 worktree daemon and watchdog PID 4160 is absent. Endurance reports 156 worker runs, 13539.5 work seconds and 36930.1 idle seconds. No task acceptance, queue refill, new engineering artifact or token delta verified this poll. Previous LLVM host installs verified for x64 and x86.",
         "2026-11-26T23:58:58Z | Source inspection confirmed the documented tester.39 planner supports -Only with kmd-rel and kmd-lab. Context capture still precedes row selection. No plan or compilation was run. V2 PID 2940 present, watchdog PID 4160 absent, endurance 156 runs, 13539.5 work seconds and 37770.1 idle seconds. No task acceptance or token delta verified.",
-        "2026-11-27T00:18:52Z | tester.39 -Plan -Only kmd-rel,kmd-lab exited 1 despite complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The planner still validates both ROCm rows and reported four missing TheRock/history inputs. No build started. Strata PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 38670.1 idle seconds at observation. No queue mutation or token delta verified."
+        "2026-11-27T00:18:52Z | tester.39 -Plan -Only kmd-rel,kmd-lab exited 1 despite complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The planner still validates both ROCm rows and reported four missing TheRock/history inputs. No build started. Strata PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 38670.1 idle seconds at observation. No queue mutation or token delta verified.",
+        "2026-11-27T00:29:43Z | Standalone release-flavour KMD -CompileOnly exited 0 and linked unsigned bc250kmd.sys (SHA256 11E6DAF5E2A1D733688557BC0D52E6FDCDCB09D32C9CD16F7869DF1820B624F4). No release package. V2 PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 39480.1 idle seconds at observation. No new task acceptance, queue refill or token delta verified."
       ],
       "evidence": [
         "scratch/strata-runtime/STRATA_ENDURANCE.json",
@@ -139,7 +140,8 @@
         "research daemon tools/strata_daemon.py heartbeat",
         "scratch/sup005-llvm-x64.log",
         "scratch/sup005-llvm-x86.log",
-        "scratch/sup005-kmd-plan/run.log"
+        "scratch/sup005-kmd-plan/run.log",
+        "scratch/sup005-kmd-compile/run.log"
       ],
       "instruction_id": "SUP-005-OVERNIGHT-20261126",
       "blockers": [
@@ -148,19 +150,19 @@
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T00:18:52Z"
+      "last_checked_utc": "2026-11-27T00:29:43Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T00:18:52Z",
+  "last_poll_utc": "2026-11-27T00:29:43Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T00:18:52Z",
+    "last_poll_utc": "2026-11-27T00:29:43Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
-    "validation": "tester.39 -Plan -Only kmd-rel,kmd-lab exited 1 despite complete context 7F6244B9B413FCDC60CA2EC3BF390476F7701F0B4AF1F495DD9F27DDF296FE90. The planner still validates both ROCm rows and reported four missing TheRock/history inputs. No build started. Strata PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 38670.1 idle seconds at observation. No queue mutation or token delta verified.",
+    "validation": "Standalone release-flavour KMD -CompileOnly exited 0 and linked unsigned bc250kmd.sys (SHA256 11E6DAF5E2A1D733688557BC0D52E6FDCDCB09D32C9CD16F7869DF1820B624F4). No release package. V2 PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 39480.1 idle seconds at observation. No new task acceptance, queue refill or token delta verified.",
     "blocker": "Live V2 branch is outside the research intake allowlist. The available research daemon publishes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records."
   }
 }
