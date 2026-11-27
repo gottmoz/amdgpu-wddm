@@ -133,15 +133,21 @@ def get_content(repo, branch, path):
 
 
 def put_content(repo, branch, path, content, message):
-    previous, sha = get_content(repo, branch, path)
-    if previous == content:
-        return False
-    payload = {"message": message, "branch": branch,
-               "content": base64.b64encode(content.encode("utf-8")).decode("ascii")}
-    if sha:
-        payload["sha"] = sha
-    gh_api(repo, f"contents/{path}", "PUT", payload)
-    return True
+    encoded = base64.b64encode(content.encode("utf-8")).decode("ascii")
+    for attempt in range(3):
+        previous, sha = get_content(repo, branch, path)
+        if previous == content:
+            return False
+        payload = {"message": message, "branch": branch, "content": encoded}
+        if sha:
+            payload["sha"] = sha
+        try:
+            gh_api(repo, f"contents/{path}", "PUT", payload)
+            return True
+        except RuntimeError as error:
+            if "HTTP 409" not in str(error) or attempt == 2:
+                raise
+    return False
 
 
 def task_key(task):

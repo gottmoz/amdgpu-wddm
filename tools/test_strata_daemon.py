@@ -381,6 +381,16 @@ class CoordinatorTests(unittest.TestCase):
 
         self.assertEqual([item[2] for item in captured], ["STRATA_PS5_STATUS.json"])
 
+    def test_status_publication_retries_concurrent_branch_update(self):
+        previous = [(None, None), (None, "new-head-file-sha")]
+        with patch.object(daemon, "get_content", side_effect=previous), \
+                patch.object(daemon, "gh_api", side_effect=[RuntimeError("HTTP 409 conflict"), {}]) as api:
+            self.assertTrue(daemon.put_content("owner/repo", "agent/strata-status",
+                                               "STRATA_NAGI_STATUS.json", "{}\n", "status"))
+        self.assertEqual(api.call_count, 2)
+        self.assertNotIn("sha", api.call_args_list[0].args[3])
+        self.assertEqual(api.call_args_list[1].args[3]["sha"], "new-head-file-sha")
+
     def test_worker_type_and_area_scope_blocks_cross_project_tasks(self):
         env = {"STRATA_ALLOWED_TASK_TYPES": '["PS5"]', "STRATA_ALLOWED_AREAS": '["RE03"]'}
         with patch.dict("os.environ", env):
