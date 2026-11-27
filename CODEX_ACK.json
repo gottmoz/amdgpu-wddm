@@ -165,13 +165,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "in_progress",
-  "last_poll_utc": "2026-11-27T07:03:24Z",
+  "last_poll_utc": "2026-11-27T07:14:12Z",
   "heartbeat": {
-    "result": "in_progress",
-    "last_poll_utc": "2026-11-27T07:03:24Z",
-    "validation": "Strata PS5 status confirms 2 completed, 0 failed, 0 pending reviews; automatic_recoveries=3; third task IN-RE03-SUP5-KDATA-CANDIDATE-TRIAGE is running. RADV build exit 0 and artifact metadata were verified.",
-    "blocker": "Historical tester.39 ROCm pins remain missing. Eight-hour V3 endurance is still in progress.",
+    "last_poll_utc": "2026-11-27T07:14:12Z",
+    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
-    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126"
+    "result": "in_progress",
+    "validation": "PS5 worker PID 1936 is a child of watchdog 16392. Three reviewed tasks. IN-RE03-SUP5-KDATA-TRIAGE-SHORT completed; review records six verified rows, source SHA-256, doclint pass and commit a4edca61a39c. Queue snapshot contains zero ready tasks. V3 counters: 333.1 work seconds, 1324 idle seconds and 7 runs; latest token totals 50139 input and 16699 output, with no comparable prior snapshot for a delta. Latest verified RADV host build exited 0 (effbb2785).",
+    "blocker": "Tester.39 historical ROCm pins remain missing. V3 has an empty ready queue and has not met the eight-hour productive target."
   }
 }
