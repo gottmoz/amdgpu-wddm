@@ -254,6 +254,12 @@ GENERATED = [
      "objective": "Read XBOX_FIRMWARE_INVENTORY.json and tools/firmware/cyan_skillfish2.json. Write a short metadata-only comparison plan for public AMD microcode and unknown Xbox firmware identifiers. Do not read binary firmware.",
      "sources": ["XBOX_FIRMWARE_INVENTORY.json", "tools/firmware/cyan_skillfish2.json"],
      "allowed_writes": ["docs/research/xbox-amd-firmware-metadata-plan.md"]},
+    {"id": "AUTO-NAGI-ADAPTER-OWNER-01", "area": "NAGI", "task_type": "NAGI",
+     "branch": "agent/strata-nagi",
+     "objective": "Summarize the adapter owner API and transition coverage in the listed source files. Report exercised transitions and one missing case only when supported by the tests. Do not infer hardware behavior. Keep the report under 150 words.",
+     "sources": ["driver/kmd/adapter_owner.c", "driver/kmd/adapter_owner.h",
+                 "driver/kmd/adapter_owner_test.c"],
+     "allowed_writes": ["docs/research/strata/nagi-adapter-owner-test-audit.md"]},
 ]
 
 

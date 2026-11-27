@@ -123,6 +123,17 @@ class CoordinatorTests(unittest.TestCase):
         self.assertIn("read_file", names)
         self.assertTrue(task["allow_public_fetch"])
 
+    def test_generated_nagi_task_uses_a_bounded_host_test_source_set(self):
+        task = daemon.generate_task("agent/strata-nagi")
+        self.assertEqual(task["area"], "NAGI")
+        self.assertEqual(task["task_type"], "NAGI")
+        self.assertEqual(task["sources"], ["driver/kmd/adapter_owner.c",
+                                            "driver/kmd/adapter_owner.h",
+                                            "driver/kmd/adapter_owner_test.c"])
+        self.assertEqual(task["allowed_writes"], [
+            "docs/research/strata/nagi-adapter-owner-test-audit.md"])
+        self.assertIsNone(daemon.generate_task("agent/strata-nagi"))
+
     def test_task_scoped_tool_schema_hides_terminal(self):
         tools = worker.definitions({"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]})
         names = {item["function"]["name"] for item in tools}
