@@ -22,11 +22,11 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE = Path(os.getenv("BC250_ROOT", str(ROOT.parent))).resolve()
 RUNTIME = Path(os.getenv("STRATA_RUNTIME_DIR", str(ROOT))).resolve()
 RUNTIME.mkdir(parents=True, exist_ok=True)
-QUEUE = ROOT / "TASK_QUEUE.json"
-CHECKPOINT = RUNTIME / "STRATA_CHECKPOINT.json"
-MEMORY = RUNTIME / "STRATA_MEMORY.jsonl"
-METRICS = RUNTIME / "STRATA_METRICS.json"
-STATE_DB = RUNTIME / "strata-state.sqlite3"
+QUEUE = Path(os.getenv("STRATA_QUEUE_PATH", str(ROOT / "TASK_QUEUE.json"))).resolve()
+CHECKPOINT = Path(os.getenv("STRATA_CHECKPOINT_PATH", str(RUNTIME / "STRATA_CHECKPOINT.json"))).resolve()
+MEMORY = Path(os.getenv("STRATA_MEMORY_PATH", str(RUNTIME / "STRATA_MEMORY.jsonl"))).resolve()
+METRICS = Path(os.getenv("STRATA_METRICS_PATH", str(RUNTIME / "STRATA_METRICS.json"))).resolve()
+STATE_DB = Path(os.getenv("STRATA_SQLITE_PATH", str(RUNTIME / "strata-state.sqlite3"))).resolve()
 MODEL_URL = os.getenv("STRATA_URL", "http://127.0.0.1:8080").rstrip("/")
 PUBLIC_HOSTS = {"raw.githubusercontent.com", "github.com", "learn.microsoft.com", "www.xbox.com", "news.xbox.com", "www.amd.com", "blog.playstation.com"}
 STATS = {"tool_calls": 0, "input_tokens": 0, "output_tokens": 0, "last_validation_utc": None}
@@ -67,6 +67,21 @@ def task_limits(task):
             raise ValueError("larger task budgets require budget_justification")
         limits[name] = value
     return limits
+
+
+def task_in_worker_scope(task):
+    raw_types = os.getenv("STRATA_ALLOWED_TASK_TYPES")
+    raw_areas = os.getenv("STRATA_ALLOWED_AREAS")
+    if raw_types is None and raw_areas is None:
+        return True
+    allowed_types = set(json.loads(raw_types)) if raw_types is not None else set()
+    allowed_areas = set(json.loads(raw_areas)) if raw_areas is not None else set()
+    area = task.get("area")
+    task_type = task.get("task_type")
+    if task_type is None:
+        task_type = "PS5" if isinstance(area, str) and area.startswith("RE") else (
+            "XBOX" if isinstance(area, str) and area.startswith("XRE") else "UNKNOWN")
+    return (not allowed_types or task_type in allowed_types) and (not allowed_areas or area in allowed_areas)
 
 
 def response_token_limit(task):
@@ -376,7 +391,7 @@ def publish(task):
             raise RuntimeError("possible credential in publication")
         if relative.replace("\\", "/").startswith("tools/tests/") and not re.search(r"\bassert\b|\.assert[A-Z]\w*\(", content):
             raise RuntimeError("automatic publication requires test assertions in each test artifact")
-    review_log = ROOT / "STRATA_REVIEWED.json"
+    review_log = Path(os.getenv("STRATA_REVIEW_LOG_PATH", str(ROOT / "STRATA_REVIEWED.json"))).resolve()
     review_data = json.loads(review_log.read_text(encoding="utf-8")) if review_log.exists() else {"schema_version": 1, "reviewed_task_ids": []}
     if task["id"] not in review_data["reviewed_task_ids"]:
         review_data["reviewed_task_ids"].append(task["id"])
@@ -509,12 +524,15 @@ def main():
     parser.add_argument("--task-id")
     args = parser.parse_args()
     QUEUE = args.queue if args.queue.is_absolute() else ROOT / args.queue
+    approved_branch = os.getenv("STRATA_WORKER_BRANCH")
+    if approved_branch and current_branch() != approved_branch:
+        raise RuntimeError("current branch does not match the configured worker branch")
     model = active_model()
     state_db = strata_state.connect(STATE_DB)
     strata_state.recover_running(state_db)
     while True:
         queue = json.loads(QUEUE.read_text(encoding="utf-8"))
-        task = next((item for item in queue["tasks"] if (item["status"] in ("pending", "retry_scheduled") or (args.task_id and item["id"] == args.task_id and item["status"] == "running")) and item.get("retry_at",0)<=time.time() and (not args.task_id or item["id"] == args.task_id)), None)
+        task = next((item for item in queue["tasks"] if (item["status"] in ("pending", "retry_scheduled") or (args.task_id and item["id"] == args.task_id and item["status"] == "running")) and item.get("retry_at",0)<=time.time() and (not args.task_id or item["id"] == args.task_id) and task_in_worker_scope(item)), None)
         if task is None:
             return 0
         if current_branch() != task["branch"] or task["branch"] == "main":

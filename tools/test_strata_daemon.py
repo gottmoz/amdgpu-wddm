@@ -30,8 +30,12 @@ class CoordinatorTests(unittest.TestCase):
     def test_inbox_scope_and_duplicate(self):
         task = {"id": "IN-XRE03-1", "area": "XRE03", "branch": "research/xbox-firmware",
                 "objective": "Review a public XVD header format without reading binary firmware.",
+                "sources": ["README.md"],
                 "allowed_writes": ["docs/research/xbox-inbox-note.md"]}
-        self.assertEqual(daemon.validate_incoming(task, task["branch"])["origin"], "github_inbox")
+        imported = daemon.validate_incoming(task, task["branch"])
+        self.assertEqual(imported["origin"], "github_inbox")
+        self.assertEqual(imported["sources"], ["README.md"])
+        self.assertEqual(imported["task_type"], "XBOX")
         with self.assertRaises(ValueError):
             daemon.validate_incoming(dict(task, allowed_writes=["driver/kmd/entry.c"]), task["branch"])
         with self.assertRaises(ValueError):
@@ -40,6 +44,26 @@ class CoordinatorTests(unittest.TestCase):
             self.assertEqual(daemon.import_inbox("owner/repo", task["branch"]), 1)
             self.assertEqual(daemon.import_inbox("owner/repo", task["branch"]), 0)
         self.assertEqual(len(daemon.load(daemon.INBOX_QUEUE)["tasks"]), 1)
+
+    def test_inbox_rejects_missing_or_unbounded_sources(self):
+        task = {"id": "IN-RE03-2", "area": "RE03", "branch": "research/ps5-firmware",
+                "objective": "Compare documented PS5 ELF loader metadata without reading firmware bytes.",
+                "sources": ["README.md"],
+                "allowed_writes": ["docs/research/ps5-loader-followup.md"]}
+        with self.assertRaisesRegex(ValueError, "sources"):
+            daemon.validate_incoming({key: value for key, value in task.items() if key != "sources"}, task["branch"])
+        for source in ("../README.md", "scratch/private.txt", "missing-source.md",
+                       "https://example.org/format", "https://user@github.com/example/repo"):
+            with self.assertRaises(ValueError):
+                daemon.validate_incoming(dict(task, sources=[source]), task["branch"])
+
+    def test_inbox_rejects_duplicate_source_paths(self):
+        task = {"id": "IN-RE03-3", "area": "RE03", "branch": "research/ps5-firmware",
+                "objective": "Compare documented PS5 loader metadata without reading firmware bytes.",
+                "sources": ["README.md", "README.md"],
+                "allowed_writes": ["docs/research/ps5-loader-followup.md"]}
+        with self.assertRaisesRegex(ValueError, "unique"):
+            daemon.validate_incoming(task, task["branch"])
 
     def test_task_scoped_tool_schema_hides_terminal(self):
         tools = worker.definitions({"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]})
@@ -232,7 +256,8 @@ class CoordinatorTests(unittest.TestCase):
 
     def test_heartbeat_has_required_fields(self):
         captured = []
-        with patch.object(daemon, "put_content", side_effect=lambda *args: captured.append(args)):
+        with patch.object(daemon, "git", side_effect=lambda *args: "0" if args[0] == "rev-list" else "deadbeef"), \
+             patch.object(daemon, "put_content", side_effect=lambda *args: captured.append(args)):
             payload = daemon.heartbeat("owner/repo", "research/xbox-firmware", "idle", None)
         self.assertEqual(len(captured), 2)
         self.assertEqual({item[2] for item in captured}, {"AGENT_STATUS.json", "AGENT_STATUS.md"})
@@ -241,16 +266,42 @@ class CoordinatorTests(unittest.TestCase):
                       "last_successful_commit", "next_task_id"):
             self.assertIn(field, payload)
 
+    def test_profile_heartbeat_writes_only_its_private_status_file(self):
+        captured = []
+        env = {"STRATA_STATUS_BRANCH": "agent/strata-status",
+               "STRATA_STATUS_FILE": "STRATA_PS5_STATUS.json", "STRATA_STATUS_MD_FILE": ""}
+        with patch.dict("os.environ", env), \
+             patch.object(daemon, "git", side_effect=lambda *args: "0" if args[0] == "rev-list" else "deadbeef"), \
+             patch.object(daemon, "put_content", side_effect=lambda *args: captured.append(args)):
+            daemon.heartbeat("owner/repo", "research/ps5-firmware", "idle", None)
+
+        self.assertEqual([item[2] for item in captured], ["STRATA_PS5_STATUS.json"])
+
+    def test_worker_type_and_area_scope_blocks_cross_project_tasks(self):
+        env = {"STRATA_ALLOWED_TASK_TYPES": '["PS5"]', "STRATA_ALLOWED_AREAS": '["RE03"]'}
+        with patch.dict("os.environ", env):
+            self.assertTrue(worker.task_in_worker_scope({"area": "RE03", "task_type": "PS5"}))
+            self.assertFalse(worker.task_in_worker_scope({"area": "XRE03", "task_type": "XBOX"}))
+            self.assertFalse(worker.task_in_worker_scope({"area": "RE04", "task_type": "PS5"}))
+
+    def test_task_log_path_uses_worker_log_directory_and_safe_id(self):
+        path = daemon.task_log_path({"id": "IN-RE03-4"})
+
+        self.assertEqual(path.parent, daemon.LOG_DIR)
+        self.assertEqual(path.name, "IN-RE03-4.log")
+        with self.assertRaisesRegex(ValueError, "task ID"):
+            daemon.task_log_path({"id": "../../AGENT_STATUS"})
+
     def test_compaction_keeps_more_than_sixteen_rounds_bounded(self):
         state = {"calls": 0, "max_messages": 0}
 
-        def fake_api(messages, _model, _task):
+        def fake_api(messages, _model, _task, step=None):
             state["calls"] += 1
             state["max_messages"] = max(state["max_messages"], len(messages))
             if state["calls"] <= 17:
                 return {"message": {"role": "assistant", "content": None, "tool_calls": [
                     {"id": f"call{state['calls']}", "type": "function",
-                     "function": {"name": "terminal", "arguments": '{"argv":["git","status"]}'}}]}}
+                     "function": {"name": "terminal", "arguments": json.dumps({"argv": ["rg", "-n", f"compaction-{state['calls']}", "README.md"]})}}]}}
             return {"message": {"role": "assistant", "content": "done"}}
 
         checkpoint = Path(self.temp.name) / "checkpoint.json"

@@ -22,22 +22,40 @@ import strata_supervisor as worker
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = worker.RUNTIME
-INBOX_QUEUE = RUNTIME / "STRATA_INBOX_QUEUE.json"
-GENERATED_QUEUE = RUNTIME / "STRATA_GENERATED_QUEUE.json"
-XBOX_QUEUE = ROOT / "XBOX_TASK_QUEUE.json"
-OBJECTIVES = ROOT / "STRATA_OBJECTIVES.json"
-REVIEW_LOG = ROOT / "STRATA_REVIEWED.json"
-LOCK = RUNTIME / ".strata-daemon.lock"
-STOP = RUNTIME / "STRATA_STOP"
-REJECTIONS = RUNTIME / "STRATA_INBOX_REJECTIONS.json"
-ENDURANCE = RUNTIME / "STRATA_ENDURANCE.json"
-RECOVERIES = RUNTIME / "STRATA_RECOVERIES.json"
-AREA_ROTATION = RUNTIME / "STRATA_AREA_ROTATION.json"
-STATUS_BRANCH = "agent/strata-status"
-INBOX_BRANCH = "agent/strata-inbox"
-APPROVED_AREAS = {*(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
+def env_path(name, default):
+    return Path(os.getenv(name, str(default))).resolve()
+
+
+QUEUE = env_path("STRATA_QUEUE_PATH", ROOT / "TASK_QUEUE.json")
+INBOX_QUEUE = env_path("STRATA_INBOX_QUEUE_PATH", RUNTIME / "STRATA_INBOX_QUEUE.json")
+GENERATED_QUEUE = env_path("STRATA_GENERATED_QUEUE_PATH", RUNTIME / "STRATA_GENERATED_QUEUE.json")
+XBOX_QUEUE = env_path("STRATA_XBOX_QUEUE_PATH", ROOT / "XBOX_TASK_QUEUE.json")
+OBJECTIVES = env_path("STRATA_OBJECTIVES_PATH", ROOT / "STRATA_OBJECTIVES.json")
+REVIEW_LOG = env_path("STRATA_REVIEW_LOG_PATH", ROOT / "STRATA_REVIEWED.json")
+LOCK = env_path("STRATA_LOCK_PATH", RUNTIME / ".strata-daemon.lock")
+STOP = env_path("STRATA_STOP_PATH", RUNTIME / "STRATA_STOP")
+REJECTIONS = env_path("STRATA_REJECTIONS_PATH", RUNTIME / "STRATA_INBOX_REJECTIONS.json")
+ENDURANCE = env_path("STRATA_ENDURANCE_PATH", RUNTIME / "STRATA_ENDURANCE.json")
+RECOVERIES = env_path("STRATA_RECOVERIES_PATH", RUNTIME / "STRATA_RECOVERIES.json")
+AREA_ROTATION = env_path("STRATA_AREA_ROTATION_PATH", RUNTIME / "STRATA_AREA_ROTATION.json")
+LOG_DIR = env_path("STRATA_LOG_DIR", RUNTIME / "logs")
+STATUS_BRANCH = os.getenv("STRATA_STATUS_BRANCH", "agent/strata-status")
+STATUS_FILE = os.getenv("STRATA_STATUS_FILE", "AGENT_STATUS.json")
+STATUS_MD_FILE = os.getenv("STRATA_STATUS_MD_FILE", "AGENT_STATUS.md")
+INBOX_BRANCH = os.getenv("STRATA_INBOX_BRANCH", "agent/strata-inbox")
+APPROVED_AREAS = set(json.loads(os.environ["STRATA_ALLOWED_AREAS"])) if os.getenv("STRATA_ALLOWED_AREAS") else {
+    *(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
+APPROVED_TYPES = set(json.loads(os.environ["STRATA_ALLOWED_TASK_TYPES"])) if os.getenv("STRATA_ALLOWED_TASK_TYPES") else set()
 SENSITIVE = re.compile(r"\b(flash|reboot|voltage change|write register|extract key|bypass signature|install driver)\b", re.I)
 STOPPING = False
+
+
+def worker_profile_active():
+    return bool(os.getenv("STRATA_WORKER_ID"))
+
+
+def task_queue_path():
+    return QUEUE if worker_profile_active() else ROOT / "TASK_QUEUE.json"
 
 
 def utc_now():
@@ -123,6 +141,16 @@ def task_key(task):
     return hashlib.sha256((task.get("area", "") + "\n" + task["objective"].strip().lower()).encode()).hexdigest()
 
 
+def infer_task_type(area):
+    if isinstance(area, str) and area.startswith("RE"):
+        return "PS5"
+    if isinstance(area, str) and area.startswith("XRE"):
+        return "XBOX"
+    if area == "NAGI":
+        return "NAGI"
+    return "UNKNOWN"
+
+
 def validate_incoming(task, branch):
     if not isinstance(task, dict) or not re.fullmatch(r"IN-[A-Za-z0-9-]{3,48}", str(task.get("id", ""))):
         raise ValueError("invalid task ID")
@@ -133,6 +161,23 @@ def validate_incoming(task, branch):
     objective = task.get("objective")
     if not isinstance(objective, str) or not 20 <= len(objective) <= 1000 or SENSITIVE.search(objective):
         raise ValueError("objective is empty, oversized or outside offline research scope")
+    sources = task.get("sources")
+    if (not isinstance(sources, list) or not 1 <= len(sources) <= 8
+            or not all(isinstance(source, str) and source for source in sources)):
+        raise ValueError("one to eight exact task sources are required")
+    if len(set(sources)) != len(sources):
+        raise ValueError("task sources must be unique")
+    for source in sources:
+        if source.startswith("https://"):
+            parsed = worker.urlparse(source)
+            if (parsed.hostname not in worker.PUBLIC_HOSTS or parsed.username or parsed.password
+                    or parsed.query or parsed.fragment):
+                raise ValueError("source URL is outside approved public documentation")
+        else:
+            path = worker.confined(source)
+            if (not path.is_file() or path.suffix.lower() not in worker.TEXT_SUFFIXES
+                    or path.stat().st_size > 1_000_000):
+                raise ValueError("source path must be an existing bounded text file")
     paths = task.get("allowed_writes")
     if not isinstance(paths, list) or not 1 <= len(paths) <= 2:
         raise ValueError("one or two output files are required")
@@ -140,8 +185,14 @@ def validate_incoming(task, branch):
         path = worker.confined(relative, writable=True)
         if not (path.relative_to(ROOT).as_posix().startswith("docs/research/") and path.suffix == ".md"):
             raise ValueError("inbox tasks may write only research notes")
+    task_type = infer_task_type(task["area"])
+    if task.get("task_type", task_type) != task_type:
+        raise ValueError("task type does not match its approved research area")
+    if APPROVED_TYPES and task_type not in APPROVED_TYPES:
+        raise ValueError("task type is outside this worker's configured scope")
     return {"id": task["id"], "area": task["area"], "branch": branch,
-            "objective": objective, "allowed_writes": paths, "status": "pending",
+            "task_type": task_type, "objective": objective, "sources": sources,
+            "allowed_writes": paths, "status": "pending",
             "verify": [["python", "tools/quality/doclint.py", "--files", *paths]],
             "publish": False, "origin": "github_inbox"}
 
@@ -155,7 +206,7 @@ def import_inbox(repo, branch):
     if incoming.get("schema_version") != 1 or not isinstance(incoming.get("tasks"), list):
         raise ValueError("invalid GitHub task inbox schema")
     inbox = load(INBOX_QUEUE)
-    all_tasks = [task for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, ROOT / "TASK_QUEUE.json") for task in load(path)["tasks"]]
+    all_tasks = [task for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, task_queue_path()) for task in load(path)["tasks"]]
     ids = {task["id"] for task in all_tasks}
     keys = {task_key(task) for task in all_tasks if "objective" in task}
     rejected = load(REJECTIONS)
@@ -192,9 +243,11 @@ GENERATED = [
 
 def generate_task(branch):
     generated = load(GENERATED_QUEUE)
-    known = {task["id"] for path in (GENERATED_QUEUE, INBOX_QUEUE, XBOX_QUEUE) for task in load(path)["tasks"]}
+    known = {task["id"] for path in (GENERATED_QUEUE, INBOX_QUEUE, XBOX_QUEUE, task_queue_path()) for task in load(path)["tasks"]}
     for template in GENERATED:
-        if template["branch"] == branch and template["id"] not in known:
+        if (template["branch"] == branch and template["id"] not in known
+                and (not worker_profile_active() or template.get("area") in APPROVED_AREAS)
+                and (not APPROVED_TYPES or infer_task_type(template.get("area")) in APPROVED_TYPES)):
             task = dict(template, status="pending", origin="generated", publish=False,
                         verify=[["python", "tools/quality/doclint.py", "--files", *template["allowed_writes"]]])
             generated["tasks"].append(task)
@@ -207,7 +260,7 @@ def replenish_backlog(branch, floor=20):
     """Queue only reviewed, source-scoped objectives until the useful backlog floor."""
     if branch != "agent/strata-v2" or not OBJECTIVES.exists():
         return 0
-    queue = load(ROOT / "TASK_QUEUE.json")
+    queue = load(task_queue_path())
     templates = json.loads(OBJECTIVES.read_text(encoding="utf-8"))["tasks"]
     other_queues = [INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE]
     known_tasks = queue["tasks"] + [t for path in other_queues for t in load(path)["tasks"]]
@@ -223,7 +276,7 @@ def replenish_backlog(branch, floor=20):
         task.setdefault("publish", False)
         task.setdefault("verify", [["python","tools/quality/doclint.py","--files",*task["allowed_writes"]]])
         queue["tasks"].append(task); known.add(task["id"]); ready += 1; added += 1
-    if added: save(ROOT / "TASK_QUEUE.json", queue)
+    if added: save(task_queue_path(), queue)
     return added
 
 
@@ -234,9 +287,11 @@ def generate_followup_reviews(branch, floor=5):
 
 def next_task(branch):
     now = time.time()
-    paths = (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, ROOT / "TASK_QUEUE.json")
+    paths = (INBOX_QUEUE, GENERATED_QUEUE, XBOX_QUEUE, task_queue_path())
     candidates = [(path, task) for path in paths for task in load(path)["tasks"]
                   if task.get("branch") == branch and task.get("status") in ("pending", "retry_scheduled", "running")
+                  and (not worker_profile_active() or task.get("area") in APPROVED_AREAS)
+                  and (not APPROVED_TYPES or task.get("task_type", infer_task_type(task.get("area"))) in APPROVED_TYPES)
                   and task.get("retry_at", 0) <= now]
     if not candidates:
         return None, None
@@ -300,14 +355,27 @@ def task_timeout_reached(started, now, timeout_seconds):
     return now - started >= timeout_seconds
 
 
+def task_log_path(task):
+    task_id = task.get("id") if isinstance(task, dict) else None
+    if not isinstance(task_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", task_id):
+        raise ValueError("task ID is invalid for a worker log path")
+    return LOG_DIR / f"{task_id}.log"
+
+
 def run_task(path, task, stall_seconds=None, tick=None):
     limits = worker.task_limits(task)
     execution_timeout = limits["max_execution_seconds"]
     progress_timeout = limits["max_progress_stall_seconds"] if stall_seconds is None else stall_seconds
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    with task_log_path(task).open("ab") as worker_log:
+        return _run_task_process(path, task, execution_timeout, progress_timeout, worker_log, tick)
+
+
+def _run_task_process(path, task, execution_timeout, progress_timeout, worker_log, tick):
     command = [sys.executable, str(ROOT / "tools/strata_supervisor.py"), "--once", "--queue", str(path), "--task-id", task["id"]]
     flags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
     process = subprocess.Popen(command, cwd=ROOT, creationflags=flags,
-                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                               stdout=worker_log, stderr=subprocess.STDOUT)
     start = time.time()
     while process.poll() is None:
         if tick:
@@ -355,7 +423,7 @@ def run_task(path, task, stall_seconds=None, tick=None):
 
 def status_payload(branch, state, task):
     tasks_by_id = {}
-    for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, ROOT / "TASK_QUEUE.json"):
+    for path in (INBOX_QUEUE, XBOX_QUEUE, GENERATED_QUEUE, task_queue_path()):
         for item in load(path)["tasks"]:
             tasks_by_id[item["id"]] = item
     tasks = list(tasks_by_id.values())
@@ -389,8 +457,17 @@ def heartbeat(repo, branch, state, task):
     payload = status_payload(branch, state, task)
     encoded = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
     md = ("# Strata status\n\n" + "\n".join(f"- {key.replace('_', ' ')}: `{value}`" for key, value in payload.items()) + "\n")
-    put_content(repo, STATUS_BRANCH, "AGENT_STATUS.json", encoded, "agent: update status JSON")
-    put_content(repo, STATUS_BRANCH, "AGENT_STATUS.md", md, "agent: update status summary")
+    worker_id = os.getenv("STRATA_WORKER_ID")
+    status_file = os.getenv("STRATA_STATUS_FILE", STATUS_FILE)
+    status_md_file = os.getenv("STRATA_STATUS_MD_FILE", STATUS_MD_FILE)
+    status_branch = os.getenv("STRATA_STATUS_BRANCH", STATUS_BRANCH)
+    expected_status = {"ps5": "STRATA_PS5_STATUS.json", "xbox": "STRATA_XBOX_STATUS.json",
+                       "nagi": "STRATA_NAGI_STATUS.json", "coordinator": "STRATA_V3_STATUS.json"}
+    if worker_id and (status_file != expected_status.get(worker_id) or status_file == "AGENT_STATUS.json"):
+        raise RuntimeError("worker status file is not isolated")
+    put_content(repo, status_branch, status_file, encoded, "agent: update worker status")
+    if status_md_file:
+        put_content(repo, status_branch, status_md_file, md, "agent: update worker status summary")
     return payload
 
 
@@ -426,7 +503,11 @@ def main():
     signal.signal(signal.SIGTERM, signal_stop)
     signal.signal(signal.SIGINT, signal_stop)
     branch = git("branch", "--show-current")
-    if branch not in ("research/xbox-firmware", "research/ps5-firmware", "agent/strata-v2"):
+    configured_branch = os.getenv("STRATA_WORKER_BRANCH")
+    if configured_branch:
+        if branch != configured_branch or branch == "main":
+            raise RuntimeError("run the worker in its exact configured branch")
+    elif branch not in ("research/xbox-firmware", "research/ps5-firmware", "agent/strata-v2"):
         raise RuntimeError("run the coordinator in an approved research or agent branch")
     for name in (STATUS_BRANCH, INBOX_BRANCH):
         ensure_branch(args.repo, name)
