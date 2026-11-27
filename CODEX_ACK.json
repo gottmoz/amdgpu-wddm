@@ -216,18 +216,18 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 still matches upstream; checked live workers and queue snapshots.",
-  "last_poll_utc": "2026-11-27T20:59:03Z",
+  "result": "SUP-006 pending. Verified RC5 source alignment and live worker links.",
+  "last_poll_utc": "2026-11-27T21:13:46.7456946Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T20:59:03Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
+    "last_poll_utc": "2026-11-27T21:13:46.7456946Z",
+    "validation": "Clean RC5 HEAD ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 matches authenticated upstream main. Verified 2 of two expected worker/watchdog links.",
     "trigger": "manual",
-    "result": "SUP-006 pending. RC5 still matches upstream; checked live workers and queue snapshots.",
-    "validation": "Clean integration HEAD ca95cf88e equals authenticated upstream main. Verified PS5 worker/watchdog 21908/5712 and Nagi 37252/31704. PS5 snapshot has zero queue rows; latest checkpoint IN-RE03-PS5-SEGMENT-HASH-REVIEW-01 is done. Nagi has nine done and three quarantined, zero ready, and checkpoint NAGI-VERIFIER-CASE-01 at tool step. Latest recorded Nagi validation: 68 targeted tests and five of five dependency identities matched.",
     "blockers": [
-      "Fresh automatic refill and validated publication for both workers remain unverified.",
-      "Full RC5 package validation is pending. Historical tester.39 TheRock and build-history inputs remain absent.",
+      "Automatic refill and validated publication for both workers remain unverified.",
+      "Full RC5 package validation remains pending. Last tester.39 plan lacked TheRock and build-history inputs.",
       "Local scheduler launch evidence unavailable."
-    ]
+    ],
+    "result": "SUP-006 pending. Verified RC5 source alignment and live worker links."
   }
 }
