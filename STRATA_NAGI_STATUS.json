@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-27T15:56:39Z",
+  "utc": "2026-11-27T15:56:45Z",
   "state": "idle",
   "current_task_id": null,
   "research_area": null,
@@ -9,15 +9,15 @@
   "input_tokens": 350787,
   "output_tokens": 101473,
   "last_successful_validation_utc": "2026-11-27T15:56:34Z",
-  "uptime_seconds": 24383,
+  "uptime_seconds": 24389,
   "endurance_target_seconds": 43200,
-  "actual_work_seconds": 2452.3,
+  "actual_work_seconds": 2457.3,
   "idle_seconds": 20396.0,
   "idle_reason": null,
   "automatic_recoveries": 7,
   "pending_reviews": 5,
   "published_commits": 3,
   "last_successful_commit": "9c5ca2062359e25670ab8d89fd6c3ad357e9f4fe",
-  "next_task_id": "NAGI-CONTEXT-UNC-01",
+  "next_task_id": "NAGI-VERIFIER-JSON-01",
   "work_branch": "agent/strata-nagi"
 }
