@@ -34,10 +34,13 @@ def worker_alive(pid, profile_path):
         return False
     try:
         import psutil
+    except ImportError:
+        return False
+    try:
         process = psutil.Process(pid)
         return process.is_running() and process.status() != psutil.STATUS_ZOMBIE and is_owned_worker_command(
             process.cmdline(), profile_path)
-    except (ImportError, OSError, ValueError):
+    except psutil.Error:
         return False
 
 

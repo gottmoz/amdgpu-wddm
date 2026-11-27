@@ -1,7 +1,10 @@
 import unittest
+from unittest.mock import patch
+
+import psutil
 from pathlib import Path
 
-from tools.strata_v3_watchdog import is_owned_worker_command, is_recovery, should_start
+from tools.strata_v3_watchdog import is_owned_worker_command, is_recovery, should_start, worker_alive
 
 
 class StrataV3WatchdogTest(unittest.TestCase):
@@ -23,6 +26,10 @@ class StrataV3WatchdogTest(unittest.TestCase):
         self.assertTrue(should_start(0, worker_alive=False, stop_requested=False))
         self.assertFalse(should_start(123, worker_alive=True, stop_requested=False))
         self.assertFalse(should_start(0, worker_alive=False, stop_requested=True))
+
+    def test_stale_worker_pid_is_treated_as_dead(self):
+        with patch("psutil.Process", side_effect=psutil.NoSuchProcess(40123)):
+            self.assertFalse(worker_alive(40123, self.profile))
 
     def test_restart_is_counted_only_after_a_previous_owned_pid_died(self):
         self.assertFalse(is_recovery(0, worker_alive=False))
