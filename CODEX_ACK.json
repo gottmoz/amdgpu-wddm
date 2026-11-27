@@ -216,17 +216,17 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. Verified published Nagi auto-task 5e0b07c54 and saved host-test result. Both worker watchdog links are live.",
-  "last_poll_utc": "2026-11-27T18:44:55Z",
+  "result": "SUP-006 pending. Verified clean RC5 integration at authenticated upstream main and both worker parent links.",
+  "last_poll_utc": "2026-11-27T18:59:30Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T18:44:55Z",
+    "last_poll_utc": "2026-11-27T18:59:30Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. Verified published Nagi auto-task 5e0b07c54 and saved host-test result. Both worker watchdog links are live.",
-    "validation": "Nagi AUTO-NAGI-ADAPTER-OWNER-02: reviewed published Markdown commit 5e0b07c54586b95bee2799dce120375a9a638945; local host-test log reports 94 checks and 0 failures. Nagi worker/watchdog 37252/31704, PS5 21908/5712. Queue snapshots: Nagi 11 done and 4 quarantined; PS5 5 done and 1 quarantined; no ready entries.",
+    "result": "SUP-006 pending. Verified clean RC5 integration at authenticated upstream main and both worker parent links.",
+    "validation": "RC5 integration HEAD and upstream main both ca95cf88ed3b400e9a3b8608a3575c9fcea86c53, with clean worktree. PS5 worker/watchdog 21908/5712 and Nagi 37252/31704. Queue files show PS5 empty and Nagi 9 done, 3 quarantined. No local scheduler launch evidence.",
     "blockers": [
-      "Nagi published auto-task is historical; fresh under-threshold refill and validated publication for each active worker remain unverified.",
-      "Historical tester.39 ROCm inputs and full graphics package validation remain pending."
+      "Fresh automatic refill and validated execution remain unverified. INF task is rejected by PS5 for research area and by Nagi for source path.",
+      "Historical tester.39 ROCm inputs and complete RC5 package validation remain pending."
     ]
   }
 }
