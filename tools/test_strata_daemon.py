@@ -117,7 +117,8 @@ class CoordinatorTests(unittest.TestCase):
             daemon.validate_incoming(task, task["branch"])
 
     def test_generated_public_source_task_exposes_fetch_url(self):
-        task = daemon.generate_task("research/xbox-firmware")
+        with patch.object(daemon, "generated_sources_available", return_value=True):
+            task = daemon.generate_task("research/xbox-firmware")
         names = {item["function"]["name"] for item in worker.definitions(task)}
         self.assertIn("fetch_url", names)
         self.assertIn("read_file", names)
@@ -129,10 +130,18 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual(task["task_type"], "NAGI")
         self.assertEqual(task["sources"], ["driver/kmd/adapter_owner.c",
                                             "driver/kmd/adapter_owner.h",
-                                            "driver/kmd/adapter_owner_test.c"])
+                                            "driver/kmd/test/adapter_owner_test.c"])
         self.assertEqual(task["allowed_writes"], [
-            "docs/research/strata/nagi-adapter-owner-test-audit.md"])
+            "docs/research/strata/nagi-adapter-owner-coverage-review.md"])
         self.assertIsNone(daemon.generate_task("agent/strata-nagi"))
+
+    def test_generated_task_is_skipped_when_a_local_source_is_missing(self):
+        template = {"id": "AUTO-NAGI-MISSING-SOURCE", "area": "NAGI", "task_type": "NAGI",
+                    "branch": "agent/strata-nagi", "objective": "Review a bounded missing-source case.",
+                    "sources": ["driver/kmd/does-not-exist.c"],
+                    "allowed_writes": ["docs/research/strata/nagi-missing-source.md"]}
+        with patch.object(daemon, "GENERATED", [template]):
+            self.assertIsNone(daemon.generate_task("agent/strata-nagi"))
 
     def test_task_scoped_tool_schema_hides_terminal(self):
         tools = worker.definitions({"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]})
@@ -149,9 +158,11 @@ class CoordinatorTests(unittest.TestCase):
         self.assertEqual({item["function"]["name"] for item in tools}, {"list_files", "write_file"})
 
     def test_generated_task_and_checkpoint_recovery(self):
-        task = daemon.generate_task("research/xbox-firmware")
+        with patch.object(daemon, "generated_sources_available", return_value=True):
+            task = daemon.generate_task("research/xbox-firmware")
         self.assertEqual(task["origin"], "generated")
-        self.assertEqual(daemon.generate_task("research/xbox-firmware")["id"], "AUTO-XRE06-01")
+        with patch.object(daemon, "generated_sources_available", return_value=True):
+            self.assertEqual(daemon.generate_task("research/xbox-firmware")["id"], "AUTO-XRE06-01")
         queue = daemon.load(daemon.GENERATED_QUEUE)
         queue["tasks"][0]["status"] = "running"
         daemon.save(daemon.GENERATED_QUEUE, queue)

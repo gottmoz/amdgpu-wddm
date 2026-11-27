@@ -254,12 +254,12 @@ GENERATED = [
      "objective": "Read XBOX_FIRMWARE_INVENTORY.json and tools/firmware/cyan_skillfish2.json. Write a short metadata-only comparison plan for public AMD microcode and unknown Xbox firmware identifiers. Do not read binary firmware.",
      "sources": ["XBOX_FIRMWARE_INVENTORY.json", "tools/firmware/cyan_skillfish2.json"],
      "allowed_writes": ["docs/research/xbox-amd-firmware-metadata-plan.md"]},
-    {"id": "AUTO-NAGI-ADAPTER-OWNER-01", "area": "NAGI", "task_type": "NAGI",
+    {"id": "AUTO-NAGI-ADAPTER-OWNER-02", "area": "NAGI", "task_type": "NAGI",
      "branch": "agent/strata-nagi",
      "objective": "Summarize the adapter owner API and transition coverage in the listed source files. Report exercised transitions and one missing case only when supported by the tests. Do not infer hardware behavior. Keep the report under 150 words.",
      "sources": ["driver/kmd/adapter_owner.c", "driver/kmd/adapter_owner.h",
-                 "driver/kmd/adapter_owner_test.c"],
-     "allowed_writes": ["docs/research/strata/nagi-adapter-owner-test-audit.md"]},
+                 "driver/kmd/test/adapter_owner_test.c"],
+     "allowed_writes": ["docs/research/strata/nagi-adapter-owner-coverage-review.md"]},
 ]
 
 
@@ -268,6 +268,7 @@ def generate_task(branch):
     known = {task["id"] for path in (GENERATED_QUEUE, INBOX_QUEUE, XBOX_QUEUE, task_queue_path()) for task in load(path)["tasks"]}
     for template in GENERATED:
         if (template["branch"] == branch and template["id"] not in known
+                and generated_sources_available(template)
                 and (not worker_profile_active() or template.get("area") in APPROVED_AREAS)
                 and (not APPROVED_TYPES or infer_task_type(template.get("area")) in APPROVED_TYPES)):
             task = dict(template, status="pending", origin="generated", publish=False,
@@ -276,6 +277,20 @@ def generate_task(branch):
             save(GENERATED_QUEUE, generated)
             return task
     return None
+
+
+def generated_sources_available(template):
+    for source in template.get("sources", []):
+        if source.startswith("https://"):
+            continue
+        try:
+            path = worker.confined(source)
+        except ValueError:
+            return False
+        if (not path.is_file() or path.suffix.lower() not in worker.SOURCE_SUFFIXES
+                or path.stat().st_size > 100_000):
+            return False
+    return True
 
 
 def replenish_backlog(branch, floor=20):
