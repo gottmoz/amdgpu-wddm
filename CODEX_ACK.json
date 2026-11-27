@@ -216,18 +216,19 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. Verified upstream source alignment and inspected V3 worker ownership and queues.",
-  "last_poll_utc": "2026-11-27T21:29:00.6504127Z",
+  "result": "SUP-006 pending. Fresh RC5 host verification.",
+  "last_poll_utc": "2026-11-27T21:44:20.0974047Z",
   "heartbeat": {
+    "last_poll_utc": "2026-11-27T21:44:20.0974047Z",
+    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
+    "result": "SUP-006 pending. Fresh RC5 host verification.",
+    "validation": "RC5 x64 and x86 rebuilt and ran locally. Record-pair verifier exit 0 on both (13 producers, 5 consumers, 50 pairs each). Raw test executables exit 1; verifier reported five remaining expected-red cases and six landed entries on each architecture. Evidence scratch/rc5-record-pairs-poll-20261127/{x64,x86}/pairs.tsv.",
     "blockers": [
       "Automatic refill with validated publication for both workers remains unverified.",
-      "Full RC5 package validation pending.",
+      "Full RC5 development package validation pending.",
+      "Tester.39 ROCm rows require pinned TheRock and build-history inputs.",
       "Local scheduler launch evidence unavailable."
-    ],
-    "result": "SUP-006 pending. Verified upstream source alignment and inspected V3 worker ownership and queues.",
-    "validation": "Clean RC5 ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 matches authenticated upstream. ps5 worker 21908, watchdog 5712, link live=True, queue=. nagi worker 37252, watchdog 31704, link live=True, queue=done=9,quarantined=3. Saved tester.39 plan records four failures for missing TheRock and build-history inputs.",
-    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
-    "last_poll_utc": "2026-11-27T21:29:00.6504127Z"
+    ]
   }
 }
