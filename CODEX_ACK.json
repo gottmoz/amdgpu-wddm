@@ -173,9 +173,9 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:59:14Z",
+  "last_poll_utc": "2026-11-27T11:14:16Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:59:14Z",
+    "last_poll_utc": "2026-11-27T11:14:16Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
@@ -191,7 +191,7 @@
         "completed": 5,
         "watchdog_pid": 5712,
         "last_validation_utc": "2026-11-27T08:56:04Z",
-        "idle_seconds": 13744.0,
+        "idle_seconds": 14614.0,
         "target_seconds": 28800
       },
       {
@@ -204,7 +204,7 @@
         "completed": 2,
         "watchdog_pid": 26144,
         "last_validation_utc": "2026-11-27T09:36:36Z",
-        "idle_seconds": 5606.0,
+        "idle_seconds": 6476.0,
         "target_seconds": 43200
       }
     ],
