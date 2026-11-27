@@ -8,7 +8,8 @@ It does not inspect firmware binaries. It does not identify components. It does 
 - `awake-devel/pkg-to-anyps5` at `2e9b12267840f9777f8d825335c4b4938160d9c4`, file [`src/selfelf.rs`](https://github.com/awake-devel/pkg-to-anyps5/blob/2e9b12267840f9777f8d825335c4b4938160d9c4/src/selfelf.rs).
 - `OpenOrbis/create-fself` at `f2da6229684ce320f673c06fceac9c218f621788`, file [`pkg/oelf/PS4Constants.go`](https://github.com/OpenOrbis/create-fself/blob/f2da6229684ce320f673c06fceac9c218f621788/pkg/oelf/PS4Constants.go).
 - `shadps4-emu/shadPS4` at `78a8a54dd5a25b05275d4918bd52d30f1511bbed`, file [`src/core/loader/elf.cpp`](https://github.com/shadps4-emu/shadPS4/blob/78a8a54dd5a25b05275d4918bd52d30f1511bbed/src/core/loader/elf.cpp).
-- Limitation: the shadPS4 fetch was cut at about 12 kB. The numeric SCE type values are not in the returned text.
+- The same shadPS4 revision defines the SCE ELF values in [`src/core/loader/elf.h`](https://github.com/shadps4-emu/shadPS4/blob/78a8a54dd5a25b05275d4918bd52d30f1511bbed/src/core/loader/elf.h).
+- Limitation: the source projects are PS4 or PS5 tools, not Sony loader specifications.
 
 ## Direct source statements
 
@@ -30,17 +31,22 @@ It does not inspect firmware binaries. It does not identify components. It does 
 
 ### shadPS4 `src/core/loader/elf.cpp`
 - `GetType` switches over `ET_NONE`, `ET_REL`, `ET_EXEC`, `ET_DYN`, `ET_CORE`, `ET_SCE_EXEC`, `ET_SCE_STUBLIB`, `ET_SCE_DYNEXEC` and `ET_SCE_DYNAMIC`.
-- The returned text contains no numeric values for these names.
+- `IsElfFile` accepts `ET_SCE_EXEC`, `ET_SCE_DYNEXEC` and `ET_SCE_DYNAMIC`. It also requires x86-64 and specific OS ABI fields.
+- `IsSharedLib` returns true for `ET_SCE_DYNAMIC`.
+- `src/core/loader/elf.h` maps `ET_SCE_EXEC` to `0xfe00`, `ET_SCE_DYNEXEC` to `0xfe10`, and `ET_SCE_DYNAMIC` to `0xfe18`.
+- These are shadPS4 implementation details. They do not establish Sony loader behavior or PS5 compatibility.
 - `GetMachine` accepts only `EM_X86_64`.
 
 ## What the labels do establish
 - Both the PS5-specific file and the PS4-oriented file use the same numeric pair 0xFE10 and 0xFE18 for SCE ELF types. Confidence: high, because both files state it directly.
 - pkg-to-anyps5 maps 0xFE10 to a main executable and 0xFE18 to a module. Confidence: medium, because it is a comment and not code that branches on the value.
 - OpenOrbis maps 0xFE10 to `ET_SCE_EXEC_ASLR` and 0xFE18 to `ET_SCE_DYNAMIC`. Confidence: high for the names, low for the implied semantics.
-- shadPS4 carries four SCE type names, while OpenOrbis defines two in this file. Confidence: high for the observation, none for the mapping to 0xFE10 or 0xFE18.
+- shadPS4 accepts `0xfe10` and `0xfe18` under its DYNEXEC and DYNAMIC names. Confidence: high for this source mapping, low for applying it to PS5.
+- OpenOrbis calls `0xfe10` `ET_SCE_EXEC_ASLR`, while shadPS4 calls it `ET_SCE_DYNEXEC`. This naming difference limits semantic conclusions.
 
 ## Cross-platform inference, not source statements
 - Applying OpenOrbis names to PS5 files is inference. The file is named `PS4Constants.go` and states no PS5 scope. Confidence: low.
+- Applying shadPS4 names to PS5 files is also inference. Its code is a PS4 emulator implementation. Confidence: low.
 - Treating the pkg-to-anyps5 comment as a PS5 ABI rule is inference. The file gives no PS5 specification reference. Confidence: low.
 - The shared numeric pair suggests a common SCE ELF convention across PS4 and PS5 tooling. Confidence: medium as a convention, none as a verified platform fact.
 
