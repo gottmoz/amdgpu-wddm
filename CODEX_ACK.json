@@ -173,18 +173,17 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T09:44:07Z",
+  "last_poll_utc": "2026-11-27T09:50:42Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T09:44:07Z",
+    "last_poll_utc": "2026-11-27T09:50:42Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "PS5 worker 21908 under watchdog 5712: 14 runs, 837.6 productive seconds. Nagi worker 29916 under watchdog 26144: 5 runs, 304.7 productive seconds. Nagi AUTO-NAGI-ADAPTER-OWNER-02 published at 5e0b07c54; review records doclint and 94 passing host checks. Prior x64/x86 Zink UMD host builds remain the latest validated builds.",
+    "validation": "Published Nagi artifact audit at 9c5ca2062 after SHA-256 recheck and zero doclint findings. dev/build-ci 36981dc93 adds wrong-identity AdapterOwnerRelease coverage; host test passes 96 checks and all five fault mutations were detected. STRATA_NAGI_STATUS.json: idle, 2 completed, 1 quarantined, 0 pending reviews; last validation 2026-11-27T09:36:36Z.",
     "blockers": [
-      "Tester.39 historical pinned ROCm inputs unavailable.",
-      "Eight-hour PS5 productive endurance target unmet.",
-      "PS5 and Nagi report no eligible ready tasks.",
-      "Local scheduler launch evidence unavailable."
+      "Nagi ready queue is empty; watchdog is active.",
+      "The 12-hour endurance target is incomplete.",
+      "tester.39 remains blocked on pinned TheRock and historical payload inputs."
     ],
     "blocker": "Tester.39 historical pinned ROCm inputs unavailable. Eight-hour PS5 productive endurance target unmet. PS5 and Nagi report no eligible ready tasks. Local scheduler launch evidence unavailable."
   }
