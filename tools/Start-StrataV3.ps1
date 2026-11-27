@@ -10,6 +10,7 @@ $profileData = Get-Content -LiteralPath $profilePath -Raw | ConvertFrom-Json
 $runtimeDir = [System.IO.Path]::GetFullPath($profileData.runtime_dir)
 $watchdogPidPath = Join-Path $runtimeDir $profileData.paths.watchdog_pid
 $workerPidPath = Join-Path $runtimeDir $profileData.paths.worker_pid
+$stopPath = Join-Path $runtimeDir $profileData.paths.stop
 $python = (Get-Command python -ErrorAction Stop).Source
 $watchdog = Join-Path $PSScriptRoot 'strata_v3_watchdog.py'
 
@@ -22,6 +23,7 @@ if (Test-Path -LiteralPath $watchdogPidPath) {
 }
 
 New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
+Remove-Item -LiteralPath $stopPath -Force -ErrorAction SilentlyContinue
 $logPath = Join-Path $runtimeDir 'watchdog.log'
 $errorLogPath = Join-Path $runtimeDir 'watchdog.err.log'
 $process = Start-Process -FilePath $python -ArgumentList @(
