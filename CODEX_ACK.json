@@ -172,30 +172,41 @@
     {
       "instruction_id": "SUP-006-24H-UPSTREAM-20261127",
       "observed_utc": "2026-11-27T14:14:36Z",
-      "disposition": "in progress; acceptance pending",
+      "disposition": "partially completed; verified vkd3d x64 build and PS5 SHA-256 validation fix",
       "evidence": [
         "Live PS5 PID 21908 and Nagi PID 29916 run strata_v3.py from the isolated V3 source worktree with separate profiles and watchdog parents 5712 and 26144.",
-        "Upstream main read-only ref confirmed ca95cf88ed3b400e9a3b8608a3575c9fcea86c53."
+        "Upstream main read-only ref confirmed ca95cf88ed3b400e9a3b8608a3575c9fcea86c53.",
+        "The source-pinned recursive submodules were initialized in a scratch-only vkd3d-proton checkout. The documented ddi-engine x64 clang-cl build completed 218 Ninja actions and passed its build-ID and option gates.",
+        "The vkd3d cache-policy and compile-admission host tests each printed PASSED and exited 0. Artifact hashes and hardware-test limits are in docs/research/strata/vkd3d-x64-build-2026-11-27.md on dev/build-ci commit a2a689940.",
+        "PS5 summary report validation now uses fullmatch for source-inventory and duplicate-candidate hashes. Regression tests reject trailing-newline hashes. Commit 2ab4cb183 is on agent/strata-v3.",
+        "The Nagi worker and watchdog remain active, but its current queue has no eligible tasks. Its last published heartbeat reports 11 completed, 4 failed, 8 recoveries, 8 pending reviews and zero ready tasks."
       ],
       "validation": [
-        "Verified live process command lines and watchdog parent links. Located daemon replenishment call and existing V2-only fixture. Prior PS5 doclint and metadata evidence retained in heartbeat."
+        "Verified live process command lines and watchdog parent links. Located daemon replenishment call and existing V2-only fixture. Prior PS5 doclint and metadata evidence retained in heartbeat.",
+        "Six targeted PS5 firmware test modules and Ghidra metadata validation passed: 104 tests. Strata budget tests passed: 35 tests.",
+        "The documentation gates for the vkd3d report and related status files passed doclint. git diff --check passed before the documentation commit.",
+        "A wider PS5 summary CLI batch had 3 fixture errors because existing fixture rows omit fields now required by inventory validation. These errors are not caused by the report-hash change and remain to be triaged."
       ],
       "blockers": [
-        "Profile-specific refill, live task acceptance and publication are unverified.",
-        "Upstream divergence and graphics package gates remain pending. Historical tester.39 pins remain outstanding."
-      ]
+        "The documented vkd3d x86 engine build uses a separate source revision and remains outstanding.",
+        "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
+        "Local automation configuration is ACTIVE with a 15-minute recurrence, but this poll has no local scheduler-run evidence. The poll is manual.",
+        "Nagi and PS5 queues report no eligible ready task, so live Strata task acceptance and publication remain unverified for these changes.",
+        "Historical tester.39 ROCm inputs and full graphics integration gates remain outstanding."
+      ],
+      "last_checked_utc": "2026-11-27T16:26:05Z"
     }
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. Nagi development commits published and CLI tests independently verified.",
-  "last_poll_utc": "2026-11-27T16:14:42Z",
+  "result": "In progress. Published the vkd3d x64 build evidence and PS5 hash-validation correction; full-day objectives remain open.",
+  "last_poll_utc": "2026-11-27T16:26:05Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:14:42Z",
+    "last_poll_utc": "2026-11-27T16:26:05Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "In progress. Nagi development commits published and CLI tests independently verified.",
-    "validation": "Fetched upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 read-only. Compared dev/build-ci 36981dc9375acad2a89482aa7c6b844f902597e7 against common base 9e9702ea00670415511eee8b474b143017974732: 14 local-only, 70 upstream-only. PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
+    "result": "In progress. Published the vkd3d x64 build evidence and PS5 hash-validation correction; full-day objectives remain open.",
+    "validation": "vkd3d x64 218/218 actions, two host tests passed; PS5 hash validation fixed with 104 targeted tests passing; task-budget suite 35 tests passing; related docs passed doclint. Published dev/build-ci a2a689940 and agent/strata-v3 2ab4cb183.",
     "workers": [
       {
         "pid": 21908,
@@ -207,7 +218,7 @@
         "completed": 5,
         "watchdog_pid": 5712,
         "last_validation_utc": "2026-11-27T08:56:04Z",
-        "idle_seconds": 26764.0,
+        "idle_seconds": 26764,
         "target_seconds": 28800,
         "idle_reason": "no eligible ready task (queue empty or waiting for retry)"
       },
@@ -221,14 +232,17 @@
         "completed": 2,
         "watchdog_pid": 26144,
         "last_validation_utc": "2026-11-27T09:36:36Z",
-        "idle_seconds": 18596.0,
+        "idle_seconds": 18596,
         "target_seconds": 43200,
         "idle_reason": "no eligible ready task (queue empty or waiting for retry)"
       }
     ],
     "blockers": [
-      "Nagi has zero ready tasks. Inbox INF review rejected because its source was not an existing bounded text file.",
-      "Actual automatic refill remains unverified. Graphics integration gates and historical tester.39 pins remain pending."
+      "The documented vkd3d x86 engine build uses a separate source revision and remains outstanding.",
+      "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
+      "Local automation configuration is ACTIVE with a 15-minute recurrence, but this poll has no local scheduler-run evidence. The poll is manual.",
+      "Nagi and PS5 queues report no eligible ready task, so live Strata task acceptance and publication remain unverified for these changes.",
+      "Historical tester.39 ROCm inputs and full graphics integration gates remain outstanding."
     ],
     "worker_observation": "PS5 PID 21908 under watchdog 5712. Nagi PID 37252 under watchdog 31704. Nagi queue: 9 done, 3 quarantined, zero ready. PS5 local queue empty.",
     "poll_note": "No independent local scheduler launch evidence. V3 scoped replenishment code is on origin at de3c5685f, including subsequent scope fixes. Automatic refill event remains unverified this poll.",
