@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending. Rechecked RC5 upstream alignment and both live worker parent links.",
-  "last_poll_utc": "2026-11-27T22:29:13.9261478Z",
+  "last_poll_utc": "2026-11-27T22:43:49.588558Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T22:29:13.9261478Z",
+    "last_poll_utc": "2026-11-27T22:43:49.588558Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending. Rechecked RC5 upstream alignment and both live worker parent links.",
-    "validation": "Upstream main and the clean integration worktree match ca95cf88e. Local main and origin/main are each 0 ahead and 70 behind it, with common base 9e9702ea. Live workers 37252 and 21908 have watchdog parents 31704 and 5712. Nagi queue has 9 done and 3 quarantined. PS5 queue is empty. Prior RC5 host verifier exited 0 for both architectures, with five expected raw failures each.",
+    "validation": "Clean RC5 integration HEAD matches authenticated upstream main at ca95cf88e. PS5 worker 21908 has watchdog parent 5712, and Nagi worker 37252 has watchdog parent 31704. Prior x64 and x86 RC5 record-pair verifiers exited 0 with five expected raw failures each.",
     "blockers": [
       "Automatic refill with validated publication for both workers remains unverified.",
       "Full RC5 development package validation pending.",
