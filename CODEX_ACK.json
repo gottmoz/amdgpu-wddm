@@ -173,18 +173,40 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T09:50:42Z",
+  "last_poll_utc": "2026-11-27T09:59:25Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T09:50:42Z",
+    "last_poll_utc": "2026-11-27T09:59:25Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "Published Nagi artifact audit at 9c5ca2062 after SHA-256 recheck and zero doclint findings. dev/build-ci 36981dc93 adds wrong-identity AdapterOwnerRelease coverage; host test passes 96 checks and all five fault mutations were detected. STRATA_NAGI_STATUS.json: idle, 2 completed, 1 quarantined, 0 pending reviews; last validation 2026-11-27T09:36:36Z.",
-    "blockers": [
-      "Nagi ready queue is empty; watchdog is active.",
-      "The 12-hour endurance target is incomplete.",
-      "tester.39 remains blocked on pinned TheRock and historical payload inputs."
+    "validation": "PS5 ELF type source comparison f645405d8: Codex review records doclint passed. Nagi audit 9c5ca2062 and AdapterOwnerRelease identity coverage 36981dc93: prior ACK records SHA-256/doclint verification, 96 passing host checks and detection of five fault mutations.",
+    "workers": [
+      {
+        "pid": 21908,
+        "runs": 14,
+        "quarantined": 1,
+        "productive_seconds": 837.6,
+        "ready": 0,
+        "name": "PS5",
+        "completed": 5,
+        "watchdog_pid": 5712
+      },
+      {
+        "pid": 29916,
+        "runs": 5,
+        "quarantined": 1,
+        "productive_seconds": 304.7,
+        "ready": 0,
+        "name": "Nagi",
+        "completed": 2,
+        "watchdog_pid": 26144
+      }
     ],
-    "blocker": "Tester.39 historical pinned ROCm inputs unavailable. Eight-hour PS5 productive endurance target unmet. PS5 and Nagi report no eligible ready tasks. Local scheduler launch evidence unavailable."
+    "blockers": [
+      "Both workers are idle with no eligible ready tasks.",
+      "PS5 eight-hour and Nagi twelve-hour productive endurance targets remain unmet.",
+      "tester.39 requires pinned TheRock and historical payload inputs.",
+      "Local scheduler launch evidence was not established."
+    ]
   }
 }
