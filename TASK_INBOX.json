@@ -24,6 +24,29 @@
           "docs/research/ps5-elf-type-crosscheck.md"
         ]
       ]
+    },
+    {
+      "id": "IN-RE03-PS5-SEGMENT-HASH-REVIEW-01",
+      "area": "RE03",
+      "branch": "research/ps5-firmware",
+      "task_type": "PS5",
+      "objective": "Cross-check the exact-hash counts and version totals in PS5_SEGMENT_COMPARISON.json against PS5_ELF_INVENTORY.json and PS5_VERSION_COMPARISON.md. Report any arithmetic or provenance mismatch. State that this reports exact byte identity only and does not identify components. Write a concise review under 200 words. Do not read firmware binaries or infer loader behavior.",
+      "sources": [
+        "PS5_SEGMENT_COMPARISON.json",
+        "PS5_ELF_INVENTORY.json",
+        "PS5_VERSION_COMPARISON.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/ps5-segment-comparison-review.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/ps5-segment-comparison-review.md"
+        ]
+      ]
     }
   ]
 }
