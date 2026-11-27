@@ -214,6 +214,30 @@ class CoordinatorTests(unittest.TestCase):
             daemon.replenish_backlog("agent/strata-v2", floor=1)
         self.assertTrue(daemon.load(root_queue)["tasks"][0]["publish"])
 
+    def test_profile_backlog_routes_only_matching_area_and_branch(self):
+        base = Path(self.temp.name)
+        queue = base / "profile-queue.json"
+        objectives = base / "STRATA_OBJECTIVES.json"
+        (base / "source.md").write_text("source fixture\n", encoding="utf-8")
+        daemon.save(queue, {"schema_version": 1, "tasks": []})
+        daemon.save(objectives, {"schema_version": 1, "tasks": [
+            {"id": "NAGI-1", "area": "NAGI", "objective": "Inspect a Nagi build dependency.",
+             "sources": ["source.md"], "allowed_writes": ["out/nagi.md"]},
+            {"id": "PS5-1", "area": "PS5", "objective": "Summarize PS5 metadata.",
+             "sources": ["source.md"], "allowed_writes": ["out/ps5.md"]},
+            {"id": "PS5-2", "area": "RE02", "objective": "Inspect a bounded PS5 metadata report.",
+             "sources": ["source.md"], "allowed_writes": ["out/re02.md"]},
+        ]})
+        with patch.object(daemon, "ROOT", base), patch.object(daemon, "QUEUE", queue), \
+                patch.object(daemon, "OBJECTIVES", objectives), \
+                patch.object(daemon, "APPROVED_AREAS", {"NAGI"}), \
+                patch.object(daemon, "APPROVED_TYPES", {"NAGI"}), \
+                patch.object(daemon, "worker_profile_active", return_value=True):
+            self.assertEqual(daemon.replenish_backlog("agent/strata-nagi", floor=10), 1)
+            tasks = daemon.load(queue)["tasks"]
+        self.assertEqual([task["id"] for task in tasks], ["NAGI-1"])
+        self.assertEqual(tasks[0]["branch"], "agent/strata-nagi")
+
     def test_worker_retry_is_not_overwritten_by_daemon(self):
         task = {"id": "T-retry", "branch": "agent/strata-v2", "status": "retry_scheduled",
                 "attempts": 1, "error": "model API timeout"}

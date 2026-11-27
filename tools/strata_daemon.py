@@ -295,7 +295,7 @@ def generated_sources_available(template):
 
 def replenish_backlog(branch, floor=20):
     """Queue only reviewed, source-scoped objectives until the useful backlog floor."""
-    if branch != "agent/strata-v2" or not OBJECTIVES.exists():
+    if not OBJECTIVES.exists():
         return 0
     queue = load(task_queue_path())
     templates = json.loads(OBJECTIVES.read_text(encoding="utf-8"))["tasks"]
@@ -307,6 +307,13 @@ def replenish_backlog(branch, floor=20):
     for template in templates:
         if ready >= floor: break
         if template["id"] in known: continue
+        if branch != "agent/strata-v2":
+            task_type = infer_task_type(template.get("area"))
+            if (TASK_BRANCHES.get(task_type) != branch
+                    or (template.get("branch") and template["branch"] != branch)
+                    or template.get("area") not in APPROVED_AREAS
+                    or (APPROVED_TYPES and task_type not in APPROVED_TYPES)):
+                continue
         if any(not (ROOT / source).is_file() for source in template.get("sources", [])):
             continue
         task = dict(template, branch=branch, status="pending")
