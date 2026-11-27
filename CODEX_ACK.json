@@ -216,18 +216,18 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "Verified local VKD3D artifacts for x64 and x86. SUP-006 remains pending.",
-  "last_poll_utc": "2026-11-27T17:29:24Z",
+  "result": "Verified SHA-256 for both local VKD3D artifacts. SUP-006 remains pending.",
+  "last_poll_utc": "2026-11-27T17:44:25Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T17:29:24Z",
-    "trigger": "manual",
+    "last_poll_utc": "2026-11-27T17:44:25Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
-    "result": "Verified local VKD3D artifacts for x64 and x86. SUP-006 remains pending.",
-    "validation": "x64 PE verified (4774400 bytes) at 6e3e7afa004a374. x86 PE verified (4164096 bytes) at 6e3e7afa004a374. Prior refill audit passed 36 daemon tests.",
+    "trigger": "manual",
+    "result": "Verified SHA-256 for both local VKD3D artifacts. SUP-006 remains pending.",
+    "validation": "Local VKD3D x64 SHA-256 1079a3a89d4b454a85118a18c0b56b0271c9e1b0332467f998f83f5b02db02c0. Local VKD3D x86 SHA-256 c48cddb91fbd2184ae4632cf09efca356ed5aac5d21d0e64a7d38fcbddc7dc77",
     "blockers": [
-      "Live refill and publication of a fresh approved worker task remain unverified.",
-      "Historical tester.39 inputs and full graphics package validation remain pending.",
-      "Local scheduler launch evidence unavailable."
+      "Live automatic refill and publication of a fresh approved worker task remain unverified.",
+      "Saved tester.39 plan reports absent TheRock and historical split inputs for ROCm release and lab rows.",
+      "Full graphics package validation remains pending."
     ]
   }
 }
