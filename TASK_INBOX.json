@@ -2,58 +2,25 @@
   "schema_version": 1,
   "tasks": [
     {
-      "id": "IN-RE02-SUP5-SEGMENT-HASH-INTERPRET",
-      "area": "RE02",
-      "branch": "research/ps5-firmware",
-      "task_type": "PS5",
-      "objective": "Read PS5_SEGMENT_HASH_AUDIT.json. Verify the three version counts, seven unchanged indices and 26 changed indices. Write a concise note listing the unchanged indices and explain that equal size and SHA-256 establish byte identity only within the recorded hash scope. They do not identify firmware components. Use only the supplied JSON. Do not discuss protected contents. Keep prose sentences to 25 words or fewer. Avoid semicolons and em or en dashes.",
-      "sources": [
-        "PS5_SEGMENT_HASH_AUDIT.json"
-      ],
-      "allowed_writes": [
-        "docs/research/ps5-segment-hash-interpretation.md"
-      ]
-    },
-    {
-      "id": "IN-RE03-SUP5-KDATA-CANDIDATE-TRIAGE",
+      "id": "IN-RE03-PS5-ELF-TYPE-SOURCE-CROSSCHECK",
       "area": "RE03",
       "branch": "research/ps5-firmware",
       "task_type": "PS5",
-      "objective": "Using only PS5_ELF_INVENTORY.json and GHIDRA_ANALYSIS_STATUS.md, triage the six inventory rows whose source_container is kdata1001.bin. Verify their architecture, ELF type, executable segment counts, validated executable byte counts, entry points, full-file hashes and Ghidra function counts. Identify exact duplicates only if the available hashes prove them. State what the metadata does not establish about component identity. Recommend one bounded next metadata check. Do not open firmware binaries or publish extracted content. Keep prose sentences to 25 words or fewer. Avoid semicolons and em or en dashes.",
+      "objective": "Compare how the PS5-specific pkg-to-anyps5 source labels ELF e_type 0xfe10 and 0xfe18 with PS4-oriented OpenOrbis and shadPS4 sources. Separate direct source statements from cross-platform inference. Explain what these labels do and do not establish for the 34 local PS5 ELF candidates. Do not infer component identity or Sony loader behavior. Cite exact source paths and repository revisions when available. Do not read firmware binaries or discuss protected contents. Keep the report concise and label confidence.",
       "sources": [
-        "PS5_ELF_INVENTORY.json",
-        "GHIDRA_ANALYSIS_STATUS.md"
+        "https://raw.githubusercontent.com/awake-devel/pkg-to-anyps5/main/src/selfelf.rs",
+        "https://raw.githubusercontent.com/OpenOrbis/create-fself/master/pkg/oelf/PS4Constants.go",
+        "https://raw.githubusercontent.com/shadps4-emu/shadPS4/main/src/core/loader/elf.cpp"
       ],
       "allowed_writes": [
-        "docs/research/ps5-kdata-candidate-triage.md"
+        "docs/research/ps5-elf-type-crosscheck.md"
       ],
       "verify": [
         [
           "python",
           "tools/quality/doclint.py",
           "--files",
-          "docs/research/ps5-kdata-candidate-triage.md"
-        ]
-      ]
-    },
-    {
-      "id": "IN-RE03-SUP5-KDATA-TRIAGE-SHORT",
-      "area": "RE03",
-      "branch": "research/ps5-firmware",
-      "task_type": "PS5",
-      "objective": "Read only PS5_KDATA_METADATA.json. Write a compact report for its six rows. Include each candidate, ELF type, architecture, entry point, validated executable byte count, full-file SHA-256 and Ghidra function count. Verify whether the six full-file hashes are unique and state that this does not establish component identity. Recommend one bounded metadata follow-up. Do not read other files or firmware. Keep prose sentences to 25 words or fewer. Avoid semicolons and em or en dashes.",
-      "sources": [
-        "PS5_KDATA_METADATA.json"
-      ],
-      "allowed_writes": [
-        "docs/research/ps5-kdata-candidate-triage.md"
-      ],
-      "verify": [
-        [
-          "python",
-          "tools/quality/doclint.py",
-          "--files",
-          "docs/research/ps5-kdata-candidate-triage.md"
+          "docs/research/ps5-elf-type-crosscheck.md"
         ]
       ]
     }
