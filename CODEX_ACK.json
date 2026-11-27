@@ -216,16 +216,16 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 integration matches upstream and both watchdog links are live.",
-  "last_poll_utc": "2026-11-27T20:28:55Z",
+  "result": "SUP-006 pending. RC5 upstream match and both live worker links verified.",
+  "last_poll_utc": "2026-11-27T20:44:06Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T20:28:55Z",
+    "last_poll_utc": "2026-11-27T20:44:06Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. RC5 integration matches upstream and both watchdog links are live.",
-    "validation": "Clean RC5 integration HEAD ca95cf88e equals authenticated upstream main. Verified PS5 and Nagi worker parent links (21908/5712 and 37252/31704). Local queue snapshots show no ready tasks. The saved tester.39 plan records four failures across two ROCm rows.",
+    "result": "SUP-006 pending. RC5 upstream match and both live worker links verified.",
+    "validation": "Clean RC5 HEAD ca95cf88e equals authenticated upstream main. Verified PS5 and Nagi worker parent links (21908/5712 and 37252/31704). Live entry point is tools/strata_v3.py. The saved tester.39 plan records four missing-input failures across two ROCm rows.",
     "blockers": [
-      "Automatic refill and fresh validated task publication remain unverified.",
+      "Automatic V3 refill and fresh validated publication remain unverified.",
       "Tester.39 TheRock and build-history inputs are absent. Full RC5 package validation remains pending.",
       "Local scheduler launch evidence unavailable."
     ]
