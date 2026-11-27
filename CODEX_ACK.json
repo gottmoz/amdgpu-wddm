@@ -173,9 +173,9 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T13:13:56Z",
+  "last_poll_utc": "2026-11-27T13:29:00Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T13:13:56Z",
+    "last_poll_utc": "2026-11-27T13:29:00Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
@@ -213,7 +213,7 @@
       "PS5 eight-hour and Nagi twelve-hour productive targets remain unmet.",
       "tester.39 remains blocked on pinned TheRock and historical payload inputs."
     ],
-    "worker_observation": "PS5 PID 21908 is a child of watchdog 5712. Nagi PID 29916 is a child of watchdog 26144. Queue counts carried forward.",
+    "worker_observation": "PS5 PID 21908, watchdog 5712, parent verified: True. Nagi PID 29916, watchdog 26144, parent verified: True. Queue counts carried forward.",
     "poll_note": "Local scheduler launch evidence unavailable. Engineering validation carried forward."
   }
 }
