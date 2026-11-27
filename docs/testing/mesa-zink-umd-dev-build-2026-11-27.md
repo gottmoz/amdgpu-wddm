@@ -8,6 +8,8 @@ The `zink-umd-dev` configuration adds Gallium softpipe. Its exact 19-option set 
 
 The DLL is an x64 PE file with 13,317,120 bytes. Its SHA-256 is `D89E7D31353DA30F949D89D088AA67704DCA0E842910C690ADAE5E8C0703EB3E`. `dumpbin /headers` reported machine `8664`. `dumpbin /dependents` listed `api-ms-win-core-synch-l1-2-0.dll`, `KERNEL32.dll`, `USER32.dll` and `GDI32.dll`. The export table has 49 named entries. It includes `OpenAdapter10` and `OpenAdapter10_2`.
 
+The x86 build also exited with code 0. Its DLL is 12,041,728 bytes, with SHA-256 `39A58C149FDD9520A89D5652016E8D3650B117523E19F5FD223DC33539EACCF8`. `dumpbin /headers` reported machine `14C`. It has the same 49 named exports and the same four dependencies.
+
 ## Provenance
 
 - Mesa commit `05e6c9622e135ac2aeaf56ec70222642627e2162` on the D-Ogi `amdgpu-wddm/radv-wddm2` branch.
