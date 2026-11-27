@@ -19,6 +19,14 @@ Started 2026-11-25 on `research/xbox-firmware`. This is source-based research. A
 
 The local BC-250 baseline is `docs/hardware.md`, backed by the facts graph. PS5 source notes are in `docs/research/ps5-firmware-portability.md`.
 
+## Pinned XVD tool review
+
+The README at XanaduXVD commit `50aa0dc89350de580b77f26ade1018b16b0bc1f8` describes the project as an experimental parser and manipulator. It claims XVD use on Xbox One, Xbox Series and Windows PC. It also says the project is not production-ready and that little-endian deserialization is incomplete. Its listed features include metadata-relevant parsing as well as decryption, extraction, header editing, signature manipulation and hash-tree changes. It is not a read-only tool by default. [Pinned XanaduXVD README](https://github.com/xboxoneresearch/XanaduXVD/blob/50aa0dc89350de580b77f26ade1018b16b0bc1f8/README.md)
+
+The README at xvdtool commit `6fc28862cc5fb711843c0e717101ce4034acf805` documents an `-i` information mode for package metadata. It describes the tool as targeting Xbox One XVD/XVC packages and says testing used developer-crypted packages. It does not establish Series X/S system-image or boot support. Other documented modes include decryption, extraction, rehashing, resigning and package writes. [Pinned xvdtool README](https://github.com/emoose/xvdtool/blob/6fc28862cc5fb711843c0e717101ce4034acf805/README.md)
+
+These sources support a bounded follow-up: inspect parser code and synthetic fixtures for read-only header fields. Do not provide keys, invoke cryptographic operations, write package inputs or infer Series X/S boot behavior from Xbox One support.
+
 ## Work packages
 
 XRE01 covers hardware identity. XRE02 inventories official packages. XRE03 studies container metadata. XRE04 maps boot stages. XRE05 studies documented Windows and Xbox interfaces. XRE06 compares AMD firmware metadata. XRE07 covers storage layout. XRE08 evaluates compatibility barriers. The small tasks are in `XBOX_TASK_QUEUE.json`.
