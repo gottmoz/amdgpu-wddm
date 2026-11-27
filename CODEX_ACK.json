@@ -173,19 +173,19 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T08:59:11Z",
+  "last_poll_utc": "2026-11-27T09:14:09Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T08:59:11Z",
+    "last_poll_utc": "2026-11-27T09:14:09Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "result": "unchanged",
     "trigger": "manual",
+    "result": "unchanged",
+    "validation": "Worker 21908 observed under watchdog 5712. 14 runs, 837.6 productive seconds, 7684 idle seconds, 0 queued. Codex reviewed the deterministic segment comparison, corrected Strata scope notes, passed doclint, and published bc5015d4f1379d302197e82639a279571f0b3085. Prior x64/x86 Zink UMD host builds passed.",
     "blockers": [
-      "Tester.39 pinned historical ROCm inputs remain unavailable.",
-      "Eight-hour productive endurance target remains unmet.",
-      "V3 PS5 ready queue is empty.",
-      "Local scheduler launch evidence was not established."
+      "Tester.39 pinned historical ROCm inputs unavailable.",
+      "Eight-hour productive endurance target unmet.",
+      "V3 PS5 ready queue empty.",
+      "Local scheduler launch evidence unavailable."
     ],
-    "blocker": "Tester.39 pinned historical ROCm inputs remain unavailable. Eight-hour productive endurance target remains unmet. V3 PS5 ready queue is empty. Local scheduler launch evidence was not established.",
-    "validation": "Strata worker 21908 verified under watchdog 5712. 14 runs, 837.6 productive seconds, 6814 idle seconds, zero queued tasks. Checkpoint marks IN-RE03-PS5-SEGMENT-HASH-REVIEW-01 done after one attempt, pending independent review. Last reviewed commit a3b55ecc6 passed doclint. Prior x64/x86 Zink UMD host builds passed."
+    "blocker": "Tester.39 pinned historical ROCm inputs unavailable. Eight-hour productive endurance target unmet. V3 PS5 ready queue empty. Local scheduler launch evidence unavailable."
   }
 }
