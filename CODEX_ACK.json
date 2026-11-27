@@ -216,14 +216,14 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. Verified clean RC5 integration at authenticated upstream main and both worker parent links.",
-  "last_poll_utc": "2026-11-27T18:59:30Z",
+  "result": "SUP-006 pending. Verified clean RC5 at authenticated upstream main and live watchdog ownership.",
+  "last_poll_utc": "2026-11-27T19:14:32Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T18:59:30Z",
+    "last_poll_utc": "2026-11-27T19:14:32Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. Verified clean RC5 integration at authenticated upstream main and both worker parent links.",
-    "validation": "RC5 integration HEAD and upstream main both ca95cf88ed3b400e9a3b8608a3575c9fcea86c53, with clean worktree. PS5 worker/watchdog 21908/5712 and Nagi 37252/31704. Queue files show PS5 empty and Nagi 9 done, 3 quarantined. No local scheduler launch evidence.",
+    "result": "SUP-006 pending. Verified clean RC5 at authenticated upstream main and live watchdog ownership.",
+    "validation": "Clean RC5 and upstream main both ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Live PS5 worker/watchdog 21908/5712 and Nagi 37252/31704. Local scheduler launch evidence unavailable.",
     "blockers": [
       "Fresh automatic refill and validated execution remain unverified. INF task is rejected by PS5 for research area and by Nagi for source path.",
       "Historical tester.39 ROCm inputs and complete RC5 package validation remain pending."
