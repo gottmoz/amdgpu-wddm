@@ -159,16 +159,16 @@
       "run_status": "manual Codex run; V3 worker remains active and a third bounded task is running",
       "disposition": "partially executed; isolated Strata worker and RADV host build verified",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T07:03:13 UTC:00Z"
+      "last_checked_utc": "2026-11-27T07:03:24Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "in_progress",
-  "last_poll_utc": "2026-11-27T07:03:13 UTC:00Z",
+  "last_poll_utc": "2026-11-27T07:03:24Z",
   "heartbeat": {
     "result": "in_progress",
-    "last_poll_utc": "2026-11-27T07:03:13 UTC:00Z",
+    "last_poll_utc": "2026-11-27T07:03:24Z",
     "validation": "Strata PS5 status confirms 2 completed, 0 failed, 0 pending reviews; automatic_recoveries=3; third task IN-RE03-SUP5-KDATA-CANDIDATE-TRIAGE is running. RADV build exit 0 and artifact metadata were verified.",
     "blocker": "Historical tester.39 ROCm pins remain missing. Eight-hour V3 endurance is still in progress.",
     "trigger": "manual",
