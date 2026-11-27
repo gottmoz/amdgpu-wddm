@@ -1,0 +1,23 @@
+{
+  "utc": "2026-11-27T09:10:16Z",
+  "state": "idle",
+  "current_task_id": null,
+  "research_area": null,
+  "completed_count": 0,
+  "failed_count": 0,
+  "tool_calls": 0,
+  "input_tokens": null,
+  "output_tokens": null,
+  "last_successful_validation_utc": null,
+  "uptime_seconds": 0,
+  "endurance_target_seconds": 28800,
+  "actual_work_seconds": 0,
+  "idle_seconds": 0,
+  "idle_reason": null,
+  "automatic_recoveries": 0,
+  "pending_reviews": 0,
+  "published_commits": 0,
+  "last_successful_commit": "a15239303735a8ad43d301f83f5ecad12cd5aa60",
+  "next_task_id": null,
+  "work_branch": "agent/strata-nagi"
+}
