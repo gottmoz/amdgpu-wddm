@@ -150,16 +150,16 @@
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T04:59:06Z"
+      "last_checked_utc": "2026-11-27T05:14:19Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T04:59:06Z",
+  "last_poll_utc": "2026-11-27T05:14:19Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T04:59:06Z",
+    "last_poll_utc": "2026-11-27T05:14:19Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
     "validation": "Authenticated scheduled inbox read. Prior worker PID 2940 present and watchdog PID 4160 absent. No newly accepted task, queue refill, or build verified.",
