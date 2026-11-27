@@ -5,6 +5,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import tools.strata_worker_profile as worker_profile
+
 from tools.strata_worker_profile import WorkerProfile, load_profile
 from tools.strata_v3 import prepare_worker
 
@@ -85,6 +87,22 @@ class WorkerProfileTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "not approved"):
             self.load("main")
 
+    def test_profile_allows_a_separate_worktree_in_the_same_git_repository(self):
+        other_worktree = self.repo.parent / "ps5-worker"
+        self.profile["worktree"] = str(other_worktree)
+        self.write_profile()
+        with patch.object(worker_profile, "git_common_dir", return_value=self.repo / ".git"):
+            profile = self.load()
+        self.assertEqual(profile.worktree, other_worktree.resolve())
+
+    def test_profile_rejects_worktree_from_another_git_repository(self):
+        other_worktree = self.repo.parent / "other-repo"
+        self.profile["worktree"] = str(other_worktree)
+        self.write_profile()
+        with patch.object(worker_profile, "git_common_dir", side_effect=[self.repo / ".git", other_worktree / ".git"]):
+            with self.assertRaisesRegex(ValueError, "same Git repository"):
+                self.load()
+
     def test_profile_rejects_runtime_path_outside_its_worker_directory(self):
         self.profile["paths"]["checkpoint"] = str(self.runtime_root / "xbox" / "checkpoint.json")
         self.write_profile()
@@ -132,6 +150,7 @@ class WorkerProfileTest(unittest.TestCase):
         environment = profile.environment()
 
         self.assertEqual(environment["STRATA_RUNTIME_DIR"], str(self.runtime))
+        self.assertEqual(environment["STRATA_WORKTREE_ROOT"], str(self.repo.resolve()))
         self.assertEqual(environment["STRATA_QUEUE_PATH"], str(self.runtime / "queue.json"))
         self.assertEqual(environment["STRATA_STATUS_FILE"], "STRATA_PS5_STATUS.json")
         self.assertEqual(environment["STRATA_STATUS_MD_FILE"], "")

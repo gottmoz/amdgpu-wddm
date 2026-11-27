@@ -20,7 +20,7 @@ import time
 import strata_supervisor as worker
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.getenv("STRATA_WORKTREE_ROOT", str(Path(__file__).resolve().parents[1]))).resolve()
 RUNTIME = worker.RUNTIME
 def env_path(name, default):
     return Path(os.getenv(name, str(default))).resolve()

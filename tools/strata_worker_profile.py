@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
+import subprocess
 
 
 PROFILE_BRANCHES = {
@@ -71,6 +72,7 @@ class WorkerProfile:
             "STRATA_ALLOWED_TASK_TYPES": json.dumps(self.allowed_task_types),
             "STRATA_ALLOWED_AREAS": json.dumps(self.allowed_areas),
             "STRATA_RUNTIME_DIR": str(self.runtime_dir),
+            "STRATA_WORKTREE_ROOT": str(self.worktree),
             "STRATA_QUEUE_PATH": str(self.paths["queue"]),
             "STRATA_INBOX_QUEUE_PATH": str(self.paths["inbox_queue"]),
             "STRATA_GENERATED_QUEUE_PATH": str(self.paths["generated_queue"]),
@@ -95,6 +97,15 @@ class WorkerProfile:
         return env
 
 
+def git_common_dir(path: str | Path) -> Path:
+    result = subprocess.run(["git", "rev-parse", "--git-common-dir"], cwd=path,
+                            capture_output=True, text=True, timeout=15)
+    if result.returncode or not result.stdout.strip():
+        raise ValueError("worker and supervisor paths must be Git worktrees")
+    common = Path(result.stdout.strip())
+    return (Path(path) / common).resolve() if not common.is_absolute() else common.resolve()
+
+
 def load_profile(path: str | Path, *, repo_root: str | Path,
                  current_branch: str) -> WorkerProfile:
     profile_path = Path(path).resolve()
@@ -110,8 +121,8 @@ def load_profile(path: str | Path, *, repo_root: str | Path,
         raise ValueError("worker ID is not approved")
     worktree = Path(data.get("worktree", "")).resolve()
     root = Path(repo_root).resolve()
-    if worktree != root:
-        raise ValueError("worktree does not match the running source root")
+    if worktree != root and git_common_dir(worktree) != git_common_dir(root):
+        raise ValueError("worker worktree must belong to the same Git repository as the supervisor")
     branch = data.get("approved_branch")
     if branch != PROFILE_BRANCHES[worker_id]:
         raise ValueError("approved branch is not approved for this worker ID")

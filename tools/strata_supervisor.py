@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.getenv("STRATA_WORKTREE_ROOT", str(Path(__file__).resolve().parents[1]))).resolve()
 WORKSPACE = Path(os.getenv("BC250_ROOT", str(ROOT.parent))).resolve()
 RUNTIME = Path(os.getenv("STRATA_RUNTIME_DIR", str(ROOT))).resolve()
 RUNTIME.mkdir(parents=True, exist_ok=True)

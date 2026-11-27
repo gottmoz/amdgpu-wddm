@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import runpy
 from pathlib import Path
 import subprocess
@@ -21,7 +22,12 @@ DAEMON = ROOT / "tools" / "strata_daemon.py"
 def prepare_worker(profile_path, *, current_root=ROOT, current_branch=None):
     root = Path(current_root).resolve()
     if current_branch is None:
-        result = subprocess.run(["git", "branch", "--show-current"], cwd=root,
+        try:
+            data = json.loads(Path(profile_path).read_text(encoding="utf-8"))
+            worktree = Path(data["worktree"]).resolve()
+        except (OSError, json.JSONDecodeError, KeyError, TypeError) as error:
+            raise ValueError(f"worker profile cannot identify its worktree: {error}") from error
+        result = subprocess.run(["git", "branch", "--show-current"], cwd=worktree,
                                 capture_output=True, text=True, timeout=15)
         if result.returncode:
             raise ValueError("could not verify the current Git branch")
