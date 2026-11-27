@@ -156,10 +156,10 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T03:58:47Z",
+  "last_poll_utc": "2026-11-27T04:13:49Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T03:58:47Z",
+    "last_poll_utc": "2026-11-27T04:13:49Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
     "validation": "Authenticated inbox read. Prior worker PID 2940 present and prior watchdog PID 4160 absent. No new task acceptance, queue refill or build verified.",
