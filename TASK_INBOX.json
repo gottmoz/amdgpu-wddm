@@ -1,1 +1,20 @@
-{"schema_version":1,"tasks":[]}
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "IN-RE04-SUP5-ELF-CROSSCHECK",
+      "area": "RE04",
+      "branch": "research/ps5-firmware",
+      "task_type": "PS5",
+      "objective": "Cross-check the 34 bounded PS5 ELF candidate records against the existing Ghidra status and rejection report. Report only concrete count or boundary inconsistencies supported by these files; if none, state that and identify one specific bounded candidate follow-up based on an executable-segment mapping. Do not read firmware binaries, infer component identities, or repeat the completed full Ghidra batch.",
+      "sources": [
+        "PS5_ELF_INVENTORY.json",
+        "GHIDRA_ANALYSIS_STATUS.md",
+        "PS5_ELF_REJECTION_REPORT.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata-ps5-elf-mapping-crosscheck.md"
+      ]
+    }
+  ]
+}
