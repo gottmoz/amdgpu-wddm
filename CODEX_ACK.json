@@ -173,13 +173,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T09:59:25Z",
+  "last_poll_utc": "2026-11-27T10:00:01Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T09:59:25Z",
+    "last_poll_utc": "2026-11-27T10:00:01Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "PS5 ELF type source comparison f645405d8: Codex review records doclint passed. Nagi audit 9c5ca2062 and AdapterOwnerRelease identity coverage 36981dc93: prior ACK records SHA-256/doclint verification, 96 passing host checks and detection of five fault mutations.",
+    "validation": "Nagi artifact audit published at 9c5ca2062. Adapter owner host regression commit 36981dc93 passes 96 checks and detects all five fault mutations. PS5 ELF type correction f645405d8 and Ghidra log audit bd627d117 are pushed on research/ps5-firmware; doclint passed. STRATA_PS5_STATUS.json at 2026-11-27T09:59:31Z reports idle, 5 completed, 1 quarantined, 0 pending reviews, 14 published commits, and last validation 08:56:04Z. STRATA_NAGI_STATUS.json reports idle, 2 completed, 1 quarantined, 0 pending reviews; last validation 09:36:36Z.",
     "workers": [
       {
         "pid": 21908,
@@ -203,10 +203,9 @@
       }
     ],
     "blockers": [
-      "Both workers are idle with no eligible ready tasks.",
-      "PS5 eight-hour and Nagi twelve-hour productive endurance targets remain unmet.",
-      "tester.39 requires pinned TheRock and historical payload inputs.",
-      "Local scheduler launch evidence was not established."
+      "PS5 and Nagi queues have no eligible ready task.",
+      "The 12-hour endurance target is incomplete.",
+      "tester.39 remains blocked on pinned TheRock and historical payload inputs."
     ]
   }
 }
