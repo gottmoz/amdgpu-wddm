@@ -1,15 +1,15 @@
 {
-  "utc": "2026-11-27T09:14:07Z",
+  "utc": "2026-11-27T09:15:09Z",
   "state": "working",
   "current_task_id": "IN-NAGI-INF-IDENTITY-REVIEW-01",
   "research_area": "NAGI",
   "completed_count": 0,
   "failed_count": 0,
-  "tool_calls": 0,
-  "input_tokens": null,
-  "output_tokens": null,
+  "tool_calls": 4,
+  "input_tokens": 4374,
+  "output_tokens": 380,
   "last_successful_validation_utc": null,
-  "uptime_seconds": 231,
+  "uptime_seconds": 293,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 0,
   "idle_seconds": 167.0,
@@ -18,6 +18,6 @@
   "pending_reviews": 0,
   "published_commits": 0,
   "last_successful_commit": "a15239303735a8ad43d301f83f5ecad12cd5aa60",
-  "next_task_id": "IN-NAGI-INF-IDENTITY-REVIEW-01",
+  "next_task_id": null,
   "work_branch": "agent/strata-nagi"
 }
