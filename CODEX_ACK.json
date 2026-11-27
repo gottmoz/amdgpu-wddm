@@ -216,18 +216,18 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. Upstream main and the isolated integration branch match at ca95cf88e (0 ahead, 0 behind). Automatic refill remains unverified.",
-  "last_poll_utc": "2026-11-27T16:59:19Z",
+  "result": "Refill eligibility audited; both worker profiles lack fresh catalog entries.",
+  "last_poll_utc": "2026-11-27T17:14:51Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:59:19Z",
+    "last_poll_utc": "2026-11-27T17:14:51Z",
     "trigger": "manual",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
-    "result": "In progress. Upstream main and the isolated integration branch match at ca95cf88e (0 ahead, 0 behind). Automatic refill remains unverified.",
-    "validation": "Authenticated upstream ref and local rev-list confirm 0/0 divergence. Prior evidence: 110 targeted tests and x64/x86 vkd3d host build/test passes.",
-    "worker_observation": "Both worker and watchdog PID pairs present (PS5 21908/5712, Nagi 37252/31704). PS5 queue empty. Nagi queue: 9 done, 3 quarantined, zero ready.",
+    "result": "Refill eligibility audited; both worker profiles lack fresh catalog entries.",
+    "validation": "36 Strata daemon tests passed. PS5 has zero catalog rows in approved areas RE01-RE08. Nagi has 12 source-present rows, all with IDs already tracked in its queues.",
+    "worker_observation": "PS5 worker/watchdog 21908/5712 and Nagi 37252/31704 verified via process parent links.",
     "blockers": [
-      "Automatic refill and live task acceptance remain unverified.",
-      "Historical tester.39 TheRock and kit8-qwen-split inputs are missing.",
+      "Fresh approved PS5 and Nagi objectives are needed to prove live refill and task publication.",
+      "Historical tester.39 TheRock and kit8-qwen-split inputs remain missing.",
       "Full graphics package validation pending.",
       "No local scheduler launch evidence for this poll."
     ]
