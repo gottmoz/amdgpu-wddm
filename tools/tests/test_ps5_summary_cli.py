@@ -46,7 +46,16 @@ ROWS = [
         "validated_executable_bytes": 25,
         "sha256": "bb" * 32,
     },
-    {"source_container": "B.pup.dec", "candidate": "elf_d", "bounds_valid": None},
+    {
+        "source_container": "B.pup.dec",
+        "candidate": "elf_d",
+        "architecture": "unknown",
+        "elf_type": "unknown",
+        "bounds_valid": False,
+        "ghidra_functions": 0,
+        "validated_executable_bytes": 0,
+        "sha256": "cc" * 32,
+    },
 ]
 
 
@@ -72,11 +81,11 @@ class Ps5SummaryCliTest(unittest.TestCase):
             self.assertEqual(report["source_inventory_sha256"], hashlib.sha256(raw).hexdigest())
             self.assertEqual(report["candidate_count"], 4)
             self.assertEqual(report["bounds_valid_count"], 2)
-            self.assertEqual(report["bounds_invalid_count"], 1)
-            self.assertEqual(report["ghidra_zero_function_count"], 1)
+            self.assertEqual(report["bounds_invalid_count"], 2)
+            self.assertEqual(report["ghidra_zero_function_count"], 2)
             self.assertEqual(report["ghidra_positive_function_count"], 2)
             self.assertEqual(report["ghidra_function_total"], 10)
-            self.assertEqual(report["distinct_candidate_hash_count"], 2)
+            self.assertEqual(report["distinct_candidate_hash_count"], 3)
             self.assertEqual(
                 report["duplicate_candidate_hashes"],
                 [{"sha256": "aa" * 32, "candidates": ["elf_a", "elf_b"]}],
@@ -87,7 +96,7 @@ class Ps5SummaryCliTest(unittest.TestCase):
                 report["by_source_container"]["A.pup.dec"]["architectures"],
                 {"arm64": 1, "x86_64": 1},
             )
-            self.assertEqual(len(report["limitations"]), 3)
+            self.assertEqual(len(report["limitations"]), 4)
         self.assertFalse(path.exists())
 
     def test_cli_out_file_is_deterministic_and_bom_tolerant(self):
