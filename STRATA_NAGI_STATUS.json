@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-27T15:53:38Z",
+  "utc": "2026-11-27T15:53:45Z",
   "state": "idle",
   "current_task_id": null,
   "research_area": null,
@@ -9,15 +9,15 @@
   "input_tokens": 296219,
   "output_tokens": 91916,
   "last_successful_validation_utc": "2026-11-27T15:33:44Z",
-  "uptime_seconds": 24202,
+  "uptime_seconds": 24209,
   "endurance_target_seconds": 43200,
-  "actual_work_seconds": 2277.9,
+  "actual_work_seconds": 2282.9,
   "idle_seconds": 20396.0,
   "idle_reason": null,
   "automatic_recoveries": 7,
   "pending_reviews": 5,
   "published_commits": 3,
   "last_successful_commit": "9c5ca2062359e25670ab8d89fd6c3ad357e9f4fe",
-  "next_task_id": "NAGI-BUILD-CONTEXT-01",
+  "next_task_id": "NAGI-PYDEPS-VERIFY-01",
   "work_branch": "agent/strata-nagi"
 }
