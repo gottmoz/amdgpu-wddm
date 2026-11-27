@@ -12,6 +12,7 @@
         "https://raw.githubusercontent.com/OpenOrbis/create-fself/master/pkg/oelf/PS4Constants.go",
         "https://raw.githubusercontent.com/shadps4-emu/shadPS4/main/src/core/loader/elf.cpp"
       ],
+      "allow_public_fetch": true,
       "allowed_writes": [
         "docs/research/ps5-elf-type-crosscheck.md"
       ],
