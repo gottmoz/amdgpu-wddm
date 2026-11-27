@@ -35,6 +35,27 @@
           "docs/research/ps5-kdata-candidate-triage.md"
         ]
       ]
+    },
+    {
+      "id": "IN-RE03-SUP5-KDATA-TRIAGE-SHORT",
+      "area": "RE03",
+      "branch": "research/ps5-firmware",
+      "task_type": "PS5",
+      "objective": "Read only PS5_KDATA_METADATA.json. Write a compact report for its six rows. Include each candidate, ELF type, architecture, entry point, validated executable byte count, full-file SHA-256 and Ghidra function count. Verify whether the six full-file hashes are unique and state that this does not establish component identity. Recommend one bounded metadata follow-up. Do not read other files or firmware. Keep prose sentences to 25 words or fewer. Avoid semicolons and em or en dashes.",
+      "sources": [
+        "PS5_KDATA_METADATA.json"
+      ],
+      "allowed_writes": [
+        "docs/research/ps5-kdata-candidate-triage.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/ps5-kdata-candidate-triage.md"
+        ]
+      ]
     }
   ]
 }
