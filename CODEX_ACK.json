@@ -216,17 +216,17 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 upstream match and both live worker links verified.",
-  "last_poll_utc": "2026-11-27T20:44:06Z",
+  "result": "SUP-006 pending. RC5 still matches upstream; checked live workers and queue snapshots.",
+  "last_poll_utc": "2026-11-27T20:59:03Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T20:44:06Z",
+    "last_poll_utc": "2026-11-27T20:59:03Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. RC5 upstream match and both live worker links verified.",
-    "validation": "Clean RC5 HEAD ca95cf88e equals authenticated upstream main. Verified PS5 and Nagi worker parent links (21908/5712 and 37252/31704). Live entry point is tools/strata_v3.py. The saved tester.39 plan records four missing-input failures across two ROCm rows.",
+    "result": "SUP-006 pending. RC5 still matches upstream; checked live workers and queue snapshots.",
+    "validation": "Clean integration HEAD ca95cf88e equals authenticated upstream main. Verified PS5 worker/watchdog 21908/5712 and Nagi 37252/31704. PS5 snapshot has zero queue rows; latest checkpoint IN-RE03-PS5-SEGMENT-HASH-REVIEW-01 is done. Nagi has nine done and three quarantined, zero ready, and checkpoint NAGI-VERIFIER-CASE-01 at tool step. Latest recorded Nagi validation: 68 targeted tests and five of five dependency identities matched.",
     "blockers": [
-      "Automatic V3 refill and fresh validated publication remain unverified.",
-      "Tester.39 TheRock and build-history inputs are absent. Full RC5 package validation remains pending.",
+      "Fresh automatic refill and validated publication for both workers remain unverified.",
+      "Full RC5 package validation is pending. Historical tester.39 TheRock and build-history inputs remain absent.",
       "Local scheduler launch evidence unavailable."
     ]
   }
