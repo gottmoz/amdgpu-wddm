@@ -188,13 +188,13 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. RC5 x64/x86 host runners and expected-red gates rerun. Live automatic refill pending.",
-  "last_poll_utc": "2026-11-27T16:00:13Z",
+  "result": "In progress. Nagi development commits published and CLI tests independently verified.",
+  "last_poll_utc": "2026-11-27T16:14:42Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:00:13Z",
+    "last_poll_utc": "2026-11-27T16:14:42Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "In progress. RC5 x64/x86 host runners and expected-red gates rerun. Live automatic refill pending.",
+    "result": "In progress. Nagi development commits published and CLI tests independently verified.",
     "validation": "Fetched upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 read-only. Compared dev/build-ci 36981dc9375acad2a89482aa7c6b844f902597e7 against common base 9e9702ea00670415511eee8b474b143017974732: 14 local-only, 70 upstream-only. PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
     "workers": [
       {
@@ -227,11 +227,11 @@
       }
     ],
     "blockers": [
-      "Verified strata_v3.py launches strata_daemon.py. replenish_backlog returns 0 outside agent/strata-v2, excluding live research/ps5-firmware and agent/strata-nagi profiles. Catalog implementation and live execution gates pending.",
-      "Integration, graphics gates and historical tester.39 pins remain pending."
+      "Nagi has zero ready tasks. Inbox INF review rejected because its source was not an existing bounded text file.",
+      "Actual automatic refill remains unverified. Graphics integration gates and historical tester.39 pins remain pending."
     ],
-    "worker_observation": "PS5 PID 21908 under watchdog 5712 and Nagi PID 7272 under watchdog 26144 verified via Win32_Process. Queue counts are historical.",
-    "poll_note": "No independent local scheduler launch evidence. No new Strata task completion verified.",
-    "current_validation": "Fresh runs of existing RC5 host binaries on x64 and x86 both exited 1. Registry validator exited 0 on both fresh outputs: 50 pairs, five expected-red and six landed rows per architecture. Local agent/strata-nagi 9c5ca2062 diverges 16 local / 70 upstream from ca95cf88e at 9e9702ea0."
+    "worker_observation": "PS5 PID 21908 under watchdog 5712. Nagi PID 37252 under watchdog 31704. Nagi queue: 9 done, 3 quarantined, zero ready. PS5 local queue empty.",
+    "poll_note": "No independent local scheduler launch evidence. V3 scoped replenishment code is on origin at de3c5685f, including subsequent scope fixes. Automatic refill event remains unverified this poll.",
+    "current_validation": "Nagi branch tip b0c6de32cb54b2391183fb8c99aa6f7a46119c9a verified on origin. Local unittest discovery for test_nagi_context_cli.py passed 12 tests. NAGI-CONTEXT-JSON-01 and NAGI-VERIFIER-JSON-01 are done in the local queue. Prior RC5 checks: registry exit 0 on both architectures, 50 pairs each."
   }
 }
