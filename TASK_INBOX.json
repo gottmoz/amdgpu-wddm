@@ -2,6 +2,29 @@
   "schema_version": 1,
   "tasks": [
     {
+      "id": "IN-NAGI-INF-IDENTITY-REVIEW-01",
+      "area": "NAGI",
+      "branch": "agent/strata-nagi",
+      "task_type": "NAGI",
+      "objective": "Cross-check the BC-250 KMD INF hardware ID, display class and service registration against docs/hardware.md and packagecheck requirements. Report exact matching lines or mismatches with confidence. Do not infer hardware behavior or propose device writes.",
+      "sources": [
+        "driver/kmd/bc250kmd.inf",
+        "docs/hardware.md",
+        "tools/packagecheck/README.md"
+      ],
+      "allowed_writes": [
+        "docs/research/strata/nagi-inf-identity-review.md"
+      ],
+      "verify": [
+        [
+          "python",
+          "tools/quality/doclint.py",
+          "--files",
+          "docs/research/strata/nagi-inf-identity-review.md"
+        ]
+      ]
+    },
+    {
       "id": "IN-RE03-PS5-ELF-TYPE-SOURCE-CROSSCHECK",
       "area": "RE03",
       "branch": "research/ps5-firmware",
