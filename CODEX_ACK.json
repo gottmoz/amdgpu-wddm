@@ -199,53 +199,19 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. Published the vkd3d x64 build evidence and PS5 hash-validation correction; full-day objectives remain open.",
-  "last_poll_utc": "2026-11-27T16:26:05Z",
+  "result": "Campaign in progress; remote engineering commits verified and both watchdog parent links confirmed. Automatic refill remains unverified.",
+  "last_poll_utc": "2026-11-27T16:29:18Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:26:05Z",
+    "last_poll_utc": "2026-11-27T16:29:18Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "In progress. Published the vkd3d x64 build evidence and PS5 hash-validation correction; full-day objectives remain open.",
-    "validation": "vkd3d x64 218/218 actions, two host tests passed; PS5 hash validation fixed with 104 targeted tests passing; task-budget suite 35 tests passing; related docs passed doclint. Published dev/build-ci a2a689940 and agent/strata-v3 2ab4cb183.",
-    "workers": [
-      {
-        "pid": 21908,
-        "runs": 14,
-        "quarantined": 1,
-        "productive_seconds": 837.6,
-        "ready": 0,
-        "name": "PS5",
-        "completed": 5,
-        "watchdog_pid": 5712,
-        "last_validation_utc": "2026-11-27T08:56:04Z",
-        "idle_seconds": 26764,
-        "target_seconds": 28800,
-        "idle_reason": "no eligible ready task (queue empty or waiting for retry)"
-      },
-      {
-        "pid": 29916,
-        "runs": 5,
-        "quarantined": 1,
-        "productive_seconds": 304.7,
-        "ready": 0,
-        "name": "Nagi",
-        "completed": 2,
-        "watchdog_pid": 26144,
-        "last_validation_utc": "2026-11-27T09:36:36Z",
-        "idle_seconds": 18596,
-        "target_seconds": 43200,
-        "idle_reason": "no eligible ready task (queue empty or waiting for retry)"
-      }
-    ],
+    "result": "Campaign in progress; remote engineering commits verified and both watchdog parent links confirmed. Automatic refill remains unverified.",
+    "validation": "Origin dev/build-ci a2a689940 documents vkd3d x64 218/218 actions and two host tests. Origin agent/strata-v3 2ab4cb183 records PS5 hash validation; prior ACK reports 104 targeted tests and 35 budget tests.",
+    "worker_observation": "PS5 21908 under 5712; Nagi 37252 under 31704. Local intake rejects IN-NAGI-INF-IDENTITY-REVIEW-01 on bounded source validation (Nagi) and area scope (PS5).",
     "blockers": [
-      "The documented vkd3d x86 engine build uses a separate source revision and remains outstanding.",
-      "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
-      "Local automation configuration is ACTIVE with a 15-minute recurrence, but this poll has no local scheduler-run evidence. The poll is manual.",
-      "Nagi and PS5 queues report no eligible ready task, so live Strata task acceptance and publication remain unverified for these changes.",
-      "Historical tester.39 ROCm inputs and full graphics integration gates remain outstanding."
-    ],
-    "worker_observation": "PS5 PID 21908 under watchdog 5712. Nagi PID 37252 under watchdog 31704. Nagi queue: 9 done, 3 quarantined, zero ready. PS5 local queue empty.",
-    "poll_note": "No independent local scheduler launch evidence. V3 scoped replenishment code is on origin at de3c5685f, including subsequent scope fixes. Automatic refill event remains unverified this poll.",
-    "current_validation": "Nagi branch tip b0c6de32cb54b2391183fb8c99aa6f7a46119c9a verified on origin. Local unittest discovery for test_nagi_context_cli.py passed 12 tests. NAGI-CONTEXT-JSON-01 and NAGI-VERIFIER-JSON-01 are done in the local queue. Prior RC5 checks: registry exit 0 on both architectures, 50 pairs each."
+      "Automatic refill below threshold not demonstrated.",
+      "vkd3d x86 engine and full graphics validation pending; historical tester.39 ROCm inputs missing.",
+      "No local scheduler launch evidence for this poll."
+    ]
   }
 }
