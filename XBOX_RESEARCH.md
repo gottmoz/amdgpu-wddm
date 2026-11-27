@@ -27,6 +27,14 @@ The README at xvdtool commit `6fc28862cc5fb711843c0e717101ce4034acf805` document
 
 These sources support a bounded follow-up: inspect parser code and synthetic fixtures for read-only header fields. Do not provide keys, invoke cryptographic operations, write package inputs or infer Series X/S boot behavior from Xbox One support.
 
+## AMD desktop kit source review
+
+AMD's 4700S support page lists BIOS revision C0A and driver packages for that kit. It does not provide CPU, GPU, memory-controller or PCI specifications. [AMD 4700S support page](https://www.amd.com/en/support/downloads/drivers.html/processors/desktop-kits/amd-4700s.html)
+
+AMD's current desktop material mentions "4800S Series and later" in a Smart Access Memory compatibility note. That is not a 4800S kit specification. [AMD desktop specifications](https://www.amd.com/en/gaming/desktops/advantage-premium.html)
+
+No primary 4800S product specification was located in the reviewed AMD product and support pages. Keep the 4800S hardware cells unknown. The AMD-authored 4700S manual remains linked from a third-party mirror, so its provenance still needs confirmation before it is treated as a primary source.
+
 ## Work packages
 
 XRE01 covers hardware identity. XRE02 inventories official packages. XRE03 studies container metadata. XRE04 maps boot stages. XRE05 studies documented Windows and Xbox interfaces. XRE06 compares AMD firmware metadata. XRE07 covers storage layout. XRE08 evaluates compatibility barriers. The small tasks are in `XBOX_TASK_QUEUE.json`.
