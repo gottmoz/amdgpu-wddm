@@ -29,5 +29,3 @@ Run the existing deterministic parser against this candidate from the preserved 
 ## Review disposition
 
 The initial Strata draft contained two unsupported statements. It counted 34 inventory records, although the inventory contains 40. It also treated entry point values as file offsets without a segment map. This corrected note removes both claims.
-
-
