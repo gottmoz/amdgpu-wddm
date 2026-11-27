@@ -173,9 +173,9 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T12:59:02Z",
+  "last_poll_utc": "2026-11-27T13:13:56Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T12:59:02Z",
+    "last_poll_utc": "2026-11-27T13:13:56Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
