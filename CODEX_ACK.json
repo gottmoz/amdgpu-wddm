@@ -156,13 +156,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T02:13:47Z",
+  "last_poll_utc": "2026-11-27T02:28:53Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T02:13:47Z",
+    "last_poll_utc": "2026-11-27T02:28:53Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
-    "validation": "Authenticated inbox confirmed SUP-005. Worker PID 2940 present; previous watchdog PID 4160 absent. Queue counts and token deltas were not remeasured. Last verified host result: standalone KMD CompileOnly exit 0. No new task acceptance, queue refill or build verified.",
+    "validation": "Authenticated inbox confirmed pending SUP-005. Worker PID 2940 present and previous watchdog PID 4160 absent. LLVM x86 build-tree llvm-config.exe is present. No new task acceptance, queue refill, or build verified this poll.",
     "blocker": "The live V2 worker branch is outside research intake scope and the available research daemon writes protected AGENT_STATUS.json. Operator action: provide a supported isolated research worker configuration with a permitted status target. The two tester.39 ROCm rows still require the pinned TheRock input and prior payload records."
   }
 }
