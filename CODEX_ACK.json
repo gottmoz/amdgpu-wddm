@@ -173,19 +173,19 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T08:14:01Z",
+  "last_poll_utc": "2026-11-27T08:28:58Z",
   "heartbeat": {
+    "last_poll_utc": "2026-11-27T08:28:58Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "result": "unchanged",
     "trigger": "manual",
+    "result": "unchanged",
+    "validation": "Prior x64/x86 Zink UMD host builds passed. Strata worker PID 21908 and watchdog PID 5712 are present. 12 runs, 627.9 productive seconds and 5284 idle seconds. Latest recorded independent review: PS5 ELF type source cross-check, doclint passed, commit a3b55ecc6.",
+    "blocker": "Tester.39 historical pinned ROCm inputs remain unavailable. Eight-hour productive endurance target remains unmet. Local scheduler launch evidence was not established for this poll. V3 PS5 ready queue is empty.",
     "blockers": [
       "Tester.39 historical pinned ROCm inputs remain unavailable.",
       "Eight-hour productive endurance target remains unmet.",
       "Local scheduler launch evidence was not established for this poll.",
       "V3 PS5 ready queue is empty."
-    ],
-    "blocker": "Tester.39 historical pinned ROCm inputs remain unavailable. Eight-hour productive endurance target remains unmet. Local scheduler launch evidence was not established for this poll. V3 PS5 ready queue is empty.",
-    "validation": "Prior x64/x86 Zink UMD host builds passed. Strata worker PID 21908 and watchdog PID 5712, 2 of 2 present. 12 runs, 627.9 work seconds and 4414 idle seconds. Local checkpoint marks IN-RE03-PS5-ELF-TYPE-SOURCE-CROSSCHECK done after three attempts. Latest recorded independent review remains a4edca61a39c.",
-    "last_poll_utc": "2026-11-27T08:14:01Z"
+    ]
   }
 }
