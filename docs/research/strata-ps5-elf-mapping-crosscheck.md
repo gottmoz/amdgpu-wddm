@@ -1,31 +1,31 @@
 # PS5 ELF inventory cross-check
 
-Scope: compare the PS5 ELF inventory, Ghidra status, and rejection report. No firmware bytes were opened for this review.
+Scope: compare the deterministic ELF inventory, Ghidra status, and rejection report. This review used structured metadata. It did not read firmware bytes.
 
 ## Verified counts
 
-- The ELF inventory contains 40 entries. Thirty-four are PUP candidates. Six are kdata entries.
-- The rejection report contains 34 entries. All 34 names also appear in the inventory.
-- The six inventory entries absent from the rejection report are the kdata entries.
-- Ghidra imported 40 candidates. Thirty-four have zero functions. Six have one function each.
-- These counts are consistent. The 34-entry rejection report covers the PUP candidates. It does not list the six kdata entries.
+- The inventory contains 40 candidates. Thirty-four come from PUP files. Six come from `kdata1001.bin`.
+- The rejection report contains the same 34 PUP candidate names. It excludes the six kdata candidates.
+- Ghidra imported all 40 candidates. The existing batch reports zero functions for 34 PUP candidates and one function for each of six kdata candidates.
+- Parser schema `bc250.firmware-audit/v1`, version 2, records bounded executable `PT_LOAD` segments for all 34 PUP candidates.
+- Each PUP candidate has one bounded executable segment. Their 34 SHA-256 values are distinct.
 
-## Entry point limits
+## Entry point mapping
 
-The inventory records entry points and executable segment counts. It does not include program header mappings, segment virtual addresses, or file offsets.
+The enriched inventory records ELF entry values and the bounded executable segment's file offset, virtual address, file size, memory size, permissions, entropy, and hash.
 
-Four readable PUP records have entry points 112 or 128. These values alone do not show whether the entry point lies in an executable segment. ELF entry points are virtual addresses. A file offset comparison would be invalid without the segment mapping.
+- Twelve PUP candidates have nonzero entry values. The parser maps each one into its bounded executable segment.
+- The other 22 candidates have a zero entry value. The parser maps zero into their executable segment ranges because all 34 segments begin at virtual address zero. This structural mapping does not prove that zero is a usable runtime entry point.
+- The PUP ELF types are 12 values of `0xfe10` and 22 values of `0xfe18`. The values do not establish component identity or Sony loader behavior.
 
-The earlier claim that these entries fall inside the program header table is unsupported by the available reports. The parser reports valid file bounds. That does not establish entry point mapping.
+The earlier report lacked program-header mappings and could not assess entry mapping. The deterministic parser has now supplied those fields. No Ghidra import was repeated for this refresh.
 
-## Bounded follow-up
+## Ghidra comparison
 
-Candidate: `1100_PS5UPDATE1.PUP_offset_28cac85d.elf`.
+The saved logs select `x86:LE:64:default:gcc` for both a PUP sample and a kdata control. The PUP sample has a mapped entry and an executable memory block, but zero functions. The kdata control has standard ELF type `ET_EXEC`, a mapped entry, and one function. The comparison does not establish why Ghidra found no PUP functions.
 
-The inventory reports one executable segment, 2,493,134 executable bytes counted by the parser, and entry point zero. It does not provide the segment address needed to assess that entry point.
-
-Run the existing deterministic parser against this candidate from the preserved local analysis workspace. Export each loadable segment's type, file offset, virtual address, file size, memory size, and permissions. Compare the entry point only against executable virtual address ranges reported by the parser. Do not repeat Ghidra import or infer a component identity.
+The PUP executable segments have entropy from 7.99762 to 7.99999 bits per byte. Entropy alone cannot determine whether bytes are compressed, encrypted, or instructions. Do not force disassembly from executable flags alone.
 
 ## Review disposition
 
-The initial Strata draft contained two unsupported statements. It counted 34 inventory records, although the inventory contains 40. It also treated entry point values as file offsets without a segment map. This corrected note removes both claims.
+This update supersedes the earlier follow-up that requested program-header mappings. The enriched records are in `PS5_ELF_INVENTORY.json` and `PS5_ELF_REJECTION_REPORT.json`. The log comparison is in `GHIDRA_ANALYSIS_STATUS.md`. These reports contain metadata and hashes, not firmware binaries or disassembly.
