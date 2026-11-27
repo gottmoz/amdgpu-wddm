@@ -201,7 +201,7 @@ def _validate_report(report):
             raise ValueError(f"report field {field!r} must be a non-negative integer, got {value!r}")
 
     digest = report["source_inventory_sha256"]
-    if digest is not None and (not isinstance(digest, str) or not SHA256_RE.match(digest)):
+    if digest is not None and (not isinstance(digest, str) or not SHA256_RE.fullmatch(digest)):
         raise ValueError(f"report field 'source_inventory_sha256' must be a 64-character hex string or null")
 
     containers = report["by_source_container"]
@@ -249,7 +249,7 @@ def _validate_report(report):
     for entry in duplicates:
         if not isinstance(entry, dict) or "sha256" not in entry or "candidates" not in entry:
             raise ValueError(f"duplicate hash entry must contain 'sha256' and 'candidates', got {entry!r}")
-        if not isinstance(entry["sha256"], str) or not SHA256_RE.match(entry["sha256"]):
+        if not isinstance(entry["sha256"], str) or not SHA256_RE.fullmatch(entry["sha256"]):
             raise ValueError(f"duplicate hash entry 'sha256' must be a 64-character hex string, got {entry['sha256']!r}")
         if not isinstance(entry["candidates"], list) or not all(isinstance(c, str) for c in entry["candidates"]):
             raise ValueError(f"duplicate hash entry 'candidates' must be a list of strings, got {entry['candidates']!r}")
