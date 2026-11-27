@@ -6,7 +6,7 @@ The documented `zink-umd` option set did not configure on the pinned Mesa source
 
 The `zink-umd-dev` configuration adds Gallium softpipe. Its exact 19-option set passed the Nagi configure gate. The `build-mesa.ps1` build exited with code 0 and linked `src/gallium/targets/d3d10umd/bc250d3d_zink.dll`.
 
-The DLL is an x64 PE file with 13,317,120 bytes. Its SHA-256 is `D89E7D31353DA30F949D89D088AA67704DCA0E842910C690ADAE5E8C0703EB3E`. `dumpbin /headers` reported machine `8664`. `dumpbin /dependents` listed `api-ms-win-core-synch-l1-2-0.dll`, `KERNEL32.dll`, `USER32.dll` and `GDI32.dll`.
+The DLL is an x64 PE file with 13,317,120 bytes. Its SHA-256 is `D89E7D31353DA30F949D89D088AA67704DCA0E842910C690ADAE5E8C0703EB3E`. `dumpbin /headers` reported machine `8664`. `dumpbin /dependents` listed `api-ms-win-core-synch-l1-2-0.dll`, `KERNEL32.dll`, `USER32.dll` and `GDI32.dll`. The export table has 49 named entries. It includes `OpenAdapter10` and `OpenAdapter10_2`.
 
 ## Provenance
 
