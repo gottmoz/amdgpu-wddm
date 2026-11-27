@@ -173,11 +173,11 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T07:29:05Z",
+  "last_poll_utc": "2026-11-27T07:44:05Z",
   "heartbeat": {
     "trigger": "manual",
     "blocker": "V3 PS5 ready queue is empty. Eight-hour productive endurance target remains unmet. Tester.39 historical pinned ROCm inputs remain unavailable. Local scheduler launch evidence was not established for this poll.",
-    "last_poll_utc": "2026-11-27T07:29:05Z",
+    "last_poll_utc": "2026-11-27T07:44:05Z",
     "result": "unchanged",
     "blockers": [
       "V3 PS5 ready queue is empty. Eight-hour productive endurance target remains unmet.",
@@ -185,6 +185,6 @@
       "Local scheduler launch evidence was not established for this poll."
     ],
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "validation": "Prior verified dev/build-ci Zink UMD evidence: x64 and x86 ConfigureOnly and host builds passed, PE architectures, 49 named exports and four system imports verified. This poll verified Strata PID 1936 under watchdog 16392, empty ready queue, 7 runs, 333.1 work seconds and 2194.0 idle seconds. Last worker validation 07:13:23Z. No new task or build verified."
+    "validation": "Prior x64/x86 Zink UMD host builds passed. Strata PID 1936 under watchdog 16392; queue snapshot ; 7 runs, 333.1 work seconds and 3064 idle seconds. Last reviewed validation 07:13:23Z, commit a4edca61a39c. No new build, task or token delta verified."
   }
 }
