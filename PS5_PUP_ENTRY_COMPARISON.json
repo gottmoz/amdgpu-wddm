@@ -1,0 +1,695 @@
+[
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 0,
+    "id": 3842,
+    "size": 4096,
+    "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 1,
+    "id": 2,
+    "size": 160,
+    "sha256": "01b3f8822773df9952d6d8af5fbfd7e1bec1982018a86ddedff32ea9efa2941d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 2,
+    "id": 1,
+    "size": 624448,
+    "sha256": "018eef055292061918cabb112171df855b1461e9960b76b626bf1500801b51d9"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 3,
+    "id": 4,
+    "size": 40,
+    "sha256": "e16a43859de3a5cd554076aca3e0d769f74bc1e3a44f1036353078f492d34bfb"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 4,
+    "id": 12,
+    "size": 96,
+    "sha256": "4207c01219b9f386f1802661ea98f2134a43a8afce916488b69780e8ebdd9f4d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 5,
+    "id": 6,
+    "size": 840,
+    "sha256": "73eafbeb6631e0806b5e72d369b50ad484d18acb540baad172783e01567fa59e"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 6,
+    "id": 22,
+    "size": 10627057,
+    "sha256": "bafe6078d4112e2f1ba6e54d9e8f64bd1049fe3357eaf4101b6e29e3a553f21d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 7,
+    "id": 8,
+    "size": 736,
+    "sha256": "b7092105b68f0c28c1214d5c7e2e14116e34e915cc2fb79fbd02dc480716f57d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 8,
+    "id": 2,
+    "size": 11780212,
+    "sha256": "fb3b4ebc0120a161d7b752b1a082af29fc0be22c2aec7d4397d71a314aeebc2a"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 9,
+    "id": 15,
+    "size": 131,
+    "sha256": "45de60c371172469a2587c80ec0baf14857017df3ec042bda0a33544a0d927f7"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 10,
+    "id": 17,
+    "size": 240128,
+    "sha256": "65c51aa8990f1cac3ce1fa6aab4350f44c1c099f3b47336f2bc105f06ac5eff0"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 11,
+    "id": 16,
+    "size": 477396,
+    "sha256": "21beb5ef281d0b4338a4a6ca764e44e2209290dc2ea4b150ed6af92dbdb3f98b"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 12,
+    "id": 18,
+    "size": 47616,
+    "sha256": "cdb7d84b0fdceb57f168b53858d31127d3d80a9d6c43bf855b90ba6003d891da"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 13,
+    "id": 20,
+    "size": 477396,
+    "sha256": "15bbc93e4b93750d9b6dd64f69546e624df42a1652cb6d61800d3411fb270f62"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 14,
+    "id": 4,
+    "size": 512,
+    "sha256": "ed93df3201e4293278a83805773d0cdb9f87843069113cb9647534501f58bd6d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 15,
+    "id": 16,
+    "size": 1984,
+    "sha256": "976058a5c914c454d7f439fdb82154b2778d3bace3e7b4ddbf5f2a455c9f2390"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 16,
+    "id": 5,
+    "size": 32112128,
+    "sha256": "7a9b496ebe1bba18a38e74c148fefd56e3ccc6e82e9e2ed96d7445863a44fc53"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 17,
+    "id": 18,
+    "size": 40,
+    "sha256": "5f80af0fd67a9ee52c5ecf79f3286970749fd4b53880f4bf21095df651fbde3c"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 18,
+    "id": 14,
+    "size": 350176,
+    "sha256": "1373223e05d3a5d7acccbcdda96c9295bb177415e8c1e8557d530505a65fd12d"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 19,
+    "id": 20,
+    "size": 40,
+    "sha256": "3ad69820e190488048149d34f200eddbceacde0ae51b2f183cb5f19f874cff4e"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 20,
+    "id": 21,
+    "size": 350192,
+    "sha256": "d343e1870256477ef80d63a0bff429d5848a36afa047795de39967e229dd2a15"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 21,
+    "id": 22,
+    "size": 1640,
+    "sha256": "1f8aee1637d8d1077ac6a11f77f9610bb4d867ed3a3164f077e9b6426ec93c95"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 22,
+    "id": 11,
+    "size": 21132448,
+    "sha256": "17fbdec1f1d634ba7988dbbbcff97076f2abdb92bba40daeae787a09df415b64"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 23,
+    "id": 259,
+    "size": 442992,
+    "sha256": "75c18af138cbf26f411c5a9e2d2886b0cbe386c6389d7d3b0ee4725d424da424"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 24,
+    "id": 260,
+    "size": 443328,
+    "sha256": "2d45af87f51f1f8365c46dd421c98cea1c24f21cf9464ed62c3a94126ca6f7f6"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 25,
+    "id": 262,
+    "size": 443328,
+    "sha256": "c77aeb9db88109990dfcfeb84fe3f92687978d901198aad1a5dee604042bcc1a"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 26,
+    "id": 263,
+    "size": 442320,
+    "sha256": "6b921af602ac59da4a08ab26745a02242eac4e573dae700eeb3b7b9375ae4268"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 27,
+    "id": 28,
+    "size": 120,
+    "sha256": "9cebbcc37ff4f84f186af459f401a0dc19b9f58563e888806242b12473f86262"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 28,
+    "id": 513,
+    "size": 1194496,
+    "sha256": "7186384ff44a663e6b4c6bf4ce478146abfed1b6c1dd6f473e2b73ede4f0fff2"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 29,
+    "id": 30,
+    "size": 37680,
+    "sha256": "cd6f2df7d78cffe9b05fcaa4f8517e9f88d79f86dc8960f506fc210d70771753"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 30,
+    "id": 515,
+    "size": 345955840,
+    "sha256": "aef178de69c20d81b75461ff2fc7bf7a3638275b097cf3a87fe3655fa3164b09"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 31,
+    "id": 32,
+    "size": 106440,
+    "sha256": "439a67f737611114811d67d18f8f8000c4191e3288582c4c6fb3e3feb5615118"
+  },
+  {
+    "version": "1100_PS5UPDATE1.PUP.dec",
+    "index": 32,
+    "id": 516,
+    "size": 919186432,
+    "sha256": "944cd1d863a6c838c1bfc2a86c21e011b3fcaf27a448305495ca98903972e4a6"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 0,
+    "id": 3842,
+    "size": 4096,
+    "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 1,
+    "id": 2,
+    "size": 160,
+    "sha256": "79b60fdb2e6814bd7d03b63ffc89dba6d64b9ef0913ce7dd52dc3e6c26226c94"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 2,
+    "id": 1,
+    "size": 624448,
+    "sha256": "018eef055292061918cabb112171df855b1461e9960b76b626bf1500801b51d9"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 3,
+    "id": 4,
+    "size": 40,
+    "sha256": "862a7442bd768659bd75e142ed301d00a123004f968c7886c6c4dbfcfb35cc43"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 4,
+    "id": 12,
+    "size": 96,
+    "sha256": "97d95ef0724282562e477c2f9c8b9256d551ff5e70d6909b2ee735168bdeecf3"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 5,
+    "id": 6,
+    "size": 840,
+    "sha256": "38217ba83f347144d123a0724be86567d9bcee13c1d6f14280986fb41330b3d5"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 6,
+    "id": 22,
+    "size": 10627057,
+    "sha256": "067ab664e5e2ec7e4874ffb8c0bd5ee4be5571b6ed2ef89beb09b51dededba86"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 7,
+    "id": 8,
+    "size": 736,
+    "sha256": "cab4151bd74e62f36b3901305b1fb727014c214fe1aa2df696a42ef816ebe4cc"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 8,
+    "id": 2,
+    "size": 11780212,
+    "sha256": "dac83de95bac39c8120b16d331a30b597104ca16c9bb35bd1e3550be12fb0dbc"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 9,
+    "id": 15,
+    "size": 131,
+    "sha256": "45de60c371172469a2587c80ec0baf14857017df3ec042bda0a33544a0d927f7"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 10,
+    "id": 17,
+    "size": 240128,
+    "sha256": "65c51aa8990f1cac3ce1fa6aab4350f44c1c099f3b47336f2bc105f06ac5eff0"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 11,
+    "id": 16,
+    "size": 477547,
+    "sha256": "042cb7c4f964b2b4bcc37fbfaa47b7815277b7d83a5562d30980a9cefc5639dd"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 12,
+    "id": 18,
+    "size": 47616,
+    "sha256": "cdb7d84b0fdceb57f168b53858d31127d3d80a9d6c43bf855b90ba6003d891da"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 13,
+    "id": 20,
+    "size": 477547,
+    "sha256": "cbb8df4152621d1e0ba00935ebbf4527bec089914bee51ae1d7ce8eebf1ef537"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 14,
+    "id": 4,
+    "size": 512,
+    "sha256": "42a22a76a54716851b35773b519e8d5630813fa04b23b7cefb63214f8e5631ec"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 15,
+    "id": 16,
+    "size": 1984,
+    "sha256": "65bc590dacea0e5556f28a4270b3dc7beabbdbcc51a7dfa4462e73f6ad361095"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 16,
+    "id": 5,
+    "size": 32112640,
+    "sha256": "2594ba86f5e105344fff5fc747efc00e168ba01bf7320b28821d70ca7df94847"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 17,
+    "id": 18,
+    "size": 40,
+    "sha256": "05c0d8aaf116ea19814509ed3d29da9dcfd2b64eff34e15d8d65cf59df461b63"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 18,
+    "id": 14,
+    "size": 350160,
+    "sha256": "d6ce6acf2d6ded0b6771fb449d68a62118a57e168d2b9428dd2c2a0cd9f7d4b6"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 19,
+    "id": 20,
+    "size": 40,
+    "sha256": "276614fac114fcfe6e7bba5184fa243ffb456fb0a80d8f407c38943ab241a832"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 20,
+    "id": 21,
+    "size": 350176,
+    "sha256": "23201e1939668d76015627573426893f06564263fe864a80fe32eb79f0a543e3"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 21,
+    "id": 22,
+    "size": 1640,
+    "sha256": "d516b290feda142a4db7d9b74d25afaa50a4f538b4c6119a9b99d8794a8ba4e5"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 22,
+    "id": 11,
+    "size": 21132448,
+    "sha256": "17fbdec1f1d634ba7988dbbbcff97076f2abdb92bba40daeae787a09df415b64"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 23,
+    "id": 259,
+    "size": 442992,
+    "sha256": "4e45c2c7a615452d81fe547810170274c3e3b9d6ddc664a03d946c6fcf82ad33"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 24,
+    "id": 260,
+    "size": 443328,
+    "sha256": "ccbee9dac99997fe04009e81b53431e09054249b53e9961cac462611051043e9"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 25,
+    "id": 262,
+    "size": 443328,
+    "sha256": "bb9c69b5edc1934337e0d62b5a3eb04c77e22542a24d0c8cc55fd956b4ed8b00"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 26,
+    "id": 263,
+    "size": 442320,
+    "sha256": "8c8b26f581f6c9b6a6feb25cc136b9fbab096b1d6e7a232de0bcb143a3a170d0"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 27,
+    "id": 28,
+    "size": 120,
+    "sha256": "e8ea245b112b4d94e873b79385a4e8c5e07875f4b8f5dbd4db678010467de4ee"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 28,
+    "id": 513,
+    "size": 1194496,
+    "sha256": "7186384ff44a663e6b4c6bf4ce478146abfed1b6c1dd6f473e2b73ede4f0fff2"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 29,
+    "id": 30,
+    "size": 37040,
+    "sha256": "11b03da5f90b90a0622df42d852badd925f5ab9d710d268e2f6f62c163442065"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 30,
+    "id": 515,
+    "size": 340337664,
+    "sha256": "c47f2c4cb5b6ed277796b67604f056637e7f458e383402aad2e88b1895a15c0f"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 31,
+    "id": 32,
+    "size": 106040,
+    "sha256": "f46abc2ac4ebd66fea6310489e847d51ccd2ba0cd62ae7f48deb738092289ca6"
+  },
+  {
+    "version": "1120_PS5UPDATE1.PUP.dec",
+    "index": 32,
+    "id": 516,
+    "size": 915031040,
+    "sha256": "e3f003b7817519d45e4ce964fc5e6bc02724d919cb538e336c798940e6f1644d"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 0,
+    "id": 3842,
+    "size": 4096,
+    "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 1,
+    "id": 2,
+    "size": 160,
+    "sha256": "cbb3dcdc8d99c168fa95a64eb2a7c4f1eb05fd55118b6d93ac227a6b9c0db3f5"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 2,
+    "id": 1,
+    "size": 624448,
+    "sha256": "018eef055292061918cabb112171df855b1461e9960b76b626bf1500801b51d9"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 3,
+    "id": 4,
+    "size": 40,
+    "sha256": "4d50ac3530f4b52d6d0141e0e77a8a2d5d5ab35e987b7bad669c25bfaab3c172"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 4,
+    "id": 12,
+    "size": 96,
+    "sha256": "ec83b5550b52a34530b64ad2ff4fa360e0c65e756c7134a1682d0477f52431be"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 5,
+    "id": 6,
+    "size": 840,
+    "sha256": "4d5eb631a409317e1c37d4705a9369dc8880474c0965e62a42d1224a56a09add"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 6,
+    "id": 22,
+    "size": 10627057,
+    "sha256": "6e8be7f7ef2dfd52c862560dc67ad9990e47d2c08bfb2f3395fdc0577cf03e7d"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 7,
+    "id": 8,
+    "size": 736,
+    "sha256": "bca7689f86537f74632ab04984f5f6acdaa5df63c6eb0df52e6db0f40140dd0a"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 8,
+    "id": 2,
+    "size": 11780212,
+    "sha256": "70df843bf31d97f7685159327dcd2646483a8d91556047ffe41ddcf422feefeb"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 9,
+    "id": 15,
+    "size": 131,
+    "sha256": "45de60c371172469a2587c80ec0baf14857017df3ec042bda0a33544a0d927f7"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 10,
+    "id": 17,
+    "size": 240128,
+    "sha256": "65c51aa8990f1cac3ce1fa6aab4350f44c1c099f3b47336f2bc105f06ac5eff0"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 11,
+    "id": 16,
+    "size": 477547,
+    "sha256": "042cb7c4f964b2b4bcc37fbfaa47b7815277b7d83a5562d30980a9cefc5639dd"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 12,
+    "id": 18,
+    "size": 47616,
+    "sha256": "cdb7d84b0fdceb57f168b53858d31127d3d80a9d6c43bf855b90ba6003d891da"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 13,
+    "id": 20,
+    "size": 477547,
+    "sha256": "cbb8df4152621d1e0ba00935ebbf4527bec089914bee51ae1d7ce8eebf1ef537"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 14,
+    "id": 4,
+    "size": 512,
+    "sha256": "9ba758a0c7353c5d254f844d1ebc7209a77fe83cb1bf82422af8773f42953ddd"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 15,
+    "id": 16,
+    "size": 1984,
+    "sha256": "16b526349dcc3ee49d5500a3c6a5bbeb72ec31b110c5a8e38220c20bd81b8072"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 16,
+    "id": 5,
+    "size": 32112640,
+    "sha256": "4e0ca7d50100335248b28741b2eb796ab9ae060ba04f1e84e79021917a08b43d"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 17,
+    "id": 18,
+    "size": 40,
+    "sha256": "867d8920638a56ce77cbc6cb01e24b54d9cda55aa63e43449d4fff2b7905cee4"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 18,
+    "id": 14,
+    "size": 350176,
+    "sha256": "03625086b2996f3707029787251237ad7dcd853092fef75d08cebd9147e3b48b"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 19,
+    "id": 20,
+    "size": 40,
+    "sha256": "35e7891f4ec4f243220538e9c02e4966796a806229376097a89ca56b28c36282"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 20,
+    "id": 21,
+    "size": 350192,
+    "sha256": "17e5e5dfe518a3e5ef7d7e7dc0373cc2c667d35e34d6f9f89ecddd30049259ad"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 21,
+    "id": 22,
+    "size": 1640,
+    "sha256": "b1d89c569ac36ffaf5d1140fd50863157b268cef3e296870df75afbb069bc491"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 22,
+    "id": 11,
+    "size": 21132448,
+    "sha256": "17fbdec1f1d634ba7988dbbbcff97076f2abdb92bba40daeae787a09df415b64"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 23,
+    "id": 259,
+    "size": 442992,
+    "sha256": "6f506800ee01244334fd3a7e50c46a4145ee993a53b63c6e702e5c6e0b93c29e"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 24,
+    "id": 260,
+    "size": 443328,
+    "sha256": "53bb809ea330b7f381c96b6f53678bc9964410b4a7295e4a77466f54793ff3e4"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 25,
+    "id": 262,
+    "size": 443328,
+    "sha256": "8db6d16404b002997f1851eec840706fdcd5615852645eb0bf2d404c75cca3a7"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 26,
+    "id": 263,
+    "size": 442320,
+    "sha256": "f9f31bbb79724fb6b4b668a6c77a2b1f0c1b1ab3886bf53f400c49ba5e435ba2"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 27,
+    "id": 28,
+    "size": 120,
+    "sha256": "d194f3f285359e4f1699cf28ab891529cee42549e6fb2d73dee4f4bb3f30b9e7"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 28,
+    "id": 513,
+    "size": 1194496,
+    "sha256": "7186384ff44a663e6b4c6bf4ce478146abfed1b6c1dd6f473e2b73ede4f0fff2"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 29,
+    "id": 30,
+    "size": 37040,
+    "sha256": "dffde731bca1dd926196a3389ff1d71855ee9ef1d6393272e4ce81109f424b3f"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 30,
+    "id": 515,
+    "size": 340357120,
+    "sha256": "87a807a78df64240d4203dc798b366cfbf3d595f1a4f6454ba97a056e89291dc"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 31,
+    "id": 32,
+    "size": 106080,
+    "sha256": "92649c22016b6b6cb6929cf308089c78be4804c25b207b3a0e66184d3e203f14"
+  },
+  {
+    "version": "1140_PS5UPDATE1.PUP.dec",
+    "index": 32,
+    "id": 516,
+    "size": 915251712,
+    "sha256": "d675b9948a12377c9f538b36bdb59e1ffab0af2089ef97b8b856fccb8505817b"
+  }
+]

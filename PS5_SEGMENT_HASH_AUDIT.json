@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_utc": "2026-11-27T06:36:56Z",
-  "source_file": "PS5_SEGMENT_COMPARISON.json",
+  "source_file": "PS5_PUP_ENTRY_COMPARISON.json",
   "source_sha256": "e1555d9b2753b38bf22a9cd453844882eea4141f6ea091d46dadc44718da64bb",
   "method": "Group by version and table index. Equality requires the same full size and SHA-256.",
   "versions": {

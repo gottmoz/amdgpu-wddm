@@ -11,9 +11,9 @@ The parser rechecked 40 existing candidate extracts. The file sizes and SHA-256 
 | 11.40 | 14 | 4 | 10 | 4 | 14 |
 | Total | 34 | 12 | 22 | 12 | 34 |
 
-Every PUP candidate has one bounded executable `PT_LOAD` segment. The 34 segment SHA-256 values are distinct within the analyzed set. The candidate hashes do not establish component identity across versions.
+Every PUP candidate has one bounded executable `PT_LOAD` segment. The 34 segment SHA-256 values are distinct within the analyzed set. Exact SHA-256 comparison finds no identical executable segment across versions. These hashes do not establish component identity.
 
-All 34 candidates retain zero Ghidra functions. This refresh did not repeat imports. See `PS5_ELF_INVENTORY.json` for raw types, mapped entry points, segment ranges and hashes. See `PS5_SEGMENT_COMPARISON.json` for the separate PUP table-entry comparison.
+All 34 candidates retain zero Ghidra functions. This refresh did not repeat imports. See `PS5_ELF_INVENTORY.json` for raw types, mapped entry points, segment ranges and hashes. `PS5_SEGMENT_COMPARISON.json` records executable segment comparisons. `PS5_PUP_ENTRY_COMPARISON.json` records PUP table-entry comparisons. `PS5_SEGMENT_HASH_AUDIT.json` references the latter.
 
 ## PUP table entries
 
