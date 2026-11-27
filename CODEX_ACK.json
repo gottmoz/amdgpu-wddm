@@ -173,13 +173,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T09:14:09Z",
+  "last_poll_utc": "2026-11-27T09:29:30Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T09:14:09Z",
-    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "trigger": "manual",
     "result": "unchanged",
-    "validation": "Worker 21908 observed under watchdog 5712. 14 runs, 837.6 productive seconds, 7684 idle seconds, 0 queued. Codex reviewed the deterministic segment comparison, corrected Strata scope notes, passed doclint, and published bc5015d4f1379d302197e82639a279571f0b3085. Prior x64/x86 Zink UMD host builds passed.",
+    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
+    "validation": "PS5 worker 21908 under watchdog 5712: 14 runs, 837.6 productive seconds, 8554 idle seconds, zero queued. Nagi worker 36988 under watchdog 31236: 3 runs, 234.7 productive seconds. Nagi review record reports source-check and doclint for INF identity; commit 39d0b95e5 verified locally. PS5 segment comparison bc5015d4 and prior x64/x86 Zink UMD host builds remain validated evidence.",
+    "last_poll_utc": "2026-11-27T09:29:30Z",
+    "trigger": "manual",
     "blockers": [
       "Tester.39 pinned historical ROCm inputs unavailable.",
       "Eight-hour productive endurance target unmet.",
