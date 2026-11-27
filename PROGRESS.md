@@ -1,6 +1,6 @@
 # Project progress
 
-Updated 2026-11-25. This is an operational handoff, not the hardware facts graph. Hardware claims belong in `docs/facts/data/*.yaml` with evidence links.
+Updated 2026-11-27. This is an operational handoff, not the hardware facts graph. Hardware claims belong in `docs/facts/data/*.yaml` with evidence links.
 
 ## Verified in this session
 
@@ -15,6 +15,7 @@ Updated 2026-11-25. This is an operational handoff, not the hardware facts graph
 
 ## In progress
 
+- D3D12 development UMD x64 and x86 rows passed host builds on 2026-11-27. Their hashes, source pins, validation limits, and the vkd3d BuildTree blocker are recorded in `docs/research/strata/d3d12-dev-build-2026-11-27.md`. The engine rows are not built.
 - Survey PS5 Linux and BC5 source projects on `research/ps5-firmware`.
 - Inventory any permitted local firmware images before attempting static analysis. No full PS5 or BC-250 firmware image has been identified in this workspace.
 
