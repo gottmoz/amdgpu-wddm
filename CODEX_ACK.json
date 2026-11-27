@@ -216,18 +216,17 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. Clean RC5 integration worktree matches current upstream main.",
-  "last_poll_utc": "2026-11-27T18:29:07Z",
+  "result": "SUP-006 pending. Verified published Nagi auto-task 5e0b07c54 and saved host-test result. Both worker watchdog links are live.",
+  "last_poll_utc": "2026-11-27T18:44:55Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T18:29:07Z",
+    "last_poll_utc": "2026-11-27T18:44:55Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. Clean RC5 integration worktree matches current upstream main.",
-    "validation": "Authenticated upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 matches the clean RC5 worktree (0 ahead, 0 behind). Prior saved record-pair evidence: five matching failure rows per architecture.",
+    "result": "SUP-006 pending. Verified published Nagi auto-task 5e0b07c54 and saved host-test result. Both worker watchdog links are live.",
+    "validation": "Nagi AUTO-NAGI-ADAPTER-OWNER-02: reviewed published Markdown commit 5e0b07c54586b95bee2799dce120375a9a638945; local host-test log reports 94 checks and 0 failures. Nagi worker/watchdog 37252/31704, PS5 21908/5712. Queue snapshots: Nagi 11 done and 4 quarantined; PS5 5 done and 1 quarantined; no ready entries.",
     "blockers": [
-      "Live automatic refill and publication of a fresh approved worker task remain unverified.",
-      "Saved tester.39 plan reports absent TheRock and historical split inputs for ROCm release and lab rows.",
-      "Full graphics package validation remains pending."
+      "Nagi published auto-task is historical; fresh under-threshold refill and validated publication for each active worker remain unverified.",
+      "Historical tester.39 ROCm inputs and full graphics package validation remain pending."
     ]
   }
 }
