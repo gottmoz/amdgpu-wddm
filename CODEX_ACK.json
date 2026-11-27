@@ -150,19 +150,19 @@
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T00:44:00Z"
+      "last_checked_utc": "2026-11-27T00:58:42Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T00:44:00Z",
+  "last_poll_utc": "2026-11-27T00:58:42Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T00:44:00Z",
+    "last_poll_utc": "2026-11-27T00:58:42Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
-    "validation": "Verified live PS5 worktree worker PID 2940 and absent watchdog PID 4160. Inbox has zero tasks. V2 snapshot has one done task and zero ready, failed or retry tasks. Endurance: 156 runs, 13539.5 work seconds, 40320.1 idle seconds. No task accepted or refilled this poll. Token totals 6691182 input and 889244 output, delta unverified. Confirmed daemon source hardcodes AGENT_STATUS.json at line 392. No build run this poll.",
+    "validation": "Authenticated inbox read confirmed SUP-005. Worker PID 2940 present and watchdog PID 4160 absent. Live intake remains blocked by the worker branch and protected status target. No task acceptance, queue refill, or build verified this poll.",
     "blocker": "Live V2 branch is outside the research intake allowlist. The available research daemon publishes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records."
   }
 }
