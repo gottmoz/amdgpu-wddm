@@ -33,6 +33,7 @@ STATS = {"tool_calls": 0, "input_tokens": 0, "output_tokens": 0, "last_validatio
 if METRICS.exists():
     STATS.update(json.loads(METRICS.read_text(encoding="utf-8")))
 TEXT_SUFFIXES = {".md", ".json", ".py", ".ps1", ".yml", ".yaml", ".txt", ".c", ".h"}
+SOURCE_SUFFIXES = TEXT_SUFFIXES | {".inf"}
 FORBIDDEN_PARTS = {".git", "evidence", "secrets", "firmware", "scratch", "toolchain"}
 SAFE_COMMANDS = {
     "rg": {"--files", "-n", "-i", "-g", "--glob", "--max-count"},

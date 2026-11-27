@@ -189,7 +189,7 @@ def validate_incoming(task, branch):
                 raise ValueError("source URL is outside approved public documentation")
         else:
             path = worker.confined(source)
-            if (not path.is_file() or path.suffix.lower() not in worker.TEXT_SUFFIXES
+            if (not path.is_file() or path.suffix.lower() not in worker.SOURCE_SUFFIXES
                     or path.stat().st_size > 1_000_000):
                 raise ValueError("source path must be an existing bounded text file")
     paths = task.get("allowed_writes")

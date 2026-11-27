@@ -48,13 +48,16 @@ class CoordinatorTests(unittest.TestCase):
     def test_nagi_inbox_task_is_accepted_only_by_scoped_worker(self):
         task = {"id": "IN-NAGI-001", "area": "NAGI", "branch": "agent/strata-nagi",
                 "objective": "Summarize the documented Nagi build blocker from the listed source files.",
-                "sources": ["docs/build.md"],
+                "sources": ["driver/kmd/bc250kmd.inf", "docs/build.md"],
                 "allowed_writes": ["docs/research/strata/nagi-build-blocker-review.md"]}
         with patch.object(daemon, "APPROVED_AREAS", {"NAGI"}), \
                 patch.object(daemon, "APPROVED_TYPES", {"NAGI"}):
             imported = daemon.validate_incoming(task, task["branch"])
             self.assertEqual(imported["task_type"], "NAGI")
             self.assertEqual(imported["branch"], "agent/strata-nagi")
+            with self.assertRaises(ValueError):
+                daemon.validate_incoming(dict(task, allowed_writes=["driver/kmd/unauthorized.inf"]),
+                                         task["branch"])
             with self.assertRaises(ValueError):
                 daemon.validate_incoming(dict(task, branch="research/ps5-firmware"),
                                          "research/ps5-firmware")
