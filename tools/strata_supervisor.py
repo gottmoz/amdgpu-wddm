@@ -289,8 +289,12 @@ def definitions(task):
     ]
     allowed=set(task.get("tools", []))
     if task.get("sources"):
-        allowed.update(("read_file", "write_file"))
-        if task.get("allow_public_fetch"): allowed.add("fetch_url")
+        sources = task["sources"]
+        if any(not source.startswith("https://") for source in sources):
+            allowed.add("read_file")
+        allowed.add("write_file")
+        if task.get("allow_public_fetch") and any(source.startswith("https://") for source in sources):
+            allowed.add("fetch_url")
         if task.get("allow_tests"): allowed.add("terminal")
     if not allowed: allowed.update(("read_file", "list_files", "write_file"))
     return [item for item in all_tools if item["function"]["name"] in allowed]
@@ -419,10 +423,14 @@ def work(task, model):
     tool_guard = ToolCallGuard(limits["max_identical_tool_calls"], task.get("tool_call_counts"))
     memory = MEMORY.read_text(encoding="utf-8").splitlines()[-8:] if MEMORY.exists() else []
     fixed_sources = task.get("sources", [])
+    local_sources = [source for source in fixed_sources if not source.startswith("https://")]
+    url_sources = [source for source in fixed_sources if source.startswith("https://")]
     available_tools = [item["function"]["name"] for item in definitions(task)]
     examples = {}
     if "read_file" in available_tools:
-        examples["read_file"] = {"path": fixed_sources[0] if fixed_sources else "README.md"}
+        examples["read_file"] = {"path": local_sources[0] if local_sources else "README.md"}
+    if "fetch_url" in available_tools:
+        examples["fetch_url"] = {"url": url_sources[0]}
     if "list_files" in available_tools:
         examples["list_files"] = {"glob": task.get("list_glob", "docs/research/ps5-dump-strata-review.md")}
     if "write_file" in available_tools:
@@ -431,7 +439,7 @@ def work(task, model):
         examples["terminal"] = {"argv": task.get("test_command", ["python", "-m", "unittest", "tools.test_strata_daemon"])}
     base = [
         {"role": "system", "content": "You are a local BC-250 engineering agent. Use only the exposed task-scoped tools. File access is not implicit: read_file may read only exact paths in sources, and write_file may write only exact paths in allowed_writes. Never read user-profile, Strata application, environment, secret or undeclared paths. Do not touch hardware or firmware bytes. For terminal, run only the supplied test_command. If a source is insufficient, continue with a bounded implementation from the declared source and document the limitation in the output. Complete the declared artifact and keep the final summary concise."},
-        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "tool_limits": {"read_file": "exact paths listed in sources only", "write_file": "exact paths listed in allowed_writes only", "terminal": "only test_command"}, "execution_limits": limits, "examples": examples, "test_command": task.get("test_command"), "previous_validation_error": task.get("validation_error"), "prior_tool_errors": [{"tool": item.get("tool"), "reason": "A prior call was rejected by task-scoped permissions."} for item in task.get("invalid_tool_history", [])[-3:] if isinstance(item, dict)], "prior_memory": memory}, ensure_ascii=False)},
+        {"role": "user", "content": json.dumps({"objective": task["objective"], "sources": fixed_sources, "allowed_writes": task["allowed_writes"], "available_tools": available_tools, "tool_limits": {"read_file": "exact local paths listed in sources only", "fetch_url": "exact public URLs listed in sources only", "write_file": "exact paths listed in allowed_writes only", "terminal": "only test_command"}, "execution_limits": limits, "examples": examples, "test_command": task.get("test_command"), "previous_validation_error": task.get("validation_error"), "prior_tool_errors": [{"tool": item.get("tool"), "reason": "A prior call was rejected by task-scoped permissions."} for item in task.get("invalid_tool_history", [])[-3:] if isinstance(item, dict)], "prior_memory": memory}, ensure_ascii=False)},
     ]
     recent = []
     compact = []

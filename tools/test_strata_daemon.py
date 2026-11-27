@@ -65,6 +65,35 @@ class CoordinatorTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unique"):
             daemon.validate_incoming(task, task["branch"])
 
+    def test_public_url_sources_require_and_expose_fetch_url(self):
+        url = "https://raw.githubusercontent.com/example/repo/main/README.md"
+        task = {"id": "IN-RE03-URL-1", "area": "RE03", "branch": "research/ps5-firmware",
+                "objective": "Compare public PS5 ELF type labels without reading firmware binaries.",
+                "sources": [url], "allowed_writes": ["docs/research/ps5-elf-types.md"]}
+        with self.assertRaisesRegex(ValueError, "allow_public_fetch"):
+            daemon.validate_incoming(task, task["branch"])
+
+        task["allow_public_fetch"] = True
+        imported = daemon.validate_incoming(task, task["branch"])
+        self.assertTrue(imported["allow_public_fetch"])
+        names = {item["function"]["name"] for item in worker.definitions(imported)}
+        self.assertEqual(names, {"fetch_url", "write_file"})
+
+    def test_public_url_fetch_opt_in_must_be_boolean(self):
+        task = {"id": "IN-RE03-URL-2", "area": "RE03", "branch": "research/ps5-firmware",
+                "objective": "Compare public PS5 ELF type labels without reading firmware binaries.",
+                "sources": ["https://raw.githubusercontent.com/example/repo/main/README.md"],
+                "allowed_writes": ["docs/research/ps5-elf-types.md"], "allow_public_fetch": "yes"}
+        with self.assertRaisesRegex(ValueError, "boolean"):
+            daemon.validate_incoming(task, task["branch"])
+
+    def test_generated_public_source_task_exposes_fetch_url(self):
+        task = daemon.generate_task("research/xbox-firmware")
+        names = {item["function"]["name"] for item in worker.definitions(task)}
+        self.assertIn("fetch_url", names)
+        self.assertIn("read_file", names)
+        self.assertTrue(task["allow_public_fetch"])
+
     def test_task_scoped_tool_schema_hides_terminal(self):
         tools = worker.definitions({"sources": ["README.md"], "allowed_writes": ["docs/research/x.md"]})
         names = {item["function"]["name"] for item in tools}

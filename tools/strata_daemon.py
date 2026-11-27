@@ -168,6 +168,12 @@ def validate_incoming(task, branch):
         raise ValueError("one to eight exact task sources are required")
     if len(set(sources)) != len(sources):
         raise ValueError("task sources must be unique")
+    allow_public_fetch = task.get("allow_public_fetch", False)
+    if not isinstance(allow_public_fetch, bool):
+        raise ValueError("allow_public_fetch must be a boolean")
+    url_sources = [source for source in sources if source.startswith("https://")]
+    if url_sources and not allow_public_fetch:
+        raise ValueError("URL sources require allow_public_fetch=true")
     for source in sources:
         if source.startswith("https://"):
             parsed = worker.urlparse(source)
@@ -193,7 +199,7 @@ def validate_incoming(task, branch):
         raise ValueError("task type is outside this worker's configured scope")
     return {"id": task["id"], "area": task["area"], "branch": branch,
             "task_type": task_type, "objective": objective, "sources": sources,
-            "allowed_writes": paths, "status": "pending",
+            "allowed_writes": paths, "allow_public_fetch": allow_public_fetch, "status": "pending",
             "verify": [["python", "tools/quality/doclint.py", "--files", *paths]],
             "publish": False, "origin": "github_inbox"}
 
@@ -234,6 +240,7 @@ GENERATED = [
     {"id": "AUTO-XRE03-01", "area": "XRE03", "branch": "research/xbox-firmware",
      "objective": "Read XBOX_RESEARCH.md and the pinned XanaduXVD README at https://raw.githubusercontent.com/xboxoneresearch/XanaduXVD/50aa0dc89350de580b77f26ade1018b16b0bc1f8/README.md. Write a short source-derived note on documented XVD container fields and unknown Series X/S applicability. Do not read binaries.",
      "sources": ["XBOX_RESEARCH.md", "https://raw.githubusercontent.com/xboxoneresearch/XanaduXVD/50aa0dc89350de580b77f26ade1018b16b0bc1f8/README.md"],
+     "allow_public_fetch": True,
      "allowed_writes": ["docs/research/xbox-xvd-source-note.md"]},
     {"id": "AUTO-XRE06-01", "area": "XRE06", "branch": "research/xbox-firmware",
      "objective": "Read XBOX_FIRMWARE_INVENTORY.json and tools/firmware/cyan_skillfish2.json. Write a short metadata-only comparison plan for public AMD microcode and unknown Xbox firmware identifiers. Do not read binary firmware.",
