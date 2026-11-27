@@ -156,13 +156,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T03:13:49Z",
+  "last_poll_utc": "2026-11-27T03:28:54Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T03:13:49Z",
+    "last_poll_utc": "2026-11-27T03:28:54Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
-    "validation": "Authenticated inbox read confirmed the pending instruction. Worker PID 2940 present and previous watchdog PID 4160 absent. No new task acceptance, queue refill, build, or token delta verified.",
+    "validation": "Authenticated inbox read. Prior worker PID 2940 present=True, prior watchdog PID 4160 present=False. Legacy endurance: 156 runs, 13539.5 work seconds, 49650.2 idle seconds. Inbox queue snapshot: {\"schema_version\":1,\"tasks\":[]}. No new task acceptance, queue refill, build or token delta verified.",
     "blocker": "The live V2 worker branch is outside research intake scope and the available research daemon writes protected AGENT_STATUS.json. Operator action: provide a supported isolated research worker configuration with a permitted status target. The two tester.39 ROCm rows still require the pinned TheRock input and prior payload records."
   }
 }
