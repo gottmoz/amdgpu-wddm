@@ -173,9 +173,9 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:44:10Z",
+  "last_poll_utc": "2026-11-27T10:59:14Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:44:10Z",
+    "last_poll_utc": "2026-11-27T10:59:14Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
@@ -191,7 +191,7 @@
         "completed": 5,
         "watchdog_pid": 5712,
         "last_validation_utc": "2026-11-27T08:56:04Z",
-        "idle_seconds": 12874.0,
+        "idle_seconds": 13744.0,
         "target_seconds": 28800
       },
       {
@@ -204,7 +204,7 @@
         "completed": 2,
         "watchdog_pid": 26144,
         "last_validation_utc": "2026-11-27T09:36:36Z",
-        "idle_seconds": 4736.0,
+        "idle_seconds": 5606.0,
         "target_seconds": 43200
       }
     ],
@@ -213,7 +213,7 @@
       "PS5 eight-hour and Nagi twelve-hour productive targets remain unmet.",
       "tester.39 remains blocked on pinned TheRock and historical payload inputs."
     ],
-    "worker_observation": "Verified PS5 PID 21908 under watchdog 5712 and Nagi PID 29916 under watchdog 26144. Both endurance files report no eligible ready task.",
+    "worker_observation": "PS5 PID 21908, watchdog 5712, parent verified: True. no eligible ready task (queue empty or waiting for retry). Nagi PID 29916, watchdog 26144, parent verified: True. no eligible ready task (queue empty or waiting for retry).",
     "poll_note": "Local scheduler launch evidence unavailable. Engineering validation carried forward."
   }
 }
