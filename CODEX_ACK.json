@@ -150,19 +150,19 @@
       "run_status": "scheduler-triggered, blocked before live acceptance",
       "disposition": "blocked",
       "observed_utc": "2026-11-26T22:14:34Z",
-      "last_checked_utc": "2026-11-27T00:29:43Z"
+      "last_checked_utc": "2026-11-27T00:44:00Z"
     }
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "scheduler-triggered",
   "result": "blocked",
-  "last_poll_utc": "2026-11-27T00:29:43Z",
+  "last_poll_utc": "2026-11-27T00:44:00Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "last_poll_utc": "2026-11-27T00:29:43Z",
+    "last_poll_utc": "2026-11-27T00:44:00Z",
     "trigger": "scheduler-triggered",
     "result": "blocked",
-    "validation": "Standalone release-flavour KMD -CompileOnly exited 0 and linked unsigned bc250kmd.sys (SHA256 11E6DAF5E2A1D733688557BC0D52E6FDCDCB09D32C9CD16F7869DF1820B624F4). No release package. V2 PID 2940 present, watchdog PID 4160 absent, 156 worker runs, 13539.5 work and 39480.1 idle seconds at observation. No new task acceptance, queue refill or token delta verified.",
+    "validation": "Verified live PS5 worktree worker PID 2940 and absent watchdog PID 4160. Inbox has zero tasks. V2 snapshot has one done task and zero ready, failed or retry tasks. Endurance: 156 runs, 13539.5 work seconds, 40320.1 idle seconds. No task accepted or refilled this poll. Token totals 6691182 input and 889244 output, delta unverified. Confirmed daemon source hardcodes AGENT_STATUS.json at line 392. No build run this poll.",
     "blocker": "Live V2 branch is outside the research intake allowlist. The available research daemon publishes protected AGENT_STATUS.json. Operator action: provide a supported isolated worker configuration with a permitted status target. Both tester.39 ROCm rows still require pinned TheRock and prior payload records."
   }
 }
