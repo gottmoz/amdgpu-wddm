@@ -11,7 +11,7 @@ The output is an x64 PE DLL with 22,586,368 bytes. Its SHA-256 is `D4175A7CC72DD
 - Mesa commit `05e6c9622e135ac2aeaf56ec70222642627e2162` on the D-Ogi `amdgpu-wddm/radv-wddm2` branch.
 - Nagi patch `experiments/E33-m12-applications/mesa05-wddm2.patch`, SHA-256 `6e4e73ec2f27c6e19761675e06b7d5d279d0b76c3432e36e072adf276b9c71af`.
 - RADV configuration from `tools/build/mesa-configs.json`: Windows, AMD Vulkan only, ACO, LLVM disabled, static CRT.
-- Build log and `recipe.json` are in `D:\BC250-Development\scratch\mesa-radv-pinned-configure`.
+- Build log: `D:\BC250-Development\scratch\mesa-radv-msvc-build.log`. The build `recipe.json` is in `D:\BC250-Development\scratch\mesa-radv-pinned-configure`.
 
 ## Local build fixes
 
@@ -22,4 +22,5 @@ These scratch changes are not part of the Nagi repository or the pinned Mesa pat
 ## Limits
 
 This is a host compile and link result. No driver installation, hardware load, GPU execution, Vulkan runtime test or BC-250 validation was performed. The DLL is not a release package.
+
 
