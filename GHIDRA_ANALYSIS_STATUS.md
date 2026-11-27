@@ -18,6 +18,9 @@ The saved Ghidra logs report the ELF loader and language `x86:LE:64:default:gcc`
 The PUP sample's executable segment entropy is 7.99763 bits per byte. Across the 34 PUP candidates, values range from 7.99762 to 7.99999. The median is 7.999845. Entropy does not identify compression, encryption or executable instruction content.
 
 The original PUP log reports `Disassemble Entry Points` at 0.000 seconds. The original kdata log reports 0.060 seconds. The targeted imports report 0.001 and 0.050 seconds. Both targeted imports exited successfully. The PUP log also reports a failed ELF note parse. These facts do not establish a cause.
+The PUP has two `PT_NOTE` ranges. Entry 9 uses file offset `0x173ed8` and length `0x24`. Entry 13 uses offset `0x1748c4` and length `0x48`. Both file ranges are bounded.
+
+The first 12 bytes in each range do not describe a standard ELF note that fits its declared segment length. This matches Ghidra's note parse warning at `0x173ed8`. It does not explain the zero function count.
 
 ## Targeted entry report
 
