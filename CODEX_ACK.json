@@ -216,30 +216,20 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. vkd3d x64/x86 development builds and host tests passed; PS5 hash validation and test fixtures were corrected. Historical tester.39 plan remains blocked on four missing inputs.",
-  "last_poll_utc": "2026-11-27T16:42:09Z",
+  "result": "In progress. Verified GitHub commits for the PS5 SHA256 validator fix and tester.39 plan blockers. Automatic refill remains unverified.",
+  "last_poll_utc": "2026-11-27T16:44:24Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:42:09Z",
-    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
+    "last_poll_utc": "2026-11-27T16:44:24Z",
     "trigger": "manual",
-    "result": "In progress. vkd3d x64/x86 development builds and host tests passed; PS5 hash validation and test fixtures were corrected. Historical tester.39 plan remains blocked on four missing inputs.",
-    "validation": "dev/build-ci dba894090 records the tester.39 plan-only blockers after successful vkd3d x64/x86 builds. agent/strata-v3 d5fd85305 contains the PS5 SHA256 validator fix and current-schema CLI fixture. 110 targeted tests passed.",
-    "worker_observation": "PS5 21908 under 5712; Nagi 37252 under 31704. Local intake rejects IN-NAGI-INF-IDENTITY-REVIEW-01 on bounded source validation (Nagi) and area scope (PS5).",
+    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
+    "result": "In progress. Verified GitHub commits for the PS5 SHA256 validator fix and tester.39 plan blockers. Automatic refill remains unverified.",
+    "validation": "Verified commits d5fd853059 and dba894090. Previous poll reported 110 targeted tests passed and x64/x86 vkd3d host build/test passes.",
+    "worker_observation": "Verified watchdog links: PS5 PID 21908/5712 and Nagi PID 37252/31704. Queue files: ps5 ; nagi done=9, quarantined=3.",
     "blockers": [
-      "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
-      "Local automation configuration is ACTIVE with a 15-minute recurrence, but this poll has no local scheduler-run evidence. The poll is manual.",
-      "Nagi and PS5 queues report no eligible ready task, so live Strata task acceptance and publication remain unverified for these changes.",
-      "Historical tester.39 ROCm inputs and full graphics integration gates remain outstanding.",
-      "Fresh engine builds and host tests do not establish Vulkan-device or BC-250 hardware compatibility. No driver was installed.",
-      "The 15-minute automation is ACTIVE, but the observed polls are manual and there is no local scheduler-trigger evidence.",
-      "Strata ready queues remain empty, so live task acceptance and publication are still unverified.",
-      "Historical tester.39 ROCm inputs and the full graphics package gates remain outstanding.",
-      "The 15-minute Codex automation is configured ACTIVE, but no scheduler-trigger evidence is available in this manual poll.",
-      "Nagi and PS5 workers are alive but their published queues have no eligible tasks. Automatic refill and new task acceptance remain unverified.",
-      "Vulkan-device and BC-250 hardware validation remain outstanding. No driver was installed.",
-      "Historical tester.39 ROCm inputs and complete graphics package gates remain outstanding.",
-      "The tester.39 plan stops before plan generation because two historical inputs are missing from two ROCm rows: the TheRock source tree and kit8-qwen-split history.",
-      "The 15-minute Codex automation is ACTIVE, but no scheduler-trigger evidence is available in this manual poll."
+      "Automatic refill and live task acceptance remain unverified.",
+      "Historical tester.39 TheRock and kit8-qwen-split inputs are missing.",
+      "Full graphics package validation pending.",
+      "No local scheduler launch evidence for this poll."
     ]
   }
 }
