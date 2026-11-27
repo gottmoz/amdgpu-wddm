@@ -172,14 +172,19 @@
   ],
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
-  "result": "in_progress",
-  "last_poll_utc": "2026-11-27T07:25:00Z",
+  "result": "unchanged",
+  "last_poll_utc": "2026-11-27T07:29:05Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T07:25:00Z",
-    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
-    "result": "in_progress",
-    "validation": "Published the development-only Zink UMD profile and build record to dev/build-ci. Fresh ConfigureOnly gates passed for x64 and x86. Both builds succeeded. dumpbin verified PE architectures, 49 named exports and four system imports. Latest PS5 status at 07:24Z reports three completed tasks, zero reviews and an empty ready queue.",
-    "blocker": "The V3 PS5 queue is empty. The eight-hour endurance target is not complete. Tester.39 still lacks historical pinned ROCm inputs. The UMD builds are host-only and have not been runtime-tested or installed."
+    "blocker": "V3 PS5 ready queue is empty. Eight-hour productive endurance target remains unmet. Tester.39 historical pinned ROCm inputs remain unavailable. Local scheduler launch evidence was not established for this poll.",
+    "last_poll_utc": "2026-11-27T07:29:05Z",
+    "result": "unchanged",
+    "blockers": [
+      "V3 PS5 ready queue is empty. Eight-hour productive endurance target remains unmet.",
+      "Tester.39 historical pinned ROCm inputs remain unavailable.",
+      "Local scheduler launch evidence was not established for this poll."
+    ],
+    "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
+    "validation": "Prior verified dev/build-ci Zink UMD evidence: x64 and x86 ConfigureOnly and host builds passed, PE architectures, 49 named exports and four system imports verified. This poll verified Strata PID 1936 under watchdog 16392, empty ready queue, 7 runs, 333.1 work seconds and 2194.0 idle seconds. Last worker validation 07:13:23Z. No new task or build verified."
   }
 }
