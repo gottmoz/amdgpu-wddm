@@ -138,7 +138,7 @@ subprojects into its `subprojects\` directory: zlib 1.3.1 for every configuratio
 SHA-256, forced by `force_fallback_for=zlib`) and DirectX-Headers v1.619.1 for RADV (wrap-git from GitHub).
 Meson also leaves a `.wraplock` file there. An offline machine needs those subprojects populated in advance.
 
-All four configurations are `debugoptimized`. RADV adds `b_ndebug=true`: `NDEBUG` is defined, so Mesa's
+The recorded configurations and `zink-umd-dev` use `debugoptimized`. RADV adds `b_ndebug=true`: `NDEBUG` is defined, so Mesa's
 assertions and the NIR and ACO validation after every pass are off, while the PDB stays. With meson's default
 `b_ndebug=if-release` they took at least 40 % of the ICD's pipeline compile time in a warm game run
 (Witcher 3, trial 135). The desktop UMD configurations keep that default in the lab flavour, so `NDEBUG` is not
@@ -366,9 +366,14 @@ option builds the set above, as recorded.
 ```
 
 Target `src/gallium/targets/d3d10umd/bc250d3d_zink.dll`. It links the static C runtime (`-Db_vscrt=mt`), for the
-reason of the `radv` set (BD-389): the router loads it into `dwm.exe`. Upstream
-`meson.build` refuses d3d10umd without softpipe or llvmpipe. The patched tree accepts Zink. The release flavour
-adds `-Db_ndebug=true`, as for `llvmpipe-umd`, and the lab flavour keeps the asserts.
+reason of the `radv` set (BD-389): the router loads it into `dwm.exe`. The pinned source requires softpipe or llvmpipe when d3d10umd is enabled. The recorded `zink-umd` set selects only Zink and ConfigureOnly fails on this source. The development-only `zink-umd-dev` set adds softpipe. The release flavour adds `-Db_ndebug=true`, as for `llvmpipe-umd`, and the lab flavour keeps the asserts.
+### Development-only Zink UMD (`-Config zink-umd-dev`)
+
+The recorded `zink-umd` option set selects only `zink`. On Mesa commit `05e6c9622e135ac2aeaf56ec70222642627e2162`, ConfigureOnly failed because `meson.build` requires Gallium swrast when `gallium-d3d10umd` is enabled. The development-only set adds `softpipe` to satisfy this source guard.
+
+`zink-umd-dev` builds the same `bc250d3d_zink.dll` target. It is derived from the E34 Zink UMD set and the pinned E33 source. It is not part of tester.39 or any release manifest.
+
+Validation requires the exact Meson option gate, a successful build, PE architecture and dependency inspection, and an artifact SHA-256. Do not treat a successful host build as hardware or runtime validation.
 
 ### OpenGL on Zink (`-Config zink-gl`)
 

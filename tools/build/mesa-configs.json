@@ -162,6 +162,32 @@
       "ships": {"src/gallium/targets/d3d10umd/bc250d3d_zink.dll": ["bc250d3d_zink.dll"]},
       "recorded_script": "experiments/E34-native-d3d-zink/build.cmd, plus -Db_vscrt=mt (BD-389)"
     },
+    "zink-umd-dev": {
+      "description": "Development-only Zink D3D10 UMD configuration. It adds Gallium softpipe because the pinned Mesa source requires softpipe or llvmpipe when gallium-d3d10umd is enabled. It is not a release or tester.39 configuration.",
+      "needs_llvm": false,
+      "glslang": "on-path",
+      "options": [
+        "-Dbuildtype=debugoptimized",
+        "-Dforce_fallback_for=zlib",
+        "-Dllvm=disabled",
+        "-Damd-use-llvm=false",
+        "-Dvulkan-drivers=[]",
+        "-Dgallium-drivers=zink,softpipe",
+        "-Dgallium-d3d10umd=true",
+        "-Dgallium-d3d10-dll-name=bc250d3d_zink",
+        "-Db_vscrt=mt",
+        "-Ddefault_library=static",
+        "-Dplatforms=windows",
+        "-Dvideo-codecs=[]",
+        "-Degl=disabled",
+        "-Dglx=disabled",
+        "-Dzstd=disabled"
+      ],
+      "targets": [
+        "src/gallium/targets/d3d10umd/bc250d3d_zink.dll"
+      ],
+      "recorded_script": "Development-only variant derived from zink-umd after ConfigureOnly exposed the pinned Mesa softpipe requirement."
+    },
     "zink-gl": {
       "description": "OpenGL through Zink (WGL): app-local opengl32.dll plus libgallium_wgl.dll, no LLVM",
       "needs_llvm": false,

@@ -11,6 +11,7 @@ Configures and builds one of the lab's Mesa components with its recorded meson o
   radv-system   the x64 system Vulkan ICD: static C runtime, asserts off (Mesa a7f44c96 or later)
   llvmpipe-umd  desktop D3D10 UMD on llvmpipe (bc250d3d.dll), needs -Llvm
   zink-umd      native D3D10 UMD on Zink (bc250d3d_zink.dll), static C runtime
+  zink-umd-dev  development-only Zink UMD plus softpipe to satisfy the pinned Mesa D3D10 UMD guard
   zink-gl       OpenGL on Zink (libgallium_wgl.dll, opengl32.dll)
   zink-gl-icd   system OpenGL ICD on Zink (amdgpu_wddm_gl.dll), x64 and x86
 
@@ -56,7 +57,7 @@ pwsh tools\build\build-mesa.ps1 -Config radv-system -Compiler clang-cl -Variant 
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory)][ValidateSet('radv', 'radv-mt', 'radv-system', 'llvmpipe-umd', 'zink-umd', 'zink-gl', 'zink-gl-icd')][string]$Config,
+    [Parameter(Mandatory)][ValidateSet('radv', 'radv-mt', 'radv-system', 'llvmpipe-umd', 'zink-umd', 'zink-umd-dev', 'zink-gl', 'zink-gl-icd')][string]$Config,
     [Parameter(Mandatory)][string]$Source,
     [Parameter(Mandatory)][string]$Build,
     # Directory whose bin\llvm-config.exe describes the LLVM to link: the -Build directory of build-llvm.ps1.
