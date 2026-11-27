@@ -16,6 +16,7 @@ Updated 2026-11-27. This is an operational handoff, not the hardware facts graph
 ## In progress
 
 - D3D12 development UMD x64 and x86 rows passed host builds on 2026-11-27. Their hashes, source pins, validation limits, and the vkd3d BuildTree blocker are recorded in `docs/research/strata/d3d12-dev-build-2026-11-27.md`. The engine rows are not built.
+- An existing RADV x64 DLL was rechecked with `dumpbin`: PE machine x64, three Vulkan ICD exports, SHA-256 `DD084C00159F047E7126649C25DA07EE534167564047256F374517567777E09E`. The incremental Ninja command did not compile or link it in this session. See `docs/research/strata/radv-x64-artifact-verification-2026-11-27.md`.
 - Survey PS5 Linux and BC5 source projects on `research/ps5-firmware`.
 - Inventory any permitted local firmware images before attempting static analysis. No full PS5 or BC-250 firmware image has been identified in this workspace.
 

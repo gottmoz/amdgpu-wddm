@@ -3,6 +3,7 @@
 ## Verified observations
 
 - The development-only D3D12 shell rows built for x64 and x86 at pinned source commit `747c1aa0`. Their SHA-256 values and host-test scope are in `docs/research/strata/d3d12-dev-build-2026-11-27.md`. The two vkd3d engine rows did not compile. BuildTree stopped during nested submodule setup.
+- The existing RADV x64 DLL has PE machine x64 and the three Vulkan ICD exports. Its SHA-256 and the unsuccessful no-op incremental-build attempt are recorded in `docs/research/strata/radv-x64-artifact-verification-2026-11-27.md`. A fresh compile or link was not observed in this session.
 - The repository builds its KMD through `driver/kmd/build.ps1`. `-CompileOnly` compiles and links without catalog creation, signing, or deployment.
 - The installed Windows kit has the 10.0.26100.0 kernel headers and libraries. The build used local directory junctions under `D:\BC250-Development\toolchain\nuget` to point at that installed kit. CI will use pinned NuGet packages instead.
 - Strata's local API exposes model `qwen3.8-flash-next-q2_0`, a 131072-token context and OpenAI-compatible tool calls. Its server is an owned background instance under profile `launch-q2_0-128k`.
