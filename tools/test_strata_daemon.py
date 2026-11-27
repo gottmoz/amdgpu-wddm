@@ -284,6 +284,11 @@ class CoordinatorTests(unittest.TestCase):
             self.assertFalse(worker.task_in_worker_scope({"area": "XRE03", "task_type": "XBOX"}))
             self.assertFalse(worker.task_in_worker_scope({"area": "RE04", "task_type": "PS5"}))
 
+    def test_task_command_uses_supervisor_from_v3_source_root(self):
+        command = daemon.task_command(Path(self.temp.name) / "inbox.json", "IN-RE03-4")
+        self.assertEqual(Path(command[1]), daemon.CODE_ROOT / "tools/strata_supervisor.py")
+        self.assertEqual(command[-1], "IN-RE03-4")
+
     def test_task_log_path_uses_worker_log_directory_and_safe_id(self):
         path = daemon.task_log_path({"id": "IN-RE03-4"})
 

@@ -20,7 +20,8 @@ import time
 import strata_supervisor as worker
 
 
-ROOT = Path(os.getenv("STRATA_WORKTREE_ROOT", str(Path(__file__).resolve().parents[1]))).resolve()
+CODE_ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.getenv("STRATA_WORKTREE_ROOT", str(CODE_ROOT))).resolve()
 RUNTIME = worker.RUNTIME
 def env_path(name, default):
     return Path(os.getenv(name, str(default))).resolve()
@@ -362,6 +363,11 @@ def task_log_path(task):
     return LOG_DIR / f"{task_id}.log"
 
 
+def task_command(path, task_id):
+    return [sys.executable, str(CODE_ROOT / "tools/strata_supervisor.py"), "--once",
+            "--queue", str(path), "--task-id", task_id]
+
+
 def run_task(path, task, stall_seconds=None, tick=None):
     limits = worker.task_limits(task)
     execution_timeout = limits["max_execution_seconds"]
@@ -372,7 +378,7 @@ def run_task(path, task, stall_seconds=None, tick=None):
 
 
 def _run_task_process(path, task, execution_timeout, progress_timeout, worker_log, tick):
-    command = [sys.executable, str(ROOT / "tools/strata_supervisor.py"), "--once", "--queue", str(path), "--task-id", task["id"]]
+    command = task_command(path, task["id"])
     flags = subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
     process = subprocess.Popen(command, cwd=ROOT, creationflags=flags,
                                stdout=worker_log, stderr=subprocess.STDOUT)
