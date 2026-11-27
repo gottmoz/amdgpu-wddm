@@ -81,7 +81,8 @@ def task_in_worker_scope(task):
     task_type = task.get("task_type")
     if task_type is None:
         task_type = "PS5" if isinstance(area, str) and area.startswith("RE") else (
-            "XBOX" if isinstance(area, str) and area.startswith("XRE") else "UNKNOWN")
+            "XBOX" if isinstance(area, str) and area.startswith("XRE") else (
+                "NAGI" if area == "NAGI" else "UNKNOWN"))
     return (not allowed_types or task_type in allowed_types) and (not allowed_areas or area in allowed_areas)
 
 

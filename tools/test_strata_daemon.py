@@ -398,6 +398,12 @@ class CoordinatorTests(unittest.TestCase):
             self.assertFalse(worker.task_in_worker_scope({"area": "XRE03", "task_type": "XBOX"}))
             self.assertFalse(worker.task_in_worker_scope({"area": "RE04", "task_type": "PS5"}))
 
+    def test_nagi_worker_scope_infers_nagi_task_type(self):
+        env = {"STRATA_ALLOWED_TASK_TYPES": '["NAGI"]', "STRATA_ALLOWED_AREAS": '["NAGI"]'}
+        with patch.dict("os.environ", env):
+            self.assertTrue(worker.task_in_worker_scope({"area": "NAGI"}))
+            self.assertFalse(worker.task_in_worker_scope({"area": "RE03"}))
+
     def test_task_command_uses_supervisor_from_v3_source_root(self):
         command = daemon.task_command(Path(self.temp.name) / "inbox.json", "IN-RE03-4")
         self.assertEqual(Path(command[1]), daemon.CODE_ROOT / "tools/strata_supervisor.py")
