@@ -173,13 +173,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:08:47Z",
+  "last_poll_utc": "2026-11-27T10:11:52Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:08:47Z",
+    "last_poll_utc": "2026-11-27T10:11:52Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "research/ps5-firmware commits f645405d8, bd627d117, 57028387b and 1bb6ed3fa publish source-reviewed ELF type interpretation and targeted Ghidra entry metadata. The original 40-import batch was preserved. Two samples were imported twice to add entry checks. PUP e_entry 0x70 maps without a Ghidra function or external entry point; kdata e_entry 0x400200 maps, while its function and external entry point are at 0x400080. No cause is inferred. Doclint passed. Nagi metadata report 9c5ca2062 and dev/build-ci regression commit 36981dc93 remain validated.",
+    "validation": "PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
     "workers": [
       {
         "pid": 21908,
