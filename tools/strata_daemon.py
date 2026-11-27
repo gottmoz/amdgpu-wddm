@@ -48,6 +48,11 @@ APPROVED_AREAS = set(json.loads(os.environ["STRATA_ALLOWED_AREAS"])) if os.geten
     *(f"XRE{i:02d}" for i in range(1, 9)), *(f"RE{i:02d}" for i in range(1, 9))}
 APPROVED_TYPES = set(json.loads(os.environ["STRATA_ALLOWED_TASK_TYPES"])) if os.getenv("STRATA_ALLOWED_TASK_TYPES") else set()
 SENSITIVE = re.compile(r"\b(flash|reboot|voltage change|write register|extract key|bypass signature|install driver)\b", re.I)
+TASK_BRANCHES = {
+    "PS5": "research/ps5-firmware",
+    "XBOX": "research/xbox-firmware",
+    "NAGI": "agent/strata-nagi",
+}
 STOPPING = False
 
 
@@ -155,10 +160,12 @@ def infer_task_type(area):
 def validate_incoming(task, branch):
     if not isinstance(task, dict) or not re.fullmatch(r"IN-[A-Za-z0-9-]{3,48}", str(task.get("id", ""))):
         raise ValueError("invalid task ID")
-    if task.get("area") not in APPROVED_AREAS:
+    area = task.get("area")
+    if area not in APPROVED_AREAS:
         raise ValueError("research area is outside the approved set")
-    if task.get("branch") != branch or branch not in {"research/xbox-firmware", "research/ps5-firmware"}:
-        raise ValueError("task branch does not match the research worktree")
+    task_type = infer_task_type(area)
+    if task.get("branch") != branch or branch != TASK_BRANCHES.get(task_type):
+        raise ValueError("task branch does not match its approved worker")
     objective = task.get("objective")
     if not isinstance(objective, str) or not 20 <= len(objective) <= 1000 or SENSITIVE.search(objective):
         raise ValueError("objective is empty, oversized or outside offline research scope")
@@ -192,7 +199,6 @@ def validate_incoming(task, branch):
         path = worker.confined(relative, writable=True)
         if not (path.relative_to(ROOT).as_posix().startswith("docs/research/") and path.suffix == ".md"):
             raise ValueError("inbox tasks may write only research notes")
-    task_type = infer_task_type(task["area"])
     if task.get("task_type", task_type) != task_type:
         raise ValueError("task type does not match its approved research area")
     if APPROVED_TYPES and task_type not in APPROVED_TYPES:
@@ -219,6 +225,8 @@ def import_inbox(repo, branch):
     rejected = load(REJECTIONS)
     added = 0
     for raw in incoming["tasks"]:
+        if isinstance(raw, dict) and raw.get("branch") in TASK_BRANCHES.values() and raw.get("branch") != branch:
+            continue
         try:
             task = validate_incoming(raw, branch)
             if task["id"] in ids or task_key(task) in keys:

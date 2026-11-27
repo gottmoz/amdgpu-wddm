@@ -45,6 +45,32 @@ class CoordinatorTests(unittest.TestCase):
             self.assertEqual(daemon.import_inbox("owner/repo", task["branch"]), 0)
         self.assertEqual(len(daemon.load(daemon.INBOX_QUEUE)["tasks"]), 1)
 
+    def test_nagi_inbox_task_is_accepted_only_by_scoped_worker(self):
+        task = {"id": "IN-NAGI-001", "area": "NAGI", "branch": "agent/strata-nagi",
+                "objective": "Summarize the documented Nagi build blocker from the listed source files.",
+                "sources": ["docs/build.md"],
+                "allowed_writes": ["docs/research/strata/nagi-build-blocker-review.md"]}
+        with patch.object(daemon, "APPROVED_AREAS", {"NAGI"}), \
+                patch.object(daemon, "APPROVED_TYPES", {"NAGI"}):
+            imported = daemon.validate_incoming(task, task["branch"])
+            self.assertEqual(imported["task_type"], "NAGI")
+            self.assertEqual(imported["branch"], "agent/strata-nagi")
+            with self.assertRaises(ValueError):
+                daemon.validate_incoming(dict(task, branch="research/ps5-firmware"),
+                                         "research/ps5-firmware")
+
+    def test_inbox_import_ignores_tasks_owned_by_other_workers(self):
+        task = {"id": "IN-XRE03-OWNED-ELSEWHERE", "area": "XRE03",
+                "branch": "research/xbox-firmware",
+                "objective": "Summarize documented XVD metadata from the listed source file.",
+                "sources": ["README.md"],
+                "allowed_writes": ["docs/research/xbox-owner-note.md"]}
+        payload = json.dumps({"schema_version": 1, "tasks": [task]})
+        with patch.object(daemon, "get_content", return_value=(payload, "sha")):
+            self.assertEqual(daemon.import_inbox("owner/repo", "research/ps5-firmware"), 0)
+        self.assertEqual(daemon.load(daemon.INBOX_QUEUE)["tasks"], [])
+        self.assertEqual(daemon.load(daemon.REJECTIONS)["tasks"], [])
+
     def test_inbox_rejects_missing_or_unbounded_sources(self):
         task = {"id": "IN-RE03-2", "area": "RE03", "branch": "research/ps5-firmware",
                 "objective": "Compare documented PS5 ELF loader metadata without reading firmware bytes.",
