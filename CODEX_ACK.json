@@ -173,19 +173,19 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T09:29:30Z",
+  "last_poll_utc": "2026-11-27T09:44:07Z",
   "heartbeat": {
-    "result": "unchanged",
+    "last_poll_utc": "2026-11-27T09:44:07Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
-    "validation": "PS5 worker 21908 under watchdog 5712: 14 runs, 837.6 productive seconds, 8554 idle seconds, zero queued. Nagi worker 36988 under watchdog 31236: 3 runs, 234.7 productive seconds. Nagi review record reports source-check and doclint for INF identity; commit 39d0b95e5 verified locally. PS5 segment comparison bc5015d4 and prior x64/x86 Zink UMD host builds remain validated evidence.",
-    "last_poll_utc": "2026-11-27T09:29:30Z",
     "trigger": "manual",
+    "result": "unchanged",
+    "validation": "PS5 worker 21908 under watchdog 5712: 14 runs, 837.6 productive seconds. Nagi worker 29916 under watchdog 26144: 5 runs, 304.7 productive seconds. Nagi AUTO-NAGI-ADAPTER-OWNER-02 published at 5e0b07c54; review records doclint and 94 passing host checks. Prior x64/x86 Zink UMD host builds remain the latest validated builds.",
     "blockers": [
-      "Tester.39 pinned historical ROCm inputs unavailable.",
-      "Eight-hour productive endurance target unmet.",
-      "V3 PS5 ready queue empty.",
+      "Tester.39 historical pinned ROCm inputs unavailable.",
+      "Eight-hour PS5 productive endurance target unmet.",
+      "PS5 and Nagi report no eligible ready tasks.",
       "Local scheduler launch evidence unavailable."
     ],
-    "blocker": "Tester.39 pinned historical ROCm inputs unavailable. Eight-hour productive endurance target unmet. V3 PS5 ready queue empty. Local scheduler launch evidence unavailable."
+    "blocker": "Tester.39 historical pinned ROCm inputs unavailable. Eight-hour PS5 productive endurance target unmet. PS5 and Nagi report no eligible ready tasks. Local scheduler launch evidence unavailable."
   }
 }
