@@ -172,7 +172,7 @@
     {
       "instruction_id": "SUP-006-24H-UPSTREAM-20261127",
       "observed_utc": "2026-11-27T14:14:36Z",
-      "disposition": "partially completed; verified vkd3d x64/x86 builds and ABI checks, PS5 SHA-256 validation, and refreshed CLI fixtures",
+      "disposition": "partially completed; vkd3d x64/x86 builds and host tests passed, PS5 hash validation fixed, tester.39 blockers confirmed",
       "evidence": [
         "Live PS5 PID 21908 and Nagi PID 29916 run strata_v3.py from the isolated V3 source worktree with separate profiles and watchdog parents 5712 and 26144.",
         "Upstream main read-only ref confirmed ca95cf88ed3b400e9a3b8608a3575c9fcea86c53.",
@@ -182,7 +182,8 @@
         "The Nagi worker and watchdog remain active, but its current queue has no eligible tasks. Its last published heartbeat reports 11 completed, 4 failed, 8 recoveries, 8 pending reviews and zero ready tasks.",
         "The vkd3d x86 ddi-engine-lto development build then completed all 218 Ninja actions with the i686 target and x86 warning gates. Its DLL and test executable are i386 PE images. Results and hashes are in docs/research/strata/vkd3d-x64-build-2026-11-27.md, published on dev/build-ci commit 629f0b0a6.",
         "The vkd3d x86 engine test passed --abi-only with 0 failures. The x64 engine test passed the same ABI-only suite. Both checks load the DLL and check exported ABI tables without creating a Vulkan device. Evidence update is on dev/build-ci commit 88329f068.",
-        "Updated the stale PS5 CLI synthetic fixture to satisfy current inventory schema. The combined seven-module PS5/Ghidra test run now passes all 110 tests. Commit d5fd85305 is on agent/strata-v3."
+        "Updated the stale PS5 CLI synthetic fixture to satisfy current inventory schema. The combined seven-module PS5/Ghidra test run now passes all 110 tests. Commit d5fd85305 is on agent/strata-v3.",
+        "Re-ran the tester.39 planner in plan-only mode. It exited 1 before writing a plan and identified four absent inputs across extra-rocm-release and extra-rocm-lab: scratch/t36/f11-rocm/rocm-input and scratch/t36/f11-rocm/tmp/kit8-qwen-split. No release rows or build artifacts were modified."
       ],
       "validation": [
         "Verified live process command lines and watchdog parent links. Located daemon replenishment call and existing V2-only fixture. Prior PS5 doclint and metadata evidence retained in heartbeat.",
@@ -191,7 +192,8 @@
         "A wider PS5 summary CLI batch had 3 fixture errors because existing fixture rows omit fields now required by inventory validation. These errors are not caused by the report-hash change and remain to be triaged.",
         "The x86 cache-policy and compile-admission tests each printed PASSED and exited 0. The related documentation passed doclint and git diff --check.",
         "vkd3d x64 and x86 cache-policy tests, compile-admission tests and ABI-only engine checks passed. The x86 DLL and engine test were confirmed i386 PE. No Vulkan-device test or hardware test was run.",
-        "PS5 ELF summary, CLI, malformed input, provenance and Ghidra JSON regression suites passed: 110 tests."
+        "PS5 ELF summary, CLI, malformed input, provenance and Ghidra JSON regression suites passed: 110 tests.",
+        "The precise tester.39 planning blockers were added to PROGRESS.md, FINDINGS.md and CURRENT_TASK.md. All three passed doclint. Published on dev/build-ci commit dba894090."
       ],
       "blockers": [
         "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
@@ -205,21 +207,23 @@
         "The 15-minute Codex automation is configured ACTIVE, but no scheduler-trigger evidence is available in this manual poll.",
         "Nagi and PS5 workers are alive but their published queues have no eligible tasks. Automatic refill and new task acceptance remain unverified.",
         "Vulkan-device and BC-250 hardware validation remain outstanding. No driver was installed.",
-        "Historical tester.39 ROCm inputs and complete graphics package gates remain outstanding."
+        "Historical tester.39 ROCm inputs and complete graphics package gates remain outstanding.",
+        "The tester.39 plan stops before plan generation because two historical inputs are missing from two ROCm rows: the TheRock source tree and kit8-qwen-split history.",
+        "The 15-minute Codex automation is ACTIVE, but no scheduler-trigger evidence is available in this manual poll."
       ],
-      "last_checked_utc": "2026-11-27T16:33:39Z"
+      "last_checked_utc": "2026-11-27T16:42:09Z"
     }
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. Published vkd3d builds and PS5 parser fixes with targeted validation; full-day objectives remain open.",
-  "last_poll_utc": "2026-11-27T16:33:39Z",
+  "result": "In progress. vkd3d x64/x86 development builds and host tests passed; PS5 hash validation and test fixtures were corrected. Historical tester.39 plan remains blocked on four missing inputs.",
+  "last_poll_utc": "2026-11-27T16:42:09Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T16:33:39Z",
+    "last_poll_utc": "2026-11-27T16:42:09Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "In progress. Published vkd3d builds and PS5 parser fixes with targeted validation; full-day objectives remain open.",
-    "validation": "dev/build-ci 88329f068 records x64/x86 vkd3d builds, 218/218 actions each, two host tests plus ABI-only checks per architecture. agent/strata-v3 d5fd85305 includes PS5 SHA256 fullmatch fix and current-schema CLI fixture. All 110 targeted PS5/Ghidra tests passed.",
+    "result": "In progress. vkd3d x64/x86 development builds and host tests passed; PS5 hash validation and test fixtures were corrected. Historical tester.39 plan remains blocked on four missing inputs.",
+    "validation": "dev/build-ci dba894090 records the tester.39 plan-only blockers after successful vkd3d x64/x86 builds. agent/strata-v3 d5fd85305 contains the PS5 SHA256 validator fix and current-schema CLI fixture. 110 targeted tests passed.",
     "worker_observation": "PS5 21908 under 5712; Nagi 37252 under 31704. Local intake rejects IN-NAGI-INF-IDENTITY-REVIEW-01 on bounded source validation (Nagi) and area scope (PS5).",
     "blockers": [
       "The wider PS5 summary CLI test fixtures need correction or their schema provenance needs review.",
@@ -233,7 +237,9 @@
       "The 15-minute Codex automation is configured ACTIVE, but no scheduler-trigger evidence is available in this manual poll.",
       "Nagi and PS5 workers are alive but their published queues have no eligible tasks. Automatic refill and new task acceptance remain unverified.",
       "Vulkan-device and BC-250 hardware validation remain outstanding. No driver was installed.",
-      "Historical tester.39 ROCm inputs and complete graphics package gates remain outstanding."
+      "Historical tester.39 ROCm inputs and complete graphics package gates remain outstanding.",
+      "The tester.39 plan stops before plan generation because two historical inputs are missing from two ROCm rows: the TheRock source tree and kit8-qwen-split history.",
+      "The 15-minute Codex automation is ACTIVE, but no scheduler-trigger evidence is available in this manual poll."
     ]
   }
 }
