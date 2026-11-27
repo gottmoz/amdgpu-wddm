@@ -188,13 +188,13 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "In progress. Daemon baseline passed and both worker snapshots report no eligible task.",
-  "last_poll_utc": "2026-11-27T14:44:36Z",
+  "result": "In progress. RC5 upstream baseline record-pair gates passed on x64 and x86.",
+  "last_poll_utc": "2026-11-27T15:00:20Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T14:44:36Z",
+    "last_poll_utc": "2026-11-27T15:00:20Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "In progress. Daemon baseline passed and both worker snapshots report no eligible task.",
+    "result": "In progress. RC5 upstream baseline record-pair gates passed on x64 and x86.",
     "validation": "Fetched upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 read-only. Compared dev/build-ci 36981dc9375acad2a89482aa7c6b844f902597e7 against common base 9e9702ea00670415511eee8b474b143017974732: 14 local-only, 70 upstream-only. PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
     "workers": [
       {
@@ -231,7 +231,7 @@
       "Integration, graphics gates and historical tester.39 pins remain pending."
     ],
     "worker_observation": "Live PS5 PID 21908 and Nagi PID 29916 run strata_v3.py from the isolated V3 source worktree with separate profiles and watchdog parents 5712 and 26144.",
-    "poll_note": "No independent local scheduler launch evidence. Idle and work counters refreshed from live runtime snapshots. Queue counts carried forward.",
-    "current_validation": "python -m unittest discover -s tools -p test_strata_daemon.py on V3 9c1887189 passed 33 tests. Current next_task filters by retry_at, approved area and type. Existing refill floor counts pending, running and scheduled retries without those eligibility checks."
+    "poll_note": "No independent local scheduler launch evidence. Worker snapshots and engineering validation from earlier observations are retained.",
+    "current_validation": "Isolated dev/upstream-nagi-rc5-integration at ca95cf88e. Registry and ten self-test cases passed. Host gates passed on x64 and x86 using clang-cl 23.1.4: 13 producers, 5 consumers, 50 pairs, five expected-red and six landed rows per architecture. Raw runner returned 1 on each; expected-red validator accepted both TSVs."
   }
 }
