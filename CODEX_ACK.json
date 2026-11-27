@@ -188,14 +188,14 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "new instruction; initial validation",
-  "last_poll_utc": "2026-11-27T14:14:36Z",
+  "result": "In progress; refill guard and upstream divergence verified",
+  "last_poll_utc": "2026-11-27T14:29:31Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T14:14:36Z",
+    "last_poll_utc": "2026-11-27T14:29:31Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "new instruction; initial validation",
-    "validation": "PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
+    "result": "In progress; refill guard and upstream divergence verified",
+    "validation": "Fetched upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 read-only. Compared dev/build-ci 36981dc9375acad2a89482aa7c6b844f902597e7 against common base 9e9702ea00670415511eee8b474b143017974732: 14 local-only, 70 upstream-only. PS5 research commits 57028387b, 1bb6ed3fa and 57a25645a added a Ghidra metadata script and findings. Full 40-import batch was preserved; only the PUP candidate and kdata control were rerun twice for entry reporting. The PUP e_entry maps but has no function/external entry; kdata has ELF e_entry 0x400200 but Ghidra reports its one function/external entry at 0x400080. Two bounded PT_NOTE ranges contain headers whose standard note sizes exceed their segment extents, consistent with the logged Ghidra note warning. This does not explain zero functions. Doclint passed.",
     "workers": [
       {
         "pid": 21908,
@@ -207,7 +207,7 @@
         "completed": 5,
         "watchdog_pid": 5712,
         "last_validation_utc": "2026-11-27T08:56:04Z",
-        "idle_seconds": 19834.0,
+        "idle_seconds": 25894.0,
         "target_seconds": 28800
       },
       {
@@ -220,15 +220,15 @@
         "completed": 2,
         "watchdog_pid": 26144,
         "last_validation_utc": "2026-11-27T09:36:36Z",
-        "idle_seconds": 11666.0,
+        "idle_seconds": 17726.0,
         "target_seconds": 43200
       }
     ],
     "blockers": [
-      "Profile-specific refill, live task acceptance and publication are unverified.",
-      "Upstream divergence and graphics package gates remain pending. Historical tester.39 pins remain outstanding."
+      "Verified strata_v3.py launches strata_daemon.py. replenish_backlog returns 0 outside agent/strata-v2, excluding live research/ps5-firmware and agent/strata-nagi profiles. Catalog implementation and live execution gates pending.",
+      "Integration, graphics gates and historical tester.39 pins remain pending."
     ],
     "worker_observation": "Live PS5 PID 21908 and Nagi PID 29916 run strata_v3.py from the isolated V3 source worktree with separate profiles and watchdog parents 5712 and 26144.",
-    "poll_note": "Local scheduler launch evidence unavailable. Worker counters carried forward."
+    "poll_note": "Local scheduler launch evidence unavailable. Run counts and times read from runtime endurance snapshots; other queue counters carried forward."
   }
 }
