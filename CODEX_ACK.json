@@ -173,13 +173,13 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:07:49Z",
+  "last_poll_utc": "2026-11-27T10:08:47Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:07:49Z",
+    "last_poll_utc": "2026-11-27T10:08:47Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
-    "validation": "PS5 Ghidra entry report and metadata-only script published at research/ps5-firmware commit 57028387b. Two targeted samples show the PUP e_entry 0x70 maps but has no function or Ghidra external entry point; the kdata e_entry 0x400200 maps but its one external entry/function is at 0x400080. This does not identify the PUP zero-function cause. Doclint passed; full Ghidra batch was not repeated. PS5 ELF source correction is at f645405d8. Nagi artifact report 9c5ca2062 and dev/build-ci host test 36981dc93 remain validated.",
+    "validation": "research/ps5-firmware commits f645405d8, bd627d117, 57028387b and 1bb6ed3fa publish source-reviewed ELF type interpretation and targeted Ghidra entry metadata. The original 40-import batch was preserved. Two samples were imported twice to add entry checks. PUP e_entry 0x70 maps without a Ghidra function or external entry point; kdata e_entry 0x400200 maps, while its function and external entry point are at 0x400080. No cause is inferred. Doclint passed. Nagi metadata report 9c5ca2062 and dev/build-ci regression commit 36981dc93 remain validated.",
     "workers": [
       {
         "pid": 21908,
