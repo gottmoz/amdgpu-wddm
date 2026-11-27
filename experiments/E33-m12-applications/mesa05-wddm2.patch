@@ -9727,10 +9727,10 @@ index df5f61ef944..a768754f360 100644
      #endif
 diff --git a/src/vulkan/util/vk_wddm2_dispatch_table_gen.py b/src/vulkan/util/vk_wddm2_dispatch_table_gen.py
 new file mode 100644
-index 00000000000..c71e4105796
+index 00000000000..dd42bf028806
 --- /dev/null
 +++ b/src/vulkan/util/vk_wddm2_dispatch_table_gen.py
-@@ -0,0 +1,260 @@
+@@ -0,0 +1,268 @@
 +COPYRIGHT = """\
 +/*
 + * Copyright 2020 Intel Corporation
@@ -9858,6 +9858,12 @@ index 00000000000..c71e4105796
 + #define DXCORE_LIBNAME "dxcore"
 + #endif
 +
++ #ifdef _WIN32
++ #define WDDM2_APIENTRY APIENTRY
++ #else
++ #define WDDM2_APIENTRY
++ #endif
++
 +static struct vk_wddm2_dispatch_table table;
 +
 +<%def name="arg(e)">
@@ -9869,7 +9875,7 @@ index 00000000000..c71e4105796
 +</%def>
 +
 +% for e in entrypoints:
-+static NTSTATUS
++static NTSTATUS WDDM2_APIENTRY
 +${e[0]}_not_supported(${arg(e)})
 +{
 +  fprintf(stderr, "D3DKMT${e[0]} is not supported\\n");
@@ -9877,6 +9883,8 @@ index 00000000000..c71e4105796
 +}
 +
 +% endfor
++
++#undef WDDM2_APIENTRY
 +
 +static void
 +initialize_dispatch_table(void)
