@@ -173,9 +173,9 @@
   "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
   "trigger": "manual",
   "result": "unchanged",
-  "last_poll_utc": "2026-11-27T10:13:59Z",
+  "last_poll_utc": "2026-11-27T10:28:57Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T10:13:59Z",
+    "last_poll_utc": "2026-11-27T10:28:57Z",
     "observed_instruction_id": "SUP-005-OVERNIGHT-20261126",
     "trigger": "manual",
     "result": "unchanged",
@@ -207,7 +207,7 @@
       "The 12-hour endurance target is incomplete.",
       "tester.39 remains blocked on pinned TheRock and historical payload inputs."
     ],
-    "worker_observation": "PS5 PID 21908, expected watchdog parent observed: True. Nagi PID 29916, expected watchdog parent observed: True.",
-    "poll_note": "Worker identities checked. Engineering evidence and queue metrics are from the preceding heartbeat. Local scheduler launch evidence was unavailable."
+    "worker_observation": "PS5 PID 21908, expected watchdog parent observed: True. Nagi PID 29916, expected watchdog parent observed: True",
+    "poll_note": "Worker parentage checked. Engineering evidence and queue metrics are carried forward. Local scheduler launch evidence unavailable."
   }
 }
