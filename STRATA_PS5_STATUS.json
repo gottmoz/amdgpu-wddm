@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-27T06:23:23Z",
+  "utc": "2026-11-27T06:24:20Z",
   "state": "idle",
   "current_task_id": null,
   "research_area": null,
@@ -9,15 +9,15 @@
   "input_tokens": 11139,
   "output_tokens": 5620,
   "last_successful_validation_utc": null,
-  "uptime_seconds": 521,
+  "uptime_seconds": 578,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 131.6,
-  "idle_seconds": 219.0,
+  "idle_seconds": 274.0,
   "idle_reason": "no eligible ready task (queue empty or waiting for retry)",
   "automatic_recoveries": 1,
   "pending_reviews": 0,
-  "published_commits": 0,
-  "last_successful_commit": "2400b0209a53fdf7688f5728fd8086adcd506ba6",
+  "published_commits": 2,
+  "last_successful_commit": "1d155f917c0c1f73e2e0d35731f2f401c6c92545",
   "next_task_id": null,
   "work_branch": "research/ps5-firmware"
 }
