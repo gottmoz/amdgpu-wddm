@@ -1,6 +1,6 @@
 {
-  "utc": "2026-11-27T06:51:29Z",
-  "state": "idle",
+  "utc": "2026-11-27T06:51:32Z",
+  "state": "error",
   "current_task_id": null,
   "research_area": null,
   "completed_count": 59,
@@ -9,7 +9,7 @@
   "input_tokens": 6691182,
   "output_tokens": 889244,
   "last_successful_validation_utc": "2026-11-26T13:15:04Z",
-  "uptime_seconds": 80528,
+  "uptime_seconds": 80531,
   "endurance_target_seconds": 28800,
   "actual_work_seconds": 13539.5,
   "idle_seconds": 61140.2,
