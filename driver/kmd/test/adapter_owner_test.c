@@ -134,7 +134,9 @@ int main(void) {
  int pdoA,pdoB; void* a=NULL; void* b=(void*)1; BC250_DEVICE unknown={0}; LONG before; unsigned i;
  HANDLE threads[2], start; RACER racers[2];
  failAllocation=1; CHECK(Bc250AddDevice(&pdoA,&a)==STATUS_INSUFFICIENT_RESOURCES); CHECK(!a && !touches);
- failAllocation=0; CHECK(Bc250AddDevice(&pdoA,&a)==0); before=touches;
+ failAllocation=0; CHECK(Bc250AddDevice(&pdoA,&a)==0);
+ AdapterOwnerRelease(&pdoB,0); CHECK(AdapterOwnerIs(&pdoA));
+ CHECK(!AdapterOwnerIs(&pdoB)); before=touches;
  CHECK(Bc250AddDevice(&pdoB,&b)==STATUS_DEVICE_BUSY); CHECK(!b && touches==before);
  unknown.PhysicalDeviceObject=&pdoB;unknown.StartVisibilityPending=1;
  CHECK(Bc250StopDevice(&unknown)==0); CHECK(touches==before); CHECK(Bc250RemoveDevice(&unknown)==0); CHECK(touches==before);

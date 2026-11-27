@@ -1,5 +1,5 @@
 param([Parameter(Mandatory=$true)][string]$Root,[Parameter(Mandatory=$true)][string]$Out,
- [ValidateSet('none','admission','cleanup','poison','bootmark')][string]$Mutation='none')
+ [ValidateSet('none','admission','cleanup','poison','bootmark','wrong-owner')][string]$Mutation='none')
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path "$PSScriptRoot/../../..").Path
 New-Item -ItemType Directory -Force $Out | Out-Null
@@ -28,6 +28,7 @@ switch($Mutation) {
  'admission' {$actual=$actual.Replace('if (!AdapterOwnerClaim(PhysicalDeviceObject)) return STATUS_DEVICE_BUSY;', '(void)AdapterOwnerClaim(PhysicalDeviceObject);')}
  'cleanup' {$actual=$actual.Replace('if (!device || !AdapterOwnerIs(device->PhysicalDeviceObject)) return STATUS_SUCCESS;', 'if (!device) return STATUS_SUCCESS;')}
  'poison' {$owner=$owner.Replace('uncertain ? &AdapterPoison : NULL','(uncertain && 0) ? &AdapterPoison : NULL')}
+ 'wrong-owner' {$owner=$owner.Replace('uncertain ? &AdapterPoison : NULL, identity);','uncertain ? &AdapterPoison : NULL, NULL);')}
  'bootmark' {$actual=$actual.Replace('if (device->GpuStopUnconfirmed) GuardMarkStopUnconfirmed();','(void)0;')}
 }
 $template=Get-Content -Raw "$PSScriptRoot/adapter_owner_test.c"
