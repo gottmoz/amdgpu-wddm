@@ -2,7 +2,7 @@
 
 Branch: `dev/build-ci`.
 
-1. Diagnose the vkd3d BuildTree nested submodule failure and complete the two engine rows without changing the historical tester.39 manifest.
+1. Build the vkd3d x86 engine row from its documented x86 source revision. The x64 `ddi-engine` row now builds and passes both host tests. Leave the historical tester.39 manifest unchanged.
 2. Explain why the RADV incremental build reports five dry-run actions but runs only the generated-header step. Perform a fresh compile and link after understanding the cause.
 3. Fix branch-aware Strata backlog replenishment so the Nagi and PS5 workers can receive useful tasks on their approved branches.
 4. Continue source-based research on `research/ps5-firmware` when the build lane is checkpointed.
