@@ -216,18 +216,18 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 record-pair gates revalidated against saved x64 and x86 results.",
-  "last_poll_utc": "2026-11-28T00:59:14.8930897Z",
+  "result": "SUP-006 pending. Verified RC5 upstream parity and both live worker parent links.",
+  "last_poll_utc": "2026-11-28T01:14:17.2303627Z",
   "heartbeat": {
-    "result": "SUP-006 pending. RC5 record-pair gates revalidated against saved x64 and x86 results.",
+    "result": "SUP-006 pending. Verified RC5 upstream parity and both live worker parent links.",
     "trigger": "manual",
     "blockers": [
       "Automatic refill followed by validated task publication remains unverified.",
       "Full graphics package validation and pinned tester.39 TheRock/build-history inputs remain pending.",
       "No local scheduler invocation evidence for this poll."
     ],
-    "last_poll_utc": "2026-11-28T00:59:14.8930897Z",
+    "last_poll_utc": "2026-11-28T01:14:17.2303627Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
-    "validation": "RC5 ca95cf88e matches authenticated upstream. Both gates exit 0 with 50 pairs and five expected reds per architecture. ps5 worker 21908 watchdog 5712: live parent link=True. nagi worker 37252 watchdog 31704: live parent link=True."
+    "validation": "Clean RC5 HEAD matches authenticated upstream at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. PS5 worker 21908 parent 5712; Nagi worker 37252 parent 31704. Previous saved host pair gates passed on both architectures with five expected reds each."
   }
 }
