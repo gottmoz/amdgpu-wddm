@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T04:44:22.9098977Z",
+  "last_poll_utc": "2026-11-28T04:59:12.0545175Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T04:44:22.9098977Z",
+    "last_poll_utc": "2026-11-28T04:59:12.0545175Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "RC5 matches authenticated upstream ca95cf88. PS5 and Nagi worker watchdog parent links verified. Local VKD3D x64 and x86 DLLs rehashed with both build identities recording 6e3e7afa004a374984b583746fe4d1f243ac5cde. Package validation pending.",
+    "validation": "Clean local RC5 matches authenticated upstream ca95cf88. PS5 worker 21908 and Nagi worker 37252 have live watchdog parents 5712 and 31704.",
     "blockers": [
       "PS5 queue empty. Nagi 9 done, 3 quarantined. IN-NAGI-INF-IDENTITY-REVIEW-01 rejected by Nagi because its source path is not an existing bounded text file and by PS5 because its area is outside the approved set. Automatic refill and validated publication pending.",
       "Graphics package validation and pinned tester.39 TheRock and kit8 inputs pending.",
