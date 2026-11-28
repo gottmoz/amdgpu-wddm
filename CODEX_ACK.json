@@ -217,17 +217,17 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T02:44:15.387976Z",
+  "last_poll_utc": "2026-11-28T02:59:13.8896019Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T02:44:15.387976Z",
+    "last_poll_utc": "2026-11-28T02:59:13.8896019Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 matches authenticated upstream main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. PS5 and Nagi worker links to live watchdogs verified. Prior x64 and x86 pair gates passed with five expected failures each.",
+    "validation": "Clean RC5 matches origin/main ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Both saved record-pair TSV gates exited 0, 50 pairs and five expected failures each. PS5 and Nagi worker PIDs have live watchdog parents.",
     "blockers": [
-      "Automatic refill followed by validated publication remains unverified.",
+      "No eligible ready task was observed in the local PS5 or Nagi queues. Automatic refill and validated publication remain unverified.",
       "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
-      "Local scheduler invocation evidence is unavailable for this poll."
+      "Local scheduler invocation evidence is unavailable."
     ]
   }
 }
