@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T06:13:45.2263896Z",
+  "last_poll_utc": "2026-11-28T06:29:04.2670869Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T06:13:45.2263896Z",
+    "last_poll_utc": "2026-11-28T06:29:04.2670869Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "RC5 local HEAD and authenticated upstream main both ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. PS5 PID 21908 (parent 5712) and Nagi PID 37252 (parent 31704) have live Python watchdog parents. Prior validation verified x64/x86 VKD3D PE machine types and hashes.",
+    "validation": "Clean RC5 integration worktree at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Both worker/watchdog parent links verified live (PS5 21908/5712, Nagi 37252/31704). Prior x64/x86 VKD3D PE architecture and hashes verified.",
     "blockers": [
       "PS5 queue empty. Nagi has nine done, three quarantined and zero ready. Automatic refill and publication remain unverified.",
       "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
