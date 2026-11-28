@@ -235,7 +235,7 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T17:44:01.9524791Z",
+  "last_poll_utc": "2026-11-28T17:59:19.4688275Z",
   "heartbeat": {
     "result": "SUP-007 pending",
     "blockers": [
@@ -243,9 +243,9 @@
       "RC5 Mesa rebuild, matching component admission and package validation remain open.",
       "Local scheduler launch evidence unavailable."
     ],
-    "validation": "Published RC5 b6022c919 changes only the Mesa WDDM2 patch and source manifest. Rechecked existing x64/x86 DXVK host logs: video CSC and 27 directional-format checks passed per architecture.",
+    "validation": "Verified existing DXVK DDI artifacts offline: x64 PE 8664 SHA256 86DAEE1C420B98ED82D788E1080FD3478A4B22C5E4215E166A85336102716DE1, x86 PE 014C SHA256 1099D5EF1FB27C146E6C9CC88D56FCE57B512F7E2750D81D10A331D2A9A99E16. Next gate: match source identity to RC5 and verify component admission.",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "last_poll_utc": "2026-11-28T17:44:01.9524791Z",
+    "last_poll_utc": "2026-11-28T17:59:19.4688275Z",
     "trigger": "manual"
   }
 }
