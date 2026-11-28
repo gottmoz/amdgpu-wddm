@@ -235,16 +235,16 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T15:44:13.6367623Z",
+  "last_poll_utc": "2026-11-28T15:59:39.3050585Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T15:44:13.6367623Z",
+    "last_poll_utc": "2026-11-28T15:59:39.3050585Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Verified the RC5 Mesa source manifest and WDDM2 patch match the parent of a15239303 byte for byte. The x86 ABI change remains to be applied and validated on RC5. Prior D3D11/DXVK x64 and x86 host checks passed.",
+    "validation": "Local RC5 commit b6022c9192a1081049e9b0bac72361795de2bdc9 ports the Mesa x86 WDDM2 patch and source manifest from a15239303. Indexed apply and diff checks passed. SHA-256 matches the manifest. Prior D3D11/DXVK x64 and x86 host checks passed.",
     "blockers": [
       "Worker refill, validated publications and eight Nagi review dispositions remain open.",
-      "RC5 integration, matching engine/ICD admission and development package validation remain open.",
+      "RC5 rebuild and publication, matching engine/ICD admission and development package validation remain open.",
       "Local scheduler launch evidence unavailable."
     ]
   }
