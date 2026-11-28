@@ -217,16 +217,16 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T07:29:54.2384744Z",
+  "last_poll_utc": "2026-11-28T07:44:03.1905270Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T07:29:54.2384744Z",
+    "last_poll_utc": "2026-11-28T07:44:03.1905270Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 ca95cf88ed3b400e9a3b8608a3575c9fcea86c53 matched upstream main. Fresh host record-pair gates passed x64 and x86 (wrapper exit 0, raw exit 1 with five expected-red rows per architecture, 13 producers, 5 consumers, 50 pairs). Both worker/watchdog parent links verified.",
+    "validation": "Clean RC5 worktree at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Prior x64/x86 host record-pair gates passed with five expected-red rows per architecture. PS5 queue now lists S006 pending. Two Strata Python processes present, but both recorded parent PIDs absent.",
     "blockers": [
-      "PS5 queue has 0 tasks. Nagi: 9 done, 3 quarantined. Automatic refill and new validated publication remain unverified.",
-      "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
+      "Watchdog supervision and execution of S006 unverified.",
+      "Graphics package validation and pinned tester.39 inputs pending.",
       "Local scheduler invocation evidence unavailable."
     ]
   }
