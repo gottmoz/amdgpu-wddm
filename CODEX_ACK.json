@@ -235,17 +235,17 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T17:29:22.5540401Z",
+  "last_poll_utc": "2026-11-28T17:44:01.9524791Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T17:29:22.5540401Z",
-    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Clean local RC5 matches published b6022c919, 0 behind and 1 ahead of ca95cf88e. git show --check passed. Prior host evidence: 50 shared-record pairs and four successful DXVK host checks per architecture.",
     "blockers": [
-      "Worker refill, validated publications and eight Nagi review dispositions remain open.",
+      "Live refill proof, task publications and eight Nagi review dispositions remain open.",
       "RC5 Mesa rebuild, matching component admission and package validation remain open.",
       "Local scheduler launch evidence unavailable."
-    ]
+    ],
+    "validation": "Published RC5 b6022c919 changes only the Mesa WDDM2 patch and source manifest. Rechecked existing x64/x86 DXVK host logs: video CSC and 27 directional-format checks passed per architecture.",
+    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
+    "last_poll_utc": "2026-11-28T17:44:01.9524791Z",
+    "trigger": "manual"
   }
 }
