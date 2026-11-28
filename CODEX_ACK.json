@@ -217,16 +217,16 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T04:59:12.0545175Z",
+  "last_poll_utc": "2026-11-28T05:14:09.3747292Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T04:59:12.0545175Z",
+    "last_poll_utc": "2026-11-28T05:14:09.3747292Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean local RC5 matches authenticated upstream ca95cf88. PS5 worker 21908 and Nagi worker 37252 have live watchdog parents 5712 and 31704.",
+    "validation": "Clean local RC5 equals upstream ca95cf88e. Live PS5 worker 21908 and Nagi worker 37252 have watchdog parents 5712 and 31704. Prior RC5 host runs recorded 212 pairs and five expected failures per architecture.",
     "blockers": [
-      "PS5 queue empty. Nagi 9 done, 3 quarantined. IN-NAGI-INF-IDENTITY-REVIEW-01 rejected by Nagi because its source path is not an existing bounded text file and by PS5 because its area is outside the approved set. Automatic refill and validated publication pending.",
-      "Graphics package validation and pinned tester.39 TheRock and kit8 inputs pending.",
+      "PS5 queue empty. Nagi has 9 done and 3 quarantined, zero ready. Automatic refill remains unverified.",
+      "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
       "Local scheduler invocation evidence unavailable."
     ]
   }
