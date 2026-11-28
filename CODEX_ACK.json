@@ -235,17 +235,17 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T14:59:17.2803355Z",
+  "last_poll_utc": "2026-11-28T15:14:11.4605783Z",
   "heartbeat": {
+    "last_poll_utc": "2026-11-28T15:14:11.4605783Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "blockers": [
-      "PS5 eligible refill and Nagi quarantine review pending; two validated publications per worker and eight Nagi dispositions unverified.",
-      "Remote RC5 integration ref absent; matching engine/ICD admission and package validation pending. Historical tester.39 ROCm inputs remain unresolved.",
-      "Local scheduler launch evidence unavailable."
-    ],
-    "last_poll_utc": "2026-11-28T14:59:17.2803355Z",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "PS5 and Nagi worker/watchdog PIDs present. Productive counters unchanged at 837.6 s / 14 runs and 2670.7 s / 130 runs. PS5 queue empty. Both D3D11 UMD build logs record passing OpenAdapter10_2 host checks. Prior x64/x86 DXVK host checks remain validated."
+    "validation": "Both Strata workers verified as children of their watchdogs. PS5 ready queue has zero tasks. RC5 local integration branch divergence versus pinned upstream is 0/0 (upstream-only/local-only). Prior x64/x86 D3D11 UMD and DXVK host build checks passed.",
+    "blockers": [
+      "PS5 eligible refill, two validated publications per worker and eight Nagi dispositions remain open.",
+      "Reviewed RC5 integration, matching engine/ICD admission and development package validation remain open.",
+      "Local scheduler launch evidence unavailable."
+    ]
   }
 }
