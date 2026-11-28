@@ -235,13 +235,13 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T15:59:39.3050585Z",
+  "last_poll_utc": "2026-11-28T16:14:04.6379011Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T15:59:39.3050585Z",
+    "last_poll_utc": "2026-11-28T16:14:04.6379011Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Local RC5 commit b6022c9192a1081049e9b0bac72361795de2bdc9 ports the Mesa x86 WDDM2 patch and source manifest from a15239303. Indexed apply and diff checks passed. SHA-256 matches the manifest. Prior D3D11/DXVK x64 and x86 host checks passed.",
+    "validation": "Rechecked the clean RC5 worktree at b6022c919, directly based on ca95cf88e. git show --check passed. The commit changes only the Mesa source manifest and WDDM2 patch. Prior indexed apply, manifest hash and x64/x86 D3D11/DXVK host checks remain valid evidence.",
     "blockers": [
       "Worker refill, validated publications and eight Nagi review dispositions remain open.",
       "RC5 rebuild and publication, matching engine/ICD admission and development package validation remain open.",
