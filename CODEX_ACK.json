@@ -235,7 +235,7 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T14:44:27.8874839Z",
+  "last_poll_utc": "2026-11-28T14:59:17.2803355Z",
   "heartbeat": {
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "blockers": [
@@ -243,9 +243,9 @@
       "Remote RC5 integration ref absent; matching engine/ICD admission and package validation pending. Historical tester.39 ROCm inputs remain unresolved.",
       "Local scheduler launch evidence unavailable."
     ],
-    "last_poll_utc": "2026-11-28T14:44:27.8874839Z",
+    "last_poll_utc": "2026-11-28T14:59:17.2803355Z",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Live process pairs PS5 21908/5712 and Nagi 37252/31704. Active endurance records show 837.6 s / 14 runs and 2670.7 s / 130 runs respectively. PS5 queue empty; Nagi adapter-owner generated task quarantined. Clean local RC5 integration at ca95cf88e; authenticated matching-refs lookup returned zero. Prior x64/x86 DXVK and D3D11 UMD host checks remain validated."
+    "validation": "PS5 and Nagi worker/watchdog PIDs present. Productive counters unchanged at 837.6 s / 14 runs and 2670.7 s / 130 runs. PS5 queue empty. Both D3D11 UMD build logs record passing OpenAdapter10_2 host checks. Prior x64/x86 DXVK host checks remain validated."
   }
 }
