@@ -216,17 +216,17 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 upstream parity confirmed. Nagi INF review has a prior reviewed publication.",
-  "last_poll_utc": "2026-11-27T23:44:01.2247988Z",
+  "result": "SUP-006 pending. RC5 x64 and x86 record-pair builds and host verification completed.",
+  "last_poll_utc": "2026-11-27T23:59:48.4253390Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-27T23:44:01.2247988Z",
-    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "result": "SUP-006 pending. RC5 upstream parity confirmed. Nagi INF review has a prior reviewed publication.",
-    "validation": "Clean local RC5 and authenticated upstream main both at ca95cf88e. Nagi INF review 39d0b95e5 appears in the Nagi tracking branch and its task record reports a doclint pass. PS5 worker/watchdog 21908/5712 and Nagi 37252/31704 confirmed live. PS5 queue empty. Nagi queue 9 done, 3 quarantined.",
+    "validation": "RC5 clean at upstream ca95cf88e. Both host verifiers exit 0, 50 pairs per architecture. Raw runners exit 1 with five expected-red cases per architecture. Live PS5/Nagi watchdog parent links verified. PS5 queue empty; Nagi 9 done, 3 quarantined. V3 source has branch-aware refill filtering; live refill remains unverified.",
+    "last_poll_utc": "2026-11-27T23:59:48.4253390Z",
     "blockers": [
-      "Automatic refill and worker publication after refill remain unverified.",
-      "Full graphics package and pinned tester.39 TheRock/history inputs remain pending."
-    ]
+      "Automatic refill and validated publication after refill remain unverified.",
+      "Full graphics package validation and pinned tester.39 TheRock/history inputs remain pending."
+    ],
+    "result": "SUP-006 pending. RC5 x64 and x86 record-pair builds and host verification completed.",
+    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127"
   }
 }
