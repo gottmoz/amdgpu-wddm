@@ -235,17 +235,17 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T13:44:38.5070864Z",
+  "last_poll_utc": "2026-11-28T14:07:37.6120438Z",
   "heartbeat": {
-    "result": "SUP-007 pending",
-    "validation": "DXVK 4cf4e386f MSVC engines built for x64/x86 (exit 0); 8/8 host tests passed. This poll assembled 315 local Microsoft DDI callback topics into a temporary reference and ran the unchanged D3D11 gates: 132 report sites, 301 entries, all 37 policy rows cross-checked and all 8 mutations refused. D3D11 shell build still pending.",
-    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "blockers": [
-      "Build recipe still expects the aggregate DDI reference at the workspace path; repeatable preparation and shell builds for both architectures remain open.",
-      "Worker refill, Nagi reviews, RC5 integration and graphics package remain open.",
-      "Scheduler launch evidence unavailable."
-    ],
     "trigger": "manual",
-    "last_poll_utc": "2026-11-28T13:44:38.5070864Z"
+    "blockers": [
+      "Matching engine/ICD admission, source integration and package validation remain open. DDI corpus prepared in an isolated local build root.",
+      "Worker refill, Nagi reviews, RC5 integration and graphics package remain open.",
+      "Local scheduler launch evidence unavailable."
+    ],
+    "last_poll_utc": "2026-11-28T14:07:37.6120438Z",
+    "result": "SUP-007 pending",
+    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
+    "validation": "D3D11 UMD x64/x86 full recipes exited 0 with Clang 23.1.4 and pinned DXVK 4cf4e386f. DDI policy 37/37, eight negative controls and OpenAdapter10_2 host checks passed on both. DLL SHA256 matched build logs (x64 4C4ED9BD47232501B66DC71DBF7195DD06E565A4B0B09364041A1B7FB66279F3; x86 DB770E478A53FE5F06A287E4D1DA46016E3F35D9C16D94D38663167E28968A83)."
   }
 }
