@@ -217,16 +217,16 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T08:29:04.3389452Z",
+  "last_poll_utc": "2026-11-28T08:44:11.9564037Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T08:29:04.3389452Z",
+    "last_poll_utc": "2026-11-28T08:44:11.9564037Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 worktree matches upstream main at ca95cf88. Prior x64 and x86 host record-pair gates passed with expected reds. Live Strata Python parent-child processes observed.",
+    "validation": "Clean RC5 matches upstream ca95cf88. ps5: watchdog link True, queue []. nagi: watchdog link True, queue [done=9, quarantined=3]. Prior x64/x86 record-pair gates passed with expected reds.",
     "blockers": [
-      "Automatic refill and S006 execution, validation and publication remain unverified.",
-      "Graphics package validation and historical tester.39 ROCm inputs remain pending.",
+      "Automatic refill and S006 execution and publication remain unverified.",
+      "Graphics package validation and historical tester.39 inputs pending.",
       "Local scheduler invocation evidence unavailable."
     ]
   }
