@@ -217,15 +217,15 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T06:29:04.2670869Z",
+  "last_poll_utc": "2026-11-28T06:44:11.4174029Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T06:29:04.2670869Z",
+    "last_poll_utc": "2026-11-28T06:44:11.4174029Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 integration worktree at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Both worker/watchdog parent links verified live (PS5 21908/5712, Nagi 37252/31704). Prior x64/x86 VKD3D PE architecture and hashes verified.",
+    "validation": "Clean RC5 worktree matches current upstream main at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. PS5 and Nagi worker and watchdog pairs are live. Prior VKD3D x64/x86 host ABI checks passed.",
     "blockers": [
-      "PS5 queue empty. Nagi has nine done, three quarantined and zero ready. Automatic refill and publication remain unverified.",
+      "PS5 queue empty. Nagi has nine done and three quarantined, zero ready. Automatic refill and new publication remain unverified.",
       "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
       "Local scheduler invocation evidence unavailable."
     ]
