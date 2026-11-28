@@ -237,15 +237,15 @@
   "result": "SUP-007 pending",
   "last_poll_utc": "2026-11-28T12:14:02.4267715Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T12:14:02.4267715Z",
+    "last_poll_utc": "2026-11-28T12:29:43.3123200Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Both live workers are children of their watchdogs. PS5 queue empty; Nagi has 9 done and 3 quarantined. Recorded Nagi rejection IN-NAGI-INF-IDENTITY-REVIEW-01: source path must be an existing bounded text file. Clean local RC5 ca95cf88. Prior VKD3D x64/x86 host and ABI-only checks remain the latest validated engine builds.",
+    "validation": "Acquired D-Ogi/dxvk at RC5 pin 4cf4e386ffda0cd32a5360004607bee56f293653 and verified all six recursive submodule checkouts; submodule update exited 0. Prior VKD3D host and ABI-only validation still applies.",
     "blockers": [
-      "Nagi INF identity review needs a valid bounded source path. Automatic refill and two reviewed publications per worker remain unverified.",
-      "Nagi review dispositions, DXVK builds, reviewed RC5 integration and matching package gates remain pending.",
-      "Local scheduler launch evidence unavailable for this poll."
+      "D3D11/DXVK x64 and x86 configuration, build and gates remain pending.",
+      "Worker refill, Nagi reviews, RC5 integration and package gates remain pending.",
+      "No local scheduler launch evidence for this execution."
     ]
   }
 }
