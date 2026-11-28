@@ -217,16 +217,16 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T01:59:12.856176Z",
+  "last_poll_utc": "2026-11-28T02:13:57.0788172Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T01:59:12.856176Z",
+    "last_poll_utc": "2026-11-28T02:13:57.0788172Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Verified live PS5 and Nagi worker/watchdog links and clean local RC5 at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Prior saved x64/x86 gates passed with five expected reds each.",
+    "validation": "Clean RC5 integration HEAD matches upstream main at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. PS5 and Nagi live worker/watchdog links verified. Prior x64/x86 pair gates passed with five expected reds per architecture.",
     "blockers": [
       "Automatic refill followed by validated publication remains unverified.",
-      "Full graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
+      "Graphics package validation and pinned tester.39 TheRock and kit8 inputs remain pending.",
       "No local scheduler invocation evidence for this poll."
     ]
   }
