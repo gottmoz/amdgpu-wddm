@@ -235,17 +235,17 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T16:29:54.0974524Z",
+  "last_poll_utc": "2026-11-28T16:44:35.7087289Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T16:29:54.0974524Z",
-    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "RC5 b6022c919: x64 and x86 shared-record host contract gates passed (50 pairs each, five expected reds, six prior expected reds now green). Raw test exit 1 on both, policy wrapper exit 0. git show --check passed.",
     "blockers": [
-      "Worker refill, validated publications and eight Nagi review dispositions remain open.",
-      "RC5 Mesa rebuild, integration branch publication, matching engine/ICD admission and development package validation remain open.",
+      "Worker refill, validated worker publications and eight Nagi dispositions remain open.",
+      "Fresh DXVK and RC5 Mesa builds, matching component admission and package validation remain open.",
       "Local scheduler launch evidence unavailable."
-    ]
+    ],
+    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
+    "last_poll_utc": "2026-11-28T16:44:35.7087289Z",
+    "trigger": "manual",
+    "validation": "Published RC5 source integration b6022c919 on dev/upstream-nagi-rc5-integration and verified remote head. It is one commit atop upstream main ca95cf88e. Patch SHA256 matches manifest. Prior x64/x86 record-pair gate passed 50 pairs each with five expected reds under the policy wrapper."
   }
 }
