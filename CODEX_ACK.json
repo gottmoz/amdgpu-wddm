@@ -235,7 +235,7 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T14:14:10.8801049Z",
+  "last_poll_utc": "2026-11-28T14:29:05.7743258Z",
   "heartbeat": {
     "trigger": "manual",
     "blockers": [
@@ -243,9 +243,9 @@
       "Worker refill, new task publications and eight Nagi reviews remain unverified.",
       "Local scheduler launch evidence unavailable."
     ],
-    "last_poll_utc": "2026-11-28T14:14:10.8801049Z",
+    "last_poll_utc": "2026-11-28T14:29:05.7743258Z",
     "result": "SUP-007 pending",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "validation": "Verified existing DXVK x64/x86 DLL PE machines 8664/014C and SHA256 matches build logs. Source 4cf4e386ffda0cd32a5360004607bee56f293653. App options, cache quota, video CSC and video format logs report exit 0 for both architectures. Worker PID/parent pairs 21908/5712 and 37252/31704 present. Prior D3D11 UMD recipes passed on x64/x86."
+    "validation": "Rechecked local D3D11 UMD PE machine and SHA256 against full build logs: x64 PE 8664, SHA256 4C4ED9BD47232501B66DC71DBF7195DD06E565A4B0B09364041A1B7FB66279F3 / x86 PE 014C, SHA256 DB770E478A53FE5F06A287E4D1DA46016E3F35D9C16D94D38663167E28968A83. Both logs show passing OpenAdapter10_2 host checks. Prior pinned DXVK x64/x86 builds and four host tests per architecture passed."
   }
 }
