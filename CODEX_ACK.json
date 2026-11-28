@@ -217,15 +217,15 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T07:44:03.1905270Z",
+  "last_poll_utc": "2026-11-28T07:44:03.190527Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T07:44:03.1905270Z",
+    "last_poll_utc": "2026-11-28T07:59:02.9714114Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 worktree at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Prior x64/x86 host record-pair gates passed with five expected-red rows per architecture. PS5 queue now lists S006 pending. Two Strata Python processes present, but both recorded parent PIDs absent.",
+    "validation": "Clean RC5 matches remote upstream main at ca95cf88. Prior x64/x86 host record-pair gates passed with five expected-red rows per architecture. Live PS5 worker 21908 and Nagi worker 37252 are children of watchdogs 5712 and 31704 respectively.",
     "blockers": [
-      "Watchdog supervision and execution of S006 unverified.",
+      "S006 validation, publication and automatic refill remain unverified.",
       "Graphics package validation and pinned tester.39 inputs pending.",
       "Local scheduler invocation evidence unavailable."
     ]
