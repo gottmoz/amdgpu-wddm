@@ -235,13 +235,13 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T15:29:07.5944536Z",
+  "last_poll_utc": "2026-11-28T15:44:13.6367623Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T15:29:07.5944536Z",
+    "last_poll_utc": "2026-11-28T15:44:13.6367623Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Rechecked both D3D11 UMD OpenAdapter10_2 host checks: configuration rejection, v1/v2/v3 records, negotiation and close passed. Clean RC5 worktree remains at ca95cf88e. Local a15239303 contains the x86 Mesa dispatch ABI fix and associated pin update, pending integration validation.",
+    "validation": "Verified the RC5 Mesa source manifest and WDDM2 patch match the parent of a15239303 byte for byte. The x86 ABI change remains to be applied and validated on RC5. Prior D3D11/DXVK x64 and x86 host checks passed.",
     "blockers": [
       "Worker refill, validated publications and eight Nagi review dispositions remain open.",
       "RC5 integration, matching engine/ICD admission and development package validation remain open.",
