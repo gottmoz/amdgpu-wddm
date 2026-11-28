@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T09:13:59.3368253Z",
+  "last_poll_utc": "2026-11-28T09:29:01.4067129Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T09:13:59.3368253Z",
+    "last_poll_utc": "2026-11-28T09:29:01.4067129Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean isolated RC5 HEAD matches upstream main ca95cf88. ps5 worker=21908 watchdog=5712 linked=True queue []. nagi worker=37252 watchdog=31704 linked=True queue [done=9, quarantined=3]. Prior host record-pair gates verified for x64/x86 with expected reds.",
+    "validation": "Clean isolated RC5 matches upstream main ca95cf88. Verified watchdog parent links PS5 21908/5712 and Nagi 37252/31704. Queue: ps5 [], nagi [done=9, quarantined=3]. Prior x64/x86 host record-pair gates verified with expected reds.",
     "blockers": [
       "Automatic refill and S006 execution and publication remain unverified.",
       "Graphics package validation and historical tester.39 inputs pending.",
