@@ -235,17 +235,17 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T12:59:27.2735834Z",
+  "last_poll_utc": "2026-11-28T13:14:07.570594Z",
   "heartbeat": {
     "result": "SUP-007 pending",
-    "validation": "Unstamped DXVK 4cf4e386f MSVC development engines built for x64/x86 (exit 0; 10 matching Meson options). App options, cache quota, video CSC and directional video format passed for both (8/8). Engine SHA256 x64 86daee1c420b98ed82d788e1080fd3478a4b22c5e4215e166a85336102716de1; x86 1099d5ef1fb27c146e6c9cc88d56fce57b512f7e2750d81d10a331d2a9a99e16. D3D11 shell recipe attempted for x64 and x86; both exited 1 at the precompile DDI policy gate because ref/ddi-display/d3d10umddi.md is missing.",
+    "validation": "Unstamped DXVK 4cf4e386f MSVC development engines built for x64/x86 (exit 0; 10 matching Meson options). App options, cache quota, video CSC and directional video format passed for both (8/8). Engine SHA256 x64 86daee1c420b98ed82d788e1080fd3478a4b22c5e4215e166a85336102716de1; x86 1099d5ef1fb27c146e6c9cc88d56fce57b512f7e2750d81d10a331d2a9a99e16. D3D11 shell recipe attempted for x64 and x86; both exited 1 at the precompile DDI policy gate because ref/ddi-display/d3d10umddi.md is missing. Traced the requested reference path to Get-Bc250Root: the isolated worktree falls back to its parent scratch directory unless BC250_ROOT is set. A bounded lookup found no d3d10umddi.md in the local project trees searched.",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "blockers": [
-      "Missing workspace reference ref/ddi-display/d3d10umddi.md blocks both D3D11 shell builds. Matching binaries and import/export checks remain open.",
+      "D3D11 x64/x86 require the workspace DDI reference corpus and explicit BC250_ROOT for the isolated checkout. Matching binary checks remain open.",
       "Worker refill, Nagi reviews, RC5 integration and package remain open.",
       "Local scheduler launch evidence unavailable."
     ],
     "trigger": "manual",
-    "last_poll_utc": "2026-11-28T12:59:27.2735834Z"
+    "last_poll_utc": "2026-11-28T13:14:07.570594Z"
   }
 }
