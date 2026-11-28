@@ -235,17 +235,16 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T12:14:02.4267715Z",
+  "last_poll_utc": "2026-11-28T12:45:48.9669322Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T12:29:43.3123200Z",
-    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Acquired D-Ogi/dxvk at RC5 pin 4cf4e386ffda0cd32a5360004607bee56f293653 and verified all six recursive submodule checkouts; submodule update exited 0. Prior VKD3D host and ABI-only validation still applies.",
+    "validation": "DXVK 4cf4e386f MSVC Meson x64/x86 configuration passed (exit 0, all 10 options matched). Compilation initiated.",
+    "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "blockers": [
-      "D3D11/DXVK x64 and x86 configuration, build and gates remain pending.",
-      "Worker refill, Nagi reviews, RC5 integration and package gates remain pending.",
-      "No local scheduler launch evidence for this execution."
-    ]
+      "DXVK build and tests, D3D11 shell, worker refill, Nagi reviews, RC5 integration and package pending.",
+      "Local scheduler launch evidence unavailable."
+    ],
+    "trigger": "manual",
+    "last_poll_utc": "2026-11-28T12:45:48.9669322Z"
   }
 }
