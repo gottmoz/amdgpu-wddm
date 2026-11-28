@@ -223,7 +223,7 @@
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean isolated RC5 HEAD matches upstream main ca95cf88. ps5 worker=21908 watchdog=5712 linked=True queue [=1]. nagi worker=37252 watchdog=31704 linked=True queue [=1]. Prior host record-pair gates verified for x64/x86 with expected reds.",
+    "validation": "Clean isolated RC5 HEAD matches upstream main ca95cf88. ps5 worker=21908 watchdog=5712 linked=True queue []. nagi worker=37252 watchdog=31704 linked=True queue [done=9, quarantined=3]. Prior host record-pair gates verified for x64/x86 with expected reds.",
     "blockers": [
       "Automatic refill and S006 execution and publication remain unverified.",
       "Graphics package validation and historical tester.39 inputs pending.",
