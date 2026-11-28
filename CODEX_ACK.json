@@ -235,16 +235,16 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T11:59:14.0823924Z",
+  "last_poll_utc": "2026-11-28T12:14:02.4267715Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T11:59:14.0823924Z",
+    "last_poll_utc": "2026-11-28T12:14:02.4267715Z",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
     "trigger": "manual",
     "result": "SUP-007 pending",
-    "validation": "Observed live Strata V3 worker/watchdog parent pairs 21908/5712 and 37252/31704. Local RC5 worktree is clean at ca95cf88ed3b400e9a3b8608a3575c9fcea86c53. Authenticated lookup of dev/upstream-nagi-rc5-integration returned HTTP 404. DXVK configuration defines a ddi-engine target built from the amdgpu-wddm/ddi-engine DXVK branch. Prior x64/x86 VKD3D host and ABI-only checks remain the latest validated engine builds.",
+    "validation": "Both live workers are children of their watchdogs. PS5 queue empty; Nagi has 9 done and 3 quarantined. Recorded Nagi rejection IN-NAGI-INF-IDENTITY-REVIEW-01: source path must be an existing bounded text file. Clean local RC5 ca95cf88. Prior VKD3D x64/x86 host and ABI-only checks remain the latest validated engine builds.",
     "blockers": [
-      "Automatic refill and two validated task publications per worker remain unverified.",
-      "Eight Nagi dispositions, fresh DXVK builds, reviewed RC5 integration and matching package gates remain pending.",
+      "Nagi INF identity review needs a valid bounded source path. Automatic refill and two reviewed publications per worker remain unverified.",
+      "Nagi review dispositions, DXVK builds, reviewed RC5 integration and matching package gates remain pending.",
       "Local scheduler launch evidence unavailable for this poll."
     ]
   }
