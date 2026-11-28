@@ -235,7 +235,7 @@
   "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
   "trigger": "manual",
   "result": "SUP-007 pending",
-  "last_poll_utc": "2026-11-28T18:13:59.1033903Z",
+  "last_poll_utc": "2026-11-28T18:29:19.8198092Z",
   "heartbeat": {
     "result": "SUP-007 pending",
     "blockers": [
@@ -243,9 +243,9 @@
       "RC5 Mesa rebuild, matching component admission and package validation remain open.",
       "Local scheduler launch evidence unavailable."
     ],
-    "validation": "Verified published RC5 b6022c9192a1081049e9b0bac72361795de2bdc9 is one commit ahead and zero behind ca95cf88e, changing only the Mesa source manifest and WDDM2 patch. Prior DXVK DDI x64/x86 PE and SHA256 checks remain recorded at 4bb1f4c8d2f013e052eeb1cfcc0633dcc9cb58c5.",
+    "validation": "Verified clean local RC5 b6022c919 matches published fork ref, git show --check passed, and Mesa WDDM2 patch SHA256 matches the RC5 source manifest (71f4ff87ac000b2e7adc615a915b394d0446e2bc73cf897c32eb19545821ed56).",
     "observed_instruction_id": "SUP-007-GRAPHICS-REFILL-20261128",
-    "last_poll_utc": "2026-11-28T18:13:59.1033903Z",
+    "last_poll_utc": "2026-11-28T18:29:19.8198092Z",
     "trigger": "manual"
   }
 }
