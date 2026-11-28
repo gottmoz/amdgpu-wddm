@@ -216,18 +216,18 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. Verified local VKD3D x64/x86 PE machine fields and calculated SHA-256.",
-  "last_poll_utc": "2026-11-28T00:44:27.8090951Z",
+  "result": "SUP-006 pending. RC5 record-pair gates revalidated against saved x64 and x86 results.",
+  "last_poll_utc": "2026-11-28T00:59:14.8930897Z",
   "heartbeat": {
-    "result": "SUP-006 pending. Verified local VKD3D x64/x86 PE machine fields and calculated SHA-256.",
-    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
-    "last_poll_utc": "2026-11-28T00:44:27.8090951Z",
-    "validation": "RC5 ca95cf88e matches authenticated upstream. VKD3D build-ID records 6e3e7afa004a374, PE machine 8664/014C and SHA-256 prefixes 1079A3A89D4B/C48CDDB91FBD. Verified PS5 21908 and Nagi 37252 under their live watchdogs.",
+    "result": "SUP-006 pending. RC5 record-pair gates revalidated against saved x64 and x86 results.",
     "trigger": "manual",
     "blockers": [
-      "Automatic refill and subsequent publication unverified. PS5 queue empty. Nagi intake rejection requires an existing bounded text source.",
-      "Full graphics package pending. Saved tester.39 plan lacks pinned TheRock and build-history inputs.",
-      "Local scheduler invocation evidence unavailable."
-    ]
+      "Automatic refill followed by validated task publication remains unverified.",
+      "Full graphics package validation and pinned tester.39 TheRock/build-history inputs remain pending.",
+      "No local scheduler invocation evidence for this poll."
+    ],
+    "last_poll_utc": "2026-11-28T00:59:14.8930897Z",
+    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
+    "validation": "RC5 ca95cf88e matches authenticated upstream. Both gates exit 0 with 50 pairs and five expected reds per architecture. ps5 worker 21908 watchdog 5712: live parent link=True. nagi worker 37252 watchdog 31704: live parent link=True."
   }
 }
