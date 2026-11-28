@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T10:59:13.2750535Z",
+  "last_poll_utc": "2026-11-28T11:14:04.4328695Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T10:59:13.2750535Z",
+    "last_poll_utc": "2026-11-28T11:14:04.4328695Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "RC5 clean at ca95cf88, verified against upstream main. ps5: worker 21908 watchdog 5712 linked=True queue []; nagi: worker 37252 watchdog 31704 linked=True queue [done=9, quarantined=3]. Previous VKD3D x64/x86 ABI-only checks passed.",
+    "validation": "PS5 worker 21908 and Nagi worker 37252 verified as children of watchdogs 5712 and 31704. RC5 worktree clean at ca95cf88e. Prior VKD3D ABI-only x64/x86 checks passed. The latest tester.39 plan log shows missing TheRock and kit8-qwen-split inputs in both ROCm rows.",
     "blockers": [
       "Automatic refill and S006 execution/publication remain unverified.",
       "Graphics development package and historical tester.39 inputs pending.",
