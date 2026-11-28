@@ -216,17 +216,17 @@
   ],
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
-  "result": "SUP-006 pending. RC5 x64 and x86 record-pair builds and host verification completed.",
-  "last_poll_utc": "2026-11-27T23:59:48.4253390Z",
+  "result": "SUP-006 pending. RC5 upstream parity and both Strata watchdog relationships verified.",
+  "last_poll_utc": "2026-11-28T00:14:20.8588191Z",
   "heartbeat": {
+    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
-    "validation": "RC5 clean at upstream ca95cf88e. Both host verifiers exit 0, 50 pairs per architecture. Raw runners exit 1 with five expected-red cases per architecture. Live PS5/Nagi watchdog parent links verified. PS5 queue empty; Nagi 9 done, 3 quarantined. V3 source has branch-aware refill filtering; live refill remains unverified.",
-    "last_poll_utc": "2026-11-27T23:59:48.4253390Z",
+    "result": "SUP-006 pending. RC5 upstream parity and both Strata watchdog relationships verified.",
+    "last_poll_utc": "2026-11-28T00:14:20.8588191Z",
+    "validation": "Clean RC5 matches upstream ca95cf88e. Live PS5 21908 / watchdog 5712 and Nagi 37252 / watchdog 31704. Prior x64/x86 host verifiers passed 50 record pairs each with five expected raw failures per architecture.",
     "blockers": [
       "Automatic refill and validated publication after refill remain unverified.",
       "Full graphics package validation and pinned tester.39 TheRock/history inputs remain pending."
-    ],
-    "result": "SUP-006 pending. RC5 x64 and x86 record-pair builds and host verification completed.",
-    "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127"
+    ]
   }
 }
