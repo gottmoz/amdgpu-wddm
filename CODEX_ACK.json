@@ -217,13 +217,13 @@
   "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
   "trigger": "manual",
   "result": "SUP-006 pending",
-  "last_poll_utc": "2026-11-28T08:59:48.5424617Z",
+  "last_poll_utc": "2026-11-28T09:13:59.3368253Z",
   "heartbeat": {
-    "last_poll_utc": "2026-11-28T08:59:48.5424617Z",
+    "last_poll_utc": "2026-11-28T09:13:59.3368253Z",
     "observed_instruction_id": "SUP-006-24H-UPSTREAM-20261127",
     "trigger": "manual",
     "result": "SUP-006 pending",
-    "validation": "Clean RC5 matches upstream ca95cf88. ps5 worker 21908 watchdog 5712 linked=False queue []. nagi worker 37252 watchdog 31704 linked=False queue [done=9, quarantined=3]. Verified VKD3D PE architectures and hashes: x64 SHA256 1079A3A89D4B454A85118A18C0B56B0271C9E1B0332467F998F83F5B02DB02C0, x86 SHA256 C48CDDB91FBD2184AE4632CF09EFCA356ED5AAC5D21D0E64A7D38FCBDDC7DC77.",
+    "validation": "Clean isolated RC5 HEAD matches upstream main ca95cf88. ps5 worker=21908 watchdog=5712 linked=True queue [=1]. nagi worker=37252 watchdog=31704 linked=True queue [=1]. Prior host record-pair gates verified for x64/x86 with expected reds.",
     "blockers": [
       "Automatic refill and S006 execution and publication remain unverified.",
       "Graphics package validation and historical tester.39 inputs pending.",
